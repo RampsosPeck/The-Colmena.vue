@@ -1,0 +1,15 @@
+// Fonts
+//@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~sweetalert2/src/sweetalert2.scss';
+
+
+
+.router-link-exact-active {
+	background-color: #e91e63;
+	color: #fff !important;
+}

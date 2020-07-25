@@ -1,0 +1,127 @@
+
+.card{
+    border-radius: 36px !important;
+}
+.shadow {
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+.card .card-content {
+    padding: 5px 15px !important;
+}
+.card-blog .card-title {
+    margin-top: 0px !important;
+}
+.card .footer {
+    margin-top: 5px !important;
+}
+.card .card-image img {
+    height: 15em !important;
+    border-radius: 36px;
+    pointer-events: none;
+    box-shadow: 0 5px 15px -8px rgba(0, 0, 0, 0.24), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+/**/
+.imgcard {
+    background-position: center center;
+    background-size: cover;
+    background: linear-gradient(60deg, #ec407a, #c2185b);
+}
+.cardprecio {
+    position:absolute;
+    margin-top: 25px;
+    font-size: 15px;
+}
+
+.almuerzo {
+	background-position: center center;
+    background-size: cover;
+	background-color: rgba(233, 32, 99, 0.55);/*#e91e63;*/
+	border-radius: 36px;
+	padding-top: 3px;
+}
+.pb-c {
+	padding-bottom:5px !important;
+}
+/*RIBBON*/
+.ribbon {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: absolute
+}
+.ribbon::before,
+.ribbon::after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    display: block;
+    border: 5px solid #2980b9
+}
+.ribbon span {
+    position: absolute;
+    display: block;
+    width: 225px;
+    padding: 8px 0;
+    background-color: #FFC300;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+    color: #0a2b4e;
+    font: 100 18px/1 'Lato', sans-serif;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 18px;
+}
+.ribbon-top-right {
+    top: -3px;
+    right: -3px;
+}
+.ribbon-top-right::before,
+.ribbon-top-right::after {
+    border-top-color: transparent;
+    border-right-color: transparent
+}
+.ribbon-top-right::before {
+    top: 0;
+    left: 17px
+}
+.ribbon-top-right::after {
+    bottom: 17px;
+    right: 0
+}
+.ribbon-top-right span {
+    left: -25px;
+    top: 30px;
+    transform: rotate(45deg)
+}
+/*HASTA AQUI*/
+
+/*ALMUEZO DEL DIA*/
+.linea {
+	margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.card .footer .stats .material-icons {
+    top: -1px;
+}
+/*HASTA AQUI*/
+
+.panel-center {
+    float: none;
+    display: block;
+    z-index: 3;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: -50px;
+}
+
+.ulcenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.text-rose {
+    color: #e91e63;
+}
