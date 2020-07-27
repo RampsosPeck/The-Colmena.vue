@@ -7,7 +7,7 @@
 	                <div class="col-xs-6 col-xs-offset-3">
         	           <div class="profile">
 	                        <div class="avatar">
-	                            <img src="/img/welcome/persona3.jpg" alt="Circle Image" class="img-circle img-responsive img-raised">
+	                            <img :src="getProfileFoto()" alt="Circle Image" class="img-circle img-responsive img-raised">
 	                        </div>
 	                        <div class="name">
 	                            <h3 class="title">{{ form.fullname }}</h3>
@@ -15,11 +15,6 @@
 	                        </div>
 	                    </div>
     	            </div>
-                    <div class="col-xs-2 follow">
-	                   <button class="btn btn-fab btn-primary" rel="tooltip" title="Follow this user">
-                            <i class="material-icons">add</i>
-                        </button>
-	                </div>
                 </div>
 
 
@@ -84,7 +79,7 @@
 		                                        </div>
 		                                    </div>
 		                                </div>
-		                                <div class="row">
+		                                <div class="row center-block">
 		                                    <div class="col-md-6">
 		                                        <div class="input-group">
 		                                            <span class="input-group-addon">
@@ -92,26 +87,14 @@
 		                                            </span>
 		                                            <div class="form-group label-floating is-empty ">
 		                                                <label class="control-label">Contraseña:</label>
-		                                                <input type="password" class="form-control" name="password" required>
-		                                                <span class="material-input"></span>
-		                                            </div>
-		                                        </div>
-		                                    </div>
-		                                    <div class="col-md-6">
-		                                        <div class="input-group">
-		                                            <span class="input-group-addon">
-		                                                <i class="material-icons text-rose">account_balance_wallet</i>
-		                                            </span>
-		                                            <div class="form-group label-floating is-empty" >
-		                                                <label class="control-label">Confirmar contraseña:</label>
-		                                                <input type="password" class="form-control" name="password_confirmation">
+		                                                <input type="password" class="form-control" name="password" required v-model="form.password">
 		                                                <span class="material-input"></span>
 		                                            </div>
 		                                        </div>
 		                                    </div>
 		                                </div>
 		                                <div class="media-footer">
-		                                    <button class="btn btn-rose btn-round" type="submit">
+		                                    <button @click.prevent="updateInfo" type="submit" class="btn btn-rose btn-round">
 		                                        <i class="material-icons">person_pin</i>
 		                                        ENVIAR
 		                                    </button>
@@ -154,11 +137,46 @@
             console.log('Component mounted.')
         },
         methods: {
+        	getProfileFoto(){
+        		let foto = (this.form.foto.length > 200) ? this.form.foto : "img/profile/"+ this.form.foto;
+                return foto;
+        	},
+        	updateInfo(){
+        		this.$Progress.start();
+        		this.form.put('api/profile/')
+        		.then(()=>{
+        			Fire.$emit('AfterCreate');
+        			swal.fire(
+        				'Actualizado!',
+                        'La información del usuario fue actualizado.',
+                        'success'
+        			)
+        			this.$Progress.finish();
+        		})
+        		.catch(()=>{
+        			this.$Progress.fail();
+        		})
+
+        	},
         	updateProfile(e){
         		//console.log('uploading...');
         		let file = e.target.files[0];
-        		let render = new FileReader();
+        		let reader = new FileReader();
 
+        		if(file['size'] < 2111775 )
+                {
+                    reader.onloadend = (file) => {
+                        //console.log('RESULT', reader.result)
+                        this.form.foto = reader.result;
+                    }
+                    reader.readAsDataURL(file);
+                }else{
+                    swal.fire(
+                    	'Oops...!',
+                        'La imagenen es demaciado grande!',
+                        'error'
+                    )
+                }
 
         	}
         },

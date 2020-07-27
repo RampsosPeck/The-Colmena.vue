@@ -80,11 +80,13 @@
                                         <i class="material-icons">dns</i> Categorias
                                     </router-link>
                                 </li>
+                                @can('isSadmin')
                                 <li>
                                     <router-link to="/developer"  class="nav-link">
                                         <i class="material-icons">dns</i> Developer
                                     </router-link>
                                 </li>
+                                @endcan
                             </ul>
                         </li>
                         <li>

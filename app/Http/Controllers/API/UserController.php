@@ -52,6 +52,44 @@ class UserController extends Controller
 
     }
 
+    public function updateProfile(Request $request)
+    {
+        $user = auth('api')->user();
+
+        $this->validate($request, [
+            'fullname' => 'required|string|max:191',
+            'celular'  => 'required|numeric|digits:8|unique:users,celular,'.$user->id,
+            'email'    => 'required|string|email|max:191|unique:users,email,'.$user->id,
+            'password' => 'sometimes|required|min:5'
+        ]);
+
+        $fotoActual = $user->foto;
+
+        if($request->foto != $fotoActual)
+        {
+            $name = time().'.'.explode('/',explode(':',substr($request->foto, 0, strpos($request->foto, ';')))[1])[1];
+
+            \Image::make($request->foto)->save(public_path('img/profile/').$name);
+
+            $request->merge(['foto' => $name]);
+
+            //Aqui encuentro la imagen en esa carpeta para borrarla
+            $userPhoto = public_path('img/profile/').$fotoActual;
+            if( file_exists($userPhoto) )
+            {
+                @unlink($userPhoto);
+            }
+        }
+
+        if(!empty($request->password))
+        {
+            $request->merge(['password' => Hash::make($request['password'])]);
+        }
+
+        $user->update($request->all());
+
+        return ['message'=> "Success"];
+    }
     /**
      * Display the specified resource.
      *
@@ -105,6 +143,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isSadmin');
+
         $user = User::findOrFail($id);
 
         $user->delete();

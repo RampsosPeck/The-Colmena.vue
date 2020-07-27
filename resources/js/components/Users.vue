@@ -33,6 +33,7 @@
 			                                    <th class="text-center"><b>Nombre</b></th>
 			                                    <th class="text-center"><b>Celular</b></th>
 			                                    <th class="text-center"><b>E-mail</b></th>
+			                                    <th class="text-center"><b>Tipo</b></th>
 			                                    <th class="text-center"><b>Creado</b></th>
 			                                    <th class="text-center"><b>Acciones</b></th>
 			                                </tr>
@@ -43,6 +44,7 @@
 			                                    <td v-text="user.fullname"></td>
 			                                    <td v-text="user.celular"></td>
 			                                    <td v-text="user.email"></td>
+			                                    <td v-text="user.tipo"></td>
 			                                    <td>{{ user.created_at | myDate }}</td>
 			                                    <td class="td-actions text-right">
 			                                        <button type="button" rel="tooltip" class="btn btn-info" data-original-title="" title="">

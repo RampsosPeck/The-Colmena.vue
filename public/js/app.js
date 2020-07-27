@@ -2737,23 +2737,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2779,18 +2762,48 @@ __webpack_require__.r(__webpack_exports__);
     console.log('Component mounted.');
   },
   methods: {
+    getProfileFoto: function getProfileFoto() {
+      var foto = this.form.foto.length > 200 ? this.form.foto : "img/profile/" + this.form.foto;
+      return foto;
+    },
+    updateInfo: function updateInfo() {
+      var _this = this;
+
+      this.$Progress.start();
+      this.form.put('api/profile/').then(function () {
+        Fire.$emit('AfterCreate');
+        swal.fire('Actualizado!', 'La información del usuario fue actualizado.', 'success');
+
+        _this.$Progress.finish();
+      })["catch"](function () {
+        _this.$Progress.fail();
+      });
+    },
     updateProfile: function updateProfile(e) {
+      var _this2 = this;
+
       //console.log('uploading...');
       var file = e.target.files[0];
-      var render = new FileReader();
+      var reader = new FileReader();
+
+      if (file['size'] < 2111775) {
+        reader.onloadend = function (file) {
+          //console.log('RESULT', reader.result)
+          _this2.form.foto = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        swal.fire('Oops...!', 'La imagenen es demaciado grande!', 'error');
+      }
     }
   },
   created: function created() {
-    var _this = this;
+    var _this3 = this;
 
     axios.get('api/profile').then(function (_ref) {
       var data = _ref.data;
-      return _this.form.fill(data);
+      return _this3.form.fill(data);
     });
   }
 });
@@ -2814,6 +2827,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -3118,9 +3133,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 resul = _context.sent;
                 //console.log(resul);
-                _this3.users = resul.data.data; //console.log(this.users);
+                _this3.users = resul.data.data;
+                console.log(_this3.users);
 
-              case 4:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -66631,7 +66647,12 @@ var render = function() {
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-xs-6 col-xs-offset-3" }, [
             _c("div", { staticClass: "profile" }, [
-              _vm._m(0),
+              _c("div", { staticClass: "avatar" }, [
+                _c("img", {
+                  staticClass: "img-circle img-responsive img-raised",
+                  attrs: { src: _vm.getProfileFoto(), alt: "Circle Image" }
+                })
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "name" }, [
                 _c("h3", { staticClass: "title" }, [
@@ -66641,9 +66662,7 @@ var render = function() {
                 _c("h6", [_vm._v(_vm._s(_vm.form.tipo))])
               ])
             ])
-          ]),
-          _vm._v(" "),
-          _vm._m(1)
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "tab-content" }, [
@@ -66663,7 +66682,7 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "col-md-4 text-center" }, [
-                      _vm._m(2),
+                      _vm._m(0),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -66672,7 +66691,7 @@ var render = function() {
                           attrs: { "data-provides": "fileinput" }
                         },
                         [
-                          _vm._m(3),
+                          _vm._m(1),
                           _vm._v(" "),
                           _c("div", {
                             staticClass:
@@ -66706,7 +66725,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("br"),
                             _vm._v(" "),
-                            _vm._m(4)
+                            _vm._m(2)
                           ])
                         ]
                       )
@@ -66717,7 +66736,7 @@ var render = function() {
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-6" }, [
                             _c("div", { staticClass: "input-group" }, [
-                              _vm._m(5),
+                              _vm._m(3),
                               _vm._v(" "),
                               _c("input", {
                                 directives: [
@@ -66755,7 +66774,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "col-md-6" }, [
                             _c("div", { staticClass: "input-group" }, [
-                              _vm._m(6),
+                              _vm._m(4),
                               _vm._v(" "),
                               _c("input", {
                                 directives: [
@@ -66794,7 +66813,7 @@ var render = function() {
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-6" }, [
                             _c("div", { staticClass: "input-group" }, [
-                              _vm._m(7),
+                              _vm._m(5),
                               _vm._v(" "),
                               _c("input", {
                                 directives: [
@@ -66830,7 +66849,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "col-md-6" }, [
                             _c("div", { staticClass: "input-group" }, [
-                              _vm._m(8),
+                              _vm._m(6),
                               _vm._v(" "),
                               _c("input", {
                                 directives: [
@@ -66865,9 +66884,84 @@ var render = function() {
                           ])
                         ]),
                         _vm._v(" "),
-                        _vm._m(9),
+                        _c("div", { staticClass: "row center-block" }, [
+                          _c("div", { staticClass: "col-md-6" }, [
+                            _c("div", { staticClass: "input-group" }, [
+                              _vm._m(7),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "form-group label-floating is-empty "
+                                },
+                                [
+                                  _c(
+                                    "label",
+                                    { staticClass: "control-label" },
+                                    [_vm._v("Contraseña:")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.form.password,
+                                        expression: "form.password"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "password",
+                                      name: "password",
+                                      required: ""
+                                    },
+                                    domProps: { value: _vm.form.password },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.form,
+                                          "password",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "material-input" })
+                                ]
+                              )
+                            ])
+                          ])
+                        ]),
                         _vm._v(" "),
-                        _vm._m(10)
+                        _c("div", { staticClass: "media-footer" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-rose btn-round",
+                              attrs: { type: "submit" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.updateInfo($event)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("person_pin")
+                              ]),
+                              _vm._v(
+                                "\n\t\t                                        ENVIAR\n\t\t                                    "
+                              )
+                            ]
+                          )
+                        ])
                       ])
                     ])
                   ]
@@ -66881,32 +66975,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "avatar" }, [
-      _c("img", {
-        staticClass: "img-circle img-responsive img-raised",
-        attrs: { src: "/img/welcome/persona3.jpg", alt: "Circle Image" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xs-2 follow" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-fab btn-primary",
-          attrs: { rel: "tooltip", title: "Follow this user" }
-        },
-        [_c("i", { staticClass: "material-icons" }, [_vm._v("add")])]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -66974,69 +67042,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "input-group" }, [
-          _c("span", { staticClass: "input-group-addon" }, [
-            _c("i", { staticClass: "material-icons text-rose" }, [
-              _vm._v("lock_outline")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group label-floating is-empty " }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contraseña:")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "password", name: "password", required: "" }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "material-input" })
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "input-group" }, [
-          _c("span", { staticClass: "input-group-addon" }, [
-            _c("i", { staticClass: "material-icons text-rose" }, [
-              _vm._v("account_balance_wallet")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group label-floating is-empty" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v("Confirmar contraseña:")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "password", name: "password_confirmation" }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "material-input" })
-          ])
-        ])
+    return _c("span", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "material-icons text-rose" }, [
+        _vm._v("lock_outline")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "media-footer" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-rose btn-round", attrs: { type: "submit" } },
-        [
-          _c("i", { staticClass: "material-icons" }, [_vm._v("person_pin")]),
-          _vm._v(
-            "\n\t\t                                        ENVIAR\n\t\t                                    "
-          )
-        ]
-      )
     ])
   }
 ]
@@ -67105,6 +67114,10 @@ var render = function() {
                           _vm._v(" "),
                           _c("td", {
                             domProps: { textContent: _vm._s(user.email) }
+                          }),
+                          _vm._v(" "),
+                          _c("td", {
+                            domProps: { textContent: _vm._s(user.tipo) }
                           }),
                           _vm._v(" "),
                           _c("td", [
@@ -67776,6 +67789,8 @@ var staticRenderFns = [
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_c("b", [_vm._v("E-mail")])]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_c("b", [_vm._v("Tipo")])]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_c("b", [_vm._v("Creado")])]),
         _vm._v(" "),
