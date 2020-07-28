@@ -70,9 +70,12 @@ class RegisterController extends Controller
     {
         if(array_key_exists('foto', $data))
         {
-            $foto = request()->file('foto')->store('public/users');
+            $file = request()->file('foto');
+            $path = public_path() . '/img/profile';
+            $fileName = uniqid() . $file->getClientOriginalName();
+            $moved = $file->move($path, $fileName);
         }else{
-            $foto = null;
+            $fileName = 'avatar.jpg';
         }
 
         return User::create([
@@ -81,7 +84,7 @@ class RegisterController extends Controller
             'celular' => $data['celular'],
             'email' => $data['email'],
             'direccion' => $data['direccion'],
-            'foto' => Storage::url($foto),
+            'foto' => $fileName,
             'password' => Hash::make($data['password']),
         ]);
     }

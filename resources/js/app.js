@@ -79,6 +79,10 @@ Vue.filter('myDate', function(created){
 	return moment(created).locale('es').format('MMMM Do YYYY, h:mm a');
 });
 
+Vue.filter('dateSimple', function(created){
+  return moment(created).locale('es').format('MMMM Do YYYY');
+});
+
 
 window.Fire = new Vue();
 

@@ -30,25 +30,41 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-       // dd($request->all());
+        //var_dump($request->all());
         $this->validate($request,[
             'fullname' => ['required', 'string', 'max:255'],
             'celular' => ['required','numeric','digits:8','unique:users,celular'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'direccion' => ['required', 'string', 'max:255'],
+            'tipo' => ['required'],
+            'password' => ['required', 'string', 'min:6'],
         ]);
 
-
         //$foto = request()->file('foto')->store('public/users');
+        if($request->foto)
+        {
+            $name = time().'.'.explode('/',explode(':',substr($request->foto, 0, strpos($request->foto, ';')))[1])[1];
 
-        return User::create([
+            \Image::make($request->foto)->save(public_path('img/profile/').$name);
+
+            //$request->merge(['foto' => $name]);
+        }else{
+            $name = 'avatar.jpg';
+        }
+
+        User::create([
             'fullname' => $request['fullname'],
             'slug' => Str::of($request['fullname'])->slug('-'),
             'email' => $request['email'],
             'celular' => $request['celular'],
             //'foto' => Storage::url($foto),
-            'formatted_address' => $request['formatted_address'],
-            'password' => Hash::make($request['password']),
+            'foto' => $name,
+            'direccion' => $request['direccion'],
+            'tipo' => $request['tipo'],
+            'password' => Hash::make($request['celular']),
         ]);
+
+        //$user->update($request->all());
+        return ['message'=> "Success OK..."];
 
     }
 
@@ -74,11 +90,11 @@ class UserController extends Controller
             $request->merge(['foto' => $name]);
 
             //Aqui encuentro la imagen en esa carpeta para borrarla
-            $userPhoto = public_path('img/profile/').$fotoActual;
+           /* $userPhoto = public_path('img/profile/').$fotoActual;
             if( file_exists($userPhoto) )
             {
                 @unlink($userPhoto);
-            }
+            }*/
         }
 
         if(!empty($request->password))
@@ -110,7 +126,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $this->authorize('isSadmin');
+
+        User::where('id', $id)
+              ->update(['activo' => 1]);
+
+        return response()->json(['message' => 'Usuario Activado'], 200);
     }
 
     /**
@@ -122,17 +143,39 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        var_dump($request->all());
         $user = User::findOrFail($id);
 
         $this->validate($request,[
             'fullname' => ['required', 'string', 'max:255'],
             'celular' => ['required','numeric','digits:8','unique:users,celular,'.$user->id],
-            'password' => ['sometimes','min:6','confirmed'],
+            'password' => ['sometimes','min:6'],
         ]);
+
+       // $user->update($request->all());
+
+        $fotoActual = $user->foto;
+
+        if($request->foto != $fotoActual)
+        {
+            $name = time().'.'.explode('/',explode(':',substr($request->foto, 0, strpos($request->foto, ';')))[1])[1];
+
+            \Image::make($request->foto)->save(public_path('img/profile/').$name);
+
+            $request->merge(['foto' => $name]);
+
+            //Aqui encuentro la imagen en esa carpeta para borrarla
+
+        }
+
+        if(!empty($request->password))
+        {
+            $request->merge(['password' => Hash::make($request['password'])]);
+        }
 
         $user->update($request->all());
 
-        return ["message" => 'Información actualizada JORGE.'];
+        return ['message'=> "Success actualizado"];
     }
 
     /**
@@ -145,9 +188,8 @@ class UserController extends Controller
     {
         $this->authorize('isSadmin');
 
-        $user = User::findOrFail($id);
-
-        $user->delete();
+        User::where('id', $id)
+              ->update(['activo' => 0]);
 
         return response()->json(['message' => 'Usuario eliminaro'], 200);
     }

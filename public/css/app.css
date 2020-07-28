@@ -1646,3 +1646,13 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   color: #fff !important;
 }
 
+.usertable {
+  font-size: 12px !important;
+  margin-bottom: 0px !important;
+}
+
+.td-usertable {
+  padding-top: 3px !important;
+  padding-bottom: 4px !important;
+}
+
