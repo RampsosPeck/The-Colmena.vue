@@ -77,7 +77,7 @@
                                 </li>
                                 <li>
                                     <router-link to="/categorias"  class="nav-link">
-                                        <i class="material-icons">dns</i> Categorias
+                                        <i class="material-icons">input</i> Categorias
                                     </router-link>
                                 </li>
                                 @can('isSadmin')

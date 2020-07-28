@@ -47,7 +47,7 @@
 			                                    				<img alt="Usuario" :src="getFoto(user.foto)" class="media-object" style="height: 100%;">
 			                                    			</div>
 			                                    		</a>
-			                                    		<div class="media-body">
+			                                    		<div class="media-body" >
 			                                    			<h6 class="media-heading">
 																{{ user.fullname }}
 			                                    				<small>* {{ user.created_at | dateSimple }}</small>
@@ -373,7 +373,7 @@
                 }else{
                     swal.fire(
                     	'Oops...!',
-                        'La imagenen es demaciado grande!',
+                        'La imagen es demaciado grande!',
                         'error'
                     )
                 }

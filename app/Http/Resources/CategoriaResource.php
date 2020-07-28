@@ -20,6 +20,7 @@ class CategoriaResource extends JsonResource
             'slug' => $this->slug,
             'descripcion' => $this->descripcion,
             'imagen' => $this->imagen,
+            'estado' => $this->estado,
             'create_dates' => [
                 'created_at_human' => $this->created_at->diffForHumans(),
                 'created_at' => $this->created_at

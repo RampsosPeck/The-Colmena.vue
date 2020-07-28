@@ -1656,3 +1656,21 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   padding-bottom: 4px !important;
 }
 
+.gallery-cate img {
+  width: 20%;
+  float: center;
+}
+
+.media .listcategoria {
+  margin: 0 auto;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  margin-right: 15px;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+}
+
+.media-body {
+  width: 0px !important;
+}
+

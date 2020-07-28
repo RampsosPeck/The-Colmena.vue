@@ -84,6 +84,8 @@ Vue.filter('dateSimple', function(created){
 });
 
 
+
+
 window.Fire = new Vue();
 
 

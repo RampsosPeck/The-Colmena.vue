@@ -1920,6 +1920,159 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2058,8 +2211,167 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  data: function data() {
+    return {
+      editmode: false,
+      categorias: [],
+      form: new Form({
+        id: '',
+        imagen: '',
+        nombre: '',
+        descripcion: '',
+        estado: '',
+        create_dates: []
+      })
+    };
+  },
+  methods: {
+    getFoto: function getFoto(ufoto) {
+      var foto = "img/categoria/" + ufoto;
+      return foto;
+    },
+    getFotocate: function getFotocate() {
+      var foto = this.form.imagen.length > 200 ? this.form.imagen : "img/categoria/" + this.form.imagen;
+      return foto;
+    },
+    updateCate: function updateCate(id) {
+      var _this = this;
+
+      this.$Progress.start();
+      this.form.put('api/categorias/' + this.form.id).then(function () {
+        _this.form.reset();
+
+        _this.editmode = false;
+        swal.fire('Actualizado!', 'La información de la categoría fue actualizada.', 'success');
+
+        _this.$Progress.finish();
+
+        Fire.$emit('AfterCreate');
+      })["catch"](function () {
+        _this.$Progress.fail();
+      });
+    },
+    editForm: function editForm(categoria) {
+      this.editmode = true;
+      this.form.reset();
+      this.form.fill(categoria);
+    },
+    deleteCate: function deleteCate(id) {
+      var _this2 = this;
+
+      swal.fire({
+        title: '¿Estás seguro?',
+        text: "No podrás revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, dar de baja!'
+      }).then(function (result) {
+        if (result.value) {
+          _this2.form["delete"]('api/categorias/' + id).then(function () {
+            swal.fire('Deleted!', 'La categoria fue dado de baja.', 'success');
+            Fire.$emit('AfterCreate');
+          })["catch"](function () {
+            swal.fire('Failed!', 'Revisa algo salió mal.', 'warning');
+          });
+        }
+      });
+    },
+    activoCate: function activoCate(id) {
+      var _this3 = this;
+
+      swal.fire({
+        title: '¿Estás seguro?',
+        text: "No podrás revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, activar!'
+      }).then(function (result) {
+        if (result.value) {
+          _this3.form.get('api/categorias/' + id).then(function () {
+            swal.fire('Excelente!', 'La categoría fue activada.', 'success');
+            Fire.$emit('AfterCreate');
+          })["catch"](function () {
+            swal.fire('Failed!', 'Revisa algo salió mal.', 'warning');
+          });
+        }
+      });
+    },
+    loadCategorias: function loadCategorias() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var resul;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get('api/categorias');
+
+              case 2:
+                resul = _context.sent;
+                _this4.categorias = resul.data.data;
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    createCate: function createCate() {
+      var _this5 = this;
+
+      this.$Progress.start();
+      this.form.post('api/categorias').then(function () {
+        Fire.$emit('AfterCreate');
+        swal.fire({
+          icon: 'success',
+          title: 'Categoria creada correctamente',
+          showConfirmButton: false,
+          timer: 2000
+        });
+
+        _this5.form.reset();
+
+        _this5.$Progress.finish();
+      })["catch"](function (error) {
+        _this5.$Progress.fail();
+
+        console.log(error);
+      });
+    },
+    cateFoto: function cateFoto(e) {
+      var _this6 = this;
+
+      //console.log('uploading...');
+      var file = e.target.files[0];
+      var reader = new FileReader();
+
+      if (file['size'] < 2111775) {
+        reader.onloadend = function (file) {
+          //console.log('RESULT', reader.result)
+          _this6.form.imagen = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        swal.fire('Oops...!', 'La imagen es demaciado grande!', 'error');
+      }
+    }
+  },
+  created: function created() {
+    var _this7 = this;
+
+    this.loadCategorias();
+    Fire.$on('AfterCreate', function () {
+      _this7.loadCategorias();
+    });
   }
 });
 
@@ -3202,7 +3514,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         reader.readAsDataURL(file);
       } else {
-        swal.fire('Oops...!', 'La imagenen es demaciado grande!', 'error');
+        swal.fire('Oops...!', 'La imagen es demaciado grande!', 'error');
       }
     }
   },
@@ -64624,438 +64936,594 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-10 panel-center" }, [
-          _c("div", { staticClass: "card card-nav-tabs" }, [
-            _c("div", { staticClass: "header header-rose" }, [
-              _c("div", { staticClass: "nav-tabs-navigation" }, [
-                _c("div", { staticClass: "nav-tabs-wrapper" }, [
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12 panel-center" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "col-md-7" }, [
+            _c("div", { staticClass: "card card-nav-tabs shadow" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-content" }, [
+                _c("div", { staticClass: "tab-content text-center" }, [
                   _c(
-                    "ul",
-                    {
-                      staticClass: "nav nav-tabs ulcenter",
-                      attrs: { "data-tabs": "tabs" }
-                    },
+                    "div",
+                    { staticClass: "tab-pane active", attrs: { id: "lista" } },
                     [
-                      _c("li", [
-                        _c("a", { attrs: { "data-toggle": "tab" } }, [
-                          _c("b", [_vm._v("LISTA DE CATEGORIAS")])
+                      _c("div", { staticClass: "table-responsive" }, [
+                        _c("table", { staticClass: "table" }, [
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _c(
+                            "tbody",
+                            _vm._l(_vm.categorias, function(categoria, index) {
+                              return _c("tr", { key: categoria.id }, [
+                                _c("td", {
+                                  domProps: {
+                                    textContent: _vm._s(categoria.id)
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("td", { staticClass: "td-usertable" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "media text-left" },
+                                    [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass: "pull-left td-usertable"
+                                        },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "listcategoria" },
+                                            [
+                                              _c("img", {
+                                                staticClass:
+                                                  "img img-raised img-rounded",
+                                                staticStyle: { height: "100%" },
+                                                attrs: {
+                                                  src: _vm.getFoto(
+                                                    categoria.imagen
+                                                  ),
+                                                  alt: "Categoria foto"
+                                                }
+                                              })
+                                            ]
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "media-body" }, [
+                                        _c(
+                                          "h6",
+                                          { staticClass: "media-heading" },
+                                          [
+                                            _vm._v(
+                                              "\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" +
+                                                _vm._s(categoria.nombre) +
+                                                "\n\t\t\t\t\t                                    \t\t\t\t"
+                                            ),
+                                            _c("small", [
+                                              _vm._v(
+                                                "* " +
+                                                  _vm._s(
+                                                    categoria.create_dates
+                                                      .created_at_human
+                                                  )
+                                              )
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("p", {
+                                          staticClass: "usertable",
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              categoria.descripcion
+                                            )
+                                          }
+                                        })
+                                      ])
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      categoria.estado ? "ACTIVO" : "INACTIVO"
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  { staticClass: "td-actions text-center" },
+                                  [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "btn btn-success",
+                                        attrs: {
+                                          href: "#",
+                                          rel: "tooltip",
+                                          "data-original-title": "",
+                                          title: "Editar Categoría"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            return _vm.editForm(categoria)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "i",
+                                          { staticClass: "material-icons" },
+                                          [_vm._v("edit")]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: categoria.estado,
+                                            expression: "categoria.estado"
+                                          }
+                                        ],
+                                        staticClass: "btn btn-danger",
+                                        attrs: {
+                                          href: "#",
+                                          "data-original-title": "",
+                                          title: "Dar de Baja"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.deleteCate(categoria.id)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "i",
+                                          { staticClass: "material-icons" },
+                                          [_vm._v("close")]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: !categoria.estado,
+                                            expression: "!categoria.estado"
+                                          }
+                                        ],
+                                        staticClass: "btn btn-warning",
+                                        attrs: {
+                                          href: "#",
+                                          "data-original-title": "",
+                                          title: "Activar categoría"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.activoCate(categoria.id)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "i",
+                                          { staticClass: "material-icons" },
+                                          [_vm._v("done")]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ])
+                            }),
+                            0
+                          )
                         ])
                       ])
                     ]
                   )
                 ])
               ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-content" }, [
-              _c("div", { staticClass: "tab-content text-center" }, [
-                _c(
-                  "div",
-                  { staticClass: "tab-pane active", attrs: { id: "profile" } },
-                  [
-                    _c("div", { staticClass: "table-responsive" }, [
-                      _c("table", { staticClass: "table" }, [
-                        _c("thead", [
-                          _c("tr", [
-                            _c("th", { staticClass: "text-center" }, [
-                              _vm._v("#")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-5" }, [
+            _c("div", { staticClass: "card card-nav-tabs shadow" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-content" }, [
+                _c("div", { staticClass: "tab-content text-center" }, [
+                  _c(
+                    "div",
+                    { staticClass: "tab-pane active", attrs: { id: "crear" } },
+                    [
+                      _c(
+                        "form",
+                        {
+                          attrs: { enctype: "multipart/form-data" },
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              _vm.editmode ? _vm.updateCate() : _vm.createCate()
+                            }
+                          }
+                        },
+                        [
+                          _c("div", { staticClass: "card-content" }, [
+                            _vm._m(3),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "fileinput fileinput-new text-center",
+                                class: {
+                                  "has-error is-focused": _vm.form.errors.has(
+                                    "imagen"
+                                  )
+                                },
+                                attrs: { "data-provides": "fileinput" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "fileinput-new thumbnail img-rounded img-raised"
+                                  },
+                                  [
+                                    _c("img", {
+                                      directives: [
+                                        {
+                                          name: "show",
+                                          rawName: "v-show",
+                                          value: !_vm.editmode,
+                                          expression: "!editmode"
+                                        }
+                                      ],
+                                      staticStyle: { width: "20rem" },
+                                      attrs: {
+                                        src: "/img/categoria/catedefault.jpg",
+                                        alt: "Foto Usuario"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("img", {
+                                      directives: [
+                                        {
+                                          name: "show",
+                                          rawName: "v-show",
+                                          value: _vm.editmode,
+                                          expression: "editmode"
+                                        }
+                                      ],
+                                      attrs: {
+                                        src: _vm.getFotocate(),
+                                        alt: "Foto Usuario"
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", {
+                                  staticClass:
+                                    "fileinput-preview fileinput-exists thumbnail img-rounded img-raised"
+                                }),
+                                _vm._v(" "),
+                                _c("div", [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "btn btn-raised btn-round btn-rose btn-file"
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { staticClass: "fileinput-new" },
+                                        [_vm._v("Añadir Imagen")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "fileinput-exists" },
+                                        [_vm._v("Cambiar")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        attrs: { type: "file", name: "imagen" },
+                                        on: { change: _vm.cateFoto }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._m(4)
+                                ]),
+                                _vm._v(" "),
+                                _c("has-error", {
+                                  attrs: { form: _vm.form, field: "imagen" }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "input-group" }, [
+                              _vm._m(5),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "form-group is-empty",
+                                  class: {
+                                    "has-error is-focused": _vm.form.errors.has(
+                                      "nombre"
+                                    )
+                                  }
+                                },
+                                [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.form.nombre,
+                                        expression: "form.nombre"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      name: "nombre",
+                                      placeholder: "Nombre de categoría"
+                                    },
+                                    domProps: { value: _vm.form.nombre },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.form,
+                                          "nombre",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "material-input" }),
+                                  _vm._v(" "),
+                                  _c("has-error", {
+                                    attrs: { form: _vm.form, field: "nombre" }
+                                  })
+                                ],
+                                1
+                              )
                             ]),
                             _vm._v(" "),
-                            _c("th", [_vm._v("Name")]),
-                            _vm._v(" "),
-                            _c("th", [_vm._v("Job Position")]),
-                            _vm._v(" "),
-                            _c("th", [_vm._v("Since")]),
-                            _vm._v(" "),
-                            _c("th", { staticClass: "text-right" }, [
-                              _vm._v("Salary")
-                            ]),
-                            _vm._v(" "),
-                            _c("th", { staticClass: "text-right" }, [
-                              _vm._v("Actions")
+                            _c("div", { staticClass: "input-group" }, [
+                              _vm._m(6),
+                              _vm._v(" "),
+                              _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.descripcion,
+                                    expression: "form.descripcion"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  placeholder: "Descripción de la categoría",
+                                  rows: "2",
+                                  name: "descripcion"
+                                },
+                                domProps: { value: _vm.form.descripcion },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.form,
+                                      "descripcion",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
                             ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "text-center" }, [
+                            _c(
+                              "button",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.editmode,
+                                    expression: "editmode"
+                                  }
+                                ],
+                                staticClass: "btn btn-rose btn-round",
+                                attrs: { type: "submit" }
+                              },
+                              [
+                                _c("i", { staticClass: "material-icons" }, [
+                                  _vm._v("edit")
+                                ]),
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t\t\t\tACTUALIZAR\n\t\t\t\t\t\t\t\t\t\t\t"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: !_vm.editmode,
+                                    expression: "!editmode"
+                                  }
+                                ],
+                                staticClass: "btn btn-rose btn-round",
+                                attrs: { type: "submit" }
+                              },
+                              [
+                                _c("i", { staticClass: "material-icons" }, [
+                                  _vm._v("person_pin")
+                                ]),
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t\t\t\tGUARDAR\n\t\t\t\t\t\t\t\t\t\t\t"
+                                )
+                              ]
+                            )
                           ])
-                        ]),
-                        _vm._v(" "),
-                        _c("tbody", [
-                          _c("tr", [
-                            _c("td", { staticClass: "text-center" }, [
-                              _vm._v("1")
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("Andrew Mike")]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("Develop")]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("2013")]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-right" }, [
-                              _vm._v("€ 99,225")
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "td-actions text-right" }, [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-info",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("person")
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-success",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("edit")
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-danger",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("close")
-                                  ])
-                                ]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("td", { staticClass: "text-center" }, [
-                              _vm._v("2")
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("John Doe")]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("Design")]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("2012")]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-right" }, [
-                              _vm._v("€ 89,241")
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "td-actions text-right" }, [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-info btn-round",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("person")
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-success btn-round",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("edit")
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-danger btn-round",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("close")
-                                  ])
-                                ]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("td", { staticClass: "text-center" }, [
-                              _vm._v("3")
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("Alex Mike")]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("Design")]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("2010")]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-right" }, [
-                              _vm._v("€ 92,144")
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "td-actions text-right" }, [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-info btn-simple",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("person")
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-success btn-simple",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("edit")
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-danger btn-simple",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("close")
-                                  ])
-                                ]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("td", { staticClass: "text-center" }, [
-                              _vm._v("4")
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("Mike Monday")]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("Marketing")]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("2013")]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-right" }, [
-                              _vm._v("€ 49,990")
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "td-actions text-right" }, [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-info btn-round",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("person")
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-success btn-round",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("edit")
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-danger btn-round",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("close")
-                                  ])
-                                ]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("td", { staticClass: "text-center" }, [
-                              _vm._v("5")
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("Paul Dickens")]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("Communication")]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("2015")]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-right" }, [
-                              _vm._v("€ 69,201")
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "td-actions text-right" }, [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-info",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("person")
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-success",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("edit")
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-danger",
-                                  attrs: {
-                                    type: "button",
-                                    rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("close")
-                                  ])
-                                ]
-                              )
-                            ])
-                          ])
-                        ])
-                      ])
-                    ])
-                  ]
-                )
+                        ]
+                      )
+                    ]
+                  )
+                ])
               ])
             ])
           ])
         ])
       ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "header header-rose" }, [
+      _c("div", { staticClass: "nav-tabs-navigation" }, [
+        _c("div", { staticClass: "nav-tabs-wrapper" }, [
+          _c(
+            "ul",
+            {
+              staticClass: "nav nav-tabs ulcenter",
+              attrs: { "data-tabs": "tabs" }
+            },
+            [
+              _c("li", { staticClass: "active" }, [
+                _c("a", { attrs: { href: "#lista", "data-toggle": "tab" } }, [
+                  _c("i", { staticClass: "material-icons" }, [_vm._v("input")]),
+                  _vm._v(
+                    "\n\t\t\t\t\t\t\t\t\t\t\t\t\tLISTA DE CATEGORIAS\n\t\t\t\t\t\t\t\t\t\t\t\t"
+                  )
+                ])
+              ])
+            ]
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "almuerzo" }, [
+        _c("th", { staticClass: "text-center" }, [_c("b", [_vm._v("#")])]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_c("b", [_vm._v("Imagen")])]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_c("b", [_vm._v("Estado")])]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [
+          _c("b", [_vm._v("Acciones")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "header header-rose" }, [
+      _c("div", { staticClass: "nav-tabs-navigation" }, [
+        _c("div", { staticClass: "nav-tabs-wrapper" }, [
+          _c(
+            "ul",
+            {
+              staticClass: "nav nav-tabs ulcenter",
+              attrs: { "data-tabs": "tabs" }
+            },
+            [
+              _c("li", { staticClass: "active" }, [
+                _c("a", { attrs: { href: "#crear", "data-toggle": "tab" } }, [
+                  _vm._v("Nueva Categoría")
+                ])
+              ])
+            ]
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [_c("b", [_vm._v("Imagen de la categoría")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "btn btn-danger btn-round fileinput-exists",
+        attrs: { href: "#pablo", "data-dismiss": "fileinput" }
+      },
+      [_c("i", { staticClass: "fa fa-times" }), _vm._v(" Eliminar")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "material-icons text-rose" }, [
+        _vm._v("card_membership")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "material-icons" }, [_vm._v("line_weight")])
     ])
   }
 ]
