@@ -29,6 +29,9 @@ Route::group(['middleware' => ['auth:api']], function(){
 	Route::put('profile','API\UserController@updateProfile');
 
 	Route::apiResources(['categorias' => 'API\CategoriaController']);
+
+	Route::apiResources(['productos' => 'API\ProductoController']);
+
 });
 
 // Routes for guests only

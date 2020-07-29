@@ -24,8 +24,7 @@ class CreateProductosTable extends Migration
             $table->unsignedInteger('stock')->nullable();
             $table->unsignedInteger('cant_personas')->nullable();
             $table->string('oferta')->nullable();
-            $table->boolean('estado')->default(0); //Agotado o Disponible
-
+            $table->boolean('estado')->default(1); //Agotado o Disponible
             $table->unsignedBigInteger('categoria_id')->nullable();
             $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->timestamps();

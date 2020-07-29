@@ -54,8 +54,8 @@ class Producto extends Model
         return '/img/default.jpg';
     }
 
-    public function prodetalles()
+    public function prodetalle()
     {
-        return $this->belongsToMany(Prodetalle::class);
+        return $this->hasOne(Prodetalle::class);
     }
 }

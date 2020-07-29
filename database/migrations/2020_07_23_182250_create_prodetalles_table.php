@@ -13,14 +13,16 @@ class CreateProdetallesTable extends Migration
      */
     public function up()
     {
-        Schema::create('prodetalles', function (Blueprint $table) {
+        Schema::create('prodetalle', function (Blueprint $table) {
             $table->id();
             $table->string('entrada')->nullable();
             $table->string('sopa')->nullable();
             $table->string('segundo')->nullable();
             $table->string('postre')->nullable();
             $table->string('refresco')->nullable();
-            $table->text('especificaion');
+            $table->text('especificacion');
+            $table->unsignedBigInteger('producto_id');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
             $table->timestamps();
         });
     }

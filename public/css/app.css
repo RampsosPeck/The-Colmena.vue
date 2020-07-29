@@ -1674,3 +1674,8 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   width: 0px !important;
 }
 
+.media-heading {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
