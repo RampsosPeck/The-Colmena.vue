@@ -1679,3 +1679,22 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   margin-bottom: 0px !important;
 }
 
+.imgpromo {
+  max-width: 70px !important;
+}
+
+.productlist {
+  font-size: 0.7em !important;
+}
+
+.productlist small {
+  font-size: 100% !important;
+}
+
+.productcate {
+  border-radius: 13px !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  line-height: 1 !important;
+}
+

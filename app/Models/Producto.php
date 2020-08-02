@@ -56,6 +56,6 @@ class Producto extends Model
 
     public function prodetalle()
     {
-        return $this->hasOne(Prodetalle::class);
+        return $this->hasOne(Prodetalle::class, 'producto_id');
     }
 }

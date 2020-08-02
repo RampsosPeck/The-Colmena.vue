@@ -13,4 +13,5 @@ class Prodetalle extends Model
     {
         return $this->belongsTo(Poducto::class);
     }
+
 }

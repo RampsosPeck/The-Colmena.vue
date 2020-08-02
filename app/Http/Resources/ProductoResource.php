@@ -33,9 +33,9 @@ class ProductoResource extends JsonResource
             'cant_personas' => $this->cant_personas,
             'oferta' => $this->oferta,
             'estado' => $this->estado,
-            'categoria' => CategoriaResource::collection($this->whenLoaded('categoria')),
-            'imagenes' => ProductofotoResource::collection($this->whenLoaded('imagenes')),
-            'prodetalle' => ProdetalleResource::collection($this->whenLoaded('prodetalle')),
+            'fotos' => ProductofotoResource::collection($this->fotos),
+            'categoria' => new CategoriaResource($this->categoria),
+            'prodetalle' => new ProdetalleResource($this->prodetalle),
         ];
     }
 }
