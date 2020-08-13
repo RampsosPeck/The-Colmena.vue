@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Prodetalle extends Model
 {
     protected $table = 'prodetalle';
-    protected $fillable = ['entrada','sopa','segundo','postre','refresco','especificacion','producto_id'];
+    protected $fillable = ['entrada','sopa','segundo','postre','refresco','especificacion','producto_id','estado'];
 
     public function producto()
     {
-        return $this->belongsTo(Poducto::class);
+        return $this->belongsTo(Producto::class );
     }
 
 }

@@ -19,7 +19,7 @@ class CreateProductosTable extends Migration
             $table->string('slug')->unique();
             $table->string('codigo')->unique()->nullable();
             $table->text('descripcion')->nullable();
-            $table->unsignedDecimal('descuento',9,2)->nullable();
+            $table->unsignedInteger('descuento')->nullable();
             $table->unsignedDecimal('precio',9,2)->nullable();
             $table->unsignedInteger('stock')->nullable();
             $table->unsignedInteger('cant_personas')->nullable();

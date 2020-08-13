@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductoResource;
+use App\Models\Categoria;
 use App\Models\Prodetalle;
 use App\Models\Producto;
 use App\Models\ProductoFoto;
@@ -19,10 +20,37 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::latest()->paginate(10);
+        $productos = Producto::latest()->paginate(20);
         return ProductoResource::collection($productos);
     }
 
+    public function tortas()
+    {
+        $tortas = Categoria::where('nombre','Tortas')->first();
+        $protortas = Producto::where('categoria_id',$tortas->id)->get();
+        return ProductoResource::collection($protortas);
+    }
+
+    public function comidas()
+    {
+        $comidas = Categoria::where('nombre','Comidas')->first();
+        $procomi = Producto::where('categoria_id',$comidas->id)->get();
+        return ProductoResource::collection($procomi);
+    }
+
+    public function almuerzo()
+    {
+        $prodetalle = Prodetalle::where('estado',1)->first();
+        $procomi = Producto::where('id',$prodetalle->producto_id)->get();
+        return ProductoResource::collection($procomi);
+    }
+
+    public function varios()
+    {
+        $varios = Categoria::where('nombre','Varios')->first();
+        $prova = Producto::where('categoria_id',$varios->id)->get();
+        return ProductoResource::collection($prova);
+    }
     /**
      * Store a newly created resource in storage.
      *

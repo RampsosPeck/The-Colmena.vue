@@ -89,14 +89,14 @@
                                     <div class="col-md-6">
                                         <div class="input-group">
                                             <span class="input-group-addon">
-                                                <i class="material-icons">email</i>
+                                                <i class="material-icons text-rose">room</i>
                                             </span>
-                                            <div class="form-group label-floating is-empty @error('email') has-error is-focused @enderror" >
-                                                <label class="control-label">Correo electrónico:</label>
-                                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                            <div class="form-group label-floating is-empty @error('direccion') has-error is-focused @enderror">
+                                                <label class="control-label">Dirección especifica:</label>
+                                                <input type="text" class="form-control" name="direccion" value="{{ old('direccion') }}">
                                                 <span class="material-input"></span>
                                             </div>
-                                            @error('email')
+                                            @error('direccion')
                                                 <span class="has-error text-danger" >
                                                     {{ $message }}
                                                 </span>
@@ -106,14 +106,14 @@
                                     <div class="col-md-6">
                                         <div class="input-group">
                                             <span class="input-group-addon">
-                                                <i class="material-icons">room</i>
+                                                <i class="material-icons">email</i>
                                             </span>
-                                            <div class="form-group label-floating is-empty @error('direccion') has-error is-focused @enderror">
-                                                <label class="control-label">Dirección especifica:</label>
-                                                <input type="text" class="form-control" name="direccion" value="{{ old('direccion') }}">
+                                            <div class="form-group label-floating is-empty @error('email') has-error is-focused @enderror" >
+                                                <label class="control-label">Correo electrónico:</label>
+                                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
                                                 <span class="material-input"></span>
                                             </div>
-                                            @error('direccion')
+                                            @error('email')
                                                 <span class="has-error text-danger" >
                                                     {{ $message }}
                                                 </span>

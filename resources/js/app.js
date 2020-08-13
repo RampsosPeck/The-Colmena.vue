@@ -62,6 +62,11 @@ let routes = [
     { path: '/developer', component: require('./components/Developer.vue').default },
     { path: '/categorias', component: require('./components/Categoria.vue').default },
     { path: '/productos', component: require('./components/Producto.vue').default },
+    {
+      path: '/editarpro/:id',
+      name: 'editar',
+      component: () => import(/* webpackChunkName: "about" */ './components/Editpro.vue')
+    },
     { path: '/profile', component: require('./components/Profile.vue').default },
     //{ path: '*', component: require('./components/NotFound.vue').default }
   ]

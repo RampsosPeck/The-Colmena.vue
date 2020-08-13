@@ -74,80 +74,113 @@
               <div class="rd-navbar-aside" id="rd-navbar-aside">
                 <h3 class="text-center">INGRESE AL SISTEMA</h3>
                 <!--RD Mailform-->
-                <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
-                  <div class="row row-22">
-                    <div class="col-12">
-                      <div class="form-wrap">
-                        <input class="form-input" id="contact-email" type="email" name="email" data-constraints="@Email @Required">
-                        <label class="form-label" for="contact-email">E-mail</label>
+                <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php" style="margin-top: 2px !important;">
+                  @csrf
+                  <div class="row ">
+                      <div class="col-12">
+                        <div class="form-wrap">
+                          <div class="form-group row">
+                            <label for="email" class="col-sm-5 col-form-label text-md-right text-white"><b>{{ __('Número de celular') }}:</b></label>
+
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control bg-light border-0  @error('celular') is-invalid @enderror" name="celular" value="{{ old('celular') }}"  autocomplete="celular" autofocus placeholder="Ingrese su número de celular">
+
+                                @error('celular')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="form-wrap">
-                        <input class="form-input" id="contact-phone" type="text" name="phone" data-constraints="@Numeric">
-                        <label class="form-label" for="contact-phone">Phone</label>
+                      <div class="col-12">
+                        <div class="form-group row">
+                            <label for="password" class="col-sm-5 col-form-label text-md-right text-white"><b> {{ __('Clave / Contraseña') }}:</b></label>
+
+                            <div class="col-sm-7">
+                                <input id="password" type="password" class="form-control bg-light border-0 @error('password') is-invalid @enderror" name="password"  autocomplete="current-password" placeholder="Ingrese su contraseña">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-12">
-                      <button class="button button-primary" type="submit">order now</button>
-                    </div>
+                      <div class="col-12 text-center" >
+                        <button class="button button-primary-wel" type="submit">INICIAR SECIÓN</button>
+                      </div>
                   </div>
                 </form>
-
-                <form method="POST" action=" " class=" shadow rounded py-3 px-4 comita-jaspeado ">
+                <br>
+                <div class="col-12 text-center" >
+                    @if (Route::has('password.request'))
+                        <a class="button-primary" href="{{ route('password.request') }}" style="border-radius: 33px;">
+                            <b> {{ __('¿Olvidaste tu contraseña?') }} </b>
+                        </a>
+                    @endif
+                </div>
+                <hr class="linea-blanca"><br>
+                  <h3 class="text-center">REGISTRATE</h3>
+                  <!--RD Mailform-->
+                  <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
                     @csrf
-                    <h6 class="text-white"><strong> INICIAR SESIÓN </strong></h6><hr class="linea-blanca">
-                    <div class="form-group row">
-                        <label for="email" class="col-sm-5 col-form-label text-md-right text-white"><strong></strong>{{ __('Cédula de identidad') }}</strong></label>
+                    <div class="row ">
+                        <div class="col-12">
+                          <div class="form-wrap">
+                            <div class="form-group row">
+                              <label for="email" class="col-sm-5 col-form-label text-md-right text-white"> <b>{{ __('Nombre completo') }}:</b></label>
 
-                        <div class="col-sm-7">
-                            <input type="number" class="form-control bg-light border-0  @error('cedula') is-invalid @enderror" name="cedula" value="{{ old('cedula') }}"  autocomplete="cedula" autofocus placeholder="Ingrese su Cédula">
+                              <div class="col-sm-7">
+                                  <input type="text" class="form-control bg-light border-0  @error('fullname') is-invalid @enderror" name="fullname" value="{{ old('fullname') }}"  autocomplete="fullname" autofocus placeholder="Nombre completo.">
 
-                            @error('cedula')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                                  @error('fullname')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-wrap">
+                            <div class="form-group row">
+                              <label for="email" class="col-sm-5 col-form-label text-md-right text-white"><b>{{ __('Número de celular') }}:</b></label>
+
+                              <div class="col-sm-7">
+                                  <input type="number" class="form-control bg-light border-0  @error('celular') is-invalid @enderror" name="celular" value="{{ old('celular') }}"  autocomplete="celular" autofocus placeholder="Ingrese su número de celular">
+
+                                  @error('celular')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-group row">
+                              <label for="password" class="col-sm-5 col-form-label text-md-right text-white"> <b>{{ __('Dirección de envio') }}:</b> </label>
+
+                              <div class="col-sm-7">
+                                  <textarea class="form-control bg-light border-0 @error('ubicacion') is-invalid @enderror" name="ubicacion" id="ubicacion" rows="2" placeholder="Direccion exacta mas referencias de envio."></textarea>
+                                  @error('ubicacion')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-12 text-center" >
+                          <button class="button button-primary-wel" type="submit">ENVIAR DATOS</button>
                         </div>
                     </div>
-
-                    <div class="form-group row">
-                        <label for="password" class="col-sm-5 col-form-label text-md-right text-white">{{ __('Clave/contraseña') }}</label>
-
-                        <div class="col-sm-7">
-                            <input id="password" type="password" class="form-control bg-light border-0 @error('password') is-invalid @enderror" name="password"  autocomplete="current-password" placeholder="Ingrese su contraseña">
-
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row mb-0">
-                        <div class="col-md-7 offset-md-5">
-                            <button type="submit" class="btn btn-block  btn-outline-light btn-comita">
-                                {{ __('INGRESAR') }}
-                            </button>
-                        </div>
-                    </div>
-                    <hr class="linea-blanca">
-                    <div class="form-group row">
-                        <div class="col-sm-6 pb-2">
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="btn btn-sm btn-block  btn-outline-light">REGISTRARSE</a>
-                            @endif
-                        </div>
-                        <div class="col-sm-6">
-                            @if (Route::has('password.request'))
-                                <a class="btn btn-block btn-sm btn-outline-light" href="{{ route('password.request') }}">
-                                    {{ __('¿Olvidaste tu contraseña?') }}
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-                </form>
+                  </form>
               </div>
             </nav>
           </div>
@@ -482,27 +515,11 @@
     <div class="snackbars" id="form-output-global"></div>
 
     <script src="{{ asset('js/principal.js') }}" ></script>
-    <!--coded by kraken-->
+
   </body>
 </html>
 
 
-<!--
-@if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
--->
 
 
 

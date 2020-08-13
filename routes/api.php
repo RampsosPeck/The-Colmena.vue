@@ -32,6 +32,10 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 	Route::apiResources(['productos' => 'API\ProductoController']);
 
+	Route::get('tortas','API\ProductoController@tortas');
+	Route::get('comidas','API\ProductoController@comidas');
+	Route::get('almuerzo','API\ProductoController@almuerzo');
+	Route::get('varios','API\ProductoController@varios');
 });
 
 // Routes for guests only

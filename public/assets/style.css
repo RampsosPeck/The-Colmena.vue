@@ -126,3 +126,36 @@
 .text-rose {
     color: #e91e63;
 }
+
+
+/* DESDE AQUI NUMERO*/
+
+.btncant.btncant  input[type="number"] {
+    max-width: 4rem !important;
+    border-width: 0 0px;
+    height: 2rem;
+}
+
+
+.btncant input[type="number"] {
+-webkit-appearance: textfield;
+-moz-appearance: textfield;
+appearance: textfield;
+}
+
+.btncant input[type=number]::-webkit-inner-spin-button,
+.btncant input[type=number]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+}
+
+.btncant input[type=number] {
+text-align: center;
+}
+.letracard{
+    font-weight: bold;
+    color: #e91e63;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 33px;
+    line-height: 1.7;
+}
+/*HASTA AQUI */

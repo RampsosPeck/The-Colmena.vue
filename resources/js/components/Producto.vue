@@ -92,6 +92,9 @@
 															<i class="material-icons">add_shopping_cart</i>
 					                                    	Comprar <div class="ripple-container"></div>
 					                                    </button>
+					                                    <router-link :to="{name: 'editar', params:{ id: producto.id}}">
+															<button class="btn btn-info btn-sm mr-2">Editar</button>
+														</router-link>
 					                                </td>
 					                            </tr>
 					                        </tbody>

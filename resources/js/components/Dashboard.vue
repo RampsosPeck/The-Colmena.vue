@@ -46,34 +46,39 @@
                 </div>
 
                 <div class="tab-content">
-                    <div class="tab-pane connections" id="tortas">
+                    <div class="tab-pane active" id="tortas">
                         <div class="row">
+                            <div v-for="(torta, index) in tortas" :key="torta.id">
                             <div class="col-md-3">
                                 <div class="card card-blog  shadow" style="background-color: #f2f2f2;">
                                     <div class="card-image">
-                                        <div class="ribbon ribbon-top-right ">
-                                            <span><strong> 30% DTO. </strong></span>
+                                        <div class="ribbon ribbon-top-right " v-show="torta.descuento">
+                                            <span><strong> {{ torta.descuento }} % DTO. </strong></span>
                                         </div>
                                         <a href="#pablo">
-                                            <label class="cardprecio label label-primary" > Bs. <strong>20.00</strong> </label>
-                                            <img class="imgcard" src="/img/secondary/a461x407.png" />
+                                            <label class="cardprecio label label-primary" > Bs. <strong>{{ torta.precio }} </strong> </label>
+                                            <span v-for="foto in torta.fotos" :key="foto.id">
+                                                <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;">
+                                            </span>
                                         </a>
                                     </div>
 
                                     <div class="card-content">
                                         <h4 class="card-title text-center">
-                                            <a href="#pablo">5 Common Startup</a>
+                                            <a href="#pablo"> {{ torta.nombre }} </a>
                                         </h4>
                                         <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                            Don't be scared of the truth because we need to restart   Owens’ bed design but the back is...PRUEBA
+                                            {{ torta.descripcion }}
                                         </p>
                                         <div class="footer">
                                             <div class="author">
-                                                 <div class="btn-group">
-                                                    <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
+                                                 <div class="btn-group " >
+                                                    <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                                                         <i class="material-icons">remove</i> </button>
-                                                    <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                    <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
+                                                    <div class="btncant" style="line-height: 1.8;">
+                                                    <input class="letracard" min="1" name="cantidad" value="1" type="number"  >
+                                                    </div>
+                                                    <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
                                                 </div>
                                             </div>
                                             <div class="stats">
@@ -88,163 +93,45 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="card card-blog shadow" style="background-color: #f2f2f2;">
-
-                                    <div class="card-image">
-                                        <div class="ribbon ribbon-top-right ">
-                                            <span><strong> 30% DTO. </strong></span>
-                                        </div>
-                                        <a href="#pablo">
-                                        <label class="cardprecio label label-primary" > Bs. <strong>50.00</strong> </label>
-                                        <img class="imgcard" src="/img/secondary/a671X671.png" />
-                                        </a>
-                                    </div>
-
-                                    <div class="card-content">
-                                        <h4 class="card-title text-center">
-                                            <a href="#pablo">5 Common dos Startup</a>
-                                        </h4>
-                                        <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                            Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...
-                                        </p>
-                                        <div class="footer">
-                                            <div class="author">
-                                                 <div class="btn-group">
-                                                    <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                        <i class="material-icons">remove</i> </button>
-                                                    <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                    <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
-                                                </div>
-                                            </div>
-                                            <div class="stats">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-round btn-rose btn-xs">
-                                                        <strong> Añadir </strong>
-                                                        <i class="material-icons" >add_shopping_cart</i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="card card-blog  shadow" style="background-color: #f2f2f2;">
-                                    <div class="card-image">
-                                        <div class="ribbon ribbon-top-right ">
-                                            <span><strong> 30% DTO. </strong></span>
-                                        </div>
-                                        <a href="#pablo">
-                                            <label class="cardprecio label label-primary" > Bs. <strong>20.00</strong> </label>
-                                            <img class="imgcard" src="/img/secondary/a461x407.png" />
-                                        </a>
-                                    </div>
-
-                                    <div class="card-content">
-                                        <h4 class="card-title text-center">
-                                            <a href="#pablo">5 Common Startup</a>
-                                        </h4>
-                                        <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                            Don't be scared of the truth because we need to restart   Owens’ bed design but the back is...PRUEBA
-                                        </p>
-                                        <div class="footer">
-                                            <div class="author">
-                                                 <div class="btn-group">
-                                                    <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                        <i class="material-icons">remove</i> </button>
-                                                    <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                    <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
-                                                </div>
-                                            </div>
-                                            <div class="stats">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-round btn-rose btn-xs">
-                                                        <strong> Añadir </strong>
-                                                        <i class="material-icons" >add_shopping_cart</i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="card card-blog shadow" style="background-color: #f2f2f2;">
-
-                                    <div class="card-image">
-                                        <div class="ribbon ribbon-top-right ">
-                                            <span><strong> 30% DTO. </strong></span>
-                                        </div>
-                                        <a href="#pablo">
-                                        <label class="cardprecio label label-primary" > Bs. <strong>50.00</strong> </label>
-                                        <img class="imgcard" src="/img/secondary/a671X671.png" />
-                                        </a>
-                                    </div>
-
-                                    <div class="card-content">
-                                        <h4 class="card-title text-center">
-                                            <a href="#pablo">5 Common dos Startup</a>
-                                        </h4>
-                                        <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                            Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...
-                                        </p>
-                                        <div class="footer">
-                                            <div class="author">
-                                                 <div class="btn-group">
-                                                    <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                        <i class="material-icons">remove</i> </button>
-                                                    <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                    <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
-                                                </div>
-                                            </div>
-                                            <div class="stats">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-round btn-rose btn-xs">
-                                                        <strong> Añadir </strong>
-                                                        <i class="material-icons" >add_shopping_cart</i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="tab-pane active" id="comidas" >
+                    <div class="tab-pane" id="comidas" >
                         <div class="row">
                             <div class="col-md-9">
                                 <h4 class="title">Platos extras</h4>
                                 <div class="row collections">
+                                    <div v-for="(comida, index) in comidas" :key="comida.id">
                                     <div class="col-md-4">
                                         <div class="card card-blog shadow" style="background-color: #f2f2f2;">
 
                                             <div class="card-image">
-                                                <div class="ribbon ribbon-top-right ">
-                                                    <span><strong> 30% DTO. </strong></span>
+                                                <div class="ribbon ribbon-top-right " v-show="comida.descuento">
+                                                    <span><strong> {{ comida.descuento }}% DTO. </strong></span>
                                                 </div>
                                                 <a href="#pablo">
-                                                <label class="cardprecio label label-primary" > Bs. <strong>50.00</strong> </label>
+                                                <label class="cardprecio label label-primary" > Bs. <strong>{{ comida.precio }}</strong> </label>
                                                 <img class="imgcard" src="/img/secondary/a671X671.png" />
                                                 </a>
                                             </div>
 
                                             <div class="card-content">
                                                 <h4 class="card-title text-center">
-                                                    <a href="#pablo">5 Common dos Startup</a>
+                                                    <a href="#pablo">{{ comida.nombre }}</a>
                                                 </h4>
                                                 <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                                    Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...
+                                                    {{ comida.descripcion }}
                                                 </p>
                                                 <div class="footer">
                                                     <div class="author">
-                                                         <div class="btn-group">
-                                                            <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
+                                                        <div class="btn-group " >
+                                                            <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                                                                 <i class="material-icons">remove</i> </button>
-                                                            <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                            <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
+                                                            <div class="btncant" style="line-height: 1.8;">
+                                                            <input class="letracard" min="1" name="cantidad" value="1" type="number"  >
+                                                            </div>
+                                                            <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
                                                         </div>
                                                     </div>
                                                     <div class="stats">
@@ -259,107 +146,38 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="card card-blog  shadow" style="background-color: #f2f2f2;">
-                                            <div class="card-image">
-                                                <div class="ribbon ribbon-top-right ">
-                                                    <span><strong> 30% DTO. </strong></span>
-                                                </div>
-                                                <a href="#pablo">
-                                                    <label class="cardprecio label label-primary" > Bs. <strong>20.00</strong> </label>
-                                                    <img class="imgcard" src="/img/secondary/a461x407.png" />
-                                                </a>
-                                            </div>
-
-                                            <div class="card-content">
-                                                <h4 class="card-title text-center">
-                                                    <a href="#pablo">5 Common Startup</a>
-                                                </h4>
-                                                <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                                    Don't be scared of the truth because we need to restart   Owens’ bed design but the back is...PRUEBA
-                                                </p>
-                                                <div class="footer">
-                                                    <div class="author">
-                                                         <div class="btn-group">
-                                                            <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                                <i class="material-icons">remove</i> </button>
-                                                            <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                            <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="stats">
-                                                        <div class="btn-group">
-                                                        <button class="btn btn-round btn-rose btn-xs">
-                                                            <strong> Añadir </strong>
-                                                            <i class="material-icons" >add_shopping_cart</i>
-                                                        </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="card card-blog shadow" style="background-color: #f2f2f2;">
-
-                                            <div class="card-image">
-                                                <div class="ribbon ribbon-top-right ">
-                                                    <span><strong> 30% DTO. </strong></span>
-                                                </div>
-                                                <a href="#pablo">
-                                                <label class="cardprecio label label-primary" > Bs. <strong>50.00</strong> </label>
-                                                <img class="imgcard" src="/img/secondary/a671X671.png" />
-                                                </a>
-                                            </div>
-
-                                            <div class="card-content">
-                                                <h4 class="card-title text-center">
-                                                    <a href="#pablo">5 Common dos Startup</a>
-                                                </h4>
-                                                <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                                    Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...
-                                                </p>
-                                                <div class="footer">
-                                                    <div class="author">
-                                                         <div class="btn-group">
-                                                            <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                                <i class="material-icons">remove</i> </button>
-                                                            <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                            <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="stats">
-                                                        <div class="btn-group">
-                                                        <button class="btn btn-round btn-rose btn-xs">
-                                                            <strong> Añadir </strong>
-                                                            <i class="material-icons" >add_shopping_cart</i>
-                                                        </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3 ">
                                 <h4 class="title text-center">Almuerzo del día</h4>
                                 <div class="card almuerzo shadow">
-                                    <div class="card-body pb-c"  >
+                                    <div class="card-body pb-c" v-for="(almu, index) in almuerzo" :key="almu.id" >
+                                        <h4 class="title text-center">{{ almu.nombre }}</h4>
                                         <ul class="list-unstyled">
-                                            <li><b>Entrada:</b> Products</li>
+                                            <li v-show="almu.prodetalle.entrada"><b>Entrada:</b> {{ almu.prodetalle.entrada }}</li>
                                             <hr class="linea">
-                                            <li><b>Sopa:</b> Collections</li>
+                                            <li v-show="almu.prodetalle.sopa"><b>Sopa:</b> {{ almu.prodetalle.sopa }}</li>
                                             <hr class="linea">
-                                            <li><b>Segundo:</b> Influencers</li>
+                                            <li v-show="almu.prodetalle.segundo"><b>Segundo:</b> {{ almu.prodetalle.segundo }}</li>
                                             <hr class="linea">
-                                            <li><b>Postre:</b> Likes</li>
+                                            <li v-show="almu.prodetalle.postre"><b>Postre:</b> {{ almu.prodetalle.postre }}</li>
+                                            <li v-show="almu.prodetalle.refresco"><b>Refresco:</b> {{ almu.prodetalle.refresco }}</li>
                                         </ul>
                                         <h4 class="title">Descripción</h4>
-                                        <p class="description text-justify">French luxury footwear and fashion. The footwear has incorporated shiny, red-lacquered soles that have become his signature.</p>
-                                        <h4 class="title">Focus</h4>
-                                        <div class="text-center">
-                                            <button class="btn btn-round btn-rose ">
+                                        <p class="description text-justify">{{ almu.descripcion }}</p>
+                                        <h6 class="title text-center"> {{ almu.create_dates.updated_at_human }}</h6>
+                                        <div class="footer text-center">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-round btn-primary btn-xs" style="border-radius: 33px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                <i class="material-icons">remove</i> </button>
+                                                <div class="btncant" style="line-height: 1.8;">
+                                                <input class="letracard" min="1" name="cantidad" value="1" type="number" style="background-color: #9c27b0; color:white;" >
+                                                </div>
+                                                <button type="button" class="btn btn-round btn-primary btn-xs" style="border-radius: 33px;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
+                                            </div>
+
+                                            <button class="btn btn-round btn-primary btn-xs">
                                                 <strong> Añadir</strong>
                                                 <i class="material-icons" >add_shopping_cart</i>
                                             </button>
@@ -370,36 +188,44 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane  connections" id="varios" >
+                    <div class="tab-pane" id="varios" >
                         <div class="row">
-                            <div class="col-md-9 col-md-offset-3">
-                                <div class="col-md-4">
+                            <div class="col-md-6 col-md-offset-3">
+                                <div v-for="(vario, index) in varios" :key="vario.id">
+                                <div class="col-md-6">
                                     <div class="card card-blog shadow" style="background-color: #f2f2f2;">
 
                                         <div class="card-image">
-                                            <div class="ribbon ribbon-top-right ">
-                                                <span><strong> 30% DTO. </strong></span>
+                                            <div class="ribbon ribbon-top-right " v-show="vario.descuento">
+                                                <span><strong> {{ vario.descuento }}% DTO. </strong></span>
                                             </div>
                                             <a href="#pablo">
-                                            <label class="cardprecio label label-primary" > Bs. <strong>50.00</strong> </label>
-                                            <img class="imgcard" src="/img/secondary/a671X671.png" />
+                                            <label class="cardprecio label label-primary" > Bs. <strong>{{ vario.precio }}</strong> </label>
+                                            <span v-for="foto in vario.fotos" :key="foto.id">
+                                                <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;">
+                                            </span>
                                             </a>
                                         </div>
 
                                         <div class="card-content">
                                             <h4 class="card-title text-center">
-                                                <a href="#pablo">5 Common dos Startup</a>
+                                                <a href="#pablo">{{ vario.nombre }}</a>
                                             </h4>
                                             <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                                Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...
+                                                {{ vario.descripcion }}
                                             </p>
                                             <div class="footer" >
                                                 <div class="author">
-                                                     <div class="btn-group">
-                                                        <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                            <i class="material-icons">remove</i> </button>
-                                                        <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                        <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                            <i class="material-icons">remove</i>
+                                                        </button>
+                                                        <div class="btncant" style="line-height: 1.8;">
+                                                            <input class="letracard" min="1" name="cantidad" value="1" type="number"  >
+                                                        </div>
+                                                        <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                            <i class="material-icons">add</i>
+                                                        </button>
                                                     </div>
                                                 </div>
                                                 <div class="stats">
@@ -414,46 +240,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="card card-blog shadow" style="background-color: #f2f2f2;">
-
-                                        <div class="card-image">
-                                            <div class="ribbon ribbon-top-right ">
-                                                <span><strong> 30% DTO. </strong></span>
-                                            </div>
-                                            <a href="#pablo">
-                                            <label class="cardprecio label label-primary" > Bs. <strong>50.00</strong> </label>
-                                            <img class="imgcard" src="/img/secondary/a671X671.png" />
-                                            </a>
-                                        </div>
-
-                                        <div class="card-content">
-                                            <h4 class="card-title text-center">
-                                                <a href="#pablo">5 Common dos Startup</a>
-                                            </h4>
-                                            <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                                Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...
-                                            </p>
-                                            <div class="footer" >
-                                                <div class="author">
-                                                     <div class="btn-group">
-                                                        <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                            <i class="material-icons">remove</i> </button>
-                                                        <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                        <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
-                                                    </div>
-                                                </div>
-                                                <div class="stats">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-round btn-rose btn-xs">
-                                                            <strong> Añadir </strong>
-                                                            <i class="material-icons" >add_shopping_cart</i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -466,8 +252,74 @@
 
 <script>
     export default {
+        data() {
+            return {
+                productos : [],
+                categorias : [],
+                tortas : [],
+                comidas : [],
+                almuerzo : [],
+                varios : [],
+                form: new Form({
+                    id:'',
+                    nombre: '',
+                    codigo: '',
+                    descripcion: '',
+                    descuento: '',
+                    precio: '',
+                    stock: '',
+                    cant_personas: '',
+                    oferta: '',
+                    estado:'',
+                    entrada:'',
+                    sopa:'',
+                    segundo:'',
+                    postre:'',
+                    refresco:'',
+                    especificacion:'',
+                    foto:'',
+                    categoria:''
+                })
+            }
+        },
+        methods:{
+            getFoto(ufoto){
+                let foto = "img/producto/"+ufoto;
+                return foto;
+            },
+            async loadProductos(){
+                //axios.get('api/user').then(({data}) => (this.users = data));
+
+                const  resul = await axios.get('api/productos');
+                //console.log(resul);
+                this.productos = resul.data.data;
+                //console.log(this.users);
+
+                const  cat = await axios.get('api/categorias');
+                this.categorias = cat.data.data;
+
+                const  tor = await axios.get('api/tortas');
+                this.tortas = tor.data.data;
+
+                const  com = await axios.get('api/comidas');
+                this.comidas = com.data.data;
+
+                const  almu = await axios.get('api/almuerzo');
+                this.almuerzo = almu.data.data;
+
+                const  va = await axios.get('api/varios');
+                this.varios = va.data.data;
+
+            }
+        },
+        created(){
+            this.loadProductos();
+            Fire.$on('AfterCreate',() => {
+                this.loadProductos();
+            });
+        },
         mounted() {
             console.log('Component mounted.')
         }
-    }
+    };
 </script>

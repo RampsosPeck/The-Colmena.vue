@@ -21,7 +21,8 @@ class ProdetalleResource extends JsonResource
             'segundo' => $this->segundo,
             'postre' => $this->postre,
             'refresco' => $this->refresco,
-            'especificacion' => $this->especificacion
+            'especificacion' => $this->especificacion,
+            'estado' => $this->estado
         ];
     }
 }

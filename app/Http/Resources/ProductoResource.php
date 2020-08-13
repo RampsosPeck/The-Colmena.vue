@@ -26,6 +26,7 @@ class ProductoResource extends JsonResource
             'descuento' => $this->descuento,
             'create_dates' => [
                 'created_at_human' => $this->created_at->diffForHumans(),
+                'updated_at_human' => $this->updated_at->diffForHumans(),
                 'created_at' => $this->created_at
             ],
             'precio' => $this->precio,

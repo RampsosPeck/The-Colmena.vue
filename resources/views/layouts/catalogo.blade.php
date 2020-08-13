@@ -185,34 +185,39 @@
                     </div>
 
                     <div class="tab-content">
-                        <div class="tab-pane connections" id="tortas">
+                        <div class="tab-pane active" id="tortas">
                             <div class="row">
+                                @foreach($protortas as $pro)
                                 <div class="col-md-3">
                                     <div class="card card-blog  shadow" style="background-color: #f2f2f2;">
                                         <div class="card-image">
+
                                             <div class="ribbon ribbon-top-right ">
-                                                <span><strong> 30% DTO. </strong></span>
+                                                <span><strong> {{ $pro->descuento }} % DTO. </strong></span>
                                             </div>
+
                                             <a href="#pablo">
-                                                <label class="cardprecio label label-primary" > Bs. <strong>20.00</strong> </label>
-                                                <img class="imgcard" src="/img/secondary/a461x407.png" />
+                                                <label class="cardprecio label label-primary" > Bs. <strong>{{ $pro->precio }}</strong> </label>
+                                                <img class="imgcard" src="{{ asset($pro->imgproductourl) }}" />
                                             </a>
                                         </div>
 
                                         <div class="card-content">
                                             <h4 class="card-title text-center">
-                                                <a href="#pablo">5 Common Startup</a>
+                                                <a href="#pablo">{{ $pro->nombre }}</a>
                                             </h4>
                                             <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                                Don't be scared of the truth because we need to restart   Owens’ bed design but the back is...PRUEBA
+                                                {{ $pro->descripcion }}
                                             </p>
                                             <div class="footer">
                                                 <div class="author">
-                                                     <div class="btn-group">
-                                                        <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
+                                                     <div class="btn-group " >
+                                                        <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                                                             <i class="material-icons">remove</i> </button>
-                                                        <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                        <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
+                                                        <div class="btncant" style="line-height: 1.8;">
+                                                        <input class="letracard" min="1" name="cantidad" value="1" type="number"  >
+                                                        </div>
+                                                        <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
                                                     </div>
                                                 </div>
                                                 <div class="stats">
@@ -227,258 +232,64 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="card card-blog shadow" style="background-color: #f2f2f2;">
-
-                                        <div class="card-image">
-                                            <div class="ribbon ribbon-top-right ">
-                                                <span><strong> 30% DTO. </strong></span>
-                                            </div>
-                                            <a href="#pablo">
-                                            <label class="cardprecio label label-primary" > Bs. <strong>50.00</strong> </label>
-                                            <img class="imgcard" src="/img/secondary/a671X671.png" />
-                                            </a>
-                                        </div>
-
-                                        <div class="card-content">
-                                            <h4 class="card-title text-center">
-                                                <a href="#pablo">5 Common dos Startup</a>
-                                            </h4>
-                                            <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                                Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...
-                                            </p>
-                                            <div class="footer">
-                                                <div class="author">
-                                                     <div class="btn-group">
-                                                        <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                            <i class="material-icons">remove</i> </button>
-                                                        <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                        <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
-                                                    </div>
-                                                </div>
-                                                <div class="stats">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-round btn-rose btn-xs">
-                                                            <strong> Añadir </strong>
-                                                            <i class="material-icons" >add_shopping_cart</i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="card card-blog  shadow" style="background-color: #f2f2f2;">
-                                        <div class="card-image">
-                                            <div class="ribbon ribbon-top-right ">
-                                                <span><strong> 30% DTO. </strong></span>
-                                            </div>
-                                            <a href="#pablo">
-                                                <label class="cardprecio label label-primary" > Bs. <strong>20.00</strong> </label>
-                                                <img class="imgcard" src="/img/secondary/a461x407.png" />
-                                            </a>
-                                        </div>
-
-                                        <div class="card-content">
-                                            <h4 class="card-title text-center">
-                                                <a href="#pablo">5 Common Startup</a>
-                                            </h4>
-                                            <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                                Don't be scared of the truth because we need to restart   Owens’ bed design but the back is...PRUEBA
-                                            </p>
-                                            <div class="footer">
-                                                <div class="author">
-                                                     <div class="btn-group">
-                                                        <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                            <i class="material-icons">remove</i> </button>
-                                                        <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                        <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
-                                                    </div>
-                                                </div>
-                                                <div class="stats">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-round btn-rose btn-xs">
-                                                            <strong> Añadir </strong>
-                                                            <i class="material-icons" >add_shopping_cart</i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="card card-blog shadow" style="background-color: #f2f2f2;">
-
-                                        <div class="card-image">
-                                            <div class="ribbon ribbon-top-right ">
-                                                <span><strong> 30% DTO. </strong></span>
-                                            </div>
-                                            <a href="#pablo">
-                                            <label class="cardprecio label label-primary" > Bs. <strong>50.00</strong> </label>
-                                            <img class="imgcard" src="/img/secondary/a671X671.png" />
-                                            </a>
-                                        </div>
-
-                                        <div class="card-content">
-                                            <h4 class="card-title text-center">
-                                                <a href="#pablo">5 Common dos Startup</a>
-                                            </h4>
-                                            <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                                Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...
-                                            </p>
-                                            <div class="footer">
-                                                <div class="author">
-                                                     <div class="btn-group">
-                                                        <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                            <i class="material-icons">remove</i> </button>
-                                                        <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                        <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
-                                                    </div>
-                                                </div>
-                                                <div class="stats">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-round btn-rose btn-xs">
-                                                            <strong> Añadir </strong>
-                                                            <i class="material-icons" >add_shopping_cart</i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
 
-                        <div class="tab-pane active" id="comidas" >
+                        <div class="tab-pane" id="comidas" >
                             <div class="row">
                                 <div class="col-md-9">
                                     <h4 class="title">Platos extras</h4>
                                     <div class="row collections">
-                                        <div class="col-md-4">
-                                            <div class="card card-blog shadow" style="background-color: #f2f2f2;">
+                                        @foreach($procomidas as $comida)
+                                            @if(!$comida->prodetalle)
+                                            <div class="col-md-4">
+                                                <div class="card card-blog shadow" style="background-color: #f2f2f2;">
 
-                                                <div class="card-image">
-                                                    <div class="ribbon ribbon-top-right ">
-                                                        <span><strong> 30% DTO. </strong></span>
-                                                    </div>
-                                                    <a href="#pablo">
-                                                    <label class="cardprecio label label-primary" > Bs. <strong>50.00</strong> </label>
-                                                    <img class="imgcard" src="/img/secondary/a671X671.png" />
-                                                    </a>
-                                                </div>
+                                                    <div class="card-image">
 
-                                                <div class="card-content">
-                                                    <h4 class="card-title text-center">
-                                                        <a href="#pablo">5 Common dos Startup</a>
-                                                    </h4>
-                                                    <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                                        Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...
-                                                    </p>
-                                                    <div class="footer">
-                                                        <div class="author">
-                                                             <div class="btn-group">
-                                                                <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                                    <i class="material-icons">remove</i> </button>
-                                                                <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                                <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
-                                                            </div>
+                                                        <div class="ribbon ribbon-top-right ">
+                                                            <span><strong> {{ $comida->descuento }}% DTO. </strong></span>
                                                         </div>
-                                                        <div class="stats">
-                                                            <div class="btn-group">
-                                                                <button class="btn btn-round btn-rose btn-xs">
-                                                                    <strong> Añadir </strong>
-                                                                    <i class="material-icons" >add_shopping_cart</i>
-                                                                </button>
+
+                                                        <a href="#pablo">
+                                                        <label class="cardprecio label label-primary" > Bs. <strong>{{ $comida->precio }}</strong> </label>
+                                                        <img class="imgcard" src="{{ asset($comida->imgproductourl) }}" />
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="card-content">
+                                                        <h4 class="card-title text-center">
+                                                            <a href="#pablo">{{ $comida->nombre }}</a>
+                                                        </h4>
+                                                        <p class="card-description text-justify" style="margin-bottom: 0px;">
+                                                            {{ $comida->descripcion }}.
+                                                        </p>
+                                                        <div class="footer">
+                                                            <div class="author">
+                                                                 <div class="btn-group">
+                                                                    <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                                        <i class="material-icons">remove</i> </button>
+                                                                    <div class="btncant" style="line-height: 1.8;">
+                                                                    <input class="letracard" min="1" name="cantidad" value="1" type="number"  >
+                                                                    </div>
+                                                                    <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="stats">
+                                                                <div class="btn-group">
+                                                                    <button class="btn btn-round btn-rose btn-xs">
+                                                                        <strong> Añadir </strong>
+                                                                        <i class="material-icons" >add_shopping_cart</i>
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="card card-blog  shadow" style="background-color: #f2f2f2;">
-                                                <div class="card-image">
-                                                    <div class="ribbon ribbon-top-right ">
-                                                        <span><strong> 30% DTO. </strong></span>
-                                                    </div>
-                                                    <a href="#pablo">
-                                                        <label class="cardprecio label label-primary" > Bs. <strong>20.00</strong> </label>
-                                                        <img class="imgcard" src="/img/secondary/a461x407.png" />
-                                                    </a>
-                                                </div>
-
-                                                <div class="card-content">
-                                                    <h4 class="card-title text-center">
-                                                        <a href="#pablo">5 Common Startup</a>
-                                                    </h4>
-                                                    <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                                        Don't be scared of the truth because we need to restart   Owens’ bed design but the back is...PRUEBA
-                                                    </p>
-                                                    <div class="footer">
-                                                        <div class="author">
-                                                             <div class="btn-group">
-                                                                <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                                    <i class="material-icons">remove</i> </button>
-                                                                <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                                <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="stats">
-                                                            <div class="btn-group">
-                                                            <button class="btn btn-round btn-rose btn-xs">
-                                                                <strong> Añadir </strong>
-                                                                <i class="material-icons" >add_shopping_cart</i>
-                                                            </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="card card-blog shadow" style="background-color: #f2f2f2;">
-
-                                                <div class="card-image">
-                                                    <div class="ribbon ribbon-top-right ">
-                                                        <span><strong> 30% DTO. </strong></span>
-                                                    </div>
-                                                    <a href="#pablo">
-                                                    <label class="cardprecio label label-primary" > Bs. <strong>50.00</strong> </label>
-                                                    <img class="imgcard" src="/img/secondary/a671X671.png" />
-                                                    </a>
-                                                </div>
-
-                                                <div class="card-content">
-                                                    <h4 class="card-title text-center">
-                                                        <a href="#pablo">5 Common dos Startup</a>
-                                                    </h4>
-                                                    <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                                        Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...
-                                                    </p>
-                                                    <div class="footer">
-                                                        <div class="author">
-                                                             <div class="btn-group">
-                                                                <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                                    <i class="material-icons">remove</i> </button>
-                                                                <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                                <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="stats">
-                                                            <div class="btn-group">
-                                                            <button class="btn btn-round btn-rose btn-xs">
-                                                                <strong> Añadir </strong>
-                                                                <i class="material-icons" >add_shopping_cart</i>
-                                                            </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="col-md-3 ">
@@ -486,19 +297,29 @@
                                     <div class="card almuerzo shadow">
                                         <div class="card-body pb-c"  >
                                             <ul class="list-unstyled">
-                                                <li><b>Entrada:</b> Products</li>
+                                                <li><b>Entrada:</b> {{ $almuerzo->prodetalle->entrada }}</li>
                                                 <hr class="linea">
-                                                <li><b>Sopa:</b> Collections</li>
+                                                <li><b>Sopa:</b> {{ $almuerzo->prodetalle->sopa }}</li>
                                                 <hr class="linea">
-                                                <li><b>Segundo:</b> Influencers</li>
+                                                <li><b>Segundo:</b> {{ $almuerzo->prodetalle->segundo }}</li>
                                                 <hr class="linea">
-                                                <li><b>Postre:</b> Likes</li>
+                                                <li><b>Refresco:</b> {{ $almuerzo->prodetalle->refresco }}</li>
+                                                <hr class="linea">
+                                                <li><b>Postre:</b> {{ $almuerzo->prodetalle->postre }}</li>
                                             </ul>
                                             <h4 class="title">Descripción</h4>
-                                            <p class="description text-justify">French luxury footwear and fashion. The footwear has incorporated shiny, red-lacquered soles that have become his signature.</p>
-                                            <h4 class="title">Focus</h4>
-                                            <div class="text-center">
-                                                <button class="btn btn-round btn-rose ">
+                                            <p class=" text-justify">{{ $almuerzo->descripcion }}</p>
+                                            <div class="footer text-center">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-round btn-primary btn-xs" style="border-radius: 33px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                    <i class="material-icons">remove</i> </button>
+                                                    <div class="btncant" style="line-height: 1.8;">
+                                                    <input class="letracard" min="1" name="cantidad" value="1" type="number" style="background-color: #9c27b0; color:white;" >
+                                                    </div>
+                                                    <button type="button" class="btn btn-round btn-primary btn-xs" style="border-radius: 33px;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
+                                                </div>
+
+                                                <button class="btn btn-round btn-primary btn-xs">
                                                     <strong> Añadir</strong>
                                                     <i class="material-icons" >add_shopping_cart</i>
                                                 </button>
@@ -509,36 +330,39 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane  connections" id="varios" >
+                        <div class="tab-pane" id="varios" >
                             <div class="row">
-                                <div class="col-md-9 col-md-offset-3">
-                                    <div class="col-md-4">
+                                <div class="col-md-6 col-md-offset-3">
+                                    @foreach($provarios as $vario)
+                                    <div class="col-md-6">
                                         <div class="card card-blog shadow" style="background-color: #f2f2f2;">
 
                                             <div class="card-image">
                                                 <div class="ribbon ribbon-top-right ">
-                                                    <span><strong> 30% DTO. </strong></span>
+                                                    <span><strong> {{ $vario->descuento }}% DTO. </strong></span>
                                                 </div>
                                                 <a href="#pablo">
-                                                <label class="cardprecio label label-primary" > Bs. <strong>50.00</strong> </label>
-                                                <img class="imgcard" src="/img/secondary/a671X671.png" />
+                                                <label class="cardprecio label label-primary" > Bs. <strong>{{ $vario->precio }}</strong> </label>
+                                                <img class="imgcard" src="{{ asset($vario->imgproductourl) }}" />
                                                 </a>
                                             </div>
 
                                             <div class="card-content">
                                                 <h4 class="card-title text-center">
-                                                    <a href="#pablo">5 Common dos Startup</a>
+                                                    <a href="#pablo">{{ $vario->nombre }}</a>
                                                 </h4>
                                                 <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                                    Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...
+                                                    {{ $vario->descripcion }}
                                                 </p>
                                                 <div class="footer" >
                                                     <div class="author">
                                                          <div class="btn-group">
-                                                            <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                                <i class="material-icons">remove</i> </button>
-                                                            <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                            <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
+                                                            <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                            <i class="material-icons">remove</i> </button>
+                                                            <div class="btncant" style="line-height: 1.8;">
+                                                            <input class="letracard" min="1" name="cantidad" value="1" type="number"  >
+                                                            </div>
+                                                            <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
                                                         </div>
                                                     </div>
                                                     <div class="stats">
@@ -553,47 +377,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="card card-blog shadow" style="background-color: #f2f2f2;">
-
-                                            <div class="card-image">
-                                                <div class="ribbon ribbon-top-right ">
-                                                    <span><strong> 30% DTO. </strong></span>
-                                                </div>
-                                                <a href="#pablo">
-                                                <label class="cardprecio label label-primary" > Bs. <strong>50.00</strong> </label>
-                                                <img class="imgcard" src="/img/secondary/a671X671.png" />
-                                                </a>
-                                            </div>
-
-                                            <div class="card-content">
-                                                <h4 class="card-title text-center">
-                                                    <a href="#pablo">5 Common dos Startup</a>
-                                                </h4>
-                                                <p class="card-description text-justify" style="margin-bottom: 0px;">
-                                                    Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...
-                                                </p>
-                                                <div class="footer" >
-                                                    <div class="author">
-                                                         <div class="btn-group">
-                                                            <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;">
-                                                                <i class="material-icons">remove</i> </button>
-                                                            <button class="btn btn-round btn-danger btn-xs" style="padding: 4px 8px !important;" ><span style="line-height: 1.7;"><strong> 3 </strong></span></button>
-                                                            <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;"> <i class="material-icons">add</i> </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="stats">
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-round btn-rose btn-xs">
-                                                                <strong> Añadir </strong>
-                                                                <i class="material-icons" >add_shopping_cart</i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

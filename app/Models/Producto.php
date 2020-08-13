@@ -34,9 +34,15 @@ class Producto extends Model
         $imgUno = $this->fotos()->first();
 
         if($imgUno){
-            return $imgUno->imagen;//del otro mutator que hicimos en el modelo ProductImage
+            //return $imgUno->imagen;
+            return '/img/producto/'.$imgUno->imagen;
         }
         return '/img/productos/default.jpg';
+
+        /*if(substr($this->imagen, 0, 4) === "http"){
+            return $this->imagen;
+        }
+        return '/images/producto/'.$this->imagen;*/
     }
 
 

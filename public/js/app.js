@@ -1,6 +1,50 @@
 /******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	function webpackJsonpCallback(data) {
+/******/ 		var chunkIds = data[0];
+/******/ 		var moreModules = data[1];
+/******/
+/******/
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
+/******/
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 	};
+/******/
+/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 	// Promise = chunk loading, 0 = chunk loaded
+/******/ 	var installedChunks = {
+/******/ 		"/js/app": 0
+/******/ 	};
+/******/
+/******/
+/******/
+/******/ 	// script path function
+/******/ 	function jsonpScriptSrc(chunkId) {
+/******/ 		return __webpack_require__.p + "" + ({"about":"about"}[chunkId]||chunkId) + ".js"
+/******/ 	}
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -26,6 +70,67 @@
 /******/ 		return module.exports;
 /******/ 	}
 /******/
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
+/******/ 		var promises = [];
+/******/
+/******/
+/******/ 		// JSONP chunk loading for javascript
+/******/
+/******/ 		var installedChunkData = installedChunks[chunkId];
+/******/ 		if(installedChunkData !== 0) { // 0 means "already installed".
+/******/
+/******/ 			// a Promise means "currently loading".
+/******/ 			if(installedChunkData) {
+/******/ 				promises.push(installedChunkData[2]);
+/******/ 			} else {
+/******/ 				// setup Promise in chunk cache
+/******/ 				var promise = new Promise(function(resolve, reject) {
+/******/ 					installedChunkData = installedChunks[chunkId] = [resolve, reject];
+/******/ 				});
+/******/ 				promises.push(installedChunkData[2] = promise);
+/******/
+/******/ 				// start chunk loading
+/******/ 				var script = document.createElement('script');
+/******/ 				var onScriptComplete;
+/******/
+/******/ 				script.charset = 'utf-8';
+/******/ 				script.timeout = 120;
+/******/ 				if (__webpack_require__.nc) {
+/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 				}
+/******/ 				script.src = jsonpScriptSrc(chunkId);
+/******/
+/******/ 				// create error before stack unwound to get useful stacktrace later
+/******/ 				var error = new Error();
+/******/ 				onScriptComplete = function (event) {
+/******/ 					// avoid mem leaks in IE.
+/******/ 					script.onerror = script.onload = null;
+/******/ 					clearTimeout(timeout);
+/******/ 					var chunk = installedChunks[chunkId];
+/******/ 					if(chunk !== 0) {
+/******/ 						if(chunk) {
+/******/ 							var errorType = event && (event.type === 'load' ? 'missing' : event.type);
+/******/ 							var realSrc = event && event.target && event.target.src;
+/******/ 							error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
+/******/ 							error.name = 'ChunkLoadError';
+/******/ 							error.type = errorType;
+/******/ 							error.request = realSrc;
+/******/ 							chunk[1](error);
+/******/ 						}
+/******/ 						installedChunks[chunkId] = undefined;
+/******/ 					}
+/******/ 				};
+/******/ 				var timeout = setTimeout(function(){
+/******/ 					onScriptComplete({ type: 'timeout', target: script });
+/******/ 				}, 120000);
+/******/ 				script.onerror = script.onload = onScriptComplete;
+/******/ 				document.head.appendChild(script);
+/******/ 			}
+/******/ 		}
+/******/ 		return Promise.all(promises);
+/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -78,6 +183,16 @@
 /******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/";
+/******/
+/******/ 	// on error function for async loading
+/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
+/******/
+/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
+/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
+/******/ 	jsonpArray.push = webpackJsonpCallback;
+/******/ 	jsonpArray = jsonpArray.slice();
+/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
+/******/ 	var parentJsonpFunction = oldJsonpFunction;
 /******/
 /******/
 /******/ 	// Load entry module and return exports
@@ -2256,220 +2371,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2723,6 +2632,106 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      productos: [],
+      categorias: [],
+      tortas: [],
+      comidas: [],
+      almuerzo: [],
+      varios: [],
+      form: new Form({
+        id: '',
+        nombre: '',
+        codigo: '',
+        descripcion: '',
+        descuento: '',
+        precio: '',
+        stock: '',
+        cant_personas: '',
+        oferta: '',
+        estado: '',
+        entrada: '',
+        sopa: '',
+        segundo: '',
+        postre: '',
+        refresco: '',
+        especificacion: '',
+        foto: '',
+        categoria: ''
+      })
+    };
+  },
+  methods: {
+    getFoto: function getFoto(ufoto) {
+      var foto = "img/producto/" + ufoto;
+      return foto;
+    },
+    loadProductos: function loadProductos() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var resul, cat, tor, com, almu, va;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get('api/productos');
+
+              case 2:
+                resul = _context.sent;
+                //console.log(resul);
+                _this.productos = resul.data.data; //console.log(this.users);
+
+                _context.next = 6;
+                return axios.get('api/categorias');
+
+              case 6:
+                cat = _context.sent;
+                _this.categorias = cat.data.data;
+                _context.next = 10;
+                return axios.get('api/tortas');
+
+              case 10:
+                tor = _context.sent;
+                _this.tortas = tor.data.data;
+                _context.next = 14;
+                return axios.get('api/comidas');
+
+              case 14:
+                com = _context.sent;
+                _this.comidas = com.data.data;
+                _context.next = 18;
+                return axios.get('api/almuerzo');
+
+              case 18:
+                almu = _context.sent;
+                _this.almuerzo = almu.data.data;
+                _context.next = 22;
+                return axios.get('api/varios');
+
+              case 22:
+                va = _context.sent;
+                _this.varios = va.data.data;
+
+              case 24:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  },
+  created: function created() {
+    var _this2 = this;
+
+    this.loadProductos();
+    Fire.$on('AfterCreate', function () {
+      _this2.loadProductos();
+    });
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
   }
@@ -2791,6 +2800,9 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
 //
 //
 //
@@ -65970,657 +65982,139 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "main main-raised" }, [
-      _c("div", { staticClass: "profile-content" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-xs-6 col-xs-offset-3" }, [
-              _c("div", { staticClass: "profile" }, [
-                _c("div", { staticClass: "avatar" }, [
-                  _c("img", {
-                    staticClass: "img-responsive",
-                    attrs: {
-                      src: "/img/secondary/menu.svg",
-                      alt: "Circle Image"
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "name" }, [
-                  _c("h3", { staticClass: "title" }, [
-                    _vm._v("CATÁLOGO - MENÚ")
-                  ])
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-6 col-md-offset-3" }, [
+  return _c("div", { staticClass: "main main-raised" }, [
+    _c("div", { staticClass: "profile-content" }, [
+      _c("div", { staticClass: "container" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "tab-content" }, [
+          _c(
+            "div",
+            { staticClass: "tab-pane active", attrs: { id: "tortas" } },
+            [
               _c(
                 "div",
-                {
-                  staticClass: "profile-tabs",
-                  staticStyle: { "margin-top": "2px" }
-                },
-                [
-                  _c("div", { staticClass: "nav-align-center" }, [
-                    _c(
-                      "ul",
-                      {
-                        staticClass:
-                          "nav nav-pills nav-pills-rose nav-pills-icons",
-                        attrs: { role: "tablist" }
-                      },
-                      [
-                        _c("li", { staticClass: "active" }, [
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "#tortas",
-                                role: "tab",
-                                "data-toggle": "tab"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                staticClass: "material-icons img-responsive",
-                                attrs: { src: "/img/secondary/torta.svg" }
-                              }),
-                              _vm._v(
-                                "\n                                        TORTAS\n                                    "
-                              )
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", [
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "#comidas",
-                                role: "tab",
-                                "data-toggle": "tab"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                staticClass: "material-icons img-responsive",
-                                attrs: { src: "/img/secondary/comida2.svg" }
-                              }),
-                              _vm._v(
-                                "\n                                        COMIDAS\n                                    "
-                              )
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", [
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "#varios",
-                                role: "tab",
-                                "data-toggle": "tab"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                staticClass: "material-icons img-responsive",
-                                attrs: { src: "/img/secondary/store.svg" }
-                              }),
-                              _vm._v(
-                                "\n                                        VARIOS\n                                    "
-                              )
-                            ]
-                          )
-                        ])
-                      ]
-                    )
+                { staticClass: "row" },
+                _vm._l(_vm.tortas, function(torta, index) {
+                  return _c("div", { key: torta.id }, [
+                    _c("div", { staticClass: "col-md-3" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "card card-blog  shadow",
+                          staticStyle: { "background-color": "#f2f2f2" }
+                        },
+                        [
+                          _c("div", { staticClass: "card-image" }, [
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: torta.descuento,
+                                    expression: "torta.descuento"
+                                  }
+                                ],
+                                staticClass: "ribbon ribbon-top-right "
+                              },
+                              [
+                                _c("span", [
+                                  _c("strong", [
+                                    _vm._v(
+                                      " " + _vm._s(torta.descuento) + " % DTO. "
+                                    )
+                                  ])
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              { attrs: { href: "#pablo" } },
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass:
+                                      "cardprecio label label-primary"
+                                  },
+                                  [
+                                    _vm._v(" Bs. "),
+                                    _c("strong", [
+                                      _vm._v(_vm._s(torta.precio) + " ")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(torta.fotos, function(foto) {
+                                  return _c("span", { key: foto.id }, [
+                                    _c("img", {
+                                      staticClass: "imgcard",
+                                      staticStyle: { height: "100%" },
+                                      attrs: {
+                                        src: _vm.getFoto(foto.imagen),
+                                        alt: "Producto foto"
+                                      }
+                                    })
+                                  ])
+                                })
+                              ],
+                              2
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "card-content" }, [
+                            _c(
+                              "h4",
+                              { staticClass: "card-title text-center" },
+                              [
+                                _c("a", { attrs: { href: "#pablo" } }, [
+                                  _vm._v(" " + _vm._s(torta.nombre) + " ")
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              {
+                                staticClass: "card-description text-justify",
+                                staticStyle: { "margin-bottom": "0px" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(torta.descripcion) +
+                                    "\n                                    "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._m(2, true)
+                          ])
+                        ]
+                      )
+                    ])
                   ])
-                ]
+                }),
+                0
               )
-            ])
-          ]),
+            ]
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "tab-content" }, [
-            _c(
-              "div",
-              { staticClass: "tab-pane connections", attrs: { id: "tortas" } },
-              [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-3" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "card card-blog  shadow",
-                        staticStyle: { "background-color": "#f2f2f2" }
-                      },
-                      [
-                        _c("div", { staticClass: "card-image" }, [
-                          _c(
-                            "div",
-                            { staticClass: "ribbon ribbon-top-right " },
-                            [_c("span", [_c("strong", [_vm._v(" 30% DTO. ")])])]
-                          ),
-                          _vm._v(" "),
-                          _c("a", { attrs: { href: "#pablo" } }, [
-                            _c(
-                              "label",
-                              { staticClass: "cardprecio label label-primary" },
-                              [_vm._v(" Bs. "), _c("strong", [_vm._v("20.00")])]
-                            ),
-                            _vm._v(" "),
-                            _c("img", {
-                              staticClass: "imgcard",
-                              attrs: { src: "/img/secondary/a461x407.png" }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "card-content" }, [
-                          _c("h4", { staticClass: "card-title text-center" }, [
-                            _c("a", { attrs: { href: "#pablo" } }, [
-                              _vm._v("5 Common Startup")
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            {
-                              staticClass: "card-description text-justify",
-                              staticStyle: { "margin-bottom": "0px" }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                        Don't be scared of the truth because we need to restart   Owens’ bed design but the back is...PRUEBA\n                                    "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "footer" }, [
-                            _c("div", { staticClass: "author" }, [
-                              _c("div", { staticClass: "btn-group" }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-round btn-rose btn-xs",
-                                    staticStyle: {
-                                      padding: "4px 8px !important"
-                                    }
-                                  },
-                                  [
-                                    _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("remove")
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-round btn-danger btn-xs",
-                                    staticStyle: {
-                                      padding: "4px 8px !important"
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "span",
-                                      { staticStyle: { "line-height": "1.7" } },
-                                      [_c("strong", [_vm._v(" 3 ")])]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-round btn-rose btn-xs",
-                                    staticStyle: {
-                                      padding: "4px 8px !important"
-                                    }
-                                  },
-                                  [
-                                    _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("add")
-                                    ])
-                                  ]
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "stats" }, [
-                              _c("div", { staticClass: "btn-group" }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-round btn-rose btn-xs"
-                                  },
-                                  [
-                                    _c("strong", [_vm._v(" Añadir ")]),
-                                    _vm._v(" "),
-                                    _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("add_shopping_cart")
-                                    ])
-                                  ]
-                                )
-                              ])
-                            ])
-                          ])
-                        ])
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-3" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "card card-blog shadow",
-                        staticStyle: { "background-color": "#f2f2f2" }
-                      },
-                      [
-                        _c("div", { staticClass: "card-image" }, [
-                          _c(
-                            "div",
-                            { staticClass: "ribbon ribbon-top-right " },
-                            [_c("span", [_c("strong", [_vm._v(" 30% DTO. ")])])]
-                          ),
-                          _vm._v(" "),
-                          _c("a", { attrs: { href: "#pablo" } }, [
-                            _c(
-                              "label",
-                              { staticClass: "cardprecio label label-primary" },
-                              [_vm._v(" Bs. "), _c("strong", [_vm._v("50.00")])]
-                            ),
-                            _vm._v(" "),
-                            _c("img", {
-                              staticClass: "imgcard",
-                              attrs: { src: "/img/secondary/a671X671.png" }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "card-content" }, [
-                          _c("h4", { staticClass: "card-title text-center" }, [
-                            _c("a", { attrs: { href: "#pablo" } }, [
-                              _vm._v("5 Common dos Startup")
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            {
-                              staticClass: "card-description text-justify",
-                              staticStyle: { "margin-bottom": "0px" }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                        Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...\n                                    "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "footer" }, [
-                            _c("div", { staticClass: "author" }, [
-                              _c("div", { staticClass: "btn-group" }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-round btn-rose btn-xs",
-                                    staticStyle: {
-                                      padding: "4px 8px !important"
-                                    }
-                                  },
-                                  [
-                                    _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("remove")
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-round btn-danger btn-xs",
-                                    staticStyle: {
-                                      padding: "4px 8px !important"
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "span",
-                                      { staticStyle: { "line-height": "1.7" } },
-                                      [_c("strong", [_vm._v(" 3 ")])]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-round btn-rose btn-xs",
-                                    staticStyle: {
-                                      padding: "4px 8px !important"
-                                    }
-                                  },
-                                  [
-                                    _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("add")
-                                    ])
-                                  ]
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "stats" }, [
-                              _c("div", { staticClass: "btn-group" }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-round btn-rose btn-xs"
-                                  },
-                                  [
-                                    _c("strong", [_vm._v(" Añadir ")]),
-                                    _vm._v(" "),
-                                    _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("add_shopping_cart")
-                                    ])
-                                  ]
-                                )
-                              ])
-                            ])
-                          ])
-                        ])
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-3" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "card card-blog  shadow",
-                        staticStyle: { "background-color": "#f2f2f2" }
-                      },
-                      [
-                        _c("div", { staticClass: "card-image" }, [
-                          _c(
-                            "div",
-                            { staticClass: "ribbon ribbon-top-right " },
-                            [_c("span", [_c("strong", [_vm._v(" 30% DTO. ")])])]
-                          ),
-                          _vm._v(" "),
-                          _c("a", { attrs: { href: "#pablo" } }, [
-                            _c(
-                              "label",
-                              { staticClass: "cardprecio label label-primary" },
-                              [_vm._v(" Bs. "), _c("strong", [_vm._v("20.00")])]
-                            ),
-                            _vm._v(" "),
-                            _c("img", {
-                              staticClass: "imgcard",
-                              attrs: { src: "/img/secondary/a461x407.png" }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "card-content" }, [
-                          _c("h4", { staticClass: "card-title text-center" }, [
-                            _c("a", { attrs: { href: "#pablo" } }, [
-                              _vm._v("5 Common Startup")
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            {
-                              staticClass: "card-description text-justify",
-                              staticStyle: { "margin-bottom": "0px" }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                        Don't be scared of the truth because we need to restart   Owens’ bed design but the back is...PRUEBA\n                                    "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "footer" }, [
-                            _c("div", { staticClass: "author" }, [
-                              _c("div", { staticClass: "btn-group" }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-round btn-rose btn-xs",
-                                    staticStyle: {
-                                      padding: "4px 8px !important"
-                                    }
-                                  },
-                                  [
-                                    _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("remove")
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-round btn-danger btn-xs",
-                                    staticStyle: {
-                                      padding: "4px 8px !important"
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "span",
-                                      { staticStyle: { "line-height": "1.7" } },
-                                      [_c("strong", [_vm._v(" 3 ")])]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-round btn-rose btn-xs",
-                                    staticStyle: {
-                                      padding: "4px 8px !important"
-                                    }
-                                  },
-                                  [
-                                    _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("add")
-                                    ])
-                                  ]
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "stats" }, [
-                              _c("div", { staticClass: "btn-group" }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-round btn-rose btn-xs"
-                                  },
-                                  [
-                                    _c("strong", [_vm._v(" Añadir ")]),
-                                    _vm._v(" "),
-                                    _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("add_shopping_cart")
-                                    ])
-                                  ]
-                                )
-                              ])
-                            ])
-                          ])
-                        ])
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-3" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "card card-blog shadow",
-                        staticStyle: { "background-color": "#f2f2f2" }
-                      },
-                      [
-                        _c("div", { staticClass: "card-image" }, [
-                          _c(
-                            "div",
-                            { staticClass: "ribbon ribbon-top-right " },
-                            [_c("span", [_c("strong", [_vm._v(" 30% DTO. ")])])]
-                          ),
-                          _vm._v(" "),
-                          _c("a", { attrs: { href: "#pablo" } }, [
-                            _c(
-                              "label",
-                              { staticClass: "cardprecio label label-primary" },
-                              [_vm._v(" Bs. "), _c("strong", [_vm._v("50.00")])]
-                            ),
-                            _vm._v(" "),
-                            _c("img", {
-                              staticClass: "imgcard",
-                              attrs: { src: "/img/secondary/a671X671.png" }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "card-content" }, [
-                          _c("h4", { staticClass: "card-title text-center" }, [
-                            _c("a", { attrs: { href: "#pablo" } }, [
-                              _vm._v("5 Common dos Startup")
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            {
-                              staticClass: "card-description text-justify",
-                              staticStyle: { "margin-bottom": "0px" }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                        Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...\n                                    "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "footer" }, [
-                            _c("div", { staticClass: "author" }, [
-                              _c("div", { staticClass: "btn-group" }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-round btn-rose btn-xs",
-                                    staticStyle: {
-                                      padding: "4px 8px !important"
-                                    }
-                                  },
-                                  [
-                                    _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("remove")
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-round btn-danger btn-xs",
-                                    staticStyle: {
-                                      padding: "4px 8px !important"
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "span",
-                                      { staticStyle: { "line-height": "1.7" } },
-                                      [_c("strong", [_vm._v(" 3 ")])]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-round btn-rose btn-xs",
-                                    staticStyle: {
-                                      padding: "4px 8px !important"
-                                    }
-                                  },
-                                  [
-                                    _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("add")
-                                    ])
-                                  ]
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "stats" }, [
-                              _c("div", { staticClass: "btn-group" }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-round btn-rose btn-xs"
-                                  },
-                                  [
-                                    _c("strong", [_vm._v(" Añadir ")]),
-                                    _vm._v(" "),
-                                    _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("add_shopping_cart")
-                                    ])
-                                  ]
-                                )
-                              ])
-                            ])
-                          ])
-                        ])
-                      ]
-                    )
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "tab-pane active", attrs: { id: "comidas" } },
-              [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-9" }, [
-                    _c("h4", { staticClass: "title" }, [
-                      _vm._v("Platos extras")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row collections" }, [
+          _c("div", { staticClass: "tab-pane", attrs: { id: "comidas" } }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-9" }, [
+                _c("h4", { staticClass: "title" }, [_vm._v("Platos extras")]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "row collections" },
+                  _vm._l(_vm.comidas, function(comida, index) {
+                    return _c("div", { key: comida.id }, [
                       _c("div", { staticClass: "col-md-4" }, [
                         _c(
                           "div",
@@ -66632,10 +66126,26 @@ var staticRenderFns = [
                             _c("div", { staticClass: "card-image" }, [
                               _c(
                                 "div",
-                                { staticClass: "ribbon ribbon-top-right " },
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: comida.descuento,
+                                      expression: "comida.descuento"
+                                    }
+                                  ],
+                                  staticClass: "ribbon ribbon-top-right "
+                                },
                                 [
                                   _c("span", [
-                                    _c("strong", [_vm._v(" 30% DTO. ")])
+                                    _c("strong", [
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(comida.descuento) +
+                                          "% DTO. "
+                                      )
+                                    ])
                                   ])
                                 ]
                               ),
@@ -66649,7 +66159,9 @@ var staticRenderFns = [
                                   },
                                   [
                                     _vm._v(" Bs. "),
-                                    _c("strong", [_vm._v("50.00")])
+                                    _c("strong", [
+                                      _vm._v(_vm._s(comida.precio))
+                                    ])
                                   ]
                                 ),
                                 _vm._v(" "),
@@ -66666,7 +66178,7 @@ var staticRenderFns = [
                                 { staticClass: "card-title text-center" },
                                 [
                                   _c("a", { attrs: { href: "#pablo" } }, [
-                                    _vm._v("5 Common dos Startup")
+                                    _vm._v(_vm._s(comida.nombre))
                                   ])
                                 ]
                               ),
@@ -66679,439 +66191,137 @@ var staticRenderFns = [
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...\n                                            "
+                                    "\n                                                " +
+                                      _vm._s(comida.descripcion) +
+                                      "\n                                            "
                                   )
                                 ]
                               ),
                               _vm._v(" "),
-                              _c("div", { staticClass: "footer" }, [
-                                _c("div", { staticClass: "author" }, [
-                                  _c("div", { staticClass: "btn-group" }, [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-round btn-rose btn-xs",
-                                        staticStyle: {
-                                          padding: "4px 8px !important"
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("remove")]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-round btn-danger btn-xs",
-                                        staticStyle: {
-                                          padding: "4px 8px !important"
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "span",
-                                          {
-                                            staticStyle: {
-                                              "line-height": "1.7"
-                                            }
-                                          },
-                                          [_c("strong", [_vm._v(" 3 ")])]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-round btn-rose btn-xs",
-                                        staticStyle: {
-                                          padding: "4px 8px !important"
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("add")]
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "stats" }, [
-                                  _c("div", { staticClass: "btn-group" }, [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-round btn-rose btn-xs"
-                                      },
-                                      [
-                                        _c("strong", [_vm._v(" Añadir ")]),
-                                        _vm._v(" "),
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("add_shopping_cart")]
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ])
-                              ])
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-4" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "card card-blog  shadow",
-                            staticStyle: { "background-color": "#f2f2f2" }
-                          },
-                          [
-                            _c("div", { staticClass: "card-image" }, [
-                              _c(
-                                "div",
-                                { staticClass: "ribbon ribbon-top-right " },
-                                [
-                                  _c("span", [
-                                    _c("strong", [_vm._v(" 30% DTO. ")])
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("a", { attrs: { href: "#pablo" } }, [
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass:
-                                      "cardprecio label label-primary"
-                                  },
-                                  [
-                                    _vm._v(" Bs. "),
-                                    _c("strong", [_vm._v("20.00")])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("img", {
-                                  staticClass: "imgcard",
-                                  attrs: { src: "/img/secondary/a461x407.png" }
-                                })
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "card-content" }, [
-                              _c(
-                                "h4",
-                                { staticClass: "card-title text-center" },
-                                [
-                                  _c("a", { attrs: { href: "#pablo" } }, [
-                                    _vm._v("5 Common Startup")
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "p",
-                                {
-                                  staticClass: "card-description text-justify",
-                                  staticStyle: { "margin-bottom": "0px" }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                                Don't be scared of the truth because we need to restart   Owens’ bed design but the back is...PRUEBA\n                                            "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "footer" }, [
-                                _c("div", { staticClass: "author" }, [
-                                  _c("div", { staticClass: "btn-group" }, [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-round btn-rose btn-xs",
-                                        staticStyle: {
-                                          padding: "4px 8px !important"
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("remove")]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-round btn-danger btn-xs",
-                                        staticStyle: {
-                                          padding: "4px 8px !important"
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "span",
-                                          {
-                                            staticStyle: {
-                                              "line-height": "1.7"
-                                            }
-                                          },
-                                          [_c("strong", [_vm._v(" 3 ")])]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-round btn-rose btn-xs",
-                                        staticStyle: {
-                                          padding: "4px 8px !important"
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("add")]
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "stats" }, [
-                                  _c("div", { staticClass: "btn-group" }, [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-round btn-rose btn-xs"
-                                      },
-                                      [
-                                        _c("strong", [_vm._v(" Añadir ")]),
-                                        _vm._v(" "),
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("add_shopping_cart")]
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ])
-                              ])
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-4" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "card card-blog shadow",
-                            staticStyle: { "background-color": "#f2f2f2" }
-                          },
-                          [
-                            _c("div", { staticClass: "card-image" }, [
-                              _c(
-                                "div",
-                                { staticClass: "ribbon ribbon-top-right " },
-                                [
-                                  _c("span", [
-                                    _c("strong", [_vm._v(" 30% DTO. ")])
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("a", { attrs: { href: "#pablo" } }, [
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass:
-                                      "cardprecio label label-primary"
-                                  },
-                                  [
-                                    _vm._v(" Bs. "),
-                                    _c("strong", [_vm._v("50.00")])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("img", {
-                                  staticClass: "imgcard",
-                                  attrs: { src: "/img/secondary/a671X671.png" }
-                                })
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "card-content" }, [
-                              _c(
-                                "h4",
-                                { staticClass: "card-title text-center" },
-                                [
-                                  _c("a", { attrs: { href: "#pablo" } }, [
-                                    _vm._v("5 Common dos Startup")
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "p",
-                                {
-                                  staticClass: "card-description text-justify",
-                                  staticStyle: { "margin-bottom": "0px" }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                                Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...\n                                            "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "footer" }, [
-                                _c("div", { staticClass: "author" }, [
-                                  _c("div", { staticClass: "btn-group" }, [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-round btn-rose btn-xs",
-                                        staticStyle: {
-                                          padding: "4px 8px !important"
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("remove")]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-round btn-danger btn-xs",
-                                        staticStyle: {
-                                          padding: "4px 8px !important"
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "span",
-                                          {
-                                            staticStyle: {
-                                              "line-height": "1.7"
-                                            }
-                                          },
-                                          [_c("strong", [_vm._v(" 3 ")])]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-round btn-rose btn-xs",
-                                        staticStyle: {
-                                          padding: "4px 8px !important"
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("add")]
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "stats" }, [
-                                  _c("div", { staticClass: "btn-group" }, [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-round btn-rose btn-xs"
-                                      },
-                                      [
-                                        _c("strong", [_vm._v(" Añadir ")]),
-                                        _vm._v(" "),
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("add_shopping_cart")]
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ])
-                              ])
+                              _vm._m(3, true)
                             ])
                           ]
                         )
                       ])
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-3 " }, [
-                    _c("h4", { staticClass: "title text-center" }, [
-                      _vm._v("Almuerzo del día")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card almuerzo shadow" }, [
-                      _c("div", { staticClass: "card-body pb-c" }, [
+                  }),
+                  0
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3 " }, [
+                _c("h4", { staticClass: "title text-center" }, [
+                  _vm._v("Almuerzo del día")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "card almuerzo shadow" },
+                  _vm._l(_vm.almuerzo, function(almu, index) {
+                    return _c(
+                      "div",
+                      { key: almu.id, staticClass: "card-body pb-c" },
+                      [
+                        _c("h4", { staticClass: "title text-center" }, [
+                          _vm._v(_vm._s(almu.nombre))
+                        ]),
+                        _vm._v(" "),
                         _c("ul", { staticClass: "list-unstyled" }, [
-                          _c("li", [
-                            _c("b", [_vm._v("Entrada:")]),
-                            _vm._v(" Products")
-                          ]),
+                          _c(
+                            "li",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: almu.prodetalle.entrada,
+                                  expression: "almu.prodetalle.entrada"
+                                }
+                              ]
+                            },
+                            [
+                              _c("b", [_vm._v("Entrada:")]),
+                              _vm._v(" " + _vm._s(almu.prodetalle.entrada))
+                            ]
+                          ),
                           _vm._v(" "),
                           _c("hr", { staticClass: "linea" }),
                           _vm._v(" "),
-                          _c("li", [
-                            _c("b", [_vm._v("Sopa:")]),
-                            _vm._v(" Collections")
-                          ]),
+                          _c(
+                            "li",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: almu.prodetalle.sopa,
+                                  expression: "almu.prodetalle.sopa"
+                                }
+                              ]
+                            },
+                            [
+                              _c("b", [_vm._v("Sopa:")]),
+                              _vm._v(" " + _vm._s(almu.prodetalle.sopa))
+                            ]
+                          ),
                           _vm._v(" "),
                           _c("hr", { staticClass: "linea" }),
                           _vm._v(" "),
-                          _c("li", [
-                            _c("b", [_vm._v("Segundo:")]),
-                            _vm._v(" Influencers")
-                          ]),
+                          _c(
+                            "li",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: almu.prodetalle.segundo,
+                                  expression: "almu.prodetalle.segundo"
+                                }
+                              ]
+                            },
+                            [
+                              _c("b", [_vm._v("Segundo:")]),
+                              _vm._v(" " + _vm._s(almu.prodetalle.segundo))
+                            ]
+                          ),
                           _vm._v(" "),
                           _c("hr", { staticClass: "linea" }),
                           _vm._v(" "),
-                          _c("li", [
-                            _c("b", [_vm._v("Postre:")]),
-                            _vm._v(" Likes")
-                          ])
+                          _c(
+                            "li",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: almu.prodetalle.postre,
+                                  expression: "almu.prodetalle.postre"
+                                }
+                              ]
+                            },
+                            [
+                              _c("b", [_vm._v("Postre:")]),
+                              _vm._v(" " + _vm._s(almu.prodetalle.postre))
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "li",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: almu.prodetalle.refresco,
+                                  expression: "almu.prodetalle.refresco"
+                                }
+                              ]
+                            },
+                            [
+                              _c("b", [_vm._v("Refresco:")]),
+                              _vm._v(" " + _vm._s(almu.prodetalle.refresco))
+                            ]
+                          )
                         ]),
                         _vm._v(" "),
                         _c("h4", { staticClass: "title" }, [
@@ -67119,340 +66329,502 @@ var staticRenderFns = [
                         ]),
                         _vm._v(" "),
                         _c("p", { staticClass: "description text-justify" }, [
+                          _vm._v(_vm._s(almu.descripcion))
+                        ]),
+                        _vm._v(" "),
+                        _c("h6", { staticClass: "title text-center" }, [
                           _vm._v(
-                            "French luxury footwear and fashion. The footwear has incorporated shiny, red-lacquered soles that have become his signature."
+                            " " + _vm._s(almu.create_dates.updated_at_human)
                           )
                         ]),
                         _vm._v(" "),
-                        _c("h4", { staticClass: "title" }, [_vm._v("Focus")]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "text-center" }, [
-                          _c(
-                            "button",
-                            { staticClass: "btn btn-round btn-rose " },
-                            [
-                              _c("strong", [_vm._v(" Añadir")]),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "material-icons" }, [
-                                _vm._v("add_shopping_cart")
-                              ])
-                            ]
-                          )
-                        ])
-                      ])
+                        _vm._m(4, true)
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "tab-pane", attrs: { id: "varios" } }, [
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-md-6 col-md-offset-3" },
+                _vm._l(_vm.varios, function(vario, index) {
+                  return _c("div", { key: vario.id }, [
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "card card-blog shadow",
+                          staticStyle: { "background-color": "#f2f2f2" }
+                        },
+                        [
+                          _c("div", { staticClass: "card-image" }, [
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: vario.descuento,
+                                    expression: "vario.descuento"
+                                  }
+                                ],
+                                staticClass: "ribbon ribbon-top-right "
+                              },
+                              [
+                                _c("span", [
+                                  _c("strong", [
+                                    _vm._v(
+                                      " " + _vm._s(vario.descuento) + "% DTO. "
+                                    )
+                                  ])
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              { attrs: { href: "#pablo" } },
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass:
+                                      "cardprecio label label-primary"
+                                  },
+                                  [
+                                    _vm._v(" Bs. "),
+                                    _c("strong", [_vm._v(_vm._s(vario.precio))])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(vario.fotos, function(foto) {
+                                  return _c("span", { key: foto.id }, [
+                                    _c("img", {
+                                      staticClass: "imgcard",
+                                      staticStyle: { height: "100%" },
+                                      attrs: {
+                                        src: _vm.getFoto(foto.imagen),
+                                        alt: "Producto foto"
+                                      }
+                                    })
+                                  ])
+                                })
+                              ],
+                              2
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "card-content" }, [
+                            _c(
+                              "h4",
+                              { staticClass: "card-title text-center" },
+                              [
+                                _c("a", { attrs: { href: "#pablo" } }, [
+                                  _vm._v(_vm._s(vario.nombre))
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              {
+                                staticClass: "card-description text-justify",
+                                staticStyle: { "margin-bottom": "0px" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                            " +
+                                    _vm._s(vario.descripcion) +
+                                    "\n                                        "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._m(5, true)
+                          ])
+                        ]
+                      )
                     ])
                   ])
-                ])
-              ]
-            ),
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xs-6 col-xs-offset-3" }, [
+        _c("div", { staticClass: "profile" }, [
+          _c("div", { staticClass: "avatar" }, [
+            _c("img", {
+              staticClass: "img-responsive",
+              attrs: { src: "/img/secondary/menu.svg", alt: "Circle Image" }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "name" }, [
+            _c("h3", { staticClass: "title" }, [_vm._v("CATÁLOGO - MENÚ")])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-6 col-md-offset-3" }, [
+        _c(
+          "div",
+          { staticClass: "profile-tabs", staticStyle: { "margin-top": "2px" } },
+          [
+            _c("div", { staticClass: "nav-align-center" }, [
+              _c(
+                "ul",
+                {
+                  staticClass: "nav nav-pills nav-pills-rose nav-pills-icons",
+                  attrs: { role: "tablist" }
+                },
+                [
+                  _c("li", { staticClass: "active" }, [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "#tortas",
+                          role: "tab",
+                          "data-toggle": "tab"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "material-icons img-responsive",
+                          attrs: { src: "/img/secondary/torta.svg" }
+                        }),
+                        _vm._v(
+                          "\n                                        TORTAS\n                                    "
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "#comidas",
+                          role: "tab",
+                          "data-toggle": "tab"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "material-icons img-responsive",
+                          attrs: { src: "/img/secondary/comida2.svg" }
+                        }),
+                        _vm._v(
+                          "\n                                        COMIDAS\n                                    "
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "#varios",
+                          role: "tab",
+                          "data-toggle": "tab"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "material-icons img-responsive",
+                          attrs: { src: "/img/secondary/store.svg" }
+                        }),
+                        _vm._v(
+                          "\n                                        VARIOS\n                                    "
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "footer" }, [
+      _c("div", { staticClass: "author" }, [
+        _c("div", { staticClass: "btn-group " }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-round btn-rose btn-xs",
+              staticStyle: { padding: "4px 8px !important" },
+              attrs: {
+                type: "button",
+                onclick:
+                  "this.parentNode.querySelector('input[type=number]').stepDown()"
+              }
+            },
+            [_c("i", { staticClass: "material-icons" }, [_vm._v("remove")])]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "btncant", staticStyle: { "line-height": "1.8" } },
+            [
+              _c("input", {
+                staticClass: "letracard",
+                attrs: {
+                  min: "1",
+                  name: "cantidad",
+                  value: "1",
+                  type: "number"
+                }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-round btn-rose btn-xs",
+              staticStyle: { padding: "4px 8px !important" },
+              attrs: {
+                type: "button",
+                onclick:
+                  "this.parentNode.querySelector('input[type=number]').stepUp()"
+              }
+            },
+            [_c("i", { staticClass: "material-icons" }, [_vm._v("add")])]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "stats" }, [
+        _c("div", { staticClass: "btn-group" }, [
+          _c("button", { staticClass: "btn btn-round btn-rose btn-xs" }, [
+            _c("strong", [_vm._v(" Añadir ")]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "tab-pane  connections", attrs: { id: "varios" } },
-              [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-9 col-md-offset-3" }, [
-                    _c("div", { staticClass: "col-md-4" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "card card-blog shadow",
-                          staticStyle: { "background-color": "#f2f2f2" }
-                        },
-                        [
-                          _c("div", { staticClass: "card-image" }, [
-                            _c(
-                              "div",
-                              { staticClass: "ribbon ribbon-top-right " },
-                              [
-                                _c("span", [
-                                  _c("strong", [_vm._v(" 30% DTO. ")])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("a", { attrs: { href: "#pablo" } }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "cardprecio label label-primary"
-                                },
-                                [
-                                  _vm._v(" Bs. "),
-                                  _c("strong", [_vm._v("50.00")])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("img", {
-                                staticClass: "imgcard",
-                                attrs: { src: "/img/secondary/a671X671.png" }
-                              })
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "card-content" }, [
-                            _c(
-                              "h4",
-                              { staticClass: "card-title text-center" },
-                              [
-                                _c("a", { attrs: { href: "#pablo" } }, [
-                                  _vm._v("5 Common dos Startup")
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "p",
-                              {
-                                staticClass: "card-description text-justify",
-                                staticStyle: { "margin-bottom": "0px" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...\n                                        "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "footer" }, [
-                              _c("div", { staticClass: "author" }, [
-                                _c("div", { staticClass: "btn-group" }, [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-round btn-rose btn-xs",
-                                      staticStyle: {
-                                        padding: "4px 8px !important"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "i",
-                                        { staticClass: "material-icons" },
-                                        [_vm._v("remove")]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-round btn-danger btn-xs",
-                                      staticStyle: {
-                                        padding: "4px 8px !important"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "span",
-                                        {
-                                          staticStyle: { "line-height": "1.7" }
-                                        },
-                                        [_c("strong", [_vm._v(" 3 ")])]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-round btn-rose btn-xs",
-                                      staticStyle: {
-                                        padding: "4px 8px !important"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "i",
-                                        { staticClass: "material-icons" },
-                                        [_vm._v("add")]
-                                      )
-                                    ]
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "stats" }, [
-                                _c("div", { staticClass: "btn-group" }, [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-round btn-rose btn-xs"
-                                    },
-                                    [
-                                      _c("strong", [_vm._v(" Añadir ")]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "i",
-                                        { staticClass: "material-icons" },
-                                        [_vm._v("add_shopping_cart")]
-                                      )
-                                    ]
-                                  )
-                                ])
-                              ])
-                            ])
-                          ])
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-4" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "card card-blog shadow",
-                          staticStyle: { "background-color": "#f2f2f2" }
-                        },
-                        [
-                          _c("div", { staticClass: "card-image" }, [
-                            _c(
-                              "div",
-                              { staticClass: "ribbon ribbon-top-right " },
-                              [
-                                _c("span", [
-                                  _c("strong", [_vm._v(" 30% DTO. ")])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("a", { attrs: { href: "#pablo" } }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "cardprecio label label-primary"
-                                },
-                                [
-                                  _vm._v(" Bs. "),
-                                  _c("strong", [_vm._v("50.00")])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("img", {
-                                staticClass: "imgcard",
-                                attrs: { src: "/img/secondary/a671X671.png" }
-                              })
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "card-content" }, [
-                            _c(
-                              "h4",
-                              { staticClass: "card-title text-center" },
-                              [
-                                _c("a", { attrs: { href: "#pablo" } }, [
-                                  _vm._v("5 Common dos Startup")
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "p",
-                              {
-                                staticClass: "card-description text-justify",
-                                staticStyle: { "margin-bottom": "0px" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Don't be scared of the truth because we need to restart   Owens’ bed design but the back issss...\n                                        "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "footer" }, [
-                              _c("div", { staticClass: "author" }, [
-                                _c("div", { staticClass: "btn-group" }, [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-round btn-rose btn-xs",
-                                      staticStyle: {
-                                        padding: "4px 8px !important"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "i",
-                                        { staticClass: "material-icons" },
-                                        [_vm._v("remove")]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-round btn-danger btn-xs",
-                                      staticStyle: {
-                                        padding: "4px 8px !important"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "span",
-                                        {
-                                          staticStyle: { "line-height": "1.7" }
-                                        },
-                                        [_c("strong", [_vm._v(" 3 ")])]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-round btn-rose btn-xs",
-                                      staticStyle: {
-                                        padding: "4px 8px !important"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "i",
-                                        { staticClass: "material-icons" },
-                                        [_vm._v("add")]
-                                      )
-                                    ]
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "stats" }, [
-                                _c("div", { staticClass: "btn-group" }, [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-round btn-rose btn-xs"
-                                    },
-                                    [
-                                      _c("strong", [_vm._v(" Añadir ")]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "i",
-                                        { staticClass: "material-icons" },
-                                        [_vm._v("add_shopping_cart")]
-                                      )
-                                    ]
-                                  )
-                                ])
-                              ])
-                            ])
-                          ])
-                        ]
-                      )
-                    ])
-                  ])
-                ])
-              ]
-            )
+            _c("i", { staticClass: "material-icons" }, [
+              _vm._v("add_shopping_cart")
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "footer" }, [
+      _c("div", { staticClass: "author" }, [
+        _c("div", { staticClass: "btn-group " }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-round btn-rose btn-xs",
+              staticStyle: { padding: "4px 8px !important" },
+              attrs: {
+                type: "button",
+                onclick:
+                  "this.parentNode.querySelector('input[type=number]').stepDown()"
+              }
+            },
+            [_c("i", { staticClass: "material-icons" }, [_vm._v("remove")])]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "btncant", staticStyle: { "line-height": "1.8" } },
+            [
+              _c("input", {
+                staticClass: "letracard",
+                attrs: {
+                  min: "1",
+                  name: "cantidad",
+                  value: "1",
+                  type: "number"
+                }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-round btn-rose btn-xs",
+              staticStyle: { padding: "4px 8px !important" },
+              attrs: {
+                type: "button",
+                onclick:
+                  "this.parentNode.querySelector('input[type=number]').stepUp()"
+              }
+            },
+            [_c("i", { staticClass: "material-icons" }, [_vm._v("add")])]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "stats" }, [
+        _c("div", { staticClass: "btn-group" }, [
+          _c("button", { staticClass: "btn btn-round btn-rose btn-xs" }, [
+            _c("strong", [_vm._v(" Añadir ")]),
+            _vm._v(" "),
+            _c("i", { staticClass: "material-icons" }, [
+              _vm._v("add_shopping_cart")
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "footer text-center" }, [
+      _c("div", { staticClass: "btn-group" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-round btn-primary btn-xs",
+            staticStyle: { "border-radius": "33px !important" },
+            attrs: {
+              type: "button",
+              onclick:
+                "this.parentNode.querySelector('input[type=number]').stepDown()"
+            }
+          },
+          [_c("i", { staticClass: "material-icons" }, [_vm._v("remove")])]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "btncant", staticStyle: { "line-height": "1.8" } },
+          [
+            _c("input", {
+              staticClass: "letracard",
+              staticStyle: { "background-color": "#9c27b0", color: "white" },
+              attrs: { min: "1", name: "cantidad", value: "1", type: "number" }
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-round btn-primary btn-xs",
+            staticStyle: { "border-radius": "33px" },
+            attrs: {
+              type: "button",
+              onclick:
+                "this.parentNode.querySelector('input[type=number]').stepUp()"
+            }
+          },
+          [_c("i", { staticClass: "material-icons" }, [_vm._v("add")])]
+        )
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-round btn-primary btn-xs" }, [
+        _c("strong", [_vm._v(" Añadir")]),
+        _vm._v(" "),
+        _c("i", { staticClass: "material-icons" }, [
+          _vm._v("add_shopping_cart")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "footer" }, [
+      _c("div", { staticClass: "author" }, [
+        _c("div", { staticClass: "btn-group" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-round btn-rose btn-xs",
+              staticStyle: { padding: "4px 8px !important" },
+              attrs: {
+                type: "button",
+                onclick:
+                  "this.parentNode.querySelector('input[type=number]').stepDown()"
+              }
+            },
+            [_c("i", { staticClass: "material-icons" }, [_vm._v("remove")])]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "btncant", staticStyle: { "line-height": "1.8" } },
+            [
+              _c("input", {
+                staticClass: "letracard",
+                attrs: {
+                  min: "1",
+                  name: "cantidad",
+                  value: "1",
+                  type: "number"
+                }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-round btn-rose btn-xs",
+              staticStyle: { padding: "4px 8px !important" },
+              attrs: {
+                type: "button",
+                onclick:
+                  "this.parentNode.querySelector('input[type=number]').stepUp()"
+              }
+            },
+            [_c("i", { staticClass: "material-icons" }, [_vm._v("add")])]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "stats" }, [
+        _c("div", { staticClass: "btn-group" }, [
+          _c("button", { staticClass: "btn btn-round btn-rose btn-xs" }, [
+            _c("strong", [_vm._v(" Añadir ")]),
+            _vm._v(" "),
+            _c("i", { staticClass: "material-icons" }, [
+              _vm._v("add_shopping_cart")
+            ])
           ])
         ])
       ])
@@ -67898,8 +67270,31 @@ var render = function() {
                                         ]
                                       ),
                                       _vm._v(" "),
-                                      _vm._m(3, true)
-                                    ]
+                                      _vm._m(3, true),
+                                      _vm._v(" "),
+                                      _c(
+                                        "router-link",
+                                        {
+                                          attrs: {
+                                            to: {
+                                              name: "editar",
+                                              params: { id: producto.id }
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "btn btn-info btn-sm mr-2"
+                                            },
+                                            [_vm._v("Editar")]
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    1
                                   )
                                 ])
                               }),
@@ -87322,6 +86717,12 @@ var routes = [{
 }, {
   path: '/productos',
   component: __webpack_require__(/*! ./components/Producto.vue */ "./resources/js/components/Producto.vue")["default"]
+}, {
+  path: '/editarpro/:id',
+  name: 'editar',
+  component: function component() {
+    return __webpack_require__.e(/*! import() | about */ "about").then(__webpack_require__.bind(null, /*! ./components/Editpro.vue */ "./resources/js/components/Editpro.vue"));
+  }
 }, {
   path: '/profile',
   component: __webpack_require__(/*! ./components/Profile.vue */ "./resources/js/components/Profile.vue")["default"]
