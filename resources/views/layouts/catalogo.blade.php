@@ -23,6 +23,8 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="assets/css/material-kit.css?v=1.2.1" rel="stylesheet"/> -->
 
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize" async defer></script>
+    <script src="/js/mapInput.js"></script>
 
     <link href="{{ asset('css/frontend.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -508,141 +510,111 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
                 <h2 class="modal-title card-title text-center" id="myModalLabel">REGISTRATE GRATIS</h2>
                 <p class="description text-center">Los campos de este <span class="text-rose"><b>color</b></span> son obligatorios </p>
+                <p class="description text-center">Mueva el icono <i class="material-icons text-rose">room</i>  en donde esta su casa exactamente. </p>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="media media-post">
                         <div class="row">
                             <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" data-toggle="validator" role="form">
-                            @csrf
-                            <div class="col-md-4 text-center">
-                                <h4><b>Foto de perfil</b></h4>
-                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail img-circle img-raised">
-                                        <img src="assets/img/placeholder.jpg" alt="...">
-                                    </div>
-                                    <div class="fileinput-preview fileinput-exists thumbnail img-circle img-raised @error('foto') has-error is-focused @enderror"></div>
-                                    <div>
-                                        <span class="btn btn-raised btn-round btn-rose btn-file">
-                                            <span class="fileinput-new">Añadir Imagen</span>
-                                            <span class="fileinput-exists">Cambiar</span>
-                                            <input type="file" name="foto"  >
-                                        </span>
-                                        <br>
-                                        <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Eliminar</a>
-                                    </div>
-                                    @error('foto')
-                                        <span class="has-error text-danger" >
-                                            {{ $message }}
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="media-footer">
-                                    <h6>Registrarse con:</h6>
-                                    <a href="" class="btn btn-just-icon btn-round btn-twitter">
-                                          <i class="fa fa-twitter"></i>
-                                    </a>
-                                    <a href="" class="btn btn-just-icon btn-round btn-facebook">
-                                          <i class="fa fa-facebook-square"></i>
-                                    </a>
-                                    <a href="" class="btn btn-just-icon btn-round btn-google">
-                                          <i class="fa fa-google-plus-square"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-md-8 text-center">
-                                <div class="media-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="input-group @error('fullname') has-error is-focused @enderror">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons text-rose">face</i>
-                                                </span>
-                                                <input type="text" class="form-control"name="fullname" autofocus required value="{{ old('fullname') }}" placeholder="Nombre completo">
-                                                @error('fullname')
-                                                    <span class="has-error text-danger" >
-                                                        {{ $message }}
-                                                    </span>
-                                                @enderror
-                                            </div>
+                                @csrf
+                                <div class="col-md-3 text-center">
+                                    <h4><b>Foto de perfil</b></h4>
+                                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail img-circle img-raised">
+                                            <img src="assets/img/placeholder.jpg" alt="...">
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="input-group @error('celular') has-error is-focused @enderror">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons text-rose">stay_current_portrait</i>
-                                                </span>
-                                                    <input type="number" class="form-control" name="celular" required value="{{ old('celular') }}" placeholder="Número de celular">
-                                                @error('celular')
-                                                    <span class="has-error text-danger" >
-                                                        {{ $message }}
-                                                    </span>
-                                                @enderror
-                                            </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail img-circle img-raised @error('foto') has-error is-focused @enderror"></div>
+                                        <div>
+                                            <span class="btn btn-raised btn-round btn-rose btn-file">
+                                                <span class="fileinput-new">Añadir Imagen</span>
+                                                <span class="fileinput-exists">Cambiar</span>
+                                                <input type="file" name="foto"  >
+                                            </span>
+                                            <br>
+                                            <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Eliminar</a>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="input-group @error('email') has-error is-focused @enderror">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">email</i>
-                                                </span>
-                                                    <input type="email" class="form-control" name="email" placeholder="Correo electrónico" value="{{ old('email') }}">
-                                                @error('email')
-                                                    <span class="has-error text-danger" >
-                                                        {{ $message }}
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="input-group @error('direccion') has-error is-focused @enderror">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">room</i>
-                                                </span>
-                                                <input type="text" class="form-control" name="direccion" placeholder="Dirección especifica" value="{{ old('direccion') }}">
-                                                @error('direccion')
-                                                    <span class="has-error text-danger" >
-                                                        {{ $message }}
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="input-group @error('password') has-error is-focused @enderror">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons text-rose">lock_outline</i>
-                                                </span>
-                                                <input type="password" class="form-control" name="password" required placeholder="Contraseña">
-                                                @error('password')
-                                                    <span class="has-error text-danger" >
-                                                        {{ $message }}
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons text-rose">account_balance_wallet</i>
-                                                </span>
-                                                <input type="password" class="form-control" name="password_confirmation" placeholder="Confirmar contraseña">
-                                            </div>
-                                        </div>
+                                        @error('foto')
+                                            <span class="has-error text-danger" >
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
                                     </div>
                                     <div class="media-footer">
-                                        <button class="btn btn-default btn-round" type="botton" data-dismiss="modal">
-                                            <i class="material-icons">close</i>
-                                            CANCELAR
-                                        </button>
-                                        <button class="btn btn-rose btn-round" type="submit">
-                                            <i class="material-icons">person_pin</i>
-                                            ENVIAR
-                                        </button>
+                                        <h6>Registrarse con:</h6>
+                                        <a href="" class="btn btn-just-icon btn-round btn-twitter">
+                                              <i class="fa fa-twitter"></i>
+                                        </a>
+                                        <a href="" class="btn btn-just-icon btn-round btn-facebook">
+                                              <i class="fa fa-facebook-square"></i>
+                                        </a>
+                                        <a href="" class="btn btn-just-icon btn-round btn-google">
+                                              <i class="fa fa-google-plus-square"></i>
+                                        </a>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="col-md-8 text-center">
+
+                                    <div class="col-md-6">
+                                        <div class="input-group @error('fullname') has-error is-focused @enderror">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons text-rose">face</i>
+                                            </span>
+                                            <input type="text" class="form-control"name="fullname" autofocus required value="{{ old('fullname') }}" placeholder="Nombre completo">
+                                            @error('fullname')
+                                                <span class="has-error text-danger" >
+                                                    {{ $message }}
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="input-group @error('celular') has-error is-focused @enderror">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons text-rose">stay_current_portrait</i>
+                                            </span>
+                                                <input type="number" class="form-control" name="celular" required value="{{ old('celular') }}" placeholder="Número de celular">
+                                            @error('celular')
+                                                <span class="has-error text-danger" >
+                                                    {{ $message }}
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons text-rose">room</i>
+                                            </span>
+                                            <div class="form-group label-floating is-empty @error('direccion') has-error is-focused @enderror">
+                                                <label class="control-label">Detalle su dirección especifica:</label>
+                                                <textarea class="form-control bg-light border-0 @error('direccion') is-invalid @enderror" name="direccion" id="direccion" rows="4" >{{ old('direccion') }}</textarea>
+                                                <span class="material-input"></span>
+                                            </div>
+                                            @error('direccion')
+                                                <span class="has-error text-danger" >
+                                                    {{ $message }}
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" id="mibusqueda" name="location" class="form-control map-input"  placeholder="Registre o busque su dirección." >
+                                            <input type="hidden" name="lat" id="lat"/>
+                                            <input type="hidden" name="lng" id="lng" />
+                                        </div>
+                                        <div id="address-map-container" style="width:100%;height:300px; ">
+                                            <div style="width: 100%; height: 100%" id="map-canvas"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media-footer text-center">
+                                    <button class="btn btn-default btn-round" type="botton" data-dismiss="modal">
+                                        <i class="material-icons">close</i>
+                                        CANCELAR
+                                    </button>
+                                    <button class="btn btn-rose btn-round" type="submit">
+                                        <i class="material-icons">person_pin</i>
+                                        ENVIAR
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>

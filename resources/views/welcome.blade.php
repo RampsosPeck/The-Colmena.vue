@@ -74,7 +74,7 @@
               <div class="rd-navbar-aside" id="rd-navbar-aside">
                 <h3 class="text-center">INGRESE AL SISTEMA</h3>
                 <!--RD Mailform-->
-                <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php" style="margin-top: 2px !important;">
+                <form  method="POST" action="{{ route('login') }}"  >
                   @csrf
                   <div class="row ">
                       <div class="col-12">
@@ -125,7 +125,7 @@
                 <hr class="linea-blanca"><br>
                   <h3 class="text-center">REGISTRATE</h3>
                   <!--RD Mailform-->
-                  <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
+                  <form  method="POST" action="{{ route('register') }}"  >
                     @csrf
                     <div class="row ">
                         <div class="col-12">
@@ -167,8 +167,8 @@
                               <label for="password" class="col-sm-5 col-form-label text-md-right text-white"> <b>{{ __('Dirección de envio') }}:</b> </label>
 
                               <div class="col-sm-7">
-                                  <textarea class="form-control bg-light border-0 @error('ubicacion') is-invalid @enderror" name="ubicacion" id="ubicacion" rows="2" placeholder="Direccion exacta mas referencias de envio."></textarea>
-                                  @error('ubicacion')
+                                  <textarea class="form-control bg-light border-0 @error('direccion') is-invalid @enderror" name="direccion" id="direccion" rows="2" placeholder="Dirección exacta más referencias de envio.">{{ old('direccion') }}</textarea>
+                                  @error('direccion')
                                       <span class="invalid-feedback" role="alert">
                                           <strong>{{ $message }}</strong>
                                       </span>

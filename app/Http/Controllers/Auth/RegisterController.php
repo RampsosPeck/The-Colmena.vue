@@ -54,9 +54,9 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'fullname' => ['required', 'string', 'max:255'],
             'celular' => ['required','numeric','digits:8','unique:users,celular'],
-            'direccion' => ['sometimes', 'max:255'],
+            'direccion' => ['required', 'min:10', 'max:255'],
             'foto' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            //'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
     }
 
@@ -67,7 +67,7 @@ class RegisterController extends Controller
      * @return \App\User
      */
     protected function create(array $data)
-    {
+    { //dd($data);
         if(array_key_exists('foto', $data))
         {
             $file = request()->file('foto');
@@ -82,10 +82,10 @@ class RegisterController extends Controller
             'fullname' => $data['fullname'],
             'slug' => Str::of($data['fullname'])->slug('-'),
             'celular' => $data['celular'],
-            'email' => $data['email'],
+            //'email' => $data['email'],
             'direccion' => $data['direccion'],
             'foto' => $fileName,
-            'password' => Hash::make($data['password']),
+            'password' => Hash::make($data['celular']),
         ]);
     }
 }
