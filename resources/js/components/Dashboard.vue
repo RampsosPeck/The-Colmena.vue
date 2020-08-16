@@ -47,8 +47,8 @@
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="tortas">
-                        <div class="row">
-                            <div v-for="(torta, index) in tortas" :key="torta.id">
+                        <material-transition tag="div"  class="row">
+                            <div v-for="(torta, index) in tortas" :key="torta.id" :data-index="index">
                             <div class="col-md-3">
                                 <div class="card card-blog  shadow" style="background-color: #f2f2f2;">
                                     <div class="card-image">
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                             </div>
-                        </div>
+                        </material-transition>
                     </div>
 
                     <div class="tab-pane" id="comidas" >

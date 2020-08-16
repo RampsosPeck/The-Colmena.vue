@@ -25,4 +25,6 @@ Auth::routes();
 Route::get('/catalogo', 'AdminController@index')->name('catalogo');
 Route::get('/dashboard', 'HomeController@index')->name('home');
 
+Route::resource('/producto_detalles',"API\CarritoDetalleController", ["only"=>["store","destroy"]]);
+
 Route::get('{path}',"HomeController@index")->where('path','[\/\w\.-]*');

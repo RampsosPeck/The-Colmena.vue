@@ -64,4 +64,9 @@ class Producto extends Model
     {
         return $this->hasOne(Prodetalle::class, 'producto_id');
     }
+
+    public function carrito_detalle()
+    {
+        return $this->belongsTo(CarritoDetalle::class);
+    }
 }

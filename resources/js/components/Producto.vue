@@ -237,8 +237,8 @@
 		                        </div>
 		                        <div class="row">
 	                        		<div class="panel panel-default text-center">
-	                        			<div role="tab" id="headingOne" class="panel-heading">
-	                        				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed btn btn-rose btn-round btn-sm">
+	                        			<div role="tab" id="headingOne" class="panel-heading " >
+	                        				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed btn   btn-round btn-sm">
 	                        					<h4 class="panel-title">
                                     				¿Menú del Almuerzo?
                                    					<i class="material-icons">keyboard_arrow_down</i>

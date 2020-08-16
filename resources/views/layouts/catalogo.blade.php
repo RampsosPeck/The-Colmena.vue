@@ -31,6 +31,7 @@
 
     <link href="/assets/style.css" rel="stylesheet"/>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body class="profile-page">
@@ -128,7 +129,7 @@
                             <a href="" target="_blank" class="btn btn-rose btn-round btn-sm" data-toggle="tooltip" data-placement="bottom" title="Carrito/Compras">
                                 <img src="{{ asset('/img/secondary/cart.svg') }}" alt="pedidos" width="30" class="nav-icon" ><b>
                                  Compras</b>
-                                 <span class="label label-warning"> 1</span>
+                                 <span class="label label-warning">{{ $productsCount }}</span>
                             </a>
                         </li>
                     </ul>
@@ -211,6 +212,9 @@
                                             <p class="card-description text-justify" style="margin-bottom: 0px;">
                                                 {{ $pro->descripcion }}
                                             </p>
+                                            <form method="POST" action="{{ url('producto_detalles') }}">
+                                            @csrf
+                                            <input type="hidden" name="producto_id" value="{{ $pro->id }}">
                                             <div class="footer">
                                                 <div class="author">
                                                      <div class="btn-group " >
@@ -224,13 +228,14 @@
                                                 </div>
                                                 <div class="stats">
                                                     <div class="btn-group">
-                                                        <button class="btn btn-round btn-rose btn-xs">
+                                                        <button class="btn btn-round btn-rose btn-xs" type="submit">
                                                             <strong> Añadir </strong>
                                                             <i class="material-icons" >add_shopping_cart</i>
                                                         </button>
                                                     </div>
                                                 </div>
                                             </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -267,6 +272,9 @@
                                                         <p class="card-description text-justify" style="margin-bottom: 0px;">
                                                             {{ $comida->descripcion }}.
                                                         </p>
+                                                        <form method="POST" action="{{ url('producto_detalles') }}">
+                                                        @csrf
+                                                        <input type="hidden" name="producto_id" value="{{ $comida->id }}">
                                                         <div class="footer">
                                                             <div class="author">
                                                                  <div class="btn-group">
@@ -280,13 +288,14 @@
                                                             </div>
                                                             <div class="stats">
                                                                 <div class="btn-group">
-                                                                    <button class="btn btn-round btn-rose btn-xs">
+                                                                    <button class="btn btn-round btn-rose btn-xs" type="submit">
                                                                         <strong> Añadir </strong>
                                                                         <i class="material-icons" >add_shopping_cart</i>
                                                                     </button>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -311,6 +320,9 @@
                                             </ul>
                                             <h4 class="title">Descripción</h4>
                                             <p class=" text-justify">{{ $almuerzo->descripcion }}</p>
+                                            <form method="POST" action="{{ url('producto_detalles') }}">
+                                            @csrf
+                                            <input type="hidden" name="producto_id" value="{{ $almuerzo->id }}">
                                             <div class="footer text-center">
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-round btn-primary btn-xs" style="border-radius: 33px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
@@ -321,11 +333,12 @@
                                                     <button type="button" class="btn btn-round btn-primary btn-xs" style="border-radius: 33px;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
                                                 </div>
 
-                                                <button class="btn btn-round btn-primary btn-xs">
+                                                <button class="btn btn-round btn-primary btn-xs" type="submit">
                                                     <strong> Añadir</strong>
                                                     <i class="material-icons" >add_shopping_cart</i>
                                                 </button>
                                             </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -356,15 +369,18 @@
                                                 <p class="card-description text-justify" style="margin-bottom: 0px;">
                                                     {{ $vario->descripcion }}
                                                 </p>
+                                                <form method="POST" action="{{ url('producto_detalles') }}">
+                                                @csrf
+                                                <input type="hidden" name="producto_id" value="{{ $vario->id }}">
                                                 <div class="footer" >
                                                     <div class="author">
                                                          <div class="btn-group">
-                                                            <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                            <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                                                             <i class="material-icons">remove</i> </button>
                                                             <div class="btncant" style="line-height: 1.8;">
                                                             <input class="letracard" min="1" name="cantidad" value="1" type="number"  >
                                                             </div>
-                                                            <button class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
+                                                            <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
                                                         </div>
                                                     </div>
                                                     <div class="stats">
@@ -376,6 +392,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -624,7 +641,7 @@
     </div>
 </div>
 <!--  End Modal -->
-
+ @include('sweet::alert')
 </body>
     <script src="{{ asset('js/app.js') }}" ></script>
     <script src="{{ asset('assets/moment.min.js') }}" ></script>

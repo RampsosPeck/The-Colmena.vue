@@ -2783,6 +2783,55 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MaterialComponent.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MaterialComponent.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  functional: true,
+  render: function render(createElement, context) {
+    var data = _objectSpread(_objectSpread({}, context.data), {}, {
+      css: false,
+      on: {
+        beforeEnter: function beforeEnter(el) {
+          el.style.opacity = 0;
+          el.style.transform = "scale(0)";
+          el.style.transition = "all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1)";
+        },
+        enter: function enter(el) {
+          var delay = 200 * el.dataset.index;
+          setTimeout(function () {
+            el.style.opacity = 1;
+            el.style.transform = "scale(1)";
+          }, delay);
+        },
+        leave: function leave(el) {
+          var delay = 200 * el.dataset.index;
+          setTimeout(function () {
+            el.style.opacity = 0;
+            el.style.transform = "scale(0)";
+          }, delay);
+        }
+      }
+    });
+
+    return createElement('transition-group', data, context.children);
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Producto.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Producto.vue?vue&type=script&lang=js& ***!
@@ -65995,114 +66044,211 @@ var render = function() {
             { staticClass: "tab-pane active", attrs: { id: "tortas" } },
             [
               _c(
-                "div",
-                { staticClass: "row" },
+                "material-transition",
+                { staticClass: "row", attrs: { tag: "div" } },
                 _vm._l(_vm.tortas, function(torta, index) {
-                  return _c("div", { key: torta.id }, [
-                    _c("div", { staticClass: "col-md-3" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "card card-blog  shadow",
-                          staticStyle: { "background-color": "#f2f2f2" }
-                        },
-                        [
-                          _c("div", { staticClass: "card-image" }, [
-                            _c(
-                              "div",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: torta.descuento,
-                                    expression: "torta.descuento"
-                                  }
+                  return _c(
+                    "div",
+                    { key: torta.id, attrs: { "data-index": index } },
+                    [
+                      _c("div", { staticClass: "col-md-3" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "card card-blog  shadow",
+                            staticStyle: { "background-color": "#f2f2f2" }
+                          },
+                          [
+                            _c("div", { staticClass: "card-image" }, [
+                              _c(
+                                "div",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: torta.descuento,
+                                      expression: "torta.descuento"
+                                    }
+                                  ],
+                                  staticClass: "ribbon ribbon-top-right "
+                                },
+                                [
+                                  _c("span", [
+                                    _c("strong", [
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(torta.descuento) +
+                                          " % DTO. "
+                                      )
+                                    ])
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                { attrs: { href: "#pablo" } },
+                                [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass:
+                                        "cardprecio label label-primary"
+                                    },
+                                    [
+                                      _vm._v(" Bs. "),
+                                      _c("strong", [
+                                        _vm._v(_vm._s(torta.precio) + " ")
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._l(torta.fotos, function(foto) {
+                                    return _c("span", { key: foto.id }, [
+                                      _c("img", {
+                                        staticClass: "imgcard",
+                                        staticStyle: { height: "100%" },
+                                        attrs: {
+                                          src: _vm.getFoto(foto.imagen),
+                                          alt: "Producto foto"
+                                        }
+                                      })
+                                    ])
+                                  })
                                 ],
-                                staticClass: "ribbon ribbon-top-right "
-                              },
-                              [
-                                _c("span", [
-                                  _c("strong", [
-                                    _vm._v(
-                                      " " + _vm._s(torta.descuento) + " % DTO. "
+                                2
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "card-content" }, [
+                              _c(
+                                "h4",
+                                { staticClass: "card-title text-center" },
+                                [
+                                  _c("a", { attrs: { href: "#pablo" } }, [
+                                    _vm._v(" " + _vm._s(torta.nombre) + " ")
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "p",
+                                {
+                                  staticClass: "card-description text-justify",
+                                  staticStyle: { "margin-bottom": "0px" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        " +
+                                      _vm._s(torta.descripcion) +
+                                      "\n                                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "footer" }, [
+                                _c("div", { staticClass: "author" }, [
+                                  _c("div", { staticClass: "btn-group " }, [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "btn btn-round btn-rose btn-xs",
+                                        staticStyle: {
+                                          padding: "4px 8px !important"
+                                        },
+                                        attrs: {
+                                          type: "button",
+                                          onclick:
+                                            "this.parentNode.querySelector('input[type=number]').stepDown()"
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "i",
+                                          { staticClass: "material-icons" },
+                                          [_vm._v("remove")]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "btncant",
+                                        staticStyle: { "line-height": "1.8" }
+                                      },
+                                      [
+                                        _c("input", {
+                                          staticClass: "letracard",
+                                          attrs: {
+                                            min: "1",
+                                            name: "cantidad",
+                                            value: "1",
+                                            type: "number"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "btn btn-round btn-rose btn-xs",
+                                        staticStyle: {
+                                          padding: "4px 8px !important"
+                                        },
+                                        attrs: {
+                                          type: "button",
+                                          onclick:
+                                            "this.parentNode.querySelector('input[type=number]').stepUp()"
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "i",
+                                          { staticClass: "material-icons" },
+                                          [_vm._v("add")]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "stats" }, [
+                                  _c("div", { staticClass: "btn-group" }, [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "btn btn-round btn-rose btn-xs"
+                                      },
+                                      [
+                                        _c("strong", [_vm._v(" Añadir ")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "i",
+                                          { staticClass: "material-icons" },
+                                          [_vm._v("add_shopping_cart")]
+                                        )
+                                      ]
                                     )
                                   ])
                                 ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              { attrs: { href: "#pablo" } },
-                              [
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass:
-                                      "cardprecio label label-primary"
-                                  },
-                                  [
-                                    _vm._v(" Bs. "),
-                                    _c("strong", [
-                                      _vm._v(_vm._s(torta.precio) + " ")
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _vm._l(torta.fotos, function(foto) {
-                                  return _c("span", { key: foto.id }, [
-                                    _c("img", {
-                                      staticClass: "imgcard",
-                                      staticStyle: { height: "100%" },
-                                      attrs: {
-                                        src: _vm.getFoto(foto.imagen),
-                                        alt: "Producto foto"
-                                      }
-                                    })
-                                  ])
-                                })
-                              ],
-                              2
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "card-content" }, [
-                            _c(
-                              "h4",
-                              { staticClass: "card-title text-center" },
-                              [
-                                _c("a", { attrs: { href: "#pablo" } }, [
-                                  _vm._v(" " + _vm._s(torta.nombre) + " ")
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "p",
-                              {
-                                staticClass: "card-description text-justify",
-                                staticStyle: { "margin-bottom": "0px" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                        " +
-                                    _vm._s(torta.descripcion) +
-                                    "\n                                    "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _vm._m(2, true)
-                          ])
-                        ]
-                      )
-                    ])
-                  ])
+                              ])
+                            ])
+                          ]
+                        )
+                      ])
+                    ]
+                  )
                 }),
                 0
               )
-            ]
+            ],
+            1
           ),
           _vm._v(" "),
           _c("div", { staticClass: "tab-pane", attrs: { id: "comidas" } }, [
@@ -66198,7 +66344,7 @@ var render = function() {
                                 ]
                               ),
                               _vm._v(" "),
-                              _vm._m(3, true)
+                              _vm._m(2, true)
                             ])
                           ]
                         )
@@ -66338,7 +66484,7 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _vm._m(4, true)
+                        _vm._m(3, true)
                       ]
                     )
                   }),
@@ -66447,7 +66593,7 @@ var render = function() {
                               ]
                             ),
                             _vm._v(" "),
-                            _vm._m(5, true)
+                            _vm._m(4, true)
                           ])
                         ]
                       )
@@ -66573,72 +66719,6 @@ var staticRenderFns = [
             ])
           ]
         )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "footer" }, [
-      _c("div", { staticClass: "author" }, [
-        _c("div", { staticClass: "btn-group " }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-round btn-rose btn-xs",
-              staticStyle: { padding: "4px 8px !important" },
-              attrs: {
-                type: "button",
-                onclick:
-                  "this.parentNode.querySelector('input[type=number]').stepDown()"
-              }
-            },
-            [_c("i", { staticClass: "material-icons" }, [_vm._v("remove")])]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "btncant", staticStyle: { "line-height": "1.8" } },
-            [
-              _c("input", {
-                staticClass: "letracard",
-                attrs: {
-                  min: "1",
-                  name: "cantidad",
-                  value: "1",
-                  type: "number"
-                }
-              })
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-round btn-rose btn-xs",
-              staticStyle: { padding: "4px 8px !important" },
-              attrs: {
-                type: "button",
-                onclick:
-                  "this.parentNode.querySelector('input[type=number]').stepUp()"
-              }
-            },
-            [_c("i", { staticClass: "material-icons" }, [_vm._v("add")])]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "stats" }, [
-        _c("div", { staticClass: "btn-group" }, [
-          _c("button", { staticClass: "btn btn-round btn-rose btn-xs" }, [
-            _c("strong", [_vm._v(" Añadir ")]),
-            _vm._v(" "),
-            _c("i", { staticClass: "material-icons" }, [
-              _vm._v("add_shopping_cart")
-            ])
-          ])
-        ])
       ])
     ])
   },
@@ -68593,14 +68673,14 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "panel-heading",
+        staticClass: "panel-heading ",
         attrs: { role: "tab", id: "headingOne" }
       },
       [
         _c(
           "a",
           {
-            staticClass: "collapsed btn btn-rose btn-round btn-sm",
+            staticClass: "collapsed btn   btn-round btn-sm",
             attrs: {
               role: "button",
               "data-toggle": "collapse",
@@ -86755,7 +86835,8 @@ window.Fire = new Vue();
 
 Vue.component('passport-clients', __webpack_require__(/*! ./components/passport/Clients.vue */ "./resources/js/components/passport/Clients.vue")["default"]);
 Vue.component('passport-authorized-clients', __webpack_require__(/*! ./components/passport/AuthorizedClients.vue */ "./resources/js/components/passport/AuthorizedClients.vue")["default"]);
-Vue.component('passport-personal-access-tokens', __webpack_require__(/*! ./components/passport/PersonalAccessTokens.vue */ "./resources/js/components/passport/PersonalAccessTokens.vue")["default"]); //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('passport-personal-access-tokens', __webpack_require__(/*! ./components/passport/PersonalAccessTokens.vue */ "./resources/js/components/passport/PersonalAccessTokens.vue")["default"]);
+Vue.component('material-transition', __webpack_require__(/*! ./components/MaterialComponent.vue */ "./resources/js/components/MaterialComponent.vue")["default"]); //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -87019,6 +87100,56 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Developer_vue_vue_type_template_id_5932c622___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/MaterialComponent.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/MaterialComponent.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MaterialComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MaterialComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/MaterialComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  _MaterialComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"],
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/MaterialComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/MaterialComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/MaterialComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MaterialComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./MaterialComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MaterialComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MaterialComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
