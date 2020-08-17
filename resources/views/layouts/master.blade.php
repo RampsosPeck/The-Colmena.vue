@@ -33,7 +33,6 @@
 
 <body class="profile-page">
     <div id="app">
-
         <nav class="navbar navbar-rose navbar-transparent navbar-fixed-top navbar-color-on-scroll">
             <div class="container">
                 <div class="navbar-header">
@@ -125,13 +124,7 @@
                             </ul>
                         </li>
                         @endguest
-                        <li>
-                            <a href="" target="_blank" class="btn btn-rose btn-round btn-sm" data-toggle="tooltip" data-placement="bottom" title="Carrito/Compras">
-                                <img src="{{ asset('/img/secondary/cart.svg') }}" alt="pedidos" width="30" class="nav-icon" ><b>
-                                 Compras</b>
-                                 <span class="label label-warning"> 1</span>
-                            </a>
-                        </li>
+                        <count-producto :count="{{ $productsCount }}"></count-producto>
                     </ul>
                 </div>
             </div>

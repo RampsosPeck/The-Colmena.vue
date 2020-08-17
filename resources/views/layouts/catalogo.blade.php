@@ -128,7 +128,7 @@
                         <li>
                             <a href="" target="_blank" class="btn btn-rose btn-round btn-sm" data-toggle="tooltip" data-placement="bottom" title="Carrito/Compras">
                                 <img src="{{ asset('/img/secondary/cart.svg') }}" alt="pedidos" width="30" class="nav-icon" ><b>
-                                 Compras</b>
+                                 Carrito</b>
                                  <span class="label label-warning">{{ $productsCount }}</span>
                             </a>
                         </li>

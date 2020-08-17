@@ -14,6 +14,22 @@ require('./theme/jquery.flexisel.js');
 require('./theme/material-kit.js');
 
 window.Vue = require('vue');
+
+const Vuex = require('vuex');
+window.store = new Vuex.Store({
+  state: {
+    productsCount:0
+  },
+  mutations: {
+    increment(state){
+      return state.productsCount++
+    },
+    set(state,value){
+      return state.productsCount = value
+    }
+  }
+});
+
 import moment from 'moment';
 import {
   Form,
@@ -125,6 +141,23 @@ Vue.component(
     'material-transition',
     require('./components/MaterialComponent.vue').default
 );
+
+
+Vue.component(
+    'add-producto-btn',
+    require('./components/AddToCartComponent.vue').default
+);
+Vue.component(
+    'count-producto',
+    require('./components/CounterProductComponent.vue').default
+);
+Vue.component(
+    'carrito-list',
+    require('./components/CarritoComponent.vue').default
+);
+
+
+
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**

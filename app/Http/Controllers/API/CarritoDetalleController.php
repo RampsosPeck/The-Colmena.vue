@@ -15,7 +15,7 @@ class CarritoDetalleController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
+        //var_dump($request->all());
         $producto = Producto::find($request->producto_id);
         $cant = $request->cantidad * $producto->precio;
         //dd($producto);

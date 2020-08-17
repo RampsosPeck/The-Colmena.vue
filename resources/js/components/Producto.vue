@@ -88,9 +88,11 @@
 					                                    <a href="#" v-show="!producto.estado" @click="activoPro(producto.id)" class="btn btn-warning" data-original-title="" title="Activar producto">
 					                                        <i class="material-icons">done</i>
 					                                    </a>
-					                                    <button class="btn btn-rose btn-xs" style="margin-top:3px;">
+					                                    <button class="btn btn-rose btn-xs" style="margin-top:3px;" @click="agregarCarro(producto)"  :disabled="estaEnCarrito(producto)">
 															<i class="material-icons">add_shopping_cart</i>
-					                                    	Comprar <div class="ripple-container"></div>
+					                                     	<span v-if="!estaEnCarrito(producto)">Añadir</span>
+					                                     	<span v-else>Agregado</span>
+					                                     	<div class="ripple-container"></div>
 					                                    </button>
 					                                    <router-link :to="{name: 'editar', params:{ id: producto.id}}">
 															<button class="btn btn-info btn-sm mr-2">Editar</button>
@@ -118,11 +120,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="card-content">
-							<div class="tab-content text-center">
-
-							</div>
-						</div>
+						<carrito-list :items="carrito"></carrito-list>
 					</div>
 				</div>
 			</div>
@@ -369,6 +367,7 @@
             	editmode : false,
                 productos : [],
                 categorias : [],
+                carrito : [],
                 form: new Form({
                 	id:'',
                     nombre: '',
@@ -543,7 +542,18 @@
                     )
                 }
 
+        	},
+        	agregarCarro(producto){
+        		this.carrito.push(producto);
+        	},
+        	estaEnCarrito(producto){
+        		const item = this.carrito.find(item => item.id === producto.id);
+        		if(item){
+        			return true;
+        		}
+        		return false;
         	}
+
         },
         created(){
         	this.loadProductos();

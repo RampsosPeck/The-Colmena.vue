@@ -70,26 +70,7 @@
                                         <p class="card-description text-justify" style="margin-bottom: 0px;">
                                             {{ torta.descripcion }}
                                         </p>
-                                        <div class="footer">
-                                            <div class="author">
-                                                 <div class="btn-group " >
-                                                    <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                        <i class="material-icons">remove</i> </button>
-                                                    <div class="btncant" style="line-height: 1.8;">
-                                                    <input class="letracard" min="1" name="cantidad" value="1" type="number"  >
-                                                    </div>
-                                                    <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
-                                                </div>
-                                            </div>
-                                            <div class="stats">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-round btn-rose btn-xs">
-                                                        <strong> Añadir </strong>
-                                                        <i class="material-icons" >add_shopping_cart</i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <add-producto-btn v-bind:product="torta"> </add-producto-btn>
                                     </div>
                                 </div>
                             </div>
@@ -123,26 +104,7 @@
                                                 <p class="card-description text-justify" style="margin-bottom: 0px;">
                                                     {{ comida.descripcion }}
                                                 </p>
-                                                <div class="footer">
-                                                    <div class="author">
-                                                        <div class="btn-group " >
-                                                            <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                                <i class="material-icons">remove</i> </button>
-                                                            <div class="btncant" style="line-height: 1.8;">
-                                                            <input class="letracard" min="1" name="cantidad" value="1" type="number"  >
-                                                            </div>
-                                                            <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="stats">
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-round btn-rose btn-xs">
-                                                                <strong> Añadir </strong>
-                                                                <i class="material-icons" >add_shopping_cart</i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <add-producto-btn v-bind:product="comida"> </add-producto-btn>
                                             </div>
                                         </div>
                                     </div>
@@ -167,20 +129,8 @@
                                         <h4 class="title">Descripción</h4>
                                         <p class="description text-justify">{{ almu.descripcion }}</p>
                                         <h6 class="title text-center"> {{ almu.create_dates.updated_at_human }}</h6>
-                                        <div class="footer text-center">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-round btn-primary btn-xs" style="border-radius: 33px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                <i class="material-icons">remove</i> </button>
-                                                <div class="btncant" style="line-height: 1.8;">
-                                                <input class="letracard" min="1" name="cantidad" value="1" type="number" style="background-color: #9c27b0; color:white;" >
-                                                </div>
-                                                <button type="button" class="btn btn-round btn-primary btn-xs" style="border-radius: 33px;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
-                                            </div>
-
-                                            <button class="btn btn-round btn-primary btn-xs">
-                                                <strong> Añadir</strong>
-                                                <i class="material-icons" >add_shopping_cart</i>
-                                            </button>
+                                        <div style="background-color:#fff; border-radius:33px;">
+                                            <add-producto-btn v-bind:product="almu"> </add-producto-btn>
                                         </div>
                                     </div>
                                 </div>
@@ -214,29 +164,7 @@
                                             <p class="card-description text-justify" style="margin-bottom: 0px;">
                                                 {{ vario.descripcion }}
                                             </p>
-                                            <div class="footer" >
-                                                <div class="author">
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                            <i class="material-icons">remove</i>
-                                                        </button>
-                                                        <div class="btncant" style="line-height: 1.8;">
-                                                            <input class="letracard" min="1" name="cantidad" value="1" type="number"  >
-                                                        </div>
-                                                        <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                            <i class="material-icons">add</i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="stats">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-round btn-rose btn-xs">
-                                                            <strong> Añadir </strong>
-                                                            <i class="material-icons" >add_shopping_cart</i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <add-producto-btn v-bind:product="vario"> </add-producto-btn>
                                         </div>
                                     </div>
                                 </div>

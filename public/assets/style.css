@@ -131,7 +131,7 @@
 /* DESDE AQUI NUMERO*/
 
 .btncant.btncant  input[type="number"] {
-    max-width: 4rem !important;
+    max-width: 2rem !important;
     border-width: 0 0px;
     height: 2rem;
 }
