@@ -1,7 +1,7 @@
 <template>
 	<div class="footer">
         <div class="author">
-        	<span class="title">Unid.</span>
+        	<span class="title">Cant.</span>
             <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" @click="cantidad--" v-if="cantidad>=2">
                 <i class="material-icons">remove</i> </button>
             <div class="btncant" style="line-height: 1.8;">
@@ -11,8 +11,9 @@
         </div>
         <div class="stats">
             <div class="btn-group">
-                <button @click="addToCart" class="btn btn-round btn-rose btn-xs">
-			        <strong> {{ message }} </strong>
+                <button @click="addToCart(producto)" class="btn btn-round btn-rose btn-xs" :disabled="estaEnCarrito(producto)">
+			        <strong v-if="!estaEnCarrito(producto)"> {{ message }} </strong>
+			        <strong v-else>Agregado</strong>
 			        <i class="material-icons" >add_shopping_cart</i>
 			    </button>
             </div>
@@ -26,12 +27,14 @@
             return {
 				message: 'Añadir',
 				endpoint:'/producto_detalles',
-				cantidad: 1
+				cantidad: 1,
+				carrito : this.carri,
+				producto: this.product
 			}
 		},
-		props: { product: { type: Object } },
+		props: { product: Object, carri: Array },
 		methods:{
-			addToCart(){
+			addToCart(producto){
 				axios({
 					method: 'POST',
 					url: this.endpoint,
@@ -44,15 +47,23 @@
 						'Content-Type': 'application/json'
 					}
 				}).then(() => {
+					this.carrito.push(producto);
                     swal.fire(
                         'Producto agregado!',
-                        'Puede verlo en el carrito de compras.XXX',
+                        'Puede verlo en el carrito de compras.',
                         'success'
                     );
                     this.cantidad = 1;
                     window.store.commit("increment");
                 })
-			}
+			},
+        	estaEnCarrito(producto){
+        		const item = this.carrito.find(item => item.id === producto.id);
+        		if(item){
+        			return true;
+        		}
+        		return false;
+        	}
 		}
 	};
 </script>

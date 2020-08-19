@@ -32,7 +32,7 @@
 					            <div class="btncant " style="line-height: 1.8;">
 					            	<input class="letracard" style="max-width: 3rem !important;" min="1" name="cantidad" v-on:input="cantidad++" value="1" type="number"  >
 					            </div>
-					            <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()" @click="aumentar(index)" > <i class="material-icons" >add</i> </button>
+					            <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"  > <i class="material-icons" >add</i> </button>
 					        </div>
 	                    </td>
 	                    <td class="td-number" colspan="1">
@@ -67,11 +67,7 @@
 		},
 		props: ['items'],
 		methods: {
-			aumentar(index){
-				this.cants[index].push({
-					cantidad: this.cantidad++
-				})
-			}
+
 		}
 	};
 </script>

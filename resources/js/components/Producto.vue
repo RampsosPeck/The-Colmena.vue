@@ -4,113 +4,123 @@
 	<div class="row">
 		<div class="col-md-12 panel-center">
 			<div class="card-body">
-				<div class="col-md-7">
-					<div class="card card-nav-tabs shadow">
-						<div class="header header-rose">
-							<div class="nav-tabs-navigation">
-								<div class="nav-tabs-wrapper">
-									<ul class="nav nav-tabs ulcenter" data-tabs="tabs">
-										<li class="active">
-											<a href="#lista" data-toggle="tab">
-												<i class="material-icons">input</i>
-												LISTA DE PRODUCTOS
-											</a>
-										</li>
-										<li >
-											<a @click="modalPro" data-toggle="tab">
-												<i class="material-icons">add</i>
-												NUEVO PRODUCTOS
-											</a>
-										</li>
-									</ul>
-								</div>
+				<div class="card card-nav-tabs shadow">
+					<div class="header header-rose">
+						<div class="nav-tabs-navigation">
+							<div class="nav-tabs-wrapper">
+								<ul class="nav nav-tabs ulcenter" data-tabs="tabs">
+									<li class="active">
+										<a href="#lista" data-toggle="tab">
+											<i class="material-icons">input</i>
+											LISTA DE PRODUCTOS
+										</a>
+									</li>
+									<li >
+										<a @click="modalPro" data-toggle="tab">
+											<i class="material-icons">add</i>
+											NUEVO PRODUCTOS
+										</a>
+									</li>
+								</ul>
 							</div>
 						</div>
-						<div class="card-content">
-							<div class="tab-content text-center">
-								<div class="tab-pane active" id="lista">
-									<div class="table-responsive">
-					                    <table class="table">
-					                        <thead>
-					                            <tr class="almuerzo">
-					                                <th class="text-center"><b>#</b></th>
-					                                <th class="text-center"><b>Datos</b></th>
-					                                <th class="text-center"><b>Estado</b></th>
-					                                <th class="text-center"><b>Acciones</b></th>
-					                            </tr>
-					                        </thead>
-					                        <tbody>
-					                            <tr v-for="(producto, index) in productos" :key="producto.id" >
-					                                <td v-text="producto.id"  ></td>
-					                                <td class="td-usertable ">
-														<div class="media text-left">
-					                                		<a class="pull-left td-usertable">
-					                                			<div class="listcategoria" v-for="foto in producto.fotos" :key="foto.id">
-					                                				<img :src="getFoto(foto.imagen)" class="img img-raised " alt="Producto foto" style="height: 100%;">
-					                                			</div>
-					                                		</a>
-					                                		<div class="media-body">
-					                                			<h6 class="media-heading">
-																	{{ producto.nombre }}
-					                                			</h6>
-					                                			<p class="usertable" v-text="producto.descripcion"></p>
-					                                			<h6 class="media-heading productlist">
-																	Precio
-					                                				<small>: {{ producto.precio }}</small> Bs.
-																	 <i class="material-icons" style="font-size:10px;">new_releases</i>
-																	Stock
-					                                				<small>: {{ producto.stock }}</small> Unid.
-					                                			</h6>
-					                                			<h6 class="media-heading productlist">
-					                                				<span v-show="producto.cant_personas">
-					                                					Num. Personas:
-					                                					<small>: {{ producto.cant_personas }}</small>
-					                                				</span>
-					                                				<button class="btn btn-default btn-xs productcate">
-					                                					{{ producto.categoria.nombre }}
-					                                				</button>
-					                                				<button class="btn btn-warning btn-xs productcate" v-if="producto.descuento">
-					                                				  Des.	{{ producto.descuento }} %
-					                                				</button>
-					                                			</h6>
+					</div>
+					<div class="card-content">
+						<div class="tab-content text-center">
+							<div class="tab-pane active" id="lista">
+								<div class="table-responsive">
+				                    <table class="table">
+				                        <thead>
+				                            <tr class="almuerzo">
+				                                <th class="text-center"><b>#</b></th>
+				                                <th class="text-center"><b>Datos</b></th>
+				                                <th class="text-center"><b>Precio</b></th>
+				                                <th class="text-center"><b>Estado</b></th>
+				                                <th class="text-center"><b>Cantidad</b></th>
+				                                <th class="text-center"><b>Acciones</b></th>
+				                            </tr>
+				                        </thead>
+				                        <tbody>
+				                            <tr v-for="(producto, index) in productos" :key="producto.id" >
+				                                <td v-text="producto.id"  ></td>
+				                                <td class="td-usertable" >
+													<div class="media text-left" style="display: flex !important;  align-items: center !important;">
+				                                		<a class="pull-left td-usertable">
+				                                			<div class="listcategoria" v-for="foto in producto.fotos" :key="foto.id" >
+				                                				<img :src="getFoto(foto.imagen)" class="img img-raised " alt="Producto foto" style="height: 100%;">
+				                                			</div>
+				                                		</a>
+				                                		<div class="media-body" style="width: auto !important;">
+				                                			<h6 class="media-heading">
+																{{ producto.nombre }}
+																<small> * <span class="media-heading">Código:</span>  {{ producto.codigo }}</small>
+				                                			</h6>
+				                                			<p class="usertable" v-text="producto.descripcion"></p>
+				                                			<h6 class="media-heading productlist">
+																Stock
+				                                				<small>: {{ producto.stock }}</small> Unid.
+				                                				<span v-show="producto.cant_personas">
+				                                					* Num. Personas:
+				                                					<small>: {{ producto.cant_personas }}</small>
+				                                				</span>
+				                                				<button class="btn btn-default btn-xs productcate">
+				                                					{{ producto.categoria.nombre }}
+				                                				</button>
+				                                			</h6>
+				                                			<h6  class="media-heading productlist" v-if="producto.descuento">
+				                                				Descuento: Del
+				                                				<button class="btn btn-warning btn-xs productcate">
+				                                				   {{ producto.descuento }} %
+				                                				</button> A partir de :
+				                                				<small> {{ producto.actides }} </small> Unids.
+				                                			</h6>
+				                                    	</div>
+				                                    </div>
+				                                </td>
+												<td class="text-center text-default">
+				                                	<h6 class="media-heading productlist">
+														Bs.
+		                                				<small>: {{ producto.precio }}</small> Unid.
+		                                			</h6>
+												</td>
+				                                <td class="text-center text-warning">
+				                                	<b>{{ producto.estado ? 'ACTIVO' : 'INACTIVO' }}</b>
+				                                	<button class="btn btn-rose btn-xs"> Detalles <div class="ripple-container"></div></button>
+				                                </td>
+				                                <td class="card-content text-center col-md-3">
 
-					                                    	</div>
-					                                    </div>
-					                                </td>
-					                                <td class="col-sm-1 col-md-1 text-center text-warning">
-					                                	<b>{{ producto.estado ? 'ACTIVO' : 'INACTIVO' }}</b>
-					                                	<button class="btn btn-default btn-xs"> Detalles <div class="ripple-container"></div></button>
-					                                </td>
-					                                <td class="td-actions text-center col-sm-1 col-md-1">
-					                                    <a @click="editModal(producto)" href="#" rel="tooltip" class="btn btn-success" data-original-title="" title="Editar Usuario">
-					                                        <i class="material-icons">edit</i>
-					                                    </a>
-					                                    <a href="#" v-show="producto.estado" @click="deletePro(producto.id)" class="btn btn-danger" data-original-title="" title="Dar de Baja">
-					                                        <i class="material-icons">close</i>
-					                                    </a>
-					                                    <a href="#" v-show="!producto.estado" @click="activoPro(producto.id)" class="btn btn-warning" data-original-title="" title="Activar producto">
-					                                        <i class="material-icons">done</i>
-					                                    </a>
-					                                    <button class="btn btn-rose btn-xs" style="margin-top:3px;" @click="agregarCarro(producto)"  :disabled="estaEnCarrito(producto)">
-															<i class="material-icons">add_shopping_cart</i>
-					                                     	<span v-if="!estaEnCarrito(producto)">Añadir</span>
-					                                     	<span v-else>Agregado</span>
-					                                     	<div class="ripple-container"></div>
-					                                    </button>
-					                                    <router-link :to="{name: 'editar', params:{ id: producto.id}}">
-															<button class="btn btn-info btn-sm mr-2">Editar</button>
-														</router-link>
-					                                </td>
-					                            </tr>
-					                        </tbody>
-					                    </table>
-					            	</div>
-								</div>
+														<add-producto-btn v-bind:product="producto" v-bind:carri="carrito"> </add-producto-btn>
+
+				                                </td>
+				                                <td class="td-actions text-center col-md-2">
+				                                    <a @click="editModal(producto)" href="#" rel="tooltip" class="btn btn-success" data-original-title="" title="Editar Usuario">
+				                                        <i class="material-icons">edit</i>
+				                                    </a>
+				                                    <a href="#" v-show="producto.estado" @click="deletePro(producto.id)" class="btn btn-danger" data-original-title="" title="Dar de Baja">
+				                                        <i class="material-icons">close</i>
+				                                    </a>
+				                                    <a href="#" v-show="!producto.estado" @click="activoPro(producto.id)" class="btn btn-warning" data-original-title="" title="Activar producto">
+				                                        <i class="material-icons">done</i>
+				                                    </a>
+				                                    <!--<button class="btn btn-rose btn-xs" style="margin-top:3px;" @click="agregarCarro(producto)"  :disabled="estaEnCarrito(producto)">
+														<i class="material-icons">add_shopping_cart</i>
+				                                     	<span v-if="!estaEnCarrito(producto)">Añadir</span>
+				                                     	<span v-else>Agregado</span>
+				                                     	<div class="ripple-container"></div>
+				                                    </button>-->
+				                                    <router-link :to="{name: 'editar', params:{ id: producto.id}}">
+														<button class="btn btn-info btn-sm mr-2">Editar</button>
+													</router-link>
+				                                </td>
+				                            </tr>
+				                        </tbody>
+				                    </table>
+				            	</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-5">
+				<!--<div class="col-md-5">
 					<div class="card card-nav-tabs shadow">
 						<div class="header header-rose">
 							<div class="nav-tabs-navigation">
@@ -125,7 +135,7 @@
 						</div>
 						<carrito-list :items="carrito"></carrito-list>
 					</div>
-				</div>
+				</div>-->
 			</div>
 	    </div>
 	</div>
@@ -609,23 +619,6 @@
                     )
                 }
 
-        	},
-        	agregarCarro(producto){
-        		this.carrito.push(producto);
-				swal.fire({
-				  position: 'top-end',
-				  icon: 'success',
-				  title: 'Producto agregado a tu carrito.',
-				  showConfirmButton: false,
-				  timer: 1500
-				})
-        	},
-        	estaEnCarrito(producto){
-        		const item = this.carrito.find(item => item.id === producto.id);
-        		if(item){
-        			return true;
-        		}
-        		return false;
         	}
 
         },

@@ -70,7 +70,7 @@
                                         <p class="card-description text-justify" style="margin-bottom: 0px;">
                                             {{ torta.descripcion }}
                                         </p>
-                                        <add-producto-btn v-bind:product="torta"> </add-producto-btn>
+                                        <add-producto-btn v-bind:product="torta" v-bind:carri="carrito"> </add-producto-btn>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                                                 <p class="card-description text-justify" style="margin-bottom: 0px;">
                                                     {{ comida.descripcion }}
                                                 </p>
-                                                <add-producto-btn v-bind:product="comida"> </add-producto-btn>
+                                                <add-producto-btn v-bind:product="comida" v-bind:carri="carrito"> </add-producto-btn>
                                             </div>
                                         </div>
                                     </div>
@@ -130,7 +130,7 @@
                                         <p class="description text-justify">{{ almu.descripcion }}</p>
                                         <h6 class="title text-center"> {{ almu.create_dates.updated_at_human }}</h6>
                                         <div style="background-color:#fff; border-radius:33px;">
-                                            <add-producto-btn v-bind:product="almu"> </add-producto-btn>
+                                            <add-producto-btn v-bind:product="almu" v-bind:carri="carrito"> </add-producto-btn>
                                         </div>
                                     </div>
                                 </div>
@@ -164,7 +164,7 @@
                                             <p class="card-description text-justify" style="margin-bottom: 0px;">
                                                 {{ vario.descripcion }}
                                             </p>
-                                            <add-producto-btn v-bind:product="vario"> </add-producto-btn>
+                                            <add-producto-btn v-bind:product="vario" v-bind:carri="carrito"> </add-producto-btn>
                                         </div>
                                     </div>
                                 </div>
@@ -188,6 +188,7 @@
                 comidas : [],
                 almuerzo : [],
                 varios : [],
+                carrito : [],
                 form: new Form({
                     id:'',
                     nombre: '',

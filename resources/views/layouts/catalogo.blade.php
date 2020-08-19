@@ -36,7 +36,6 @@
 
 <body class="profile-page">
     <div id="app">
-
         <nav class="navbar navbar-rose navbar-transparent navbar-fixed-top navbar-color-on-scroll">
             <div class="container">
                 <div class="navbar-header">
@@ -194,11 +193,11 @@
                                 <div class="col-md-3">
                                     <div class="card card-blog  shadow" style="background-color: #f2f2f2;">
                                         <div class="card-image">
-
+                                            @if($pro->descuento)
                                             <div class="ribbon ribbon-top-right ">
                                                 <span><strong> {{ $pro->descuento }} % DTO. </strong></span>
                                             </div>
-
+                                            @endif
                                             <a href="#pablo">
                                                 <label class="cardprecio label label-primary" > Bs. <strong>{{ $pro->precio }}</strong> </label>
                                                 <img class="imgcard" src="{{ asset($pro->imgproductourl) }}" />
@@ -254,11 +253,11 @@
                                                 <div class="card card-blog shadow" style="background-color: #f2f2f2;">
 
                                                     <div class="card-image">
-
+                                                        @if($comida->descuento)
                                                         <div class="ribbon ribbon-top-right ">
                                                             <span><strong> {{ $comida->descuento }}% DTO. </strong></span>
                                                         </div>
-
+                                                        @endif
                                                         <a href="#pablo">
                                                         <label class="cardprecio label label-primary" > Bs. <strong>{{ $comida->precio }}</strong> </label>
                                                         <img class="imgcard" src="{{ asset($comida->imgproductourl) }}" />
@@ -353,9 +352,11 @@
                                         <div class="card card-blog shadow" style="background-color: #f2f2f2;">
 
                                             <div class="card-image">
+                                                @if($vario->descuento)
                                                 <div class="ribbon ribbon-top-right ">
                                                     <span><strong> {{ $vario->descuento }}% DTO. </strong></span>
                                                 </div>
+                                                @endif
                                                 <a href="#pablo">
                                                 <label class="cardprecio label label-primary" > Bs. <strong>{{ $vario->precio }}</strong> </label>
                                                 <img class="imgcard" src="{{ asset($vario->imgproductourl) }}" />
