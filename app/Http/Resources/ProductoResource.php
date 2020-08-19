@@ -32,7 +32,7 @@ class ProductoResource extends JsonResource
             'precio' => $this->precio,
             'stock' => $this->stock,
             'cant_personas' => $this->cant_personas,
-            'oferta' => $this->oferta,
+            'actides' => $this->actides,
             'estado' => $this->estado,
             'fotos' => ProductofotoResource::collection($this->fotos),
             'categoria' => new CategoriaResource($this->categoria),

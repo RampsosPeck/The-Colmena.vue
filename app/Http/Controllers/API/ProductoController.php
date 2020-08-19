@@ -69,6 +69,12 @@ class ProductoController extends Controller
             'categoria' => 'required',
         ]);
 
+         if($request['descuento'] && $request['actides'])
+         {
+            $ofer = 'Hay un descuento de '.(($request['precio']*$request['descuento'])/100).' Bs. Apartir de :'.$request['actides'].' unidades.';
+         }else{
+            $ofer = 'Sin descuento';
+         }
 
          $producto = new Producto;
          $producto->nombre = $request['nombre'];
@@ -76,10 +82,11 @@ class ProductoController extends Controller
          $producto->codigo = date('h:m:s').'/'.date('Y-M-d').'/'.auth()->user()->id;
          $producto->descripcion = $request['descripcion'];
          $producto->descuento = $request['descuento'];
+         $producto->actides = $request['actides'];
          $producto->precio = $request['precio'];
          $producto->stock = $request['stock'];
          $producto->cant_personas = $request['cant_personas'];
-         $producto->oferta = $request['oferta'];
+         $producto->oferta = $ofer;
          $producto->estado = true;
          $producto->categoria_id = $request['categoria'];
          $producto->save();
@@ -164,6 +171,14 @@ class ProductoController extends Controller
             $fotopro->save();
 
         }
+
+         if($request['descuento'] && $request['actides'])
+         {
+            $ofer = 'Hay un descuento de '.(($request['precio']*$request['descuento'])/100).' Bs. Apartir de :'.$request['actides'].' unidades.';
+            $request->merge(['oferta' => $ofer]);
+         }else{
+            $request->merge(['oferta' => 'Sin descuento']);
+         }
         $producto->update($request->all());
 
         if($prodetalle){

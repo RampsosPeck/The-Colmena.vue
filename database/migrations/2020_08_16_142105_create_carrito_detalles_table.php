@@ -20,6 +20,7 @@ class CreateCarritoDetallesTable extends Migration
             $table->unsignedInteger('cantidad');
             $table->text('especificacion')->nullable();
             $table->unsignedDecimal('producto_precio',8,2);
+            $table->unsignedDecimal('descuento_bs',8,2)->default(0);
             $table->unsignedDecimal('subtotal_bs',8,2);
             $table->foreign('producto_id')->references('id')->on('productos');
             $table->foreign('carrito_id')->references('id')->on('carritos');

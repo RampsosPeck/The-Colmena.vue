@@ -13,6 +13,7 @@ class Producto extends Model
     	'codigo',
     	'descripcion',
     	'descuento',
+        'actides',
     	'precio',
     	'stock',
     	'cant_personas',

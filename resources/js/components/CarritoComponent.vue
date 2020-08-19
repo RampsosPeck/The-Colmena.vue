@@ -32,7 +32,7 @@
 					            <div class="btncant " style="line-height: 1.8;">
 					            	<input class="letracard" style="max-width: 3rem !important;" min="1" name="cantidad" v-on:input="cantidad++" value="1" type="number"  >
 					            </div>
-					            <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()" > <i class="material-icons" >add</i> </button>
+					            <button type="button" class="btn btn-round btn-rose btn-xs" style="padding: 4px 8px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()" @click="aumentar(index)" > <i class="material-icons" >add</i> </button>
 					        </div>
 	                    </td>
 	                    <td class="td-number" colspan="1">
@@ -46,7 +46,7 @@
 	                       Total: 2,346 <small>Bs.</small>
 	                    </td>
 	                    <td class="td-number" colspan="2">
-	                    	<button type="button" class="btn btn-info btn-round">
+	                    	<button type="button" class="btn btn-rose btn-round">
 	                    		Realizar Pedido
 	                    		<i class="material-icons">keyboard_arrow_right</i>
 	                    	</button>
@@ -61,11 +61,17 @@
 	export default {
 		data() {
             return {
-				cantidad: 1
+				cantidad: 1,
+				cants:[]
 			}
 		},
 		props: ['items'],
 		methods: {
+			aumentar(index){
+				this.cants[index].push({
+					cantidad: this.cantidad++
+				})
+			}
 		}
 	};
 </script>

@@ -2167,11 +2167,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      cantidad: 1
+      cantidad: 1,
+      cants: []
     };
   },
   props: ['items'],
-  methods: {}
+  methods: {
+    aumentar: function aumentar(index) {
+      this.cants[index].push({
+        cantidad: this.cantidad++
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -3321,6 +3328,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3328,16 +3353,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       productos: [],
       categorias: [],
       carrito: [],
+      smsdescuento: '',
       form: new Form({
         id: '',
         nombre: '',
         codigo: '',
         descripcion: '',
         descuento: '',
+        actides: '',
         precio: '',
         stock: '',
         cant_personas: '',
-        oferta: '',
         estado: '',
         entrada: '',
         sopa: '',
@@ -3349,6 +3375,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         categoria: ''
       })
     };
+  },
+  computed: {
+    generardescuento: function generardescuento() {
+      if (this.form.descuento > 100) {
+        swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'No puedes poner un valor mayor a 100.'
+        });
+        this.form.descuento = 0; //this.form.descuento = (this.form.precio * this.form.descuento) /100;
+        //this.form.precio = this.form.precio  - this.form.descuento;
+
+        this.smsdescuento = 'Hay un descuento de ' + this.form.precio * this.form.descuento / 100 + ' Bs. Apartir de :';
+        return this.smsdescuento;
+      } else if (this.form.descuento < 0) {
+        swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'No puedes poner un valor menor a 0.'
+        });
+        this.form.descuento = 0; //this.form.descuento = (this.form.precio * this.form.descuento) /100;
+        //this.form.precio = this.form.precio - this.form.descuento;
+
+        this.smsdescuento = '';
+        return this.smsdescuento;
+      } else if (this.form.descuento > 0) {
+        //this.form.descuento = (this.form.precio * this.form.descuento) /100;
+        //this.form.precio = this.form.precio - this.form.descuento;
+        if (this.form.descuento == 100) {
+          this.smsdescuento = 'Este producto tiene el 100% de descuento, por ende es gratis.';
+        } else {
+          this.smsdescuento = 'Hay un descuento de ' + this.form.precio * this.form.descuento / 100 + ' Bs. Apartir de :';
+        }
+
+        return this.smsdescuento;
+      } else {
+        //this.form.descuento = '';
+        //this.form.precio = this.form.precio;
+        this.smsdescuento = 'Sin descuento.';
+        return this.smsdescuento;
+      }
+    }
   },
   methods: {
     getFoto: function getFoto(ufoto) {
@@ -3508,6 +3576,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     agregarCarro: function agregarCarro(producto) {
       this.carrito.push(producto);
+      swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Producto agregado a tu carrito.',
+        showConfirmButton: false,
+        timer: 1500
+      });
     },
     estaEnCarrito: function estaEnCarrito(producto) {
       var item = this.carrito.find(function (item) {
@@ -65755,17 +65830,38 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _vm._m(1, true)
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-round btn-rose btn-xs",
+                            staticStyle: { padding: "4px 8px !important" },
+                            attrs: {
+                              type: "button",
+                              onclick:
+                                "this.parentNode.querySelector('input[type=number]').stepUp()"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.aumentar(index)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "material-icons" }, [
+                              _vm._v("add")
+                            ])
+                          ]
+                        )
                       ])
                     ]
                   ),
                   _vm._v(" "),
-                  _vm._m(2, true)
+                  _vm._m(1, true)
                 ]
               )
             }),
             _vm._v(" "),
-            _vm._m(3)
+            _vm._m(2)
           ],
           2
         )
@@ -65798,24 +65894,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-round btn-rose btn-xs",
-        staticStyle: { padding: "4px 8px !important" },
-        attrs: {
-          type: "button",
-          onclick:
-            "this.parentNode.querySelector('input[type=number]').stepUp()"
-        }
-      },
-      [_c("i", { staticClass: "material-icons" }, [_vm._v("add")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("td", { staticClass: "td-number", attrs: { colspan: "1" } }, [
       _c("div", { staticClass: "text-center" }, [
         _c("small", [_vm._v("Bs.")]),
@@ -65836,7 +65914,7 @@ var staticRenderFns = [
       _c("td", { staticClass: "td-number", attrs: { colspan: "2" } }, [
         _c(
           "button",
-          { staticClass: "btn btn-info btn-round", attrs: { type: "button" } },
+          { staticClass: "btn btn-rose btn-round", attrs: { type: "button" } },
           [
             _vm._v(
               "\n\t                    \t\tRealizar Pedido\n\t                    \t\t"
@@ -67482,7 +67560,26 @@ var render = function() {
                                                         "\n\t\t\t\t\t                                \t\t\t\t"
                                                     )
                                                   ]
-                                                )
+                                                ),
+                                                _vm._v(" "),
+                                                producto.descuento
+                                                  ? _c(
+                                                      "button",
+                                                      {
+                                                        staticClass:
+                                                          "btn btn-warning btn-xs productcate"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n\t\t\t\t\t                                \t\t\t\t  Des.\t" +
+                                                            _vm._s(
+                                                              producto.descuento
+                                                            ) +
+                                                            " %\n\t\t\t\t\t                                \t\t\t\t"
+                                                        )
+                                                      ]
+                                                    )
+                                                  : _vm._e()
                                               ]
                                             )
                                           ]
@@ -68152,509 +68249,11 @@ var render = function() {
                             ],
                             1
                           )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-md-6" }, [
-                            _c(
-                              "div",
-                              { staticClass: "input-group" },
-                              [
-                                _vm._m(12),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model.number",
-                                      value: _vm.form.descuento,
-                                      expression: "form.descuento",
-                                      modifiers: { number: true }
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: {
-                                    type: "number",
-                                    step: "0.01",
-                                    name: "descuento",
-                                    placeholder: "Descuento del producto."
-                                  },
-                                  domProps: { value: _vm.form.descuento },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.form,
-                                        "descuento",
-                                        _vm._n($event.target.value)
-                                      )
-                                    },
-                                    blur: function($event) {
-                                      return _vm.$forceUpdate()
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("has-error", {
-                                  attrs: { form: _vm.form, field: "descuento" }
-                                })
-                              ],
-                              1
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-6" }, [
-                            _c("div", { staticClass: "input-group" }, [
-                              _vm._m(13),
-                              _vm._v(" "),
-                              _c("textarea", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model.trim",
-                                    value: _vm.form.oferta,
-                                    expression: "form.oferta",
-                                    modifiers: { trim: true }
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  placeholder: "Describa el descuento.",
-                                  rows: "2",
-                                  name: "oferta"
-                                },
-                                domProps: { value: _vm.form.oferta },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.form,
-                                      "oferta",
-                                      $event.target.value.trim()
-                                    )
-                                  },
-                                  blur: function($event) {
-                                    return _vm.$forceUpdate()
-                                  }
-                                }
-                              })
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "row" }, [
-                          _c(
-                            "div",
-                            { staticClass: "panel panel-default text-center" },
-                            [
-                              _vm._m(14),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "panel-collapse collapse",
-                                  staticStyle: { height: "0px" },
-                                  attrs: {
-                                    id: "collapseOne",
-                                    role: "tabpanel",
-                                    "aria-labelledby": "headingOne",
-                                    "aria-expanded": "false"
-                                  }
-                                },
-                                [
-                                  _c("div", { staticClass: "panel-body" }, [
-                                    _c("div", { staticClass: "row" }, [
-                                      _c("div", { staticClass: "col-md-4" }, [
-                                        _c(
-                                          "div",
-                                          { staticClass: "input-group" },
-                                          [
-                                            _vm._m(15),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "form-group is-empty",
-                                                class: {
-                                                  "has-error is-focused": _vm.form.errors.has(
-                                                    "entrada"
-                                                  )
-                                                }
-                                              },
-                                              [
-                                                _c("input", {
-                                                  directives: [
-                                                    {
-                                                      name: "model",
-                                                      rawName: "v-model.trim",
-                                                      value: _vm.form.entrada,
-                                                      expression:
-                                                        "form.entrada",
-                                                      modifiers: { trim: true }
-                                                    }
-                                                  ],
-                                                  staticClass: "form-control",
-                                                  attrs: {
-                                                    type: "text",
-                                                    name: "entrada",
-                                                    placeholder: "Entrada"
-                                                  },
-                                                  domProps: {
-                                                    value: _vm.form.entrada
-                                                  },
-                                                  on: {
-                                                    input: function($event) {
-                                                      if (
-                                                        $event.target.composing
-                                                      ) {
-                                                        return
-                                                      }
-                                                      _vm.$set(
-                                                        _vm.form,
-                                                        "entrada",
-                                                        $event.target.value.trim()
-                                                      )
-                                                    },
-                                                    blur: function($event) {
-                                                      return _vm.$forceUpdate()
-                                                    }
-                                                  }
-                                                }),
-                                                _vm._v(" "),
-                                                _c("span", {
-                                                  staticClass: "material-input"
-                                                }),
-                                                _vm._v(" "),
-                                                _c("has-error", {
-                                                  attrs: {
-                                                    form: _vm.form,
-                                                    field: "entrada"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-md-4" }, [
-                                        _c(
-                                          "div",
-                                          { staticClass: "input-group" },
-                                          [
-                                            _vm._m(16),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "form-group is-empty",
-                                                class: {
-                                                  "has-error is-focused": _vm.form.errors.has(
-                                                    "sopa"
-                                                  )
-                                                }
-                                              },
-                                              [
-                                                _c("input", {
-                                                  directives: [
-                                                    {
-                                                      name: "model",
-                                                      rawName: "v-model.trim",
-                                                      value: _vm.form.sopa,
-                                                      expression: "form.sopa",
-                                                      modifiers: { trim: true }
-                                                    }
-                                                  ],
-                                                  staticClass: "form-control",
-                                                  attrs: {
-                                                    type: "text",
-                                                    name: "sopa",
-                                                    placeholder: "Sopa"
-                                                  },
-                                                  domProps: {
-                                                    value: _vm.form.sopa
-                                                  },
-                                                  on: {
-                                                    input: function($event) {
-                                                      if (
-                                                        $event.target.composing
-                                                      ) {
-                                                        return
-                                                      }
-                                                      _vm.$set(
-                                                        _vm.form,
-                                                        "sopa",
-                                                        $event.target.value.trim()
-                                                      )
-                                                    },
-                                                    blur: function($event) {
-                                                      return _vm.$forceUpdate()
-                                                    }
-                                                  }
-                                                }),
-                                                _vm._v(" "),
-                                                _c("span", {
-                                                  staticClass: "material-input"
-                                                }),
-                                                _vm._v(" "),
-                                                _c("has-error", {
-                                                  attrs: {
-                                                    form: _vm.form,
-                                                    field: "sopa"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-md-4" }, [
-                                        _c(
-                                          "div",
-                                          { staticClass: "input-group" },
-                                          [
-                                            _vm._m(17),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "form-group is-empty",
-                                                class: {
-                                                  "has-error is-focused": _vm.form.errors.has(
-                                                    "segundo"
-                                                  )
-                                                }
-                                              },
-                                              [
-                                                _c("input", {
-                                                  directives: [
-                                                    {
-                                                      name: "model",
-                                                      rawName: "v-model.trim",
-                                                      value: _vm.form.segundo,
-                                                      expression:
-                                                        "form.segundo",
-                                                      modifiers: { trim: true }
-                                                    }
-                                                  ],
-                                                  staticClass: "form-control",
-                                                  attrs: {
-                                                    type: "text",
-                                                    name: "segundo",
-                                                    placeholder: "Segundo"
-                                                  },
-                                                  domProps: {
-                                                    value: _vm.form.segundo
-                                                  },
-                                                  on: {
-                                                    input: function($event) {
-                                                      if (
-                                                        $event.target.composing
-                                                      ) {
-                                                        return
-                                                      }
-                                                      _vm.$set(
-                                                        _vm.form,
-                                                        "segundo",
-                                                        $event.target.value.trim()
-                                                      )
-                                                    },
-                                                    blur: function($event) {
-                                                      return _vm.$forceUpdate()
-                                                    }
-                                                  }
-                                                }),
-                                                _vm._v(" "),
-                                                _c("span", {
-                                                  staticClass: "material-input"
-                                                }),
-                                                _vm._v(" "),
-                                                _c("has-error", {
-                                                  attrs: {
-                                                    form: _vm.form,
-                                                    field: "segundo"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            )
-                                          ]
-                                        )
-                                      ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "row" }, [
-                                      _c("div", { staticClass: "col-md-4" }, [
-                                        _c(
-                                          "div",
-                                          { staticClass: "input-group" },
-                                          [
-                                            _vm._m(18),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "form-group is-empty",
-                                                class: {
-                                                  "has-error is-focused": _vm.form.errors.has(
-                                                    "postre"
-                                                  )
-                                                }
-                                              },
-                                              [
-                                                _c("input", {
-                                                  directives: [
-                                                    {
-                                                      name: "model",
-                                                      rawName: "v-model.trim",
-                                                      value: _vm.form.postre,
-                                                      expression: "form.postre",
-                                                      modifiers: { trim: true }
-                                                    }
-                                                  ],
-                                                  staticClass: "form-control",
-                                                  attrs: {
-                                                    type: "text",
-                                                    name: "postre",
-                                                    placeholder: "Postre"
-                                                  },
-                                                  domProps: {
-                                                    value: _vm.form.postre
-                                                  },
-                                                  on: {
-                                                    input: function($event) {
-                                                      if (
-                                                        $event.target.composing
-                                                      ) {
-                                                        return
-                                                      }
-                                                      _vm.$set(
-                                                        _vm.form,
-                                                        "postre",
-                                                        $event.target.value.trim()
-                                                      )
-                                                    },
-                                                    blur: function($event) {
-                                                      return _vm.$forceUpdate()
-                                                    }
-                                                  }
-                                                }),
-                                                _vm._v(" "),
-                                                _c("span", {
-                                                  staticClass: "material-input"
-                                                }),
-                                                _vm._v(" "),
-                                                _c("has-error", {
-                                                  attrs: {
-                                                    form: _vm.form,
-                                                    field: "postre"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-md-4" }, [
-                                        _c(
-                                          "div",
-                                          { staticClass: "input-group" },
-                                          [
-                                            _vm._m(19),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "form-group is-empty",
-                                                class: {
-                                                  "has-error is-focused": _vm.form.errors.has(
-                                                    "refresco"
-                                                  )
-                                                }
-                                              },
-                                              [
-                                                _c("input", {
-                                                  directives: [
-                                                    {
-                                                      name: "model",
-                                                      rawName: "v-model.trim",
-                                                      value: _vm.form.refresco,
-                                                      expression:
-                                                        "form.refresco",
-                                                      modifiers: { trim: true }
-                                                    }
-                                                  ],
-                                                  staticClass: "form-control",
-                                                  attrs: {
-                                                    type: "text",
-                                                    name: "refresco",
-                                                    placeholder: "Refresco"
-                                                  },
-                                                  domProps: {
-                                                    value: _vm.form.refresco
-                                                  },
-                                                  on: {
-                                                    input: function($event) {
-                                                      if (
-                                                        $event.target.composing
-                                                      ) {
-                                                        return
-                                                      }
-                                                      _vm.$set(
-                                                        _vm.form,
-                                                        "refresco",
-                                                        $event.target.value.trim()
-                                                      )
-                                                    },
-                                                    blur: function($event) {
-                                                      return _vm.$forceUpdate()
-                                                    }
-                                                  }
-                                                }),
-                                                _vm._v(" "),
-                                                _c("span", {
-                                                  staticClass: "material-input"
-                                                }),
-                                                _vm._v(" "),
-                                                _c("has-error", {
-                                                  attrs: {
-                                                    form: _vm.form,
-                                                    field: "refresco"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-md-4" })
-                                    ])
-                                  ])
-                                ]
-                              )
-                            ]
-                          )
                         ])
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-4 text-center" }, [
-                        _vm._m(20),
+                        _vm._m(12),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -68669,7 +68268,7 @@ var render = function() {
                             attrs: { "data-provides": "fileinput" }
                           },
                           [
-                            _vm._m(21),
+                            _vm._m(13),
                             _vm._v(" "),
                             _c("div", {
                               staticClass:
@@ -68701,7 +68300,7 @@ var render = function() {
                                 ]
                               ),
                               _vm._v(" "),
-                              _vm._m(22)
+                              _vm._m(14)
                             ]),
                             _vm._v(" "),
                             _c("has-error", {
@@ -68709,6 +68308,564 @@ var render = function() {
                             })
                           ],
                           1
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-4" }, [
+                          _c(
+                            "div",
+                            { staticClass: "input-group" },
+                            [
+                              _vm._m(15),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model.number",
+                                    value: _vm.form.descuento,
+                                    expression: "form.descuento",
+                                    modifiers: { number: true }
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "number",
+                                  step: "any",
+                                  min: "0",
+                                  max: "100",
+                                  value: "0",
+                                  name: "descuento",
+                                  id: "descuento",
+                                  placeholder: "Porcentaje del descuento."
+                                },
+                                domProps: { value: _vm.form.descuento },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.form,
+                                      "descuento",
+                                      _vm._n($event.target.value)
+                                    )
+                                  },
+                                  blur: function($event) {
+                                    return _vm.$forceUpdate()
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("has-error", {
+                                attrs: { form: _vm.form, field: "descuento" }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "progress",
+                                  staticStyle: {
+                                    height: "19px",
+                                    "margin-bottom": "2px !important"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "progress-bar progress-bar-rose ",
+                                      style: {
+                                        width: _vm.form.descuento + "%"
+                                      },
+                                      attrs: {
+                                        role: "progressbar",
+                                        "aria-valuenow": "form.descuento",
+                                        "aria-valuemin": "0",
+                                        "aria-valuemax": "100"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n\t\t\t\t\t\t\t\t\t    " +
+                                          _vm._s(_vm.form.descuento) +
+                                          "%\n\t\t\t\t\t\t\t\t\t  "
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-4" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("div", { staticClass: "input-group-addon" }, [
+                              _c("span", { staticClass: "input-group-text" }, [
+                                _vm._v(_vm._s(_vm.generardescuento))
+                              ])
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-4" }, [
+                          _c(
+                            "div",
+                            { staticClass: "input-group" },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model.number",
+                                    value: _vm.form.actides,
+                                    expression: "form.actides",
+                                    modifiers: { number: true }
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "number",
+                                  step: "any",
+                                  min: "0",
+                                  max: "100",
+                                  value: "0",
+                                  name: "actides",
+                                  placeholder: "Ej.: 3 "
+                                },
+                                domProps: { value: _vm.form.actides },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.form,
+                                      "actides",
+                                      _vm._n($event.target.value)
+                                    )
+                                  },
+                                  blur: function($event) {
+                                    return _vm.$forceUpdate()
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm._m(16),
+                              _vm._v(" "),
+                              _c("has-error", {
+                                attrs: { form: _vm.form, field: "actides" }
+                              })
+                            ],
+                            1
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c(
+                          "div",
+                          { staticClass: "panel panel-default text-center" },
+                          [
+                            _vm._m(17),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "panel-collapse collapse",
+                                staticStyle: { height: "0px" },
+                                attrs: {
+                                  id: "collapseOne",
+                                  role: "tabpanel",
+                                  "aria-labelledby": "headingOne",
+                                  "aria-expanded": "false"
+                                }
+                              },
+                              [
+                                _c("div", { staticClass: "panel-body" }, [
+                                  _c("div", { staticClass: "row" }, [
+                                    _c("div", { staticClass: "col-md-4" }, [
+                                      _c(
+                                        "div",
+                                        { staticClass: "input-group" },
+                                        [
+                                          _vm._m(18),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "form-group is-empty",
+                                              class: {
+                                                "has-error is-focused": _vm.form.errors.has(
+                                                  "entrada"
+                                                )
+                                              }
+                                            },
+                                            [
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model.trim",
+                                                    value: _vm.form.entrada,
+                                                    expression: "form.entrada",
+                                                    modifiers: { trim: true }
+                                                  }
+                                                ],
+                                                staticClass: "form-control",
+                                                attrs: {
+                                                  type: "text",
+                                                  name: "entrada",
+                                                  placeholder: "Entrada"
+                                                },
+                                                domProps: {
+                                                  value: _vm.form.entrada
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.$set(
+                                                      _vm.form,
+                                                      "entrada",
+                                                      $event.target.value.trim()
+                                                    )
+                                                  },
+                                                  blur: function($event) {
+                                                    return _vm.$forceUpdate()
+                                                  }
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("span", {
+                                                staticClass: "material-input"
+                                              }),
+                                              _vm._v(" "),
+                                              _c("has-error", {
+                                                attrs: {
+                                                  form: _vm.form,
+                                                  field: "entrada"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-md-4" }, [
+                                      _c(
+                                        "div",
+                                        { staticClass: "input-group" },
+                                        [
+                                          _vm._m(19),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "form-group is-empty",
+                                              class: {
+                                                "has-error is-focused": _vm.form.errors.has(
+                                                  "sopa"
+                                                )
+                                              }
+                                            },
+                                            [
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model.trim",
+                                                    value: _vm.form.sopa,
+                                                    expression: "form.sopa",
+                                                    modifiers: { trim: true }
+                                                  }
+                                                ],
+                                                staticClass: "form-control",
+                                                attrs: {
+                                                  type: "text",
+                                                  name: "sopa",
+                                                  placeholder: "Sopa"
+                                                },
+                                                domProps: {
+                                                  value: _vm.form.sopa
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.$set(
+                                                      _vm.form,
+                                                      "sopa",
+                                                      $event.target.value.trim()
+                                                    )
+                                                  },
+                                                  blur: function($event) {
+                                                    return _vm.$forceUpdate()
+                                                  }
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("span", {
+                                                staticClass: "material-input"
+                                              }),
+                                              _vm._v(" "),
+                                              _c("has-error", {
+                                                attrs: {
+                                                  form: _vm.form,
+                                                  field: "sopa"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-md-4" }, [
+                                      _c(
+                                        "div",
+                                        { staticClass: "input-group" },
+                                        [
+                                          _vm._m(20),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "form-group is-empty",
+                                              class: {
+                                                "has-error is-focused": _vm.form.errors.has(
+                                                  "segundo"
+                                                )
+                                              }
+                                            },
+                                            [
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model.trim",
+                                                    value: _vm.form.segundo,
+                                                    expression: "form.segundo",
+                                                    modifiers: { trim: true }
+                                                  }
+                                                ],
+                                                staticClass: "form-control",
+                                                attrs: {
+                                                  type: "text",
+                                                  name: "segundo",
+                                                  placeholder: "Segundo"
+                                                },
+                                                domProps: {
+                                                  value: _vm.form.segundo
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.$set(
+                                                      _vm.form,
+                                                      "segundo",
+                                                      $event.target.value.trim()
+                                                    )
+                                                  },
+                                                  blur: function($event) {
+                                                    return _vm.$forceUpdate()
+                                                  }
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("span", {
+                                                staticClass: "material-input"
+                                              }),
+                                              _vm._v(" "),
+                                              _c("has-error", {
+                                                attrs: {
+                                                  form: _vm.form,
+                                                  field: "segundo"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "row" }, [
+                                    _c("div", { staticClass: "col-md-4" }, [
+                                      _c(
+                                        "div",
+                                        { staticClass: "input-group" },
+                                        [
+                                          _vm._m(21),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "form-group is-empty",
+                                              class: {
+                                                "has-error is-focused": _vm.form.errors.has(
+                                                  "postre"
+                                                )
+                                              }
+                                            },
+                                            [
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model.trim",
+                                                    value: _vm.form.postre,
+                                                    expression: "form.postre",
+                                                    modifiers: { trim: true }
+                                                  }
+                                                ],
+                                                staticClass: "form-control",
+                                                attrs: {
+                                                  type: "text",
+                                                  name: "postre",
+                                                  placeholder: "Postre"
+                                                },
+                                                domProps: {
+                                                  value: _vm.form.postre
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.$set(
+                                                      _vm.form,
+                                                      "postre",
+                                                      $event.target.value.trim()
+                                                    )
+                                                  },
+                                                  blur: function($event) {
+                                                    return _vm.$forceUpdate()
+                                                  }
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("span", {
+                                                staticClass: "material-input"
+                                              }),
+                                              _vm._v(" "),
+                                              _c("has-error", {
+                                                attrs: {
+                                                  form: _vm.form,
+                                                  field: "postre"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-md-4" }, [
+                                      _c(
+                                        "div",
+                                        { staticClass: "input-group" },
+                                        [
+                                          _vm._m(22),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "form-group is-empty",
+                                              class: {
+                                                "has-error is-focused": _vm.form.errors.has(
+                                                  "refresco"
+                                                )
+                                              }
+                                            },
+                                            [
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model.trim",
+                                                    value: _vm.form.refresco,
+                                                    expression: "form.refresco",
+                                                    modifiers: { trim: true }
+                                                  }
+                                                ],
+                                                staticClass: "form-control",
+                                                attrs: {
+                                                  type: "text",
+                                                  name: "refresco",
+                                                  placeholder: "Refresco"
+                                                },
+                                                domProps: {
+                                                  value: _vm.form.refresco
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.$set(
+                                                      _vm.form,
+                                                      "refresco",
+                                                      $event.target.value.trim()
+                                                    )
+                                                  },
+                                                  blur: function($event) {
+                                                    return _vm.$forceUpdate()
+                                                  }
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("span", {
+                                                staticClass: "material-input"
+                                              }),
+                                              _vm._v(" "),
+                                              _c("has-error", {
+                                                attrs: {
+                                                  form: _vm.form,
+                                                  field: "refresco"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-md-4" })
+                                  ])
+                                ])
+                              ]
+                            )
+                          ]
                         )
                       ])
                     ]),
@@ -68923,18 +69080,52 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "input-group-addon" }, [
-      _c("i", { staticClass: "material-icons" }, [_vm._v("money_off")])
+    return _c("h4", [_c("b", [_vm._v("Imagen de la categoría")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "fileinput-new thumbnail img-rounded img-raised " },
+      [
+        _c("img", {
+          staticStyle: { width: "20rem" },
+          attrs: { src: "/img/categoria/catedefault.jpg", alt: "Foto Usuario" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "btn btn-sm btn-danger btn-round fileinput-exists",
+        attrs: { href: "#pablo", "data-dismiss": "fileinput" }
+      },
+      [_c("i", { staticClass: "fa fa-times" }), _vm._v(" Eliminar")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-addon" }, [
+      _c("span", { staticClass: "input-group-text" }, [
+        _c("h4", [_vm._v(" % ")])
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "input-group-addon" }, [
-      _c("i", { staticClass: "material-icons" }, [
-        _vm._v("indeterminate_check_box")
-      ])
+    return _c("div", { staticClass: "input-group-addon" }, [
+      _c("span", { staticClass: "input-group-text" }, [_vm._v(" Unids. ")])
     ])
   },
   function() {
@@ -68964,7 +69155,7 @@ var staticRenderFns = [
           [
             _c("h4", { staticClass: "panel-title" }, [
               _vm._v(
-                "\n                                    \t\t\t\t¿Menú del Almuerzo?\n                                   \t\t\t\t\t"
+                "\n                                \t\t\t\t¿Menú del Almuerzo?\n                               \t\t\t\t\t"
               ),
               _c("i", { staticClass: "material-icons" }, [
                 _vm._v("keyboard_arrow_down")
@@ -69024,40 +69215,6 @@ var staticRenderFns = [
         _vm._v("local_offer")
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", [_c("b", [_vm._v("Imagen de la categoría")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "fileinput-new thumbnail img-rounded img-raised " },
-      [
-        _c("img", {
-          staticStyle: { width: "20rem" },
-          attrs: { src: "/img/categoria/catedefault.jpg", alt: "Foto Usuario" }
-        })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "btn btn-sm btn-danger btn-round fileinput-exists",
-        attrs: { href: "#pablo", "data-dismiss": "fileinput" }
-      },
-      [_c("i", { staticClass: "fa fa-times" }), _vm._v(" Eliminar")]
-    )
   },
   function() {
     var _vm = this
