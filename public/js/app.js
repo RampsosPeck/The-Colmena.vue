@@ -2186,7 +2186,7 @@ __webpack_require__.r(__webpack_exports__);
       cants: []
     };
   },
-  props: ['items'],
+  //props: ['items'],
   methods: {}
 });
 
@@ -2577,6 +2577,17 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -65738,195 +65749,34 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card-content" }, [
-    _c("div", { staticClass: "table-responsive" }, [
-      _c("table", { staticClass: "table table-shopping" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          [
-            _vm._l(_vm.items, function(item, index) {
-              return _c(
-                "tr",
-                { key: item.id, attrs: { "data-index": index } },
-                [
-                  _c(
-                    "td",
-                    { staticClass: "td-usertable ", attrs: { colspan: "1" } },
-                    [
-                      _c("div", { staticClass: "media text-left" }, [
-                        _c("div", { staticClass: "media-body" }, [
-                          _c("h6", { staticClass: "media-heading " }, [
-                            _c("span", { staticClass: "text-rose" }, [
-                              _vm._v(_vm._s(item.nombre))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "usertable" }, [
-                            _vm._v(" " + _vm._s(item.descripcion))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "h6",
-                            { staticClass: "media-heading productlist" },
-                            [
-                              _vm._v(
-                                "\n\t\t\t\t\t\t\t\t\t\tPrecio\n\t                    \t\t\t\t"
-                              ),
-                              _c("small", [_vm._v(": " + _vm._s(item.precio))]),
-                              _vm._v(" Bs.\n\t                    \t\t\t")
-                            ]
-                          )
-                        ])
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    { staticClass: "td-number", attrs: { colspan: "1" } },
-                    [
-                      _c("div", { staticClass: "text-center" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-round btn-rose btn-xs",
-                            staticStyle: { padding: "4px 8px !important" },
-                            attrs: {
-                              type: "button",
-                              onclick:
-                                "this.parentNode.querySelector('input[type=number]').stepDown()"
-                            },
-                            on: {
-                              input: function($event) {
-                                _vm.cantidad--
-                              }
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "material-icons" }, [
-                              _vm._v("remove")
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass: "btncant ",
-                            staticStyle: { "line-height": "1.8" }
-                          },
-                          [
-                            _c("input", {
-                              staticClass: "letracard",
-                              staticStyle: { "max-width": "3rem !important" },
-                              attrs: {
-                                min: "1",
-                                name: "cantidad",
-                                value: "1",
-                                type: "number"
-                              },
-                              on: {
-                                input: function($event) {
-                                  _vm.cantidad++
-                                }
-                              }
-                            })
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _vm._m(1, true)
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm._m(2, true)
-                ]
-              )
-            }),
-            _vm._v(" "),
-            _vm._m(3)
-          ],
-          2
-        )
-      ])
-    ])
-  ])
+  return _vm._m(0)
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", { staticClass: "almuerzo" }, [
-        _c("th", { staticClass: "text-center" }, [
-          _c("b", [_vm._v("Producto")])
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [
-          _c("b", [_vm._v("Cantidad")])
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [
-          _c("b", [_vm._v("Sub Total")])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-round btn-rose btn-xs",
-        staticStyle: { padding: "4px 8px !important" },
-        attrs: {
-          type: "button",
-          onclick:
-            "this.parentNode.querySelector('input[type=number]').stepUp()"
-        }
-      },
-      [_c("i", { staticClass: "material-icons" }, [_vm._v("add")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "td-number", attrs: { colspan: "1" } }, [
-      _c("div", { staticClass: "text-center" }, [
-        _c("small", [_vm._v("Bs.")]),
-        _vm._v("549\n\t                        ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", { staticClass: "text-right" }, [
-        _vm._v("\n\t                       Total: 2,346 "),
-        _c("small", [_vm._v("Bs.")])
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "td-number", attrs: { colspan: "2" } }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-rose btn-round", attrs: { type: "button" } },
-          [
-            _vm._v(
-              "\n\t                    \t\tRealizar Pedido\n\t                    \t\t"
-            ),
-            _c("i", { staticClass: "material-icons" }, [
-              _vm._v("keyboard_arrow_right")
+    return _c("div", { staticClass: "card-content" }, [
+      _c("div", { staticClass: "table-responsive" }, [
+        _c("table", { staticClass: "table table-shopping" }, [
+          _c("thead", [
+            _c("tr", { staticClass: "almuerzo" }, [
+              _c("th", { staticClass: "text-center" }, [
+                _c("b", [_vm._v("Producto")])
+              ]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [
+                _c("b", [_vm._v("Cantidad")])
+              ]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [
+                _c("b", [_vm._v("Sub Total")])
+              ])
             ])
-          ]
-        )
+          ]),
+          _vm._v(" "),
+          _c("tbody")
+        ])
       ])
     ])
   }
@@ -66564,32 +66414,39 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("li", [
-    _c(
-      "a",
-      {
-        staticClass: "btn btn-rose btn-round btn-sm",
-        attrs: {
-          href: "",
-          target: "_blank",
-          "data-toggle": "tooltip",
-          "data-placement": "bottom",
-          title: "Carrito/Compras"
-        }
-      },
-      [
-        _c("img", {
-          staticClass: "nav-icon",
-          attrs: { src: "/img/secondary/cart.svg", alt: "pedidos", width: "30" }
-        }),
-        _c("b", [_vm._v("\n             Carrito")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "label label-warning" }, [
-          _vm._v(" " + _vm._s(_vm.productsCount))
-        ])
-      ]
-    )
-  ])
+  return _c(
+    "li",
+    [
+      _c(
+        "router-link",
+        {
+          staticClass: "btn btn-rose btn-round btn-sm",
+          attrs: {
+            to: "/carrito",
+            "data-toggle": "tooltip",
+            "data-placement": "bottom",
+            title: "Carrito/Compras"
+          }
+        },
+        [
+          _c("img", {
+            staticClass: "nav-icon",
+            attrs: {
+              src: "/img/secondary/cart.svg",
+              alt: "pedidos",
+              width: "30"
+            }
+          }),
+          _c("b", [_vm._v("\n             Carritxo")]),
+          _vm._v(" "),
+          _c("span", { staticClass: "label label-warning" }, [
+            _vm._v(" " + _vm._s(_vm.productsCount))
+          ])
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -66753,6 +66610,194 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "tab-pane", attrs: { id: "comidas" } }, [
             _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "col-md-3",
+                  staticStyle: { "margin-top": "35px" }
+                },
+                _vm._l(_vm.almuerzo, function(almu, index) {
+                  return _c(
+                    "div",
+                    {
+                      key: almu.id,
+                      staticClass: "card card-pricing",
+                      staticStyle: {
+                        "background-color": "rgba(233, 32, 99, 0.46)"
+                      }
+                    },
+                    [
+                      _c("div", { staticClass: "card-image" }, [
+                        _c("div", { staticClass: "ribbon ribbon-top-right" }, [
+                          _c("span", [
+                            _c("strong", [
+                              _vm._v(" " + _vm._s(almu.precio) + " Bs. ")
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          { attrs: { href: "#pablo" } },
+                          _vm._l(almu.fotos, function(foto) {
+                            return _c("span", { key: foto.id }, [
+                              _c("img", {
+                                staticClass: "imgcard",
+                                staticStyle: { height: "100%" },
+                                attrs: {
+                                  src: _vm.getFoto(foto.imagen),
+                                  alt: "Producto foto"
+                                }
+                              })
+                            ])
+                          }),
+                          0
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "card-content" },
+                        [
+                          _c("h4", { staticClass: "title " }, [
+                            _vm._v("ALMUERZO FAMILIAR")
+                          ]),
+                          _vm._v(" "),
+                          _c("ul", [
+                            _c(
+                              "li",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: almu.prodetalle.entrada,
+                                    expression: "almu.prodetalle.entrada"
+                                  }
+                                ]
+                              },
+                              [
+                                _c("b", [_vm._v("Entrada:")]),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "text-rose" }, [
+                                  _vm._v(_vm._s(almu.prodetalle.entrada))
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "li",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: almu.prodetalle.sopa,
+                                    expression: "almu.prodetalle.sopa"
+                                  }
+                                ]
+                              },
+                              [
+                                _c("b", [_vm._v("Sopa:")]),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "text-rose" }, [
+                                  _vm._v(_vm._s(almu.prodetalle.sopa))
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "li",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: almu.prodetalle.segundo,
+                                    expression: "almu.prodetalle.segundo"
+                                  }
+                                ]
+                              },
+                              [
+                                _c("b", [_vm._v("Segundo:")]),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "text-rose" }, [
+                                  _vm._v(_vm._s(almu.prodetalle.segundo))
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "li",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: almu.prodetalle.postre,
+                                    expression: "almu.prodetalle.postre"
+                                  }
+                                ]
+                              },
+                              [
+                                _c("b", [_vm._v("Refresco:")]),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "text-rose" }, [
+                                  _vm._v(_vm._s(almu.prodetalle.refresco))
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "li",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: almu.prodetalle.refresco,
+                                    expression: "almu.prodetalle.refresco"
+                                  }
+                                ]
+                              },
+                              [
+                                _c("b", [_vm._v("Postre:")]),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "text-rose" }, [
+                                  _vm._v(_vm._s(almu.prodetalle.refresco))
+                                ])
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "p",
+                            {
+                              staticClass:
+                                "card-description text-rose text-justify",
+                              staticStyle: { "margin-bottom": "0px" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                        " +
+                                  _vm._s(almu.descripcion) +
+                                  "\n                                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("add-producto-btn", {
+                            attrs: { product: almu, carri: _vm.carrito }
+                          })
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                }),
+                0
+              ),
+              _vm._v(" "),
               _c("div", { staticClass: "col-md-9" }, [
                 _c("h4", { staticClass: "title" }, [_vm._v("Platos extras")]),
                 _vm._v(" "),
@@ -66858,157 +66903,6 @@ var render = function() {
                         )
                       ])
                     ])
-                  }),
-                  0
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3 " }, [
-                _c("h4", { staticClass: "title text-center" }, [
-                  _vm._v("Almuerzo del día")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "card almuerzo shadow" },
-                  _vm._l(_vm.almuerzo, function(almu, index) {
-                    return _c(
-                      "div",
-                      { key: almu.id, staticClass: "card-body pb-c" },
-                      [
-                        _c("h4", { staticClass: "title text-center" }, [
-                          _vm._v(_vm._s(almu.nombre))
-                        ]),
-                        _vm._v(" "),
-                        _c("ul", { staticClass: "list-unstyled" }, [
-                          _c(
-                            "li",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: almu.prodetalle.entrada,
-                                  expression: "almu.prodetalle.entrada"
-                                }
-                              ]
-                            },
-                            [
-                              _c("b", [_vm._v("Entrada:")]),
-                              _vm._v(" " + _vm._s(almu.prodetalle.entrada))
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("hr", { staticClass: "linea" }),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: almu.prodetalle.sopa,
-                                  expression: "almu.prodetalle.sopa"
-                                }
-                              ]
-                            },
-                            [
-                              _c("b", [_vm._v("Sopa:")]),
-                              _vm._v(" " + _vm._s(almu.prodetalle.sopa))
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("hr", { staticClass: "linea" }),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: almu.prodetalle.segundo,
-                                  expression: "almu.prodetalle.segundo"
-                                }
-                              ]
-                            },
-                            [
-                              _c("b", [_vm._v("Segundo:")]),
-                              _vm._v(" " + _vm._s(almu.prodetalle.segundo))
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("hr", { staticClass: "linea" }),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: almu.prodetalle.postre,
-                                  expression: "almu.prodetalle.postre"
-                                }
-                              ]
-                            },
-                            [
-                              _c("b", [_vm._v("Postre:")]),
-                              _vm._v(" " + _vm._s(almu.prodetalle.postre))
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: almu.prodetalle.refresco,
-                                  expression: "almu.prodetalle.refresco"
-                                }
-                              ]
-                            },
-                            [
-                              _c("b", [_vm._v("Refresco:")]),
-                              _vm._v(" " + _vm._s(almu.prodetalle.refresco))
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("h4", { staticClass: "title" }, [
-                          _vm._v("Descripción")
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "description text-justify" }, [
-                          _vm._v(_vm._s(almu.descripcion))
-                        ]),
-                        _vm._v(" "),
-                        _c("h6", { staticClass: "title text-center" }, [
-                          _vm._v(
-                            " " + _vm._s(almu.create_dates.updated_at_human)
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticStyle: {
-                              "background-color": "#fff",
-                              "border-radius": "33px"
-                            }
-                          },
-                          [
-                            _c("add-producto-btn", {
-                              attrs: { product: almu, carri: _vm.carrito }
-                            })
-                          ],
-                          1
-                        )
-                      ]
-                    )
                   }),
                   0
                 )
@@ -88483,6 +88377,9 @@ var routes = [{
   path: '/productos',
   component: __webpack_require__(/*! ./components/Producto.vue */ "./resources/js/components/Producto.vue")["default"]
 }, {
+  path: '/carrito',
+  component: __webpack_require__(/*! ./components/CarritoComponent.vue */ "./resources/js/components/CarritoComponent.vue")["default"]
+}, {
   path: '/editarpro/:id',
   name: 'editar',
   component: function component() {
@@ -88523,8 +88420,7 @@ Vue.component('passport-authorized-clients', __webpack_require__(/*! ./component
 Vue.component('passport-personal-access-tokens', __webpack_require__(/*! ./components/passport/PersonalAccessTokens.vue */ "./resources/js/components/passport/PersonalAccessTokens.vue")["default"]);
 Vue.component('material-transition', __webpack_require__(/*! ./components/MaterialComponent.vue */ "./resources/js/components/MaterialComponent.vue")["default"]);
 Vue.component('add-producto-btn', __webpack_require__(/*! ./components/AddToCartComponent.vue */ "./resources/js/components/AddToCartComponent.vue")["default"]);
-Vue.component('count-producto', __webpack_require__(/*! ./components/CounterProductComponent.vue */ "./resources/js/components/CounterProductComponent.vue")["default"]);
-Vue.component('carrito-list', __webpack_require__(/*! ./components/CarritoComponent.vue */ "./resources/js/components/CarritoComponent.vue")["default"]); //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('count-producto', __webpack_require__(/*! ./components/CounterProductComponent.vue */ "./resources/js/components/CounterProductComponent.vue")["default"]); //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

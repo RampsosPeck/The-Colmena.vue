@@ -1,10 +1,10 @@
 <template>
 	<li>
-        <a href="" target="_blank" class="btn btn-rose btn-round btn-sm" data-toggle="tooltip" data-placement="bottom" title="Carrito/Compras">
+        <router-link to="/carrito"  class="btn btn-rose btn-round btn-sm" data-toggle="tooltip" data-placement="bottom" title="Carrito/Compras">
             <img src="/img/secondary/cart.svg" alt="pedidos" width="30" class="nav-icon" ><b>
-             Carrito</b>
+             Carritxo</b>
              <span class="label label-warning"> {{ productsCount }}</span>
-        </a>
+        </router-link>
     </li>
 </template>
 <script>

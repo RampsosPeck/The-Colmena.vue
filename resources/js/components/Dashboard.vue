@@ -77,9 +77,46 @@
                             </div>
                         </material-transition>
                     </div>
-
                     <div class="tab-pane" id="comidas" >
                         <div class="row">
+                            <div class="col-md-3" style="margin-top:35px;">
+                                <div class="card card-pricing" style="background-color:rgba(233, 32, 99, 0.46);" v-for="(almu, index) in almuerzo" :key="almu.id">
+                                    <div class="card-image">
+                                        <div class="ribbon ribbon-top-right">
+                                            <span><strong> {{ almu.precio }} Bs. </strong></span>
+                                        </div>
+                                        <a href="#pablo">
+                                        <span v-for="foto in almu.fotos" :key="foto.id">
+                                            <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;">
+                                        </span>
+                                        </a>
+                                    </div>
+                                    <div class="card-content">
+                                        <h4 class="title ">ALMUERZO FAMILIAR</h4>
+                                        <ul>
+                                            <li v-show="almu.prodetalle.entrada"><b>Entrada:</b>
+                                               <span class="text-rose">{{ almu.prodetalle.entrada }}</span>
+                                            </li>
+                                            <li v-show="almu.prodetalle.sopa"><b>Sopa:</b>
+                                                <span class="text-rose">{{ almu.prodetalle.sopa }}</span>
+                                            </li>
+                                            <li v-show="almu.prodetalle.segundo"><b>Segundo:</b>
+                                                <span class="text-rose">{{ almu.prodetalle.segundo }}</span>
+                                            </li>
+                                            <li v-show="almu.prodetalle.postre"><b>Refresco:</b>
+                                                <span class="text-rose">{{ almu.prodetalle.refresco }}</span>
+                                            </li>
+                                            <li v-show="almu.prodetalle.refresco"><b>Postre:</b>
+                                                <span class="text-rose">{{ almu.prodetalle.refresco }}</span>
+                                            </li>
+                                        </ul>
+                                        <p class="card-description text-rose text-justify" style="margin-bottom: 0px;">
+                                            {{ almu.descripcion }}
+                                        </p>
+                                        <add-producto-btn v-bind:product="almu" v-bind:carri="carrito"> </add-producto-btn>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-9">
                                 <h4 class="title">Platos extras</h4>
                                 <div class="row collections">
@@ -111,40 +148,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 ">
-                                <h4 class="title text-center">Almuerzo del día</h4>
-                                <div class="card almuerzo shadow">
-                                    <div class="card-body pb-c" v-for="(almu, index) in almuerzo" :key="almu.id" >
-                                        <h4 class="title text-center">{{ almu.nombre }}</h4>
-                                        <ul class="list-unstyled">
-                                            <li v-show="almu.prodetalle.entrada"><b>Entrada:</b> {{ almu.prodetalle.entrada }}</li>
-                                            <hr class="linea">
-                                            <li v-show="almu.prodetalle.sopa"><b>Sopa:</b> {{ almu.prodetalle.sopa }}</li>
-                                            <hr class="linea">
-                                            <li v-show="almu.prodetalle.segundo"><b>Segundo:</b> {{ almu.prodetalle.segundo }}</li>
-                                            <hr class="linea">
-                                            <li v-show="almu.prodetalle.postre"><b>Postre:</b> {{ almu.prodetalle.postre }}</li>
-                                            <li v-show="almu.prodetalle.refresco"><b>Refresco:</b> {{ almu.prodetalle.refresco }}</li>
-                                        </ul>
-                                        <h4 class="title">Descripción</h4>
-                                        <p class="description text-justify">{{ almu.descripcion }}</p>
-                                        <h6 class="title text-center"> {{ almu.create_dates.updated_at_human }}</h6>
-                                        <div style="background-color:#fff; border-radius:33px;">
-                                            <add-producto-btn v-bind:product="almu" v-bind:carri="carrito"> </add-producto-btn>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
-
                     <div class="tab-pane" id="varios" >
                         <div class="row">
                             <div class="col-md-6 col-md-offset-3">
                                 <div v-for="(vario, index) in varios" :key="vario.id">
                                 <div class="col-md-6">
                                     <div class="card card-blog shadow" style="background-color: #f2f2f2;">
-
                                         <div class="card-image">
                                             <div class="ribbon ribbon-top-right " v-show="vario.descuento">
                                                 <span><strong> {{ vario.descuento }}% DTO. </strong></span>

@@ -243,7 +243,43 @@
                         </div>
 
                         <div class="tab-pane" id="comidas" >
-                            <div class="row">
+                                <div class="col-md-3 ">
+                                    <div class="card card-pricing card-background" style="background-image: url({{$almuerzo->imgproductourl}})">
+                                        <div class="card-content">
+                                            <h4 class="title text-info">ALMUERZO FAMILIAR</h4>
+                                            <h3 class="card-title"><small>Bs.</small>{{ $almuerzo->precio }}</h3>
+                                            <ul>
+                                                <li><b>Entrada:</b> {{ $almuerzo->prodetalle->entrada }}</li>
+                                                <li><b>Sopa:</b> {{ $almuerzo->prodetalle->sopa }}</li>
+                                                <li><b>Segundo:</b> {{ $almuerzo->prodetalle->segundo }}</li>
+                                                <li><b>Refresco:</b> {{ $almuerzo->prodetalle->refresco }}</li>
+                                                <li><b>Postre:</b> {{ $almuerzo->prodetalle->postre }}</li>
+                                            </ul>
+                                            <p class="card-description text-justify" style="margin-bottom: 0px;">
+                                                {{ $almuerzo->descripcion }}
+                                            </p>
+                                            <form method="POST" action="{{ url('producto_detalles') }}">
+                                            @csrf
+                                            <input type="hidden" name="producto_id" value="{{ $almuerzo->id }}">
+                                            <div class="footer text-center">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-round btn-rose btn-xs" style="border-radius: 33px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                    <i class="material-icons">remove</i> </button>
+                                                    <div class="btncant" style="line-height: 1.8;">
+                                                    <input class="letracard" min="1" name="cantidad" value="1" type="number" style="background-color: #9c27b0; color:white;" >
+                                                    </div>
+                                                    <button type="button" class="btn btn-round btn-rose btn-xs" style="border-radius: 33px;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
+                                                </div>
+
+                                                <button class="btn btn-round btn-rose btn-xs" type="submit">
+                                                    <strong> Añadir</strong>
+                                                    <i class="material-icons" >add_shopping_cart</i>
+                                                </button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-9">
                                     <h4 class="title">Platos extras</h4>
                                     <div class="row collections">
@@ -302,46 +338,7 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                <div class="col-md-3 ">
-                                    <h4 class="title text-center">Almuerzo del día</h4>
-                                    <div class="card almuerzo shadow">
-                                        <div class="card-body pb-c"  >
-                                            <ul class="list-unstyled">
-                                                <li><b>Entrada:</b> {{ $almuerzo->prodetalle->entrada }}</li>
-                                                <hr class="linea">
-                                                <li><b>Sopa:</b> {{ $almuerzo->prodetalle->sopa }}</li>
-                                                <hr class="linea">
-                                                <li><b>Segundo:</b> {{ $almuerzo->prodetalle->segundo }}</li>
-                                                <hr class="linea">
-                                                <li><b>Refresco:</b> {{ $almuerzo->prodetalle->refresco }}</li>
-                                                <hr class="linea">
-                                                <li><b>Postre:</b> {{ $almuerzo->prodetalle->postre }}</li>
-                                            </ul>
-                                            <h4 class="title">Descripción</h4>
-                                            <p class=" text-justify">{{ $almuerzo->descripcion }}</p>
-                                            <form method="POST" action="{{ url('producto_detalles') }}">
-                                            @csrf
-                                            <input type="hidden" name="producto_id" value="{{ $almuerzo->id }}">
-                                            <div class="footer text-center">
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-round btn-primary btn-xs" style="border-radius: 33px !important;" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                    <i class="material-icons">remove</i> </button>
-                                                    <div class="btncant" style="line-height: 1.8;">
-                                                    <input class="letracard" min="1" name="cantidad" value="1" type="number" style="background-color: #9c27b0; color:white;" >
-                                                    </div>
-                                                    <button type="button" class="btn btn-round btn-primary btn-xs" style="border-radius: 33px;" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> <i class="material-icons">add</i> </button>
-                                                </div>
 
-                                                <button class="btn btn-round btn-primary btn-xs" type="submit">
-                                                    <strong> Añadir</strong>
-                                                    <i class="material-icons" >add_shopping_cart</i>
-                                                </button>
-                                            </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="tab-pane" id="varios" >

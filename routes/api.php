@@ -18,24 +18,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });*/
 
-
-
-// Route group for authenticated users only
-Route::group(['middleware' => ['auth:api']], function(){
-
-	Route::apiResources(['users' => 'API\UserController']);
-	Route::get('profile','API\UserController@profile');
-	Route::get('findUser','API\UserController@search');
-	Route::put('profile','API\UserController@updateProfile');
-
 	Route::apiResources(['categorias' => 'API\CategoriaController']);
-
 	Route::apiResources(['productos' => 'API\ProductoController']);
-
 	Route::get('tortas','API\ProductoController@tortas');
 	Route::get('comidas','API\ProductoController@comidas');
 	Route::get('almuerzo','API\ProductoController@almuerzo');
 	Route::get('varios','API\ProductoController@varios');
+// Route group for authenticated users only
+Route::group(['middleware' => ['auth:api']], function(){
+	Route::apiResources(['users' => 'API\UserController']);
+	Route::get('profile','API\UserController@profile');
+	Route::get('findUser','API\UserController@search');
+	Route::put('profile','API\UserController@updateProfile');
 });
 
 // Routes for guests only

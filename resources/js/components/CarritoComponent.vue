@@ -10,7 +10,7 @@
 	                </tr>
 	            </thead>
 	            <tbody>
-	                <tr  v-for="(item, index) in items" :key="item.id" :data-index="index">
+	                <!--<tr  v-for="(item, index) in items" :key="item.id" :data-index="index">
 	                    <td class="td-usertable " colspan="1">
 							<div class="media text-left">
 	                    		<div class="media-body">
@@ -51,7 +51,7 @@
 	                    		<i class="material-icons">keyboard_arrow_right</i>
 	                    	</button>
 	                    </td>
-	                </tr>
+	                </tr>-->
 	            </tbody>
 	        </table>
         </div>
@@ -65,7 +65,7 @@
 				cants:[]
 			}
 		},
-		props: ['items'],
+		//props: ['items'],
 		methods: {
 
 		}

@@ -78,6 +78,7 @@ let routes = [
     { path: '/developer', component: require('./components/Developer.vue').default },
     { path: '/categorias', component: require('./components/Categoria.vue').default },
     { path: '/productos', component: require('./components/Producto.vue').default },
+    { path: '/carrito',  component: require('./components/CarritoComponent.vue').default },
     {
       path: '/editarpro/:id',
       name: 'editar',
@@ -151,10 +152,7 @@ Vue.component(
     'count-producto',
     require('./components/CounterProductComponent.vue').default
 );
-Vue.component(
-    'carrito-list',
-    require('./components/CarritoComponent.vue').default
-);
+
 
 
 

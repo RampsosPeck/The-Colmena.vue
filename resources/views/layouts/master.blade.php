@@ -42,7 +42,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand " href="{{ url('dashboard') }}"><strong>La Colmena </strong></a>
+                    <a class="navbar-brand " href="/"><strong>La Colmena </strong></a>
                 </div>
 
                 <div class="collapse navbar-collapse">
@@ -56,7 +56,7 @@
                             </li>
                             @if (Route::has('register'))
                                 <li>
-                                    <a data-toggle="modal" data-target="#registerModal">
+                                    <a href="{{ route('register') }}">
                                         <i class="material-icons">create</i>
                                         {{ __('REGISTRARSE') }}
                                     </a>
@@ -170,6 +170,81 @@
             </div>
         </footer>
 
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-login">
+                <div class="modal-content">
+                    <div class="card card-signup card-plain">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
+
+                            <div class="header header-rose text-center">
+                                <h4 class="card-title">INICIO DE SECIÓN </h4>
+                                <div class="social-line">
+                                    <a href="#pablo" class="btn btn-just-icon btn-simple">
+                                        <i class="fa fa-facebook-square"></i>
+                                    </a>
+                                    <a href="#pablo" class="btn btn-just-icon btn-simple">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                    <a href="#pablo" class="btn btn-just-icon btn-simple">
+                                        <i class="fa fa-google-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="{{ route('login') }}">
+                                @csrf
+                                <div class="card-content">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons text-rose">stay_current_portrait</i>
+                                        </span>
+                                        <div class="form-group label-floating is-empty @error('celular') has-error is-focused @enderror">
+                                            <label class="control-label">Celular:</label>
+                                            <input type="number" class="form-control" name="celular" required value="{{ old('celular') }}">
+                                            <span class="material-input"></span>
+                                        </div>
+                                        @error('celular')
+                                            <span class="has-error text-danger" >
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons text-rose">lock_outline</i>
+                                        </span>
+                                        <div class="form-group label-floating is-empty @error('password') has-error is-focused @enderror">
+                                            <label class="control-label">Contraseña:</label>
+                                            <input type="password" class="form-control" name="password" required>
+                                            <span class="material-input"></span>
+                                        </div>
+                                        @error('password')
+                                            <span class="has-error text-danger" >
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-rose btn-round">
+                                        {{ __('INGRESAR') }}
+                                    </button>
+                                </div>
+                            </form>
+                            <div class="text-center">
+                                @if (Route::has('password.request'))
+                                    <a class="btn btn-danger btn-round btn-sm " href="{{ route('password.request') }}">
+                                        {{ __('¿Olvidaste tu contraseña?') }}
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
     <script src="{{ asset('js/app.js') }}" ></script>

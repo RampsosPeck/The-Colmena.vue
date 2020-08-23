@@ -198,7 +198,7 @@
                       <h1 data-swiper-anime='{"animation":"swiperContentRide","duration":1000,"delay":1000}' data-subtext="#1">La Colmena</h1>
                       <p class="big text-justify" data-swiper-anime='{"animation":"swiperContentRide","duration":1100,"delay":1100}'>Le ofrecemos una variedad de productos y ahora puedes realizar tus pedidos en linea. </p>
                       <p class="postitle text-center" data-swiper-anime='{"animation":"swiperContentRide","duration":1200,"delay":1200}'>
-                        <a class="button button-primary-wel" href="{{ url('catalogo') }}">Ver Catálogo</a>
+                        <a class="button button-primary-wel" href="{{ url('dashboard') }}">Ver Catálogo</a>
                       </p>
                     </div>
                     <div class="box-round-wrap">
@@ -217,7 +217,7 @@
                       <h1 data-swiper-anime='{"animation":"swiperContentRide","duration":1000,"delay":1000}' data-subtext="250">TORTAS ESPECIALES</h1>
                       <p class="big text-justify" data-swiper-anime='{"animation":"swiperContentRide","duration":1100,"delay":1100}'>Los mejores pasteles y para todos los gustos, frescos y especiales con un decorado inolvidable.</p>
                       <p class="postitle text-center" data-swiper-anime='{"animation":"swiperContentRide","duration":1200,"delay":1200}'>
-                        <a class="button button-primary-wel" href="{{ url('catalogo') }}">Pedir Tortas</a>
+                        <a class="button button-primary-wel" href="{{ url('dashboard') }}">Pedir Tortas</a>
                       </p>
                     </div>
                     <div class="box-round-wrap">
@@ -236,7 +236,7 @@
                       <h1 data-swiper-anime='{"animation":"swiperContentRide","duration":1000,"delay":1000}' data-subtext="100%">Comida deliciosa</h1>
                       <p class="big text-justify" data-swiper-anime='{"animation":"swiperContentRide","duration":1100,"delay":1100}'>Una variedad de platos a la carta y almuerzos para que deguste de la mejor comida más deliciosa.</p>
                       <p class="postitle text-center" data-swiper-anime='{"animation":"swiperContentRide","duration":1200,"delay":1200}'>
-                        <a class="button button-primary-wel" href="{{ url('catalogo') }}">Pedir platos a la carta</a>
+                        <a class="button button-primary-wel" href="{{ url('dashboard') }}">Pedir platos a la carta</a>
                       </p>
                     </div>
                     <div class="box-round-wrap">
@@ -255,7 +255,7 @@
                       <h1 data-swiper-anime='{"animation":"swiperContentRide","duration":1000,"delay":1000}' data-subtext="3k">Servicio de entrega</h1>
                       <p class="big text-justify" data-swiper-anime='{"animation":"swiperContentRide","duration":1100,"delay":1100}'>Nuestros clientes confian en nosotros por deleitar su paladar más de una decada.</p>
                       <p class="postitle text-center" data-swiper-anime='{"animation":"swiperContentRide","duration":1200,"delay":1200}'>
-                          <a class="button button-primary-wel" href="{{ url('catalogo') }}">Ver Catálogo</a>
+                          <a class="button button-primary-wel" href="{{ url('dashboard') }}">Ver Catálogo</a>
                       </p>
                     </div>
                     <div class="box-round-wrap"><img src="images/slider-04-671x671.png" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'/>
@@ -291,7 +291,7 @@
                   <li>Los ingredientes más frescos para cada plato.</li>
                 </ul>
                 <div class="text-center justify-content-center pt-3">
-                  <a class="button button-primary" href="{{ url('catalogo') }}">Ver Catálogo</a>
+                  <a class="button button-primary" href="{{ url('dashboard') }}">Ver Catálogo</a>
                 </div>
               </div>
             </div>
@@ -321,7 +321,7 @@
                 </div>
                 <p class="product-text text-justify">La mejor opción si estas buscando la comida más sabrosa fresca y a buen precio.</p>
                 <div class="cel-pro">
-                    <a class="button button-primary" href="{{ url('catalogo') }}">Ordenar ahora.</a>
+                    <a class="button button-primary" href="{{ url('dashboard') }}">Ordenar ahora.</a>
                 </div>
 
                 <!--<div>
@@ -343,7 +343,7 @@
                 </div>
                 <p class="product-text text-justify">Las tortas más deliciosas con decoraciones inolvidables únicos a gusto del cliente.</p>
                 <div class="cel-pro">
-                    <a class="button button-primary" href="{{ url('catalogo') }}">Ordenar ahora</a>
+                    <a class="button button-primary" href="{{ url('dashboard') }}">Ordenar ahora</a>
                 </div>
               </div>
             </div>
@@ -360,7 +360,7 @@
                 </div>
                 <p class="product-text text-justify">Le ofrecemos distintos productos desde refrescos y mucho más con un envio rápido y seguro.</p>
                 <div class="cel-pro">
-                    <a class="button button-primary" href="{{ url('catalogo') }}">Ordenar ahora</a>
+                    <a class="button button-primary" href="{{ url('dashboard') }}">Ordenar ahora</a>
                 </div>
               </div>
             </div>
