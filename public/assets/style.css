@@ -160,3 +160,26 @@ text-align: center;
 }
 /*HASTA AQUI */
 
+/*de aqui img la colmena central*/
+.imgcol{
+    margin-top: 20px;
+    margin-left: 3rem;
+    width: 40%;
+    height: auto;
+    position:absolute;
+    z-index: 1;
+}
+@media (min-width: 360px) and (max-width: 640px) {
+    .imgcol{
+        width: 70%;
+        height: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        margin-top: 1px;
+    }
+}
+/*hasta aqui*/

@@ -46,8 +46,8 @@
                     <!--RD Navbar Brand-->
                     <div class="rd-navbar-brand">
                       <a class="brand" href="#programs">
-                        <img class="brand-logo-dark" src="images/logo-default-363x100.png" alt="" width="181" height="50"/>
-                        <img class="brand-logo-light" src="images/logo-inverse-363x100.png" alt="" width="181" height="50"/>
+                        <img class="brand-logo-light" src="{{ asset('/img/welcome/logo.png') }}" alt="" width="181" height="50"/>
+
                       </a>
                     </div>
                   </div>
@@ -202,7 +202,7 @@
                       </p>
                     </div>
                     <div class="box-round-wrap">
-                      <img class="imgfirst" src="/img/welcome/a671X671.png" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'  />
+                      <img class="imgfirst" src="{{ asset('/img/welcome/logo.png') }}" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'  />
                     </div>
                   </div>
                 </div>

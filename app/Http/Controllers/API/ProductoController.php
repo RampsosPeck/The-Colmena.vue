@@ -13,6 +13,10 @@ use Illuminate\Support\Str;
 
 class ProductoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['only' => ['store','show','update','destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -63,30 +67,32 @@ class ProductoController extends Controller
         $this->validate($request, [
             'nombre' => ['required', 'string', 'max:255','unique:productos,nombre'],
             'descripcion' => ['required', 'string', 'max:255'],
-            'precio' => 'required|regex:/^[1-9][0-9]+$/i|not_in:0',
+            //'precio' => 'required|regex:/^[1-9][0-9]+$///i|not_in:0',
+            'precio' => 'required|numeric|not_in:0',
             'stock' => 'required|min:1',
             'foto' => 'required',
             'categoria' => 'required',
         ]);
 
-         if($request['descuento'] && $request['actides'])
+         /*if($request['descuento'] && $request['actides'])
          {
             $ofer = 'Hay un descuento de '.(($request['precio']*$request['descuento'])/100).' Bs. Apartir de :'.$request['actides'].' unidades.';
          }else{
             $ofer = 'Sin descuento';
-         }
+         }*/
 
          $producto = new Producto;
          $producto->nombre = $request['nombre'];
          $producto->slug = Str::of($request['nombre'])->slug('-');
-         $producto->codigo = date('h:m:s').'/'.date('Y-M-d').'/'.auth()->user()->id;
+         //$producto->codigo = date('h:m:s').'/'.date('Y-M-d').'/'.auth()->user()->id;
+         $producto->codigo = 'PRO/'.$request['categoria'].'/'.date('M').'/'.date('h:m:s').'/'.auth()->user()->id;
          $producto->descripcion = $request['descripcion'];
          $producto->descuento = $request['descuento'];
          $producto->actides = $request['actides'];
          $producto->precio = $request['precio'];
          $producto->stock = $request['stock'];
          $producto->cant_personas = $request['cant_personas'];
-         $producto->oferta = $ofer;
+         $producto->oferta = $request['oferta'];
          $producto->estado = true;
          $producto->categoria_id = $request['categoria'];
          $producto->save();
@@ -172,13 +178,13 @@ class ProductoController extends Controller
 
         }
 
-         if($request['descuento'] && $request['actides'])
+         /*if($request['descuento'] && $request['actides'])
          {
             $ofer = 'Hay un descuento de '.(($request['precio']*$request['descuento'])/100).' Bs. Apartir de :'.$request['actides'].' unidades.';
             $request->merge(['oferta' => $ofer]);
          }else{
             $request->merge(['oferta' => 'Sin descuento']);
-         }
+         }*/
         $producto->update($request->all());
 
         if($prodetalle){

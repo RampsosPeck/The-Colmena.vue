@@ -14,6 +14,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xs-2 follow">
+                        <router-link to="/carrito"  class="btn btn-fab btn-rose" rel="tooltip" title="Carrito de compras">
+                            <i class="material-icons">local_grocery_store</i>
+                        </router-link>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -129,8 +134,12 @@
                                                     <span><strong> {{ comida.descuento }}% DTO. </strong></span>
                                                 </div>
                                                 <a href="#pablo">
-                                                <label class="cardprecio label label-primary" > Bs. <strong>{{ comida.precio }}</strong> </label>
-                                                <img class="imgcard" src="/img/secondary/a671X671.png" />
+                                                <label class="cardprecio label label-primary" >
+                                                    Bs. <strong>{{ comida.precio }} </strong>
+                                                </label>
+                                                    <span v-for="foto in comida.fotos" :key="foto.id">
+                                                        <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;">
+                                                    </span>
                                                 </a>
                                             </div>
 

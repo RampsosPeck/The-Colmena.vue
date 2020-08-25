@@ -31,6 +31,11 @@ class Carrito extends Model
     	}else{
     		return Carrito::create();
     	}
+        /*if($carrito_id){
+            return Carrito::findOrFail($carrito_id);
+        }else{
+            return Carrito::create();
+        }*/
     }
 
     public function carrito_detalles()

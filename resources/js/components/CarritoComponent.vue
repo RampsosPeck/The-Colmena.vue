@@ -53,11 +53,11 @@ span.round-tab i{
 }
 .wizard li.active span.round-tab {
     background: #fff;
-    border: 3px solid #e91e63;
+    border: 3px solid #3C4858;
 
 }
 .wizard li.active span.round-tab i{
-    color: #e91e63;
+    color: #3C4858;
 }
 
 span.round-tab:hover {
@@ -77,7 +77,7 @@ span.round-tab:hover {
     margin: 0 auto;
     bottom: 0px;
     border: 5px solid transparent;
-    border-bottom-color: #e91e63;
+    border-bottom-color: #3C4858;
     transition: 0.1s ease-in-out;
 }
 
@@ -89,7 +89,7 @@ span.round-tab:hover {
     margin: 0 auto;
     bottom: 0px;
     border: 10px solid transparent;
-    border-bottom-color: #e91e63;
+    border-bottom-color: #3C4858;
 }
 
 .wizard .nav-tabs > li a {
@@ -160,7 +160,7 @@ span.round-tab:hover {
 							<div class="wizard"  >
 	            				<div class="wizard-inner">
 					                <div class="connecting-line"></div>
-					                <ul class="nav nav-tabs" role="tablist" style="background: rgba(46, 51, 56, 0.2)!important;">
+					                <ul class="nav nav-tabs navbar-rose" role="tablist" style="background: #e91e63 !important;">
 
 					                    <li role="presentation" class="active">
 					                        <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Paso 1 - Lista">
@@ -200,144 +200,91 @@ span.round-tab:hover {
 					                    <div class="tab-pane active" role="tabpanel" id="step1">
 					                    	<h3 class="card-title text-center" >LISTA DE PRODUCTOS</h3>
 					                        <div class="table-responsive">
-				                                <table class="table table-shopping">
+				                                <table class="table ">
 				                                    <thead>
-				                                        <tr>
-				                                            <th class="text-center"></th>
-				                                            <th >Product</th>
-				                                            <th class="th-description">Color</th>
-				                                            <th class="th-description">Size</th>
-				                                            <th class="text-right">Price</th>
-				                                            <th class="text-right">Qty</th>
-				                                            <th class="text-right">Amount</th>
+				                                        <tr class="almuerzo">
+				                                            <th class="text-center">#</th>
+				                                            <th class="text-center">Producto</th>
+				                                            <th class="text-center">Cantidad</th>
+				                                            <th class="text-center">Precio</th>
+				                                            <th class="text-center">Descuento</th>
+				                                            <th class="text-center">Sub Total</th>
 				                                            <th></th>
 				                                        </tr>
 				                                    </thead>
 				                                    <tbody>
-				                                        <tr>
-				                                            <td>
-				                                                <div class="img-container" style="margin-top:-12px; margin-bottom:-12px;"  >
-				                                                    <img src="assets/img/product1.jpg" style="width: 80% !important; ">
-				                                                </div>
+				                                    	<tr v-for="(cade, index) in carridetas" :key="cade.id" >
+							                                <td v-text="cade.id"  ></td>
+							                                <td class="td-usertable" >
+																<div class="media text-left" style="display: flex !important;  align-items: center !important;">
+							                                		<a class="pull-left td-usertable">
+							                                			<div class="listcategoria" v-for="foto in cade.producto.fotos" :key="foto.id" >
+				                                							<img :src="getFoto(foto.imagen)" class="img img-raised " alt="Producto foto" style="height: 100%;">
+				                                						</div>
+							                                		</a>
+							                                		<div class="media-body" style="width: auto !important;">
+							                                			<h6 class="media-heading">
+																			{{ cade.producto.nombre }}
+																			<small> * <span class="media-heading">Código:</span>  {{ cade.producto.codigo }}</small>
+							                                			</h6>
+							                                			<p class="usertable" v-text="cade.producto.descripcion"></p>
+							                                			<h6 class="media-heading productlist">
+							                                				<span v-show="cade.producto.cant_personas">
+							                                					* Num. Personas:
+							                                					<small>: {{ cade.producto.cant_personas }}</small>
+							                                				</span>
+							                                				<button class="btn btn-default btn-xs productcate">
+							                                					{{ cade.producto.categoria.nombre }}
+							                                				</button>
+							                                			</h6>
+							                                			<h6  class="media-heading productlist" v-if="cade.producto.descuento">
+							                                				Descuento: Del
+							                                				<button class="btn btn-warning btn-xs productcate">
+							                                				   {{ cade.producto.descuento }} %
+							                                				</button> Mayor a:
+							                                				<small> {{ cade.producto.actides }} </small> Unids.
+							                                			</h6>
+							                                    	</div>
+							                                    </div>
+							                                </td>
+							                                <td class="td-actions">
+            													<i class="material-icons"  v-on:click="cambiarCantidad(index,false)">remove_circle_outline</i>
+            														<span class="letracard" style="position:absolute !important;"> {{cade.cantidad}}</span>
+            													<i class="material-icons"  v-on:click="cambiarCantidad(index, true)" style="padding-left:1rem !important;">add_circle_outline</i>
 				                                            </td>
-				                                            <td class="td-name">
-				                                                <a href="#jacket">Spring Jacket</a>
-				                                                <br /><small>by Dolce&Gabbana</small>
-				                                            </td>
-				                                            <td>
-				                                                Red
-				                                            </td>
-				                                            <td>
-				                                                M
-				                                            </td>
-				                                            <td class="td-number">
-				                                                <small>&euro;</small>549
-				                                            </td>
-				                                            <td class="td-number">
-				                                                1
-				                                                <div class="btn-group">
-				                                                    <button class="btn btn-round btn-info btn-xs"> <i class="material-icons">remove</i> </button>
-				                                                    <button class="btn btn-round btn-info btn-xs"> <i class="material-icons">add</i> </button>
-				                                                </div>
-				                                            </td>
-				                                            <td class="td-number">
-				                                                <small>&euro;</small>549
-				                                            </td>
-				                                            <td class="td-actions">
-				                                                <button type="button" rel="tooltip" data-placement="left" title="Remove item" class="btn btn-simple">
-				                                                    <i class="material-icons">close</i>
-				                                                </button>
-				                                            </td>
-				                                        </tr>
-				                                        <tr>
-				                                             <td>
-				                                                <div class="img-container" style="margin-top:-12px; margin-bottom:-12px;">
-				                                                    <img src="assets/img/product2.jpg" alt="..."/>
-				                                                </div>
-				                                            </td>
-				                                            <td class="td-name">
-				                                                <a href="#pants">Short Pants</a>
-				                                                <br /><small>by Pucci</small>
-				                                            </td>
-				                                            <td>
-				                                                Purple
-				                                            </td>
-				                                            <td>
-				                                                M
-				                                            </td>
-
-				                                            <td class="td-number">
-				                                                <small>&euro;</small>499
-				                                            </td>
-				                                            <td class="td-number">
-				                                                2
-				                                                <div class="btn-group">
-				                                                    <button class="btn btn-round btn-info btn-xs"> <i class="material-icons">remove</i> </button>
-				                                                    <button class="btn btn-round btn-info btn-xs"> <i class="material-icons">add</i> </button>
-				                                                </div>
-				                                            </td>
-				                                            <td class="td-number">
-				                                                <small>&euro;</small>998
-				                                            </td>
-				                                            <td class="td-actions">
-				                                                <button type="button" rel="tooltip" data-placement="left" title="Remove item" class="btn btn-simple">
-				                                                    <i class="material-icons">close</i>
-				                                                </button>
-				                                            </td>
-				                                        </tr>
-				                                        <tr>
-				                                            <td>
-				                                                <div class="img-container" style="margin-top:-12px; margin-bottom:-12px;">
-				                                                    <img src="assets/img/product3.jpg" alt="...">
-				                                                </div>
-				                                            </td>
-				                                            <td class="td-name">
-				                                                <a href="#nothing">Pencil Skirt</a>
-				                                                <br /><small>by Valentino</small>
-				                                            </td>
-				                                            <td>
-				                                                White
-				                                            </td>
-				                                            <td>
-				                                                XL
-				                                            </td>
-
-				                                            <td class="td-number">
-				                                                <small>&euro;</small>799
-				                                            </td>
-				                                            <td class="td-number">
-				                                                1
-				                                                <div class="btn-group">
-				                                                    <button class="btn btn-round btn-info btn-xs"> <i class="material-icons">remove</i> </button>
-				                                                    <button class="btn btn-round btn-info btn-xs"> <i class="material-icons">add</i> </button>
-				                                                </div>
-				                                            </td>
-				                                            <td class="td-number">
-				                                                <small>&euro;</small>799</td>
-				                                            <td class="td-actions">
-				                                                <button type="button" rel="tooltip" data-placement="left" title="Remove item" class="btn btn-simple">
-				                                                    <i class="material-icons">close</i>
-				                                                </button>
-				                                            </td>
-				                                        </tr>
-				                                        <tr>
-				                                            <td colspan="3">
-				                                            </td>
-				                                            <td class="td-total">
-				                                               Total
-				                                            </td>
-				                                            <td class="td-price">
-				                                                <small>&euro;</small>2,346
-				                                            </td>
-				                                            <td colspan="3" class="text-right"> <button type="button" class="btn btn-info btn-round">Complete Purchase <i class="material-icons">keyboard_arrow_right</i></button></td>
-
-				                                        </tr>
+															<td class="text-center text-default">
+							                                	<h6 class="media-heading">
+					                                				{{ cade.producto.precio }}
+					                                			</h6>
+															</td>
+							                                <td class="text-center">
+							                                	<button class="btn btn-xs productcate" :class="cade.descuento_bs>0 ? 'btn-info' : 'btn-default'">
+				                                				    {{ convertMoney(cade.descuento_bs) }} Bs.
+				                                				</button>
+							                                </td>
+							                                <td class="text-center text-rose">
+							                                	<h6 class="media-heading">
+							                                	    {{ convertMoney((cade.cantidad*cade.producto_precio)-cade.descuento_bs) }}
+							                                	</h6>
+							                                </td>
+							                                <td class="text-center">
+							                                	<i @click="deletePro(cade.id)" class="material-icons btn-danger" title="Eliminar Producto">clear</i>
+							                                </td>
+							                            </tr>
+							                            <tr class="text-rose">
+							                            	<td class="text-right" colspan="4">
+							                            		<b> Total: </b>
+							                            	</td>
+							                            	<td class="text-left" colspan="2">
+							                            		{{onViewTotal()}} Bs.
+							                            	</td>
+							                            </tr>
 				                                    </tbody>
 				                                </table>
+				                                <div class="pull-right" style="padding-right: 15px;">
+						                            <button type="button" class="btn btn-rose btn-round next-step" v-on:click="onSendOrder()">Guardar y continuar</button>
+						                        </div>
 					                        </div>
-					                        <ul class="list-inline pull-right">
-					                            <li><button type="button" class="btn btn-rose btn-round next-step">Guardar y continuar</button></li>
-					                        </ul>
 					                    </div>
 					                    <div class="tab-pane" role="tabpanel" id="step2">
 							                <h3 class="card-title text-center" >DATOS DEL USUARIO</h3>
@@ -432,6 +379,8 @@ span.round-tab:hover {
 	export default {
 		data() {
             return {
+            	carridetas : [],
+            	desmessage: '0.00',
                 form: new Form({
                 	fullname: ''
                 })
@@ -439,7 +388,127 @@ span.round-tab:hover {
 		},
 		//props: ['items'],
 		methods: {
+			getFoto(ufoto){
+        		let foto = "img/producto/"+ufoto;
+                return foto;
+        	},
+			async loadProductos(){
+                //axios.get('api/user').then(({data}) => (this.users = data));
+                const  resul = await axios.get('/carripro');
+				//console.log(resul.data.data);
+				this.carridetas = resul.data.data;
+				//console.log(this.users);
 
-		}
+            },
+            cambiarCantidad(index,type){
+              // sacar variable de carrito
+              const dataCar = this.carridetas
+
+              // sacar la cantidad de producto
+              let cantd = dataCar[index].cantidad;
+              let desbs = dataCar[index].descuento_bs;
+              let subbs = dataCar[index].subtotal_bs;
+
+              let descubs = ((dataCar[index].producto.descuento*dataCar[index].producto_precio)/100);
+
+              if (type) {
+                cantd = cantd + 1
+                if(cantd > dataCar[index].producto.actides){
+                	//desbs = desbs+descubs
+                	desbs = cantd*descubs
+                }
+                subbs = (cantd*dataCar[index].producto_precio)-desbs
+              }
+              else if (type==false&&cantd>=1) {
+                cantd = cantd - 1
+                if(cantd <= dataCar[index].producto.actides){
+                	desbs = 0
+                }else{
+                	desbs = desbs-descubs
+                }
+                subbs = (cantd*dataCar[index].producto_precio)-desbs
+              }
+
+              if ((type==false&&cantd>=1)||type) {
+                dataCar[index].cantidad = cantd
+
+                dataCar[index].descuento_bs = desbs
+                dataCar[index].subtotal_bs = subbs
+
+                this.carridetas
+              }
+
+          	},
+          	convertMoney(value){
+		        const formatterPeso = new Intl.NumberFormat('es-CO', {
+		            style: 'currency',
+		            currency: 'COP',
+		            minimumFractionDigits: 0
+		        })
+		        let valueFinal = formatterPeso.format(value);
+		        return valueFinal
+		    },
+          	onViewTotal(){
+	            let total = 0
+	            this.carridetas.map((data)=>{
+	              	//total = total + parseFloat(data.subtotal_bs)
+	              	total = total + ((data.cantidad * data.producto.precio)-data.descuento_bs)
+	            })
+	            return this.convertMoney(total)
+	        },
+	        deletePro(id){
+	        	swal.fire({
+				  title: '¿Estás seguro?',
+				  text: "No podrás revertir esto!",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: 'Si, Eliminar!'
+				}).then((result) => {
+				   if (result.value)
+				   {
+				      axios.delete('carripro/'+id).then(()=>{
+                            swal.fire(
+                                'Deleted!',
+                                'El producto eliminado de tu carrito.',
+                                'success'
+                            )
+                            Fire.$emit('AfterCreate');
+                        }).catch(()=>{
+                            swal.fire(
+                                'Failed!',
+                                'Revisa algo salió mal.',
+                                'warning'
+                            )
+                      })
+				   }
+				})
+        	},
+        	onSendOrder(){
+                this.$Progress.start();
+                axios.post('carriproductos',this.carridetas)
+                .then(() => {
+                    swal.fire(
+                        'Excelente!',
+                        'Tu carrito de compras se guardo con éxito.',
+                        'success'
+                    )
+                    this.$Progress.finish();
+                    Fire.$emit('AfterCreate');
+                })
+                .catch(() => {
+                    this.$Progress.fail();
+                });
+            }
+		},
+        created(){
+        	this.loadProductos();
+        	Fire.$on('AfterCreate',() => {
+                this.loadProductos();
+            });
+        },
+        computed: {
+        }
 	};
 </script>

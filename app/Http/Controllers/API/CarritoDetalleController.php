@@ -19,12 +19,19 @@ class CarritoDetalleController extends Controller
         $producto = Producto::find($request->producto_id);
         $cant = $request->cantidad * $producto->precio;
         //dd($producto);
+        if($request->cantidad > $producto->actides){
+            $des = (($producto->descuento*$producto->precio)/100)*$request->cantidad;
+            $cant = $cant-$des;
+        }else{
+            $des = 0;
+        }
 
         $carritodetalles = CarritoDetalle::create([
             'carrito_id'     => $request->carrito->id,
             'producto_id'    => $producto->id,
             'cantidad'       => $request->cantidad,
             'producto_precio'=> $producto->precio,
+            'descuento_bs'   => $des,
             'subtotal_bs'    => $cant
         ]);
 

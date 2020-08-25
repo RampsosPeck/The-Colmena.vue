@@ -25,8 +25,10 @@ Auth::routes();
 Route::get('/catalogo', 'AdminController@index')->name('catalogo');
 Route::get('/dashboard', 'HomeController@index')->name('home');
 
-//Route::get('/carrito', 'API/CarritoController@index')->name('shopping_cart.show');
 
+Route::get('/carripro', 'API\CarritoController@index')->name('shopping_cart.show');
+Route::delete('/carripro/{id}', 'API\CarritoController@destroy')->name('shopping_cart.delete');
+Route::post('/carriproductos','API\CarritoController@store')->name('shopping_cart.update');
 
 Route::resource('/producto_detalles',"API\CarritoDetalleController", ["only"=>["store","destroy"]]);
 

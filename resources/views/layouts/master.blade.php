@@ -89,6 +89,11 @@
                             </ul>
                         </li>
                         <li>
+                            <router-link to="/dashboard"  class="nav-link">
+                                <i class="material-icons">local_offer</i>Catálogo
+                            </router-link>
+                        </li>
+                        <li>
                             <router-link to="/productos"  class="nav-link">
                                 <i class="material-icons">shop</i> Productos
                             </router-link>
@@ -131,7 +136,9 @@
         </nav>
 
         <div class="page-header header-filter" data-parallax="true" style="background-image: url('../img/secondary/potosi.jpg');">
-
+            <div style="position: relative; ">
+                <img class="imgcol" src="{{ asset('/img/welcome/logo1.png') }}" alt="Colmena Image" />
+            </div>
         </div>
 
         <router-view></router-view>

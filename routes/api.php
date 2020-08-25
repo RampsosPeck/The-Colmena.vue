@@ -24,6 +24,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 	Route::get('comidas','API\ProductoController@comidas');
 	Route::get('almuerzo','API\ProductoController@almuerzo');
 	Route::get('varios','API\ProductoController@varios');
+
+/*Route::group(['middleware' => ['web']], function () {
+	Route::apiResources(['carripro' => 'API\CarritoController']);
+});*/
 // Route group for authenticated users only
 Route::group(['middleware' => ['auth:api']], function(){
 	Route::apiResources(['users' => 'API\UserController']);

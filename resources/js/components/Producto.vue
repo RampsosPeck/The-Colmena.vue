@@ -226,6 +226,15 @@
 		                        		<span class="material-input"></span>
 			                            <has-error :form="form" field="descripcion"></has-error>
 		                            </div>
+
+		                         	<span class="input-group-addon">
+		                                <i class="material-icons">line_weight</i>
+		                            </span>
+		                            <div class="form-group is-empty" :class="{ 'has-error is-focused': form.errors.has('oferta') }">
+		                        		<textarea placeholder="Oferta del producto. Ejm.: más de 3 platos una soda gratis." rows="2" class="form-control" name="oferta" v-model.trim="form.oferta"></textarea>
+		                        		<span class="material-input"></span>
+			                            <has-error :form="form" field="oferta"></has-error>
+		                            </div>
 		                      	</div>
                             </div>
                             <div class="col-md-4 text-center">
@@ -247,7 +256,7 @@
 									<has-error :form="form" field="foto"></has-error>
 								</div>
                             </div>
-	                      	<div class="row">
+	                      	<div class="row ">
 	                        	<div class="col-md-4">
 	                        		<div class="input-group" >
 	                                    <div class="input-group-addon">
@@ -412,6 +421,7 @@
                     sopa:'',
                     segundo:'',
                     postre:'',
+                    oferta:'',
                     refresco:'',
                     especificacion:'',
                     foto:'',
