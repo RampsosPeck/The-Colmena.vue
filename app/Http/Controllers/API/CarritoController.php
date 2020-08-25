@@ -31,30 +31,30 @@ class CarritoController extends Controller
      */
     public function store(Request $request)
     {
-        //Aqui actualizo la tabla carrito_detalles
-        //return $request[0];
-        //return (object)$request;
-        $objeto = (object) $request;
-        var_dump($objeto);
-        foreach ($objeto as $animal => $id){
-            return ucfirst($animal) . ": " . $id . "<br>";
-        }
+
+        //$dato =  $request[0];
+        //return  response()->json($dato['cantidad']);
+        //$result = CarritoDetalle::where('id',$dato['id'])->first();
+        //return  $result->cantidad;
+        //return $request->all();
 
         $carri = Carrito::where('id',$request->carrito->id)->first();
 
-        /*$detalles = $request;
-        foreach($detalles as $detalle){
-            CarritoDetalle::where('id',$detalle->id)->where('carrito_id',$carri->id)->update([
-                'cantidad'    => $detalle->cantidad,
-                'descuento_bs'=> $detalle->descuento_bs,
-                'subtotal_bs' => $detalle->subtotal_bs
-            ]);
-        }*/
+        $detalles = $request->all();
+        foreach($detalles as $detalle)
+        {
+            //$cadetalles = CarritoDetalle::where('id',$detalle['id'])->first();
+            $cadetalles = CarritoDetalle::find($detalle['id']);
+            $cadetalles->cantidad = $detalle['cantidad'];
+            $cadetalles->descuento_bs = $detalle['descuento_bs'];
+            $cadetalles->subtotal_bs  = $detalle['subtotal_bs'];
+            $cadetalles->save();
+        }
 
 
         Carrito::where('id',$request->carrito->id)->update([
                 'codigo'   => 'CO/'.date('M').'/'.date('h:m:s').'/'.$carri->id,
-                'total_bs' => 150
+                'total_bs' => $carri->carrito_detalles()->sum('subtotal_bs')
             ]);
 
         return ['message'=> "Se actualizó tu carrito."];
@@ -89,10 +89,16 @@ class CarritoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+
         CarritoDetalle::where('id', $id)
               ->delete();
+
+        $carri = Carrito::where('id',$request->carrito->id)->first();
+        Carrito::where('id',$request->carrito->id)->update([
+                'total_bs' => $carri->carrito_detalles()->sum('subtotal_bs')
+            ]);
 
         return response()->json(['message' => 'Producto eliminado.'], 200);
     }
