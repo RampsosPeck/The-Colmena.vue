@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Grimzy\LaravelMysqlSpatial\Types\Point;
 
 class RegisterController extends Controller
 {
@@ -78,12 +79,17 @@ class RegisterController extends Controller
             $fileName = 'avatar.jpg';
         }
 
+        $location = new Point((array)$data['lat'], (array)$data['lng']);
+
         return User::create([
             'fullname' => $data['fullname'],
             'slug' => Str::of($data['fullname'])->slug('-'),
             'celular' => $data['celular'],
             //'email' => $data['email'],
             'direccion' => $data['direccion'],
+            'location'  => $location,
+            'lat' => $data['lat'],
+            'lng' => $data['lng'],
             'foto' => $fileName,
             'password' => Hash::make($data['celular']),
         ]);

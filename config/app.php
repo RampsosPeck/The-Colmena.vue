@@ -167,6 +167,7 @@ return [
          */
         Intervention\Image\ImageServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
+        Grimzy\LaravelMysqlSpatial\SpatialServiceProvider::class,
         /*
          * Application Service Providers...
          */

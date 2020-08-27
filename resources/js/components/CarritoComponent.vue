@@ -138,6 +138,15 @@ span.round-tab:hover {
         position: absolute;
         left: 35%;
     }
+
+
+    .pac-item {
+    	font-size:  16px;
+    	cursor:  pointer;
+    }
+    .pac-item-query {
+    	font-size:  16px;
+    }
 }
 </style>
 <template>
@@ -145,13 +154,13 @@ span.round-tab:hover {
     <div class="profile-content" style="margin-top: -100px;">
         <div class="container">
 
-                <div class="col-md-12">
-                   <div class="profile" style="margin-bottom: -70px;">
-                        <div class="avatar">
-                            <img src="/img/secondary/cart1.svg" alt="Circle Image" class="img-responsive">
-                        </div>
+            <div class="col-md-12">
+               <div class="profile" style="margin-bottom: -70px;">
+                    <div class="avatar">
+                        <img src="/img/secondary/cart1.svg" alt="Circle Image" class="img-responsive">
                     </div>
                 </div>
+            </div>
 
             <div class="row">
                 <div class="col-md-12">
@@ -195,177 +204,200 @@ span.round-tab:hover {
 					                </ul>
 					            </div>
 
-					            <form role="form">
-					                <div class="tab-content">
-					                    <div class="tab-pane active" role="tabpanel" id="step1">
-					                    	<h3 class="card-title text-center" >LISTA DE PRODUCTOS</h3>
-					                        <div class="table-responsive">
-				                                <table class="table ">
-				                                    <thead>
-				                                        <tr class="almuerzo">
-				                                            <th class="text-center">#</th>
-				                                            <th class="text-center">Producto</th>
-				                                            <th class="text-center">Cantidad</th>
-				                                            <th class="text-center">Precio</th>
-				                                            <th class="text-center">Descuento</th>
-				                                            <th class="text-center">Sub Total</th>
-				                                            <th></th>
-				                                        </tr>
-				                                    </thead>
-				                                    <tbody>
-				                                    	<tr v-for="(cade, index) in carridetas" :key="cade.id" >
-							                                <td v-text="cade.id"  ></td>
-							                                <td class="td-usertable" >
-																<div class="media text-left" style="display: flex !important;  align-items: center !important;">
-							                                		<a class="pull-left td-usertable">
-							                                			<div class="listcategoria" v-for="foto in cade.producto.fotos" :key="foto.id" >
-				                                							<img :src="getFoto(foto.imagen)" class="img img-raised " alt="Producto foto" style="height: 100%;">
-				                                						</div>
-							                                		</a>
-							                                		<div class="media-body" style="width: auto !important;">
-							                                			<h6 class="media-heading">
-																			{{ cade.producto.nombre }}
-																			<small> * <span class="media-heading">Código:</span>  {{ cade.producto.codigo }}</small>
-							                                			</h6>
-							                                			<p class="usertable" v-text="cade.producto.descripcion"></p>
-							                                			<h6 class="media-heading productlist">
-							                                				<span v-show="cade.producto.cant_personas">
-							                                					* Num. Personas:
-							                                					<small>: {{ cade.producto.cant_personas }}</small>
-							                                				</span>
-							                                				<button class="btn btn-default btn-xs productcate">
-							                                					{{ cade.producto.categoria.nombre }}
-							                                				</button>
-							                                			</h6>
-							                                			<h6  class="media-heading productlist" v-if="cade.producto.descuento">
-							                                				Descuento: Del
-							                                				<button class="btn btn-warning btn-xs productcate">
-							                                				   {{ cade.producto.descuento }} %
-							                                				</button> Mayor a:
-							                                				<small> {{ cade.producto.actides }} </small> Unids.
-							                                			</h6>
-							                                    	</div>
-							                                    </div>
-							                                </td>
-							                                <td class="td-actions">
-            													<i class="material-icons"  v-on:click="cambiarCantidad(index,false)">remove_circle_outline</i>
-            														<span class="letracard" style="position:absolute !important;"> {{cade.cantidad}}</span>
-            													<i class="material-icons"  v-on:click="cambiarCantidad(index, true)" style="padding-left:1rem !important;">add_circle_outline</i>
-				                                            </td>
-															<td class="text-center text-default">
-							                                	<h6 class="media-heading">
-					                                				{{ cade.producto.precio }}
-					                                			</h6>
-															</td>
-							                                <td class="text-center">
-							                                	<button class="btn btn-xs productcate" :class="cade.descuento_bs>0 ? 'btn-info' : 'btn-default'">
-				                                				    {{ convertMoney(cade.descuento_bs) }} Bs.
-				                                				</button>
-							                                </td>
-							                                <td class="text-center text-rose">
-							                                	<h6 class="media-heading">
-							                                	    {{ convertMoney((cade.cantidad*cade.producto_precio)-cade.descuento_bs) }}
-							                                	</h6>
-							                                </td>
-							                                <td class="text-center">
-							                                	<i @click="deletePro(cade.id)" class="material-icons btn-danger" title="Eliminar Producto">clear</i>
-							                                </td>
-							                            </tr>
-							                            <tr class="text-rose">
-							                            	<td class="text-right" colspan="4">
-							                            		<b> Total: </b>
-							                            	</td>
-							                            	<td class="text-left" colspan="2">
-							                            		{{onViewTotal()}} Bs.
-							                            	</td>
-							                            </tr>
-				                                    </tbody>
-				                                </table>
-				                                <div class="pull-right" style="padding-right: 15px;">
-						                            <button type="button" class="btn btn-rose btn-round next-step" v-on:click="onSendOrder()">Guardar y continuar</button>
-						                        </div>
+				                <div class="tab-content">
+				                    <div class="tab-pane active" role="tabpanel" id="step1">
+				                    	<h3 class="card-title text-center" >LISTA DE PRODUCTOS</h3>
+				                        <div class="table-responsive">
+			                                <table class="table ">
+			                                    <thead>
+			                                        <tr class="almuerzo">
+			                                            <th class="text-center">#</th>
+			                                            <th class="text-center">Producto</th>
+			                                            <th class="text-center">Cantidad</th>
+			                                            <th class="text-center">Precio</th>
+			                                            <th class="text-center">Descuento</th>
+			                                            <th class="text-center">Sub Total</th>
+			                                            <th></th>
+			                                        </tr>
+			                                    </thead>
+			                                    <tbody>
+			                                    	<tr v-for="(cade, index) in carridetas" :key="cade.id" >
+						                                <td v-text="cade.id"  ></td>
+						                                <td class="td-usertable" >
+															<div class="media text-left" style="display: flex !important;  align-items: center !important;">
+						                                		<a class="pull-left td-usertable">
+						                                			<div class="listcategoria" v-for="foto in cade.producto.fotos" :key="foto.id" >
+			                                							<img :src="getFoto(foto.imagen)" class="img img-raised " alt="Producto foto" style="height: 100%;">
+			                                						</div>
+						                                		</a>
+						                                		<div class="media-body" style="width: auto !important;">
+						                                			<h6 class="media-heading">
+																		{{ cade.producto.nombre }}
+																		<small> * <span class="media-heading">Código:</span>  {{ cade.producto.codigo }}</small>
+						                                			</h6>
+						                                			<p class="usertable" v-text="cade.producto.descripcion"></p>
+						                                			<h6 class="media-heading productlist">
+						                                				<span v-show="cade.producto.cant_personas">
+						                                					* Num. Personas:
+						                                					<small>: {{ cade.producto.cant_personas }}</small>
+						                                				</span>
+						                                				<button class="btn btn-default btn-xs productcate">
+						                                					{{ cade.producto.categoria.nombre }}
+						                                				</button>
+						                                			</h6>
+						                                			<h6  class="media-heading productlist" v-if="cade.producto.descuento">
+						                                				Descuento: Del
+						                                				<button class="btn btn-warning btn-xs productcate">
+						                                				   {{ cade.producto.descuento }} %
+						                                				</button> Mayor a:
+						                                				<small> {{ cade.producto.actides }} </small> Unids.
+						                                			</h6>
+						                                    	</div>
+						                                    </div>
+						                                </td>
+						                                <td class="td-actions">
+        													<i class="material-icons"  v-on:click="cambiarCantidad(index,false)">remove_circle_outline</i>
+        														<span class="letracard" style="position:absolute !important;"> {{cade.cantidad}}</span>
+        													<i class="material-icons"  v-on:click="cambiarCantidad(index, true)" style="padding-left:1rem !important;">add_circle_outline</i>
+			                                            </td>
+														<td class="text-center text-default">
+						                                	<h6 class="media-heading">
+				                                				{{ cade.producto.precio }}
+				                                			</h6>
+														</td>
+						                                <td class="text-center">
+						                                	<button class="btn btn-xs productcate" :class="cade.descuento_bs>0 ? 'btn-info' : 'btn-default'">
+			                                				    {{ convertMoney(cade.descuento_bs) }} Bs.
+			                                				</button>
+						                                </td>
+						                                <td class="text-center text-rose">
+						                                	<h6 class="media-heading">
+						                                	    {{ convertMoney((cade.cantidad*cade.producto_precio)-cade.descuento_bs) }}
+						                                	</h6>
+						                                </td>
+						                                <td class="text-center">
+						                                	<i @click="deletePro(cade.id)" class="material-icons btn-danger" title="Eliminar Producto">clear</i>
+						                                </td>
+						                            </tr>
+						                            <tr class="text-rose">
+						                            	<td class="text-right" colspan="4">
+						                            		<b> Total: </b>
+						                            	</td>
+						                            	<td class="text-left" colspan="2">
+						                            		{{onViewTotal()}} Bs.
+						                            	</td>
+						                            </tr>
+			                                    </tbody>
+			                                </table>
+			                                <div class="pull-right" style="padding-right: 15px;">
+					                            <button type="button" class="btn btn-rose btn-round next-step" v-on:click="onSendOrder()">Guardar y continuar</button>
 					                        </div>
-					                    </div>
-					                    <div class="tab-pane" role="tabpanel" id="step2">
-							                <h3 class="card-title text-center" >DATOS DEL USUARIO</h3>
-							                <p class="description text-center">Los campos de este <span class="text-rose"><b>color</b></span> son obligatorios </p>
-							                <p class="description text-center" style="margin-top:-2px;">Mueva el icono <i class="material-icons text-rose">room</i>  en donde esta su casa exactamente. </p>
-							                <div class="card-body">
-					                            <div class="row ">
-					                                <div class="col-md-5">
-					                                    <div class="input-group">
-					                                        <span class="input-group-addon">
-					                                            <i class="material-icons text-rose">face</i>
-					                                        </span>
-					                                        <div class="form-group label-floating is-empty" :class="{ 'has-error is-focused': form.errors.has('fullname') }">
-					                                            <label class="control-label">Nombre completo:</label>
-					                                            <input type="text" class="form-control" name="fullname" autofocus required value=" ">
-					                                            <span class="material-input"></span>
-					                            				<has-error :form="form" field="fullname"></has-error>
-					                                        </div>
-					                                    </div>
-					                                    <div class="input-group">
-					                                        <span class="input-group-addon">
-					                                            <i class="material-icons text-rose">stay_current_portrait</i>
-					                                        </span>
-					                                        <div class="form-group label-floating is-empty " :class="{ 'has-error is-focused': form.errors.has('celular') }">
-					                                            <label class="control-label">Celular:</label>
-					                                            <input type="number" class="form-control" name="celular" required value=" ">
-					                                            <span class="material-input"></span>
-					                            				<has-error :form="form" field="celular"></has-error>
-					                                        </div>
-					                                    </div>
-					                                    <div class="input-group">
-					                                        <span class="input-group-addon">
-					                                            <i class="material-icons text-rose">room</i>
-					                                        </span>
-					                                        <div class="form-group label-floating is-empty " :class="{ 'has-error is-focused': form.errors.has('direccion') }">
-					                                            <label class="control-label">Detalle su dirección especifica:</label>
-					                                            <textarea class="form-control bg-light border-0" :class="{ 'has-error is-focused': form.errors.has('direccion') }" name="direccion" id="direccion" rows="4" > </textarea>
-					                                            <span class="material-input"></span>
-					                            				<has-error :form="form" field="direccion"></has-error>
-					                                        </div>
-					                                    </div>
-					                                    <button type="button" class="btn btn-primary btn-round">Capturar mi ubicación</button>
-					                                </div>
-					                                <div class="col-md-7 big-map">
-					                                    <div class="form-group">
-					                                        <input type="text" id="mibusqueda" name="location" class="form-control map-input"  placeholder="Registre o busque su dirección." >
-					                                        <input type="hidden" name="lat" id="lat"/>
-					                                        <input type="hidden" name="lng" id="lng" />
-					                                    </div>
-					                                    <div id="address-map-container" style="width:100%;height:300px; ">
-					                                        <div style="width: 100%; height: 100%" id="map-canvas"></div>
-					                                    </div>
-					                                </div>
-					                            </div>
+				                        </div>
+				                    </div>
+				                    <div class="tab-pane" role="tabpanel" id="step2">
+						                <h3 class="card-title text-center" >DATOS DEL USUARIO</h3>
+						                <p class="description text-center">Los campos de este <span class="text-rose"><b>color</b></span> son obligatorios </p>
+						                <p class="description text-center" style="margin-top:-2px;">Mueva el icono <i class="material-icons text-rose">room</i>  en donde esta su casa exactamente. </p>
+						                <div class="card-body">
+				                            <div class="row ">
+				                                <div class="col-md-5">
+				                                    <div class="input-group">
+				                                        <span class="input-group-addon">
+				                                            <i class="material-icons text-rose">face</i>
+				                                        </span>
+				                                        <div class="form-group label-floating is-empty" :class="{ 'has-error is-focused': form.errors.has('fullname') }">
+				                                            <label class="control-label">Nombre completo:</label>
+				                                            <input type="text" class="form-control" name="fullname" autofocus required value=" ">
+				                                            <span class="material-input"></span>
+				                            				<has-error :form="form" field="fullname"></has-error>
+				                                        </div>
+				                                    </div>
+				                                    <div class="input-group">
+				                                        <span class="input-group-addon">
+				                                            <i class="material-icons text-rose">stay_current_portrait</i>
+				                                        </span>
+				                                        <div class="form-group label-floating is-empty " :class="{ 'has-error is-focused': form.errors.has('celular') }">
+				                                            <label class="control-label">Celular:</label>
+				                                            <input type="number" class="form-control" name="celular" required value=" ">
+				                                            <span class="material-input"></span>
+				                            				<has-error :form="form" field="celular"></has-error>
+				                                        </div>
+				                                    </div>
+				                                    <div class="input-group">
+				                                        <span class="input-group-addon">
+				                                            <i class="material-icons text-rose">room</i>
+				                                        </span>
+				                                        <div class="form-group label-floating is-empty " :class="{ 'has-error is-focused': form.errors.has('direccion') }">
+				                                            <label class="control-label">Detalle su dirección especifica:</label>
+				                                            <textarea class="form-control bg-light border-0" :class="{ 'has-error is-focused': form.errors.has('direccion') }" name="direccion" id="direccion" rows="3" > </textarea>
+				                                            <span class="material-input"></span>
+				                            				<has-error :form="form" field="direccion"></has-error>
+				                                        </div>
+				                                    </div>
 
-						                        <ul class="list-inline pull-right">
-					                            	<li>
-					                            		<button type="button" class="btn btn-default prev-step">Atrás</button>
-					                            	</li>
-					                            	<li>
-					                            		<button type="button" class="btn btn-rose btn-round next-step">Guardar y continuar</button>
-					                            	</li>
-					                        	</ul>
-							            	</div>
-					                    </div>
-					                    <div class="tab-pane" role="tabpanel" id="step3">
-					                        <h3>Step 3</h3>
-					                        <p>This is step 3</p>
+				                                    <div class="row">
+									                    <div class="col-md-9 col-md-offset-3">
+									                        <div class="profile-tabs" style="margin-top: 2px;">
+									                            <div class="nav-align-center">
+									                            	<div class="alert alert-danger" role="alert" v-show="error">
+														            	{{ error }}
+														            </div>
+
+														            <input type="text" name="address" class="form-control"  placeholder="Aqui aparecerá su dirección." v-model="address" id="autocomplete">
+
+									                                <ul class="nav nav-pills nav-pills-rose nav-pills-icons" role="tablist">
+									                                    <li class="active" @click="locatorButton">
+									                                        <a href="#" role="tab" data-toggle="tab" class="text-center">
+									                                            <img src="/img/wizard/map.svg"  class="material-icons img-responsive" style="width:50%;">
+									                                            <span>Capturar mi ubicación </span>
+																			</a>
+									                                    </li>
+									                                </ul>
+
+									                            </div>
+									                        </div>
+									                    </div>
+									                </div>
+
+				                                </div>
+				                                <div class="col-md-7 big-map">
+				                                    <div class="form-group">
+				                                        <input type="text" id="mibusqueda" name="location" class="form-control map-input"  placeholder="Registre o busque su dirección." >
+				                                        <input type="hidden" name="lat" id="lat"/>
+				                                        <input type="hidden" name="lng" id="lng" />
+				                                    </div>
+				                                    <div style="width:100%;height:400px; ">
+				                                        <div style="width: 100%; height: 100%" id="map"></div>
+				                                    </div>
+				                                </div>
+				                            </div>
+
 					                        <ul class="list-inline pull-right">
-					                            <li><button type="button" class="btn btn-default prev-step">Atrás</button></li>
-					                            <li><button type="button" class="btn btn-default next-step">Omitir</button></li>
-					                            <li><button type="button" class="btn btn-rose btn-round btn-info-full next-step">Guardar y continuar</button></li>
-					                        </ul>
-					                    </div>
-					                    <div class="tab-pane" role="tabpanel" id="complete">
-					                        <h3>Complete</h3>
-					                        <p>You have successfully completed all steps.</p>
-					                    </div>
-					                    <div class="clearfix"></div>
-					                </div>
-					            </form>
+				                            	<li>
+				                            		<button type="button" class="btn btn-default prev-step">Atrás</button>
+				                            	</li>
+				                            	<li>
+				                            		<button type="button" class="btn btn-rose btn-round next-step">Guardar y continuar</button>
+				                            	</li>
+				                        	</ul>
+						            	</div>
+				                    </div>
+				                    <div class="tab-pane" role="tabpanel" id="step3">
+				                        <h3>Step 3</h3>
+				                        <p>This is step 3</p>
+				                        <ul class="list-inline pull-right">
+				                            <li><button type="button" class="btn btn-default prev-step">Atrás</button></li>
+				                            <li><button type="button" class="btn btn-default next-step">Omitir</button></li>
+				                            <li><button type="button" class="btn btn-rose btn-round btn-info-full next-step">Guardar y continuar</button></li>
+				                        </ul>
+				                    </div>
+				                    <div class="tab-pane" role="tabpanel" id="complete">
+				                        <h3>Complete</h3>
+				                        <p>You have successfully completed all steps.</p>
+				                    </div>
+				                    <div class="clearfix"></div>
+				                </div>
+
 					        </div>
 					    </div>
 					</div>
@@ -381,12 +413,30 @@ span.round-tab:hover {
             return {
             	carridetas : [],
             	desmessage: '0.00',
+            	address: "",
+            	error: '',
                 form: new Form({
-                	fullname: ''
+                	fullname: '',
+                	celular:'',
+                	direccion:''
                 })
 			}
 		},
-		//props: ['items'],
+		mounted(){
+			let autocomplete = new google.maps.places.Autocomplete(document.getElementById("autocomplete"),{
+					bounds: new google.maps.LatLngBounds(
+						new google.maps.LatLng( -65.7530600, -19.5836100)
+					)
+			});
+			autocomplete.addListener("place_changed", () => {
+				let place = autocomplete.getPlace();
+				console.log(place);
+				this.showUserLocationOnTheMap(
+					place.geometry.location.lat(),
+					place.geometry.location.lng()
+				);
+			});
+		},
 		methods: {
 			getFoto(ufoto){
         		let foto = "img/producto/"+ufoto;
@@ -500,6 +550,64 @@ span.round-tab:hover {
                 .catch(() => {
                     this.$Progress.fail();
                 });
+            },
+            locatorButton(){
+            	if(navigator.geolocation){
+            		navigator.geolocation.getCurrentPosition(
+            			position=>{
+	            			this.getAddressFrom(
+	            				position.coords.latitude,
+	            				position.coords.longitude
+	            			);
+	            			//console.log(position.coords.latitude);
+	            			//console.log(position.coords.longitude);
+	            			this.showUserLocationOnTheMap(
+	            				position.coords.latitude,
+	            				position.coords.longitude
+	            			);
+	            		},
+            			error=>{
+            				this.error = "El localizador no puede encontrar su dirección. Escriba su dirección manualmente.";
+            				console.log(error.message);
+            			}
+            		);
+            	}else{
+            		this.error = "Su navegador no es compatible con la API de geolocalización.";
+            		console.log("Su navegador no es compatible con la API de geolocalización.");
+            	}
+            },
+            getAddressFrom(lat, long){
+            	axios.get("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?latlng="
+            		+ lat +
+            		","
+            		+ long
+            		+ "&key=AIzaSyAGWmTpyFKvxX4Z5q6O11yWCgWRamgviGY" )
+            	.then(response => {
+            		if(response.data.error_message){
+            			this.error = response.data.error_message;
+            			console.log(response.data.error_message);
+            		}else{
+            			this.address = response.data.results[0].formatted_address;
+            			console.log(response.data.results[0].formatted_address);
+            		}
+            	}).catch(error => {
+            		this.error = error.message;
+            		console.log(error.message);
+            	});
+            },
+            showUserLocationOnTheMap(latitude, longitude){
+            	//Craete A Map Object
+            	let map = new google.maps.Map(document.getElementById("map"),{
+            		zoom: 15,
+            		center: new google.maps.LatLng(latitude, longitude),
+            		mapTypeId: google.maps.MapTypeId.SATELLITE
+            	});
+
+            	//Add Marker
+            	new google.maps.Marker({
+            		position: new google.maps.LatLng(latitude, longitude),
+            		map: map
+            	});
             }
 		},
         created(){
