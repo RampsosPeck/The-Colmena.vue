@@ -2530,13 +2530,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2544,25 +2537,116 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       desmessage: '0.00',
       address: "",
       error: '',
+      myLatLng: {
+        lat: -19.589263,
+        lng: -65.754102
+      },
       form: new Form({
         fullname: '',
         celular: '',
-        direccion: ''
+        direccion: '',
+        lat: '',
+        lng: ''
       })
     };
   },
   mounted: function mounted() {
-    var _this = this;
+    /*Inicio el mapa con la ubicacion señalada en myLatLng*/
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: this.myLatLng,
+      mapTypeId: google.maps.MapTypeId.SATELLITE,
+      scrollwheel: true,
+      zoom: 16
+    }); //hasta aqui se ve el mapa
 
-    var autocomplete = new google.maps.places.Autocomplete(document.getElementById("autocomplete"), {
-      bounds: new google.maps.LatLngBounds(new google.maps.LatLng(-65.7530600, -19.5836100))
-    });
-    autocomplete.addListener("place_changed", function () {
-      var place = autocomplete.getPlace();
-      console.log(place);
+    /*Inicio el icono para que se mueva*/
 
-      _this.showUserLocationOnTheMap(place.geometry.location.lat(), place.geometry.location.lng());
+    var marker = new google.maps.Marker({
+      map: map,
+      draggable: true,
+      position: this.myLatLng,
+      title: 'Mové esto a tu casa!'
+    }); //agarro las coordenadas de la posición donde mueva
+
+    google.maps.event.addListener(marker, 'position_changed', function () {
+      var lat = marker.getPosition().lat();
+      var lng = marker.getPosition().lng();
+      $('#lat').val(lat);
+      $('#lng').val(lng);
+    }); //hasta aqui muestro el icono con  lat, lng
+
+    /*Aqui inicio con el cuadro de busqueda*/
+
+    var input = document.getElementById('autocomplete');
+    var searchBox = new google.maps.places.SearchBox(input); // Sesgar los resultados del Cuadro de búsqueda hacia los mapas actuales de la vista.
+
+    map.addListener('bounds_changed', function () {
+      searchBox.setBounds(map.getBounds());
     });
+    var markers = []; //Detecta el evento cuando el usuario escribe una predicción y recuperar más detalles para ese lugar
+
+    searchBox.addListener('places_changed', function () {
+      var places = searchBox.getPlaces();
+
+      if (places.length == 0) {
+        return;
+      } // Borrar los viejos marcadores.
+
+
+      markers.forEach(function (marker) {
+        marker.setMap(null);
+      });
+      markers = []; // Para cada lugar, obtener el icono, el nombre y la ubicación.
+
+      var bounds = new google.maps.LatLngBounds();
+      places.forEach(function (place) {
+        var icon = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25)
+        }; // Cree un marcador para cada lugar.
+
+        markers.push(new google.maps.Marker({
+          map: map,
+          icon: icon,
+          title: place.name,
+          position: place.geometry.location
+        }));
+
+        if (place.geometry.viewport) {
+          //Sólo los códigos geográficos tienen ventana.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      map.fitBounds(bounds);
+    }); //hasta aqui detecta lo que escribe el evento
+
+    /*Aqui detectamos la ubicación*/
+
+    var infoWindow = new google.maps.InfoWindow({
+      map: map
+    }); // Empieza la Geolocalización con HTML5
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        infoWindow.setPosition(pos);
+        infoWindow.setContent('¡Tú ubicación!');
+        map.setCenter(pos);
+      }, function () {
+        this.handleLocationError(true, infoWindow, map.getCenter());
+      });
+    } else {
+      // Si el navegador no admite la localización
+      this.handleLocationError(false, infoWindow, map.getCenter());
+    }
   },
   methods: {
     getFoto: function getFoto(ufoto) {
@@ -2570,7 +2654,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return foto;
     },
     loadProductos: function loadProductos() {
-      var _this2 = this;
+      var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var resul;
@@ -2584,7 +2668,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 resul = _context.sent;
                 //console.log(resul.data.data);
-                _this2.carridetas = resul.data.data; //console.log(this.users);
+                _this.carridetas = resul.data.data; //console.log(this.users);
 
               case 4:
               case "end":
@@ -2669,31 +2753,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     },
     onSendOrder: function onSendOrder() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.$Progress.start();
       axios.post('carriproductos', this.carridetas).then(function () {
         swal.fire('Excelente!', 'Tu carrito de compras se guardo con éxito.', 'success');
 
-        _this3.$Progress.finish();
+        _this2.$Progress.finish();
 
         Fire.$emit('AfterCreate');
       })["catch"](function () {
-        _this3.$Progress.fail();
+        _this2.$Progress.fail();
       });
     },
     locatorButton: function locatorButton() {
-      var _this4 = this;
+      var _this3 = this;
 
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-          _this4.getAddressFrom(position.coords.latitude, position.coords.longitude); //console.log(position.coords.latitude);
+          _this3.getAddressFrom(position.coords.latitude, position.coords.longitude); //console.log(position.coords.latitude);
           //console.log(position.coords.longitude);
 
 
-          _this4.showUserLocationOnTheMap(position.coords.latitude, position.coords.longitude);
+          _this3.showUserLocationOnTheMap(position.coords.latitude, position.coords.longitude);
         }, function (error) {
-          _this4.error = "El localizador no puede encontrar su dirección. Escriba su dirección manualmente.";
+          _this3.error = "El localizador no puede encontrar su dirección. Escriba su dirección manualmente.";
           console.log(error.message);
         });
       } else {
@@ -2702,18 +2786,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     },
     getAddressFrom: function getAddressFrom(lat, _long) {
-      var _this5 = this;
+      var _this4 = this;
 
       axios.get("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + _long + "&key=AIzaSyAGWmTpyFKvxX4Z5q6O11yWCgWRamgviGY").then(function (response) {
         if (response.data.error_message) {
-          _this5.error = response.data.error_message;
+          _this4.error = response.data.error_message;
           console.log(response.data.error_message);
         } else {
-          _this5.address = response.data.results[0].formatted_address;
+          _this4.address = response.data.results[0].formatted_address;
           console.log(response.data.results[0].formatted_address);
         }
       })["catch"](function (error) {
-        _this5.error = error.message;
+        _this4.error = error.message;
         console.log(error.message);
       });
     },
@@ -2729,14 +2813,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         position: new google.maps.LatLng(latitude, longitude),
         map: map
       });
+    },
+    handleLocationError: function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ? 'Habilite el servicio de geolocalización en su dispositivo.' : 'Error: Su navegador no admite geolocalización.');
     }
   },
   created: function created() {
-    var _this6 = this;
+    var _this5 = this;
 
     this.loadProductos();
     Fire.$on('AfterCreate', function () {
-      _this6.loadProductos();
+      _this5.loadProductos();
     });
   },
   computed: {}
@@ -66878,13 +66966,11 @@ var render = function() {
                             _vm._v(" "),
                             _vm._m(4),
                             _vm._v(" "),
-                            _vm._m(5),
-                            _vm._v(" "),
                             _c("div", { staticClass: "card-body" }, [
                               _c("div", { staticClass: "row " }, [
                                 _c("div", { staticClass: "col-md-5" }, [
                                   _c("div", { staticClass: "input-group" }, [
-                                    _vm._m(6),
+                                    _vm._m(5),
                                     _vm._v(" "),
                                     _c(
                                       "div",
@@ -66905,6 +66991,14 @@ var render = function() {
                                         ),
                                         _vm._v(" "),
                                         _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.form.fullname,
+                                              expression: "form.fullname"
+                                            }
+                                          ],
                                           staticClass: "form-control",
                                           attrs: {
                                             type: "text",
@@ -66912,6 +67006,21 @@ var render = function() {
                                             autofocus: "",
                                             required: "",
                                             value: " "
+                                          },
+                                          domProps: {
+                                            value: _vm.form.fullname
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.form,
+                                                "fullname",
+                                                $event.target.value
+                                              )
+                                            }
                                           }
                                         }),
                                         _vm._v(" "),
@@ -66931,7 +67040,7 @@ var render = function() {
                                   ]),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "input-group" }, [
-                                    _vm._m(7),
+                                    _vm._m(6),
                                     _vm._v(" "),
                                     _c(
                                       "div",
@@ -66948,16 +67057,39 @@ var render = function() {
                                         _c(
                                           "label",
                                           { staticClass: "control-label" },
-                                          [_vm._v("Celular:")]
+                                          [_vm._v("Número de celular:")]
                                         ),
                                         _vm._v(" "),
                                         _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model.number",
+                                              value: _vm.form.celular,
+                                              expression: "form.celular",
+                                              modifiers: { number: true }
+                                            }
+                                          ],
                                           staticClass: "form-control",
                                           attrs: {
                                             type: "number",
-                                            name: "celular",
-                                            required: "",
-                                            value: " "
+                                            name: "celular"
+                                          },
+                                          domProps: { value: _vm.form.celular },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.form,
+                                                "celular",
+                                                _vm._n($event.target.value)
+                                              )
+                                            },
+                                            blur: function($event) {
+                                              return _vm.$forceUpdate()
+                                            }
                                           }
                                         }),
                                         _vm._v(" "),
@@ -66977,7 +67109,7 @@ var render = function() {
                                   ]),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "input-group" }, [
-                                    _vm._m(8),
+                                    _vm._m(7),
                                     _vm._v(" "),
                                     _c(
                                       "div",
@@ -67002,6 +67134,15 @@ var render = function() {
                                         ),
                                         _vm._v(" "),
                                         _c("textarea", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model.trim",
+                                              value: _vm.form.direccion,
+                                              expression: "form.direccion",
+                                              modifiers: { trim: true }
+                                            }
+                                          ],
                                           staticClass:
                                             "form-control bg-light border-0",
                                           class: {
@@ -67012,7 +67153,25 @@ var render = function() {
                                           attrs: {
                                             name: "direccion",
                                             id: "direccion",
-                                            rows: "3"
+                                            rows: "2"
+                                          },
+                                          domProps: {
+                                            value: _vm.form.direccion
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.form,
+                                                "direccion",
+                                                $event.target.value.trim()
+                                              )
+                                            },
+                                            blur: function($event) {
+                                              return _vm.$forceUpdate()
+                                            }
                                           }
                                         }),
                                         _vm._v(" "),
@@ -67031,124 +67190,194 @@ var render = function() {
                                     )
                                   ]),
                                   _vm._v(" "),
-                                  _c("div", { staticClass: "row" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "col-md-9 col-md-offset-3"
-                                      },
-                                      [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass: "profile-tabs",
-                                            staticStyle: { "margin-top": "2px" }
-                                          },
-                                          [
-                                            _c(
-                                              "div",
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "media media-post",
+                                      staticStyle: { "margin-top": "1px" }
+                                    },
+                                    [
+                                      _c(
+                                        "h6",
+                                        {
+                                          staticClass: "title",
+                                          staticStyle: {
+                                            "margin-top": "1px",
+                                            "margin-bottom": "1px"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n\t\t\t\t                                    \t\tClick en la imagen para capturar su Ubicación o sino escriba.\n\t\t\t\t                                    \t"
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "show",
+                                              rawName: "v-show",
+                                              value: _vm.error,
+                                              expression: "error"
+                                            }
+                                          ],
+                                          staticClass: "alert alert-danger",
+                                          attrs: { role: "alert" }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n\t\t\t\t\t\t\t\t\t\t\t            \t" +
+                                              _vm._s(_vm.error) +
+                                              "\n\t\t\t\t\t\t\t\t\t\t\t            "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass: "pull-left author",
+                                          attrs: { href: "#" }
+                                        },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "listcategoria" },
+                                            [
+                                              _c("img", {
+                                                staticClass: "media-object",
+                                                attrs: {
+                                                  alt: "64x64",
+                                                  src: "/img/wizard/map.svg"
+                                                },
+                                                on: { click: _vm.locatorButton }
+                                              })
+                                            ]
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "media-body",
+                                          staticStyle: {
+                                            width: "10000px !important"
+                                          }
+                                        },
+                                        [
+                                          _c("input", {
+                                            directives: [
                                               {
-                                                staticClass: "nav-align-center"
-                                              },
-                                              [
-                                                _c(
-                                                  "div",
-                                                  {
-                                                    directives: [
-                                                      {
-                                                        name: "show",
-                                                        rawName: "v-show",
-                                                        value: _vm.error,
-                                                        expression: "error"
-                                                      }
-                                                    ],
-                                                    staticClass:
-                                                      "alert alert-danger",
-                                                    attrs: { role: "alert" }
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t            \t" +
-                                                        _vm._s(_vm.error) +
-                                                        "\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t            "
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c("input", {
-                                                  directives: [
-                                                    {
-                                                      name: "model",
-                                                      rawName: "v-model",
-                                                      value: _vm.address,
-                                                      expression: "address"
-                                                    }
-                                                  ],
-                                                  staticClass: "form-control",
-                                                  attrs: {
-                                                    type: "text",
-                                                    name: "address",
-                                                    placeholder:
-                                                      "Aqui aparecerá su dirección.",
-                                                    id: "autocomplete"
-                                                  },
-                                                  domProps: {
-                                                    value: _vm.address
-                                                  },
-                                                  on: {
-                                                    input: function($event) {
-                                                      if (
-                                                        $event.target.composing
-                                                      ) {
-                                                        return
-                                                      }
-                                                      _vm.address =
-                                                        $event.target.value
-                                                    }
-                                                  }
-                                                }),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "ul",
-                                                  {
-                                                    staticClass:
-                                                      "nav nav-pills nav-pills-rose nav-pills-icons",
-                                                    attrs: { role: "tablist" }
-                                                  },
-                                                  [
-                                                    _c(
-                                                      "li",
-                                                      {
-                                                        staticClass: "active",
-                                                        on: {
-                                                          click:
-                                                            _vm.locatorButton
-                                                        }
-                                                      },
-                                                      [_vm._m(9)]
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ])
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.address,
+                                                expression: "address"
+                                              }
+                                            ],
+                                            staticClass: "form-control",
+                                            attrs: {
+                                              type: "text",
+                                              name: "address",
+                                              id: "autocomplete",
+                                              placeholder:
+                                                "Direccíon Ejm. Las Delicias, Potosi, Bolivia."
+                                            },
+                                            domProps: { value: _vm.address },
+                                            on: {
+                                              input: function($event) {
+                                                if ($event.target.composing) {
+                                                  return
+                                                }
+                                                _vm.address =
+                                                  $event.target.value
+                                              }
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
                                 ]),
                                 _vm._v(" "),
-                                _vm._m(10)
+                                _c("div", { staticClass: "col-md-7 big-map" }, [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _vm._m(8),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.lat,
+                                          expression: "form.lat"
+                                        }
+                                      ],
+                                      attrs: {
+                                        type: "hidden",
+                                        name: "lat",
+                                        id: "lat"
+                                      },
+                                      domProps: { value: _vm.form.lat },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.form,
+                                            "lat",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.lng,
+                                          expression: "form.lng"
+                                        }
+                                      ],
+                                      attrs: {
+                                        type: "hidden",
+                                        name: "lng",
+                                        id: "lng"
+                                      },
+                                      domProps: { value: _vm.form.lng },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.form,
+                                            "lng",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._m(9)
+                                ])
                               ]),
                               _vm._v(" "),
-                              _vm._m(11)
+                              _vm._m(10)
                             ])
                           ]
                         ),
                         _vm._v(" "),
-                        _vm._m(12),
+                        _vm._m(11),
                         _vm._v(" "),
-                        _vm._m(13),
+                        _vm._m(12),
                         _vm._v(" "),
                         _c("div", { staticClass: "clearfix" })
                       ])
@@ -67365,23 +67594,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "p",
-      {
-        staticClass: "description text-center",
-        staticStyle: { "margin-top": "-2px" }
-      },
-      [
-        _vm._v("Mueva el icono "),
-        _c("i", { staticClass: "material-icons text-rose" }, [_vm._v("room")]),
-        _vm._v("  en donde esta su casa exactamente. ")
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("span", { staticClass: "input-group-addon" }, [
       _c("i", { staticClass: "material-icons text-rose" }, [_vm._v("face")])
     ])
@@ -67409,19 +67621,19 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "a",
+      "h6",
       {
-        staticClass: "text-center",
-        attrs: { href: "#", role: "tab", "data-toggle": "tab" }
+        staticClass: "title",
+        staticStyle: { "margin-top": "1px", "margin-bottom": "1px" }
       },
       [
-        _c("img", {
-          staticClass: "material-icons img-responsive",
-          staticStyle: { width: "50%" },
-          attrs: { src: "/img/wizard/map.svg" }
-        }),
-        _vm._v(" "),
-        _c("span", [_vm._v("Capturar mi ubicación ")])
+        _vm._v(
+          "\n\t\t\t\t                                    \t\tMueva el icono "
+        ),
+        _c("i", { staticClass: "material-icons text-rose" }, [_vm._v("room")]),
+        _vm._v(
+          "  en donde esta su casa exactamente.\n\t\t\t\t                                    \t"
+        )
       ]
     )
   },
@@ -67429,29 +67641,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-7 big-map" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("input", {
-          staticClass: "form-control map-input",
-          attrs: {
-            type: "text",
-            id: "mibusqueda",
-            name: "location",
-            placeholder: "Registre o busque su dirección."
-          }
-        }),
-        _vm._v(" "),
-        _c("input", { attrs: { type: "hidden", name: "lat", id: "lat" } }),
-        _vm._v(" "),
-        _c("input", { attrs: { type: "hidden", name: "lng", id: "lng" } })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticStyle: { width: "100%", height: "400px" } }, [
-        _c("div", {
-          staticStyle: { width: "100%", height: "100%" },
-          attrs: { id: "map" }
-        })
-      ])
+    return _c("div", { staticStyle: { width: "100%", height: "400px" } }, [
+      _c("div", {
+        staticStyle: { width: "100%", height: "100%" },
+        attrs: { id: "map" }
+      })
     ])
   },
   function() {
@@ -71993,10 +72187,10 @@ var render = function() {
                                       directives: [
                                         {
                                           name: "model",
-                                          rawName: "v-model.number",
+                                          rawName: "v-model.trim",
                                           value: _vm.form.direccion,
                                           expression: "form.direccion",
-                                          modifiers: { number: true }
+                                          modifiers: { trim: true }
                                         }
                                       ],
                                       staticClass: "form-control",
@@ -72014,7 +72208,7 @@ var render = function() {
                                           _vm.$set(
                                             _vm.form,
                                             "direccion",
-                                            _vm._n($event.target.value)
+                                            $event.target.value.trim()
                                           )
                                         },
                                         blur: function($event) {

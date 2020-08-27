@@ -1,6 +1,6 @@
 function initialize()
 {
-    var myLatLng = {lat: -16.4954112, lng: -68.16727039999999};
+    var myLatLng = {lat: -19.589263, lng: -65.754102};
     var map = new google.maps.Map(document.getElementById('map-canvas'),
     {
         center: myLatLng,

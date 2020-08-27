@@ -1,3 +1,4 @@
+/*WIZARD*/
 <style>
 .wizard {
     margin: 20px auto;
@@ -306,7 +307,7 @@ span.round-tab:hover {
 				                                        </span>
 				                                        <div class="form-group label-floating is-empty" :class="{ 'has-error is-focused': form.errors.has('fullname') }">
 				                                            <label class="control-label">Nombre completo:</label>
-				                                            <input type="text" class="form-control" name="fullname" v-model="form.fullname" autofocus required value=" ">
+				                                            <input type="text" class="form-control" name="fullname" autofocus required value=" ">
 				                                            <span class="material-input"></span>
 				                            				<has-error :form="form" field="fullname"></has-error>
 				                                        </div>
@@ -316,8 +317,8 @@ span.round-tab:hover {
 				                                            <i class="material-icons text-rose">stay_current_portrait</i>
 				                                        </span>
 				                                        <div class="form-group label-floating is-empty " :class="{ 'has-error is-focused': form.errors.has('celular') }">
-				                                            <label class="control-label">Número de celular:</label>
-				                                            <input v-model.number="form.celular" type="number" class="form-control" name="celular" >
+				                                            <label class="control-label">Celular:</label>
+				                                            <input type="number" class="form-control" name="celular" required value=" ">
 				                                            <span class="material-input"></span>
 				                            				<has-error :form="form" field="celular"></has-error>
 				                                        </div>
@@ -328,7 +329,7 @@ span.round-tab:hover {
 				                                        </span>
 				                                        <div class="form-group label-floating is-empty " :class="{ 'has-error is-focused': form.errors.has('direccion') }">
 				                                            <label class="control-label">Detalle su dirección especifica:</label>
-				                                            <textarea class="form-control bg-light border-0" :class="{ 'has-error is-focused': form.errors.has('direccion') }" name="direccion" id="direccion" rows="2" v-model.trim="form.direccion"  > </textarea>
+				                                            <textarea class="form-control bg-light border-0" :class="{ 'has-error is-focused': form.errors.has('direccion') }" name="direccion" id="direccion" rows="3" > </textarea>
 				                                            <span class="material-input"></span>
 				                            				<has-error :form="form" field="direccion"></has-error>
 				                                        </div>
@@ -356,8 +357,8 @@ span.round-tab:hover {
 				                                        <h6 class="title" style="margin-top:1px; margin-bottom:1px;" >
 				                                    		Mueva el icono <i class="material-icons text-rose">room</i>  en donde esta su casa exactamente.
 				                                    	</h6>
-				                                        <input type="hidden" name="lat" id="lat" v-model="form.lat"/>
-				                                        <input type="hidden" name="lng" id="lng" v-model="form.lng"/>
+				                                        <input type="hidden" name="lat" id="lat"/>
+				                                        <input type="hidden" name="lng" id="lng" />
 				                                    </div>
 				                                    <div style="width:100%;height:400px; ">
 				                                        <div style="width: 100%; height: 100%" id="map"></div>
@@ -408,110 +409,27 @@ span.round-tab:hover {
             	desmessage: '0.00',
             	address: "",
             	error: '',
-            	myLatLng: {lat: -19.589263, lng: -65.754102},
                 form: new Form({
                 	fullname: '',
                 	celular:'',
-                	direccion:'',
-                	lat:'',
-                	lng:''
+                	direccion:''
                 })
 			}
 		},
 		mounted(){
-			/*Inicio el mapa con la ubicacion señalada en myLatLng*/
-			let map = new google.maps.Map(document.getElementById('map'),
-		    {
-		        center: this.myLatLng,
-		        mapTypeId: google.maps.MapTypeId.SATELLITE,
-		        scrollwheel: true,
-		        zoom: 16
-		    });
-			//hasta aqui se ve el mapa
-
-			/*Inicio el icono para que se mueva*/
-		    let marker = new google.maps.Marker({
-		      map: map,
-		      draggable: true,
-		      position: this.myLatLng,
-		      title: 'Mové esto a tu casa!'
-		    });
-		    //agarro las coordenadas de la posición donde mueva
-		    google.maps.event.addListener(marker,'position_changed',function(){
-		        let lat = marker.getPosition().lat();
-		        let lng = marker.getPosition().lng();
-		        $('#lat').val(lat);
-		        $('#lng').val(lng);
-		    });
-		    //hasta aqui muestro el icono con  lat, lng
-
-		    /*Aqui inicio con el cuadro de busqueda*/
-		    let input = document.getElementById('autocomplete');
-          	let searchBox = new google.maps.places.SearchBox(input);
-          	// Sesgar los resultados del Cuadro de búsqueda hacia los mapas actuales de la vista.
-	        map.addListener('bounds_changed', function() {
-	            searchBox.setBounds(map.getBounds());
-	        });
-	        let markers = [];
-	        //Detecta el evento cuando el usuario escribe una predicción y recuperar más detalles para ese lugar
-	        searchBox.addListener('places_changed', function()
-	        {
-	            let places = searchBox.getPlaces();
-	            if (places.length == 0) {
-	            	return;
-	            }
-	            // Borrar los viejos marcadores.
-	            markers.forEach(function(marker) {
-	            	marker.setMap(null);
-	            });
-	            markers = [];
-	            // Para cada lugar, obtener el icono, el nombre y la ubicación.
-	            let bounds = new google.maps.LatLngBounds();
-	            places.forEach(function(place) {
-	              	let icon = {
-	                	url: place.icon,
-	                	size: new google.maps.Size(71, 71),
-	                	origin: new google.maps.Point(0, 0),
-	                	anchor: new google.maps.Point(17, 34),
-	                	scaledSize: new google.maps.Size(25, 25)
-	            	};
-	              	// Cree un marcador para cada lugar.
-	              	markers.push(new google.maps.Marker({
-		                map: map,
-		                icon: icon,
-		                title: place.name,
-		                position: place.geometry.location
-		            }));
-		            if (place.geometry.viewport) {
-		            	//Sólo los códigos geográficos tienen ventana.
-		                bounds.union(place.geometry.viewport);
-		            } else {
-		                bounds.extend(place.geometry.location);
-		            }
-	            });
-	            map.fitBounds(bounds);
-	        });
-	        //hasta aqui detecta lo que escribe el evento
-
-	        /*Aqui detectamos la ubicación*/
-    		let infoWindow = new google.maps.InfoWindow({map: map});
-      		// Empieza la Geolocalización con HTML5
-    		if (navigator.geolocation) {
-        		navigator.geolocation.getCurrentPosition(function(position) {
-          			let pos = {
-			            lat: position.coords.latitude,
-			            lng: position.coords.longitude
-			        };
-			        infoWindow.setPosition(pos);
-			        infoWindow.setContent('¡Tú ubicación!');
-			        map.setCenter(pos);
-        		}, function() {
-		          	this.handleLocationError(true, infoWindow, map.getCenter());
-		        });
-      		} else {
-        		// Si el navegador no admite la localización
-        		this.handleLocationError(false, infoWindow, map.getCenter());
-    		}
+			let autocomplete = new google.maps.places.Autocomplete(document.getElementById("autocomplete"),{
+					bounds: new google.maps.LatLngBounds(
+						new google.maps.LatLng( -65.7530600, -19.5836100)
+					)
+			});
+			autocomplete.addListener("place_changed", () => {
+				let place = autocomplete.getPlace();
+				console.log(place);
+				this.showUserLocationOnTheMap(
+					place.geometry.location.lat(),
+					place.geometry.location.lng()
+				);
+			});
 		},
 		methods: {
 			getFoto(ufoto){
@@ -684,13 +602,7 @@ span.round-tab:hover {
             		position: new google.maps.LatLng(latitude, longitude),
             		map: map
             	});
-            },
-            handleLocationError(browserHasGeolocation, infoWindow, pos) {
-          		infoWindow.setPosition(pos);
-          		infoWindow.setContent(browserHasGeolocation ?
-                                'Habilite el servicio de geolocalización en su dispositivo.' :
-                                'Error: Su navegador no admite geolocalización.');
-        	}
+            }
 		},
         created(){
         	this.loadProductos();

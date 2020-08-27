@@ -150,7 +150,7 @@
 				                                        <span class="input-group-addon">
 				                                            <i class="material-icons text-rose">room</i>
 				                                        </span>
-					                                    <input  v-model.number="form.direccion" type="text" class="form-control" name="direccion" placeholder="Dirección exacta">
+					                                    <input  v-model.trim="form.direccion" type="text" class="form-control" name="direccion" placeholder="Dirección exacta">
 					                                    <has-error :form="form" field="direccion"></has-error>
 				                                    </div>
         		                                </div>
