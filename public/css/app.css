@@ -1700,3 +1700,15 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   line-height: 1 !important;
 }
 
+.text-width {
+  color: #fff;
+}
+
+.cut-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

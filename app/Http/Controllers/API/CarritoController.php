@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CarritoResource;
 use App\Models\Carrito;
 use App\Models\CarritoDetalle;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class CarritoController extends Controller
 {
@@ -58,6 +61,40 @@ class CarritoController extends Controller
             ]);
 
         return ['message'=> "Se actualizó tu carrito."];
+    }
+
+    public function infoperson(Request $request)
+    {
+        //return $request->all();
+        $antuser = User::where('celular',$request->celular)->first();
+        if($antuser){
+            $antuser->update($request->all());
+            $carri = Carrito::where('id',$request->carrito->id)->first();
+            Carrito::where('id',$request->carrito->id)->update([
+                'codigo'   => 'CO/'.date('M').'/'.date('h:m:s').'/'.$carri->id,
+                'user_id'  => $antuser->id,
+                'especificacion' => $request->especificacion
+            ]);
+        }else{
+            $userid = \DB::table('users')->insertGetId([
+                'slug' => Str::of($request->fullname)->slug('-'),
+                'fullname' => $request->fullname,
+                'celular'  => $request->celular,
+                'direccion'=> $request->direccion,
+                'lat'      => $request->lat,
+                'lng'      => $request->lng,
+                'password' => Hash::make($request->celular)
+            ]);
+            $carri = Carrito::where('id',$request->carrito->id)->first();
+            Carrito::where('id',$request->carrito->id)->update([
+                'codigo'   => 'CO/'.date('M').'/'.date('h:m:s').'/'.$carri->id,
+                'user_id'  => $userid,
+                'especificacion' => $request->especificacion
+            ]);
+        }
+
+        //$request->session()->flush();
+
     }
 
     /**

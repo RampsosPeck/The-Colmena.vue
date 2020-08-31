@@ -1,154 +1,4 @@
-<style>
-.wizard {
-    margin: 20px auto;
-    background: #fff;
-}
 
-    .wizard .nav-tabs {
-        position: relative;
-        margin: 40px auto;
-        margin-bottom: 0;
-        border-bottom-color: #e0e0e0;
-    }
-
-    .wizard > div.wizard-inner {
-        position: relative;
-    }
-
-.connecting-line {
-    height: 4px;
-    background: #fff;
-    position: absolute;
-    width: 70%;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-    top: 50%;
-    z-index: 1;
-}
-
-.wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
-    color: #555555;
-    cursor: default;
-    border: 0;
-    border-bottom-color: transparent;
-}
-
-span.round-tab {
-    width: 70px;
-    height: 70px;
-    line-height: 70px;
-    display: inline-block;
-    border-radius: 100px;
-    background: #fff;
-    border: 2px solid #e0e0e0;
-    z-index: 2;
-    position: absolute;
-    left: 0;
-    text-align: center;
-    font-size: 25px;
-}
-span.round-tab i{
-    color:#555555;
-}
-.wizard li.active span.round-tab {
-    background: #fff;
-    border: 3px solid #3C4858;
-
-}
-.wizard li.active span.round-tab i{
-    color: #3C4858;
-}
-
-span.round-tab:hover {
-    color: #333;
-    border: 2px solid #333;
-}
-
-.wizard .nav-tabs > li {
-    width: 25%;
-}
-
-.wizard li:after {
-    content: " ";
-    position: absolute;
-    left: 46%;
-    opacity: 0;
-    margin: 0 auto;
-    bottom: 0px;
-    border: 5px solid transparent;
-    border-bottom-color: #3C4858;
-    transition: 0.1s ease-in-out;
-}
-
-.wizard li.active:after {
-    content: " ";
-    position: absolute;
-    left: 46%;
-    opacity: 1;
-    margin: 0 auto;
-    bottom: 0px;
-    border: 10px solid transparent;
-    border-bottom-color: #3C4858;
-}
-
-.wizard .nav-tabs > li a {
-    width: 70px;
-    height: 70px;
-    margin: 20px auto;
-    border-radius: 100%;
-    padding: 0;
-}
-
-    .wizard .nav-tabs > li a:hover {
-        background: transparent;
-    }
-
-.wizard .tab-pane {
-    position: relative;
-    padding-top: 30px;
-}
-
-.wizard h3 {
-    margin-top: 0;
-}
-
-@media( max-width : 585px ) {
-
-    .wizard {
-        width: 90%;
-        height: auto !important;
-    }
-
-    span.round-tab {
-        font-size: 16px;
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-    }
-
-    .wizard .nav-tabs > li a {
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-    }
-
-    .wizard li.active:after {
-        content: " ";
-        position: absolute;
-        left: 35%;
-    }
-
-
-    .pac-item {
-    	font-size:  16px;
-    	cursor:  pointer;
-    }
-    .pac-item-query {
-    	font-size:  16px;
-    }
-}
-</style>
 <template>
 <div class="main main-raised">
     <div class="profile-content" style="margin-top: -100px;">
@@ -169,7 +19,7 @@ span.round-tab:hover {
 							<div class="wizard"  >
 	            				<div class="wizard-inner">
 					                <div class="connecting-line"></div>
-					                <ul class="nav nav-tabs navbar-rose" role="tablist" style="background: #e91e63 !important;">
+					                <ul class="nav nav-tabs navbar-rose ulcenter" role="tablist" style="background: #e91e63 !important;">
 
 					                    <li role="presentation" class="active">
 					                        <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Paso 1 - Lista">
@@ -186,13 +36,13 @@ span.round-tab:hover {
 					                            </span>
 					                        </a>
 					                    </li>
-					                    <li role="presentation" class="disabled">
+					                    <!--<li role="presentation" class="disabled">
 					                        <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Paso 3 - Confirmar">
 					                            <span class="round-tab">
 					                                <img src="/img/wizard/stationery.svg" style="width: 90%; vertical-align: initial; margin-top:1px;">
 					                            </span>
 					                        </a>
-					                    </li>
+					                    </li>-->
 
 					                    <li role="presentation" class="disabled">
 					                        <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Completo!">
@@ -298,6 +148,7 @@ span.round-tab:hover {
 						                <h3 class="card-title text-center" >DATOS DEL USUARIO</h3>
 						                <p class="description text-center">Los campos de este <span class="text-rose"><b>color</b></span> son obligatorios </p>
 						                <div class="card-body">
+						                	<form method="POST">
 				                            <div class="row ">
 				                                <div class="col-md-5">
 				                                    <div class="input-group">
@@ -317,7 +168,7 @@ span.round-tab:hover {
 				                                        </span>
 				                                        <div class="form-group label-floating is-empty " :class="{ 'has-error is-focused': form.errors.has('celular') }">
 				                                            <label class="control-label">Número de celular:</label>
-				                                            <input v-model.number="form.celular" type="number" class="form-control" name="celular" >
+				                                            <input v-model.number="form.celular" type="number" class="form-control" name="celular" required >
 				                                            <span class="material-input"></span>
 				                            				<has-error :form="form" field="celular"></has-error>
 				                                        </div>
@@ -328,26 +179,9 @@ span.round-tab:hover {
 				                                        </span>
 				                                        <div class="form-group label-floating is-empty " :class="{ 'has-error is-focused': form.errors.has('direccion') }">
 				                                            <label class="control-label">Detalle su dirección especifica:</label>
-				                                            <textarea class="form-control bg-light border-0" :class="{ 'has-error is-focused': form.errors.has('direccion') }" name="direccion" id="direccion" rows="2" v-model.trim="form.direccion"  > </textarea>
+				                                            <textarea class="form-control bg-light border-0" :class="{ 'has-error is-focused': form.errors.has('direccion') }" name="direccion" id="direccion" rows="2" v-model.trim="form.direccion" required > </textarea>
 				                                            <span class="material-input"></span>
 				                            				<has-error :form="form" field="direccion"></has-error>
-				                                        </div>
-				                                    </div>
-
-				                                    <div class="media media-post" style="margin-top:1px;">
-				                                    	<h6 class="title" style="margin-top:1px; margin-bottom:1px;" >
-				                                    		Click en la imagen para capturar su Ubicación o sino escriba.
-				                                    	</h6>
-				                                    	<div class="alert alert-danger" role="alert" v-show="error">
-											            	{{ error }}
-											            </div>
-			                                          	<a class="pull-left author" href="#">
-			                                              	<div class="listcategoria" >
-			                                                    <img class="media-object" alt="64x64" src="/img/wizard/map.svg" @click="locatorButton" />
-			                                              	</div>
-			                                          	</a>
-				                                        <div class="media-body" style="width: 10000px !important;">
-															<input type="text" name="address" v-model="address" id="autocomplete" class="form-control" placeholder="Direccíon Ejm. Las Delicias, Potosi, Bolivia."/>
 				                                        </div>
 				                                    </div>
 				                                </div>
@@ -356,8 +190,8 @@ span.round-tab:hover {
 				                                        <h6 class="title" style="margin-top:1px; margin-bottom:1px;" >
 				                                    		Mueva el icono <i class="material-icons text-rose">room</i>  en donde esta su casa exactamente.
 				                                    	</h6>
-				                                        <input type="hidden" name="lat" id="lat" v-model="form.lat"/>
-				                                        <input type="hidden" name="lng" id="lng" v-model="form.lng"/>
+				                                        <input type="hidden" name="lat" id="lat" v-model="form.lat" ref="posilat" />
+				                                        <input type="hidden" name="lng" id="lng" v-model="form.lng" ref="posilng" />
 				                                    </div>
 				                                    <div style="width:100%;height:400px; ">
 				                                        <div style="width: 100%; height: 100%" id="map"></div>
@@ -370,27 +204,69 @@ span.round-tab:hover {
 				                            		<button type="button" class="btn btn-default prev-step">Atrás</button>
 				                            	</li>
 				                            	<li>
-				                            		<button type="button" class="btn btn-rose btn-round next-step">Guardar y continuar</button>
-				                            	</li>
+				                            		<button @click.prevent="infoPerson" type="submit" class="next-step btn btn-rose btn-round">Continuar</button>
+				                        		</li>
 				                        	</ul>
+				                        	</form>
 						            	</div>
 				                    </div>
-				                    <div class="tab-pane" role="tabpanel" id="step3">
+				                    <!--<div class="tab-pane" role="tabpanel" id="step3">
 				                        <h3>Step 3</h3>
 				                        <p>This is step 3</p>
 				                        <ul class="list-inline pull-right">
 				                            <li><button type="button" class="btn btn-default prev-step">Atrás</button></li>
 				                            <li><button type="button" class="btn btn-default next-step">Omitir</button></li>
-				                            <li><button type="button" class="btn btn-rose btn-round btn-info-full next-step">Guardar y continuar</button></li>
+				                            <li>
+				                            	<button    type="button" class="btn btn-rose btn-round btn-info-full next-step">Guardar y continuar</button>
+				                            </li>
 				                        </ul>
-				                    </div>
+				                    </div>-->
 				                    <div class="tab-pane" role="tabpanel" id="complete">
-				                        <h3>Complete</h3>
-				                        <p>You have successfully completed all steps.</p>
+				                        <h3 class="card-title text-center"> DATOS GENERALES </h3>
+						                <div class="col-md-4 col-md-offset-4" style="padding-right: 0px; padding-left: 0px;">
+				                            <div class="card card-blog shadow" style="background-color: #f2f2f2;">
+				                                <div class="card-image">
+				                                    <a href="#">
+				                                        <img src="img/welcome/logo.png" class="imgcard"  alt="Producto foto" style="height: 100%;" />
+				                                    </a>
+				                                </div>
+				                                <div class="card-pricing card-content">
+			                                        <ul class="list-unstyled">
+			                                            <li >
+			                                            	<b><i class="material-icons text-rose">contacts</i> Nombre:</b> Jorge Denys Peralta
+			                                            </li>
+			                                            <li>
+			                                            	<b> <i class="material-icons text-rose">tap_and_play</i> Celular:</b> 75729198
+			                                            </li>
+			                                            <li class="card-description text-justify">
+			                                            	<b><i class="material-icons text-rose text-rose">my_location</i> Dirección</b> Lorem, ipsum, dolor sit amet consectetur adipisicing elit. Sunt delectus magnam id, optio provident.
+			                                            </li>
+			                                            <li class="card-description text-justify">
+			                                            	<b> <i class="material-icons text-rose">local_offer</i> Especificación:</b> Lorem, ipsum, dolor sit amet consectetur adipisicing elit. Sunt delectus magnam id, optio provident.
+			                                            </li>
+			                                            <li><i class="material-icons text-success">check</i> <i class="material-icons text-rose">pin_drop</i> Con datos en el mapa</li>
+			 											<li>
+			 												<i class="material-icons text-danger">close</i>
+			 												<i class="material-icons text-rose">pin_drop</i>  Sin datos en el mapa
+			 											</li>
+			 											<li>
+			 												<b><i class="material-icons text-rose">local_grocery_store</i> En producto:</b> 107 Bs.
+			 											</li>
+			 											<li>
+			 												<b> <i class="material-icons text-rose">motorcycle</i> Delivery:</b> 10 Bs.
+			 											</li>
+			                                        </ul>
+				                                    <h6 class="card-title">Total</h6>
+			                                        <h1 class="card-title"><small>Bs.</small>117</h1>
+			                                        <a href="#pablo" class="btn btn-rose btn-round">
+			                                            <b> ENVIAR PEDIDO </b>
+			                                        </a>
+				                                </div>
+				                            </div>
+				                        </div>
 				                    </div>
 				                    <div class="clearfix"></div>
 				                </div>
-
 					        </div>
 					    </div>
 					</div>
@@ -406,7 +282,6 @@ span.round-tab:hover {
             return {
             	carridetas : [],
             	desmessage: '0.00',
-            	address: "",
             	error: '',
             	myLatLng: {lat: -19.589263, lng: -65.754102},
                 form: new Form({
@@ -414,104 +289,13 @@ span.round-tab:hover {
                 	celular:'',
                 	direccion:'',
                 	lat:'',
-                	lng:''
+                	lng:'',
+                	especificacion:''
                 })
 			}
 		},
-		mounted(){
-			/*Inicio el mapa con la ubicacion señalada en myLatLng*/
-			let map = new google.maps.Map(document.getElementById('map'),
-		    {
-		        center: this.myLatLng,
-		        mapTypeId: google.maps.MapTypeId.SATELLITE,
-		        scrollwheel: true,
-		        zoom: 16
-		    });
-			//hasta aqui se ve el mapa
-
-			/*Inicio el icono para que se mueva*/
-		    let marker = new google.maps.Marker({
-		      map: map,
-		      draggable: true,
-		      position: this.myLatLng,
-		      title: 'Mové esto a tu casa!'
-		    });
-		    //agarro las coordenadas de la posición donde mueva
-		    google.maps.event.addListener(marker,'position_changed',function(){
-		        let lat = marker.getPosition().lat();
-		        let lng = marker.getPosition().lng();
-		        $('#lat').val(lat);
-		        $('#lng').val(lng);
-		    });
-		    //hasta aqui muestro el icono con  lat, lng
-
-		    /*Aqui inicio con el cuadro de busqueda*/
-		    let input = document.getElementById('autocomplete');
-          	let searchBox = new google.maps.places.SearchBox(input);
-          	// Sesgar los resultados del Cuadro de búsqueda hacia los mapas actuales de la vista.
-	        map.addListener('bounds_changed', function() {
-	            searchBox.setBounds(map.getBounds());
-	        });
-	        let markers = [];
-	        //Detecta el evento cuando el usuario escribe una predicción y recuperar más detalles para ese lugar
-	        searchBox.addListener('places_changed', function()
-	        {
-	            let places = searchBox.getPlaces();
-	            if (places.length == 0) {
-	            	return;
-	            }
-	            // Borrar los viejos marcadores.
-	            markers.forEach(function(marker) {
-	            	marker.setMap(null);
-	            });
-	            markers = [];
-	            // Para cada lugar, obtener el icono, el nombre y la ubicación.
-	            let bounds = new google.maps.LatLngBounds();
-	            places.forEach(function(place) {
-	              	let icon = {
-	                	url: place.icon,
-	                	size: new google.maps.Size(71, 71),
-	                	origin: new google.maps.Point(0, 0),
-	                	anchor: new google.maps.Point(17, 34),
-	                	scaledSize: new google.maps.Size(25, 25)
-	            	};
-	              	// Cree un marcador para cada lugar.
-	              	markers.push(new google.maps.Marker({
-		                map: map,
-		                icon: icon,
-		                title: place.name,
-		                position: place.geometry.location
-		            }));
-		            if (place.geometry.viewport) {
-		            	//Sólo los códigos geográficos tienen ventana.
-		                bounds.union(place.geometry.viewport);
-		            } else {
-		                bounds.extend(place.geometry.location);
-		            }
-	            });
-	            map.fitBounds(bounds);
-	        });
-	        //hasta aqui detecta lo que escribe el evento
-
-	        /*Aqui detectamos la ubicación*/
-    		let infoWindow = new google.maps.InfoWindow({map: map});
-      		// Empieza la Geolocalización con HTML5
-    		if (navigator.geolocation) {
-        		navigator.geolocation.getCurrentPosition(function(position) {
-          			let pos = {
-			            lat: position.coords.latitude,
-			            lng: position.coords.longitude
-			        };
-			        infoWindow.setPosition(pos);
-			        infoWindow.setContent('¡Tú ubicación!');
-			        map.setCenter(pos);
-        		}, function() {
-		          	this.handleLocationError(true, infoWindow, map.getCenter());
-		        });
-      		} else {
-        		// Si el navegador no admite la localización
-        		this.handleLocationError(false, infoWindow, map.getCenter());
-    		}
+		async mounted() {
+		    await this.initializeMap()
 		},
 		methods: {
 			getFoto(ufoto){
@@ -616,7 +400,7 @@ span.round-tab:hover {
                 axios.post('carriproductos',this.carridetas)
                 .then(() => {
                     swal.fire(
-                        'Excelente!',
+                        'Ok. continua.!',
                         'Tu carrito de compras se guardo con éxito.',
                         'success'
                     )
@@ -627,69 +411,149 @@ span.round-tab:hover {
                     this.$Progress.fail();
                 });
             },
-            locatorButton(){
-            	if(navigator.geolocation){
-            		navigator.geolocation.getCurrentPosition(
-            			position=>{
-	            			this.getAddressFrom(
-	            				position.coords.latitude,
-	            				position.coords.longitude
-	            			);
-	            			//console.log(position.coords.latitude);
-	            			//console.log(position.coords.longitude);
-	            			this.showUserLocationOnTheMap(
-	            				position.coords.latitude,
-	            				position.coords.longitude
-	            			);
-	            		},
-            			error=>{
-            				this.error = "El localizador no puede encontrar su dirección. Escriba su dirección manualmente.";
-            				console.log(error.message);
-            			}
-            		);
-            	}else{
-            		this.error = "Su navegador no es compatible con la API de geolocalización.";
-            		console.log("Su navegador no es compatible con la API de geolocalización.");
-            	}
-            },
-            getAddressFrom(lat, long){
-            	axios.get("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?latlng="
-            		+ lat +
-            		","
-            		+ long
-            		+ "&key=AIzaSyAGWmTpyFKvxX4Z5q6O11yWCgWRamgviGY" )
-            	.then(response => {
-            		if(response.data.error_message){
-            			this.error = response.data.error_message;
-            			console.log(response.data.error_message);
-            		}else{
-            			this.address = response.data.results[0].formatted_address;
-            			console.log(response.data.results[0].formatted_address);
-            		}
-            	}).catch(error => {
-            		this.error = error.message;
-            		console.log(error.message);
-            	});
-            },
-            showUserLocationOnTheMap(latitude, longitude){
-            	//Craete A Map Object
-            	let map = new google.maps.Map(document.getElementById("map"),{
-            		zoom: 15,
-            		center: new google.maps.LatLng(latitude, longitude),
-            		mapTypeId: google.maps.MapTypeId.SATELLITE
-            	});
+            initializeMap(){
+            	/*Inicio el mapa con la ubicacion señalada en myLatLng*/
+				let map = new google.maps.Map(document.getElementById('map'),
+			    {
+			        center: this.myLatLng,
+			        mapTypeId: google.maps.MapTypeId.SATELLITE,
+			        scrollwheel: true,
+			        zoom: 16
+			    });
+				//hasta aqui se ve el mapa
 
-            	//Add Marker
-            	new google.maps.Marker({
-            		position: new google.maps.LatLng(latitude, longitude),
-            		map: map
-            	});
+				/*Inicio el icono para que se mueva*/
+			    let marker = new google.maps.Marker({
+			      map: map,
+			      draggable: true,
+			      position: this.myLatLng,
+			      title: 'Mové esto a tu casa!'
+			    });
+			    //agarro las coordenadas de la posición donde mueva
+
+			    google.maps.event.addListener(marker,'position_changed',function(){
+			        let lat = marker.getPosition().lat();
+			        let lng = marker.getPosition().lng();
+			        $('#lat').val(lat);
+			        $('#lng').val(lng);
+			    });
+			    //console.log(posilat);
+			    //hasta aqui muestro el icono con  lat, lng
+
+			    /*Aqui inicio con el cuadro de busqueda*/
+			    /*let input = document.getElementById('autocomplete');
+	          	let searchBox = new google.maps.places.SearchBox(input);
+	          	// Sesgar los resultados del Cuadro de búsqueda hacia los mapas actuales de la vista.
+		        map.addListener('bounds_changed', function() {
+		            searchBox.setBounds(map.getBounds());
+		        });
+		        let markers = [];
+		        //Detecta el evento cuando el usuario escribe una predicción y recuperar más detalles para ese lugar
+		        searchBox.addListener('places_changed', function()
+		        {
+		            let places = searchBox.getPlaces();
+		            if (places.length == 0) {
+		            	return;
+		            }
+		            // Borrar los viejos marcadores.
+		            markers.forEach(function(marker) {
+		            	marker.setMap(null);
+		            });
+		            markers = [];
+		            // Para cada lugar, obtener el icono, el nombre y la ubicación.
+		            let bounds = new google.maps.LatLngBounds();
+		            places.forEach(function(place) {
+		              	let icon = {
+		                	url: place.icon,
+		                	size: new google.maps.Size(71, 71),
+		                	origin: new google.maps.Point(0, 0),
+		                	anchor: new google.maps.Point(17, 34),
+		                	scaledSize: new google.maps.Size(25, 25)
+		            	};
+		              	// Cree un marcador para cada lugar.
+		              	markers.push(new google.maps.Marker({
+			                map: map,
+			                icon: icon,
+			                title: place.name,
+			                position: place.geometry.location
+			            }));
+			            if (place.geometry.viewport) {
+			            	//Sólo los códigos geográficos tienen ventana.
+			                bounds.union(place.geometry.viewport);
+			            } else {
+			                bounds.extend(place.geometry.location);
+			            }
+		            });
+		            map.fitBounds(bounds);
+		        });*/
+		        //hasta aqui detecta lo que escribe el evento
+
+		        /*Aqui detectamos la ubicación*/
+	    		/*let infoWindow = new google.maps.InfoWindow({map: map});
+	      		// Empieza la Geolocalización con HTML5
+	    		if (navigator.geolocation) {
+	        		navigator.geolocation.getCurrentPosition(function(position) {
+	          			let pos = {
+				            lat: position.coords.latitude,
+				            lng: position.coords.longitude
+				        };
+				        infoWindow.setPosition(pos);
+				        infoWindow.setContent('¡Tú ubicación!');
+				        map.setCenter(pos);
+	        		}, function() {
+			          	handleLocationError(true, infoWindow, map.getCenter());
+			        });
+	      		} else {
+	        		// Si el navegador no admite la localización
+	        		handleLocationError(false, infoWindow, map.getCenter());
+	    		}
+	    		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+	          		infoWindow.setPosition(pos);
+	          		infoWindow.setContent(browserHasGeolocation ?
+	                                'Habilite el servicio de geolocalización en su dispositivo.' :
+	                                'Error: Su navegador no admite geolocalización.');
+	        	}*/
             },
-            handleLocationError(browserHasGeolocation, infoWindow, pos) {
-          		infoWindow.setPosition(pos);
-          		infoWindow.setContent(browserHasGeolocation ?
-                                'Habilite el servicio de geolocalización en su dispositivo.' :
-                                'Error: Su navegador no admite geolocalización.');
+            getPosition(){
+            	this.form.lat = this.$refs.posilat.value
+        		this.form.lng = this.$refs.posilng.value
+        		if(this.form.lat !=""){
+        			Fire.$emit('AfterCreate');
+        			this.$Progress.start();
+        			swal.fire(
+						'Ok. continua.!',
+		                'Puedes continuar.',
+		                'success'
+    				)
+        			this.$Progress.finish();
+        		}else{
+        			swal.fire(
+						'El icono rojo!',
+		                'Muevalo donde su casa.',
+		                'error'
+    				)
+        			this.$Progress.fail();
+        		}
+
+            },
+            infoPerson(){
+            	this.form.lat = this.$refs.posilat.value
+        		this.form.lng = this.$refs.posilng.value
+        		//console.log(this.form.lat);
+        		this.$Progress.start();
+        		this.form.post('/infoperson')
+        		.then(()=>{
+        			Fire.$emit('AfterCreate');
+        			swal.fire(
+        				'Ok. continua.!',
+                        'La información del usuario fue guardada.',
+                        'success'
+        			)
+        			this.$Progress.finish();
+        		})
+        		.catch(()=>{
+        			this.$Progress.fail();
+        		})
         	}
 		},
         created(){
@@ -698,7 +562,11 @@ span.round-tab:hover {
                 this.loadProductos();
             });
         },
-        computed: {
+        watch: {
+        	initializeMap(){
+        		this.form.lat = this.$refs.posilat.value
+        		this.form.lng = this.$refs.posilng.value
+        	}
         }
 	};
 </script>

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Carrito extends Model
 {
     protected $table = 'carritos';
-    protected $fillable = ['id','codigo','fecha_orden','fecha_entrega','total_bs','estado','user_id'];
+    protected $fillable = ['id','codigo','fecha_orden','fecha_entrega','total_bs','estado','especificacion','user_id'];
 
     //Un carrito fue creado por un solo usuario
     public function user()

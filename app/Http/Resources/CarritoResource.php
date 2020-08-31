@@ -19,7 +19,6 @@ class CarritoResource extends JsonResource
             'carrito_id' => $this->carrito_id,
             'producto_id' => $this->producto_id,
             'cantidad' => $this->cantidad,
-            'especificacion' => $this->especificacion,
             'producto_precio' => $this->producto_precio,
             'subtotal_bs' => $this->subtotal_bs,
             'descuento_bs' => $this->descuento_bs,

@@ -1,3 +1,11 @@
+<style>
+.card-img-top {
+    width: 100%;
+    /*height: 25vw;*/
+    height: 350px;
+    /*object-fit: cover;*/
+}
+</style>
 <template>
     <div class="main main-raised">
         <div class="profile-content">
@@ -15,7 +23,7 @@
                         </div>
                     </div>
                     <div class="col-xs-2 follow">
-                        <router-link to="/carrito"  class="btn btn-fab btn-rose" rel="tooltip" title="Carrito de compras">
+                        <router-link to="/carrito" @click.native="$router.go()" class="btn btn-fab btn-rose" rel="tooltip" title="Carrito de compras">
                             <i class="material-icons">local_grocery_store</i>
                         </router-link>
                     </div>
@@ -54,8 +62,8 @@
                     <div class="tab-pane active" id="tortas">
                         <material-transition tag="div"  class="row">
                             <div v-for="(torta, index) in tortas" :key="torta.id" :data-index="index">
-                            <div class="col-md-3">
-                                <div class="card card-blog  shadow" style="background-color: #f2f2f2;">
+                            <div class="col-md-3  ">
+                                <div class="card card-blog card-img-top shadow" style="background-color: #f2f2f2;">
                                     <div class="card-image">
                                         <div class="ribbon ribbon-top-right " v-show="torta.descuento">
                                             <span><strong> {{ torta.descuento }} % DTO. </strong></span>
@@ -72,11 +80,11 @@
                                         <h4 class="card-title text-center">
                                             <a href="#pablo"> {{ torta.nombre }} </a>
                                         </h4>
-                                        <p class="card-description text-justify" style="margin-bottom: 0px;">
+                                        <p class="card-description text-justify cut-text" style="margin-bottom: 0px;">
                                             {{ torta.descripcion }}
                                         </p>
-                                        <add-producto-btn v-bind:product="torta" v-bind:carri="carrito"> </add-producto-btn>
                                     </div>
+                                    <add-producto-btn v-bind:product="torta" v-bind:carri="carrito"> </add-producto-btn>
                                 </div>
                             </div>
                             </div>
@@ -85,7 +93,7 @@
                     <div class="tab-pane" id="comidas" >
                         <div class="row">
                             <div class="col-md-3" style="margin-top:35px;">
-                                <div class="card card-pricing" style="background-color:rgba(233, 32, 99, 0.46);" v-for="(almu, index) in almuerzo" :key="almu.id">
+                                <div class="card" style="background-color:rgba(233, 32, 99, 0.46);" v-for="(almu, index) in almuerzo" :key="almu.id">
                                     <div class="card-image">
                                         <div class="ribbon ribbon-top-right">
                                             <span><strong> {{ almu.precio }} Bs. </strong></span>
@@ -96,30 +104,31 @@
                                         </span>
                                         </a>
                                     </div>
-                                    <div class="card-content">
+                                    <div class="card-content card-pricing"  >
                                         <h4 class="title ">ALMUERZO FAMILIAR</h4>
                                         <ul>
                                             <li v-show="almu.prodetalle.entrada"><b>Entrada:</b>
-                                               <span class="text-rose">{{ almu.prodetalle.entrada }}</span>
+                                               <span class="text-width title">{{ almu.prodetalle.entrada }}</span>
                                             </li>
                                             <li v-show="almu.prodetalle.sopa"><b>Sopa:</b>
-                                                <span class="text-rose">{{ almu.prodetalle.sopa }}</span>
+                                                <span class="text-width title">{{ almu.prodetalle.sopa }}</span>
                                             </li>
                                             <li v-show="almu.prodetalle.segundo"><b>Segundo:</b>
-                                                <span class="text-rose">{{ almu.prodetalle.segundo }}</span>
+                                                <span class="text-width title">{{ almu.prodetalle.segundo }}</span>
                                             </li>
                                             <li v-show="almu.prodetalle.postre"><b>Refresco:</b>
-                                                <span class="text-rose">{{ almu.prodetalle.refresco }}</span>
+                                                <span class="text-width title">{{ almu.prodetalle.refresco }}</span>
                                             </li>
                                             <li v-show="almu.prodetalle.refresco"><b>Postre:</b>
-                                                <span class="text-rose">{{ almu.prodetalle.refresco }}</span>
+                                                <span class="text-width title">{{ almu.prodetalle.refresco }}</span>
                                             </li>
                                         </ul>
-                                        <p class="card-description text-rose text-justify" style="margin-bottom: 0px;">
+                                        <p class="card-description text-width title text-justify" style="margin-bottom: 0px;">
                                             {{ almu.descripcion }}
                                         </p>
-                                        <add-producto-btn v-bind:product="almu" v-bind:carri="carrito"> </add-producto-btn>
                                     </div>
+                                    <hr style="height: 20px !important;">
+                                    <add-producto-btn v-bind:product="almu" v-bind:carri="carrito"> </add-producto-btn>
                                 </div>
                             </div>
                             <div class="col-md-9">
@@ -127,7 +136,7 @@
                                 <div class="row collections">
                                     <div v-for="(comida, index) in comidas" :key="comida.id">
                                     <div class="col-md-4">
-                                        <div class="card card-blog shadow" style="background-color: #f2f2f2;">
+                                        <div class="card card-img-top card-blog shadow" style="background-color: #f2f2f2;">
 
                                             <div class="card-image">
                                                 <div class="ribbon ribbon-top-right " v-show="comida.descuento">
@@ -147,11 +156,12 @@
                                                 <h4 class="card-title text-center">
                                                     <a href="#pablo">{{ comida.nombre }}</a>
                                                 </h4>
-                                                <p class="card-description text-justify" style="margin-bottom: 0px;">
+                                                <p class="card-description text-justify cut-text" >
                                                     {{ comida.descripcion }}
                                                 </p>
-                                                <add-producto-btn v-bind:product="comida" v-bind:carri="carrito"> </add-producto-btn>
                                             </div>
+                                            <hr>
+                                            <add-producto-btn v-bind:product="comida" v-bind:carri="carrito"> </add-producto-btn>
                                         </div>
                                     </div>
                                     </div>
@@ -164,7 +174,7 @@
                             <div class="col-md-6 col-md-offset-3">
                                 <div v-for="(vario, index) in varios" :key="vario.id">
                                 <div class="col-md-6">
-                                    <div class="card card-blog shadow" style="background-color: #f2f2f2;">
+                                    <div class="card card-img-top card-blog shadow" style="background-color: #f2f2f2;">
                                         <div class="card-image">
                                             <div class="ribbon ribbon-top-right " v-show="vario.descuento">
                                                 <span><strong> {{ vario.descuento }}% DTO. </strong></span>
@@ -181,11 +191,11 @@
                                             <h4 class="card-title text-center">
                                                 <a href="#pablo">{{ vario.nombre }}</a>
                                             </h4>
-                                            <p class="card-description text-justify" style="margin-bottom: 0px;">
+                                            <p class="card-description text-justify cut-text" style="margin-bottom: 0px;">
                                                 {{ vario.descripcion }}
                                             </p>
-                                            <add-producto-btn v-bind:product="vario" v-bind:carri="carrito"> </add-producto-btn>
                                         </div>
+                                        <add-producto-btn v-bind:product="vario" v-bind:carri="carrito"> </add-producto-btn>
                                     </div>
                                 </div>
                                 </div>

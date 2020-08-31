@@ -50,6 +50,11 @@
                     <ul class="nav navbar-nav navbar-right">
                          @guest
                             <li>
+                                <router-link to="/dashboard"  class="nav-link">
+                                    <i class="material-icons">local_offer</i>Catálogo
+                                </router-link>
+                            </li>
+                            <li>
                                 <a data-toggle="modal" data-target="#loginModal">
                                     <i class="material-icons">account_circle</i>
                                     INGRESAR

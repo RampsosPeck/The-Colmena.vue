@@ -1,6 +1,6 @@
 <template>
 	<li>
-        <router-link to="/carrito"  class="btn btn-rose btn-round btn-sm" data-toggle="tooltip" data-placement="bottom" title="Carrito/Compras">
+        <router-link to="/carrito" @click.native="$router.go()" class="btn btn-rose btn-round btn-sm" data-toggle="tooltip" data-placement="bottom" title="Carrito/Compras">
             <img src="/img/secondary/cart.svg" alt="pedidos" width="30" class="nav-icon" ><b>
              Carrito</b>
              <span class="label label-warning"> {{ productsCount }}</span>
