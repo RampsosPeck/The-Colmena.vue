@@ -143,7 +143,7 @@
 
         <div class="page-header header-filter" data-parallax="true" style="background-image: url('../img/secondary/potosi.jpg');">
             <div style="position: relative; ">
-                <img class="imgcol" src="{{ asset('/img/welcome/logo1.png') }}" alt="Colmena Image" />
+                <img class="imgcol" src="{{ asset('/img/welcome/642-193_4.png') }}" alt="Colmena Image" />
             </div>
         </div>
 

@@ -2406,12 +2406,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       carridetas: [],
-      desmessage: '0.00',
-      error: '',
+      totalbsok: 0,
+      cantipro: 0,
+      errors: [],
       myLatLng: {
         lat: -19.589263,
         lng: -65.754102
@@ -2422,7 +2454,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         direccion: '',
         lat: '',
         lng: '',
-        especificacion: ''
+        especificacion: '',
+        delivery: ''
       })
     };
   },
@@ -2467,7 +2500,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 //console.log(resul.data.data);
                 _this2.carridetas = resul.data.data; //console.log(this.users);
 
-              case 4:
+                _context2.next = 6;
+                return axios.get('api/profile').then(function (_ref) {
+                  var data = _ref.data;
+                  return _this2.form.fill(data);
+                });
+
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -2529,6 +2568,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
       return this.convertMoney(total);
     },
+    deliTotal: function deliTotal() {
+      var total = 0;
+      var totaltor = 0;
+      var deli = 0;
+      var actitor = false;
+      var canpro = 0;
+      this.carridetas.map(function (data) {
+        total = total + (data.cantidad * data.producto.precio - data.descuento_bs);
+        canpro = canpro + data.cantidad;
+
+        if (data.producto.categoria.nombre === 'Tortas') {
+          totaltor = totaltor + (data.cantidad * data.producto.precio - data.descuento_bs);
+          actitor = true;
+        }
+      });
+
+      if (actitor) {
+        deli = 10;
+
+        if (totaltor > 120) {
+          deli = 15;
+        }
+      } else {
+        deli = 8;
+      }
+
+      this.totalbsok = total + deli;
+      this.form.delivery = deli;
+      this.cantipro = canpro;
+      return deli;
+    },
     deletePro: function deletePro(id) {
       swal.fire({
         title: '¿Estás seguro?',
@@ -2564,28 +2634,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     },
     initializeMap: function initializeMap() {
+      var _this4 = this;
+
       /*Inicio el mapa con la ubicacion señalada en myLatLng*/
       var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
         center: this.myLatLng,
-        mapTypeId: google.maps.MapTypeId.SATELLITE,
-        scrollwheel: true,
-        zoom: 16
+        mapTypeId: google.maps.MapTypeId.SATELLITE //scrollwheel: true,
+
       }); //hasta aqui se ve el mapa
 
       /*Inicio el icono para que se mueva*/
 
       var marker = new google.maps.Marker({
+        position: this.myLatLng,
         map: map,
         draggable: true,
-        position: this.myLatLng,
         title: 'Mové esto a tu casa!'
       }); //agarro las coordenadas de la posición donde mueva
 
       google.maps.event.addListener(marker, 'position_changed', function () {
-        var lat = marker.getPosition().lat();
-        var lng = marker.getPosition().lng();
-        $('#lat').val(lat);
-        $('#lng').val(lng);
+        _this4.form.lat = marker.getPosition().lat();
+        _this4.form.lng = marker.getPosition().lng();
       }); //console.log(posilat);
       //hasta aqui muestro el icono con  lat, lng
 
@@ -2665,51 +2735,59 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                                 'Error: Su navegador no admite geolocalización.');
         	}*/
     },
-    getPosition: function getPosition() {
-      this.form.lat = this.$refs.posilat.value;
-      this.form.lng = this.$refs.posilng.value;
+    prePosition: function prePosition() {
+      if (this.form.fullname && this.form.celular) {
+        if (this.form.direccion) {
+          return true;
+        }
+      }
 
-      if (this.form.lat != "") {
-        Fire.$emit('AfterCreate');
+      this.errors = [];
+
+      if (!this.form.fullname) {
+        this.errors.push('El nombre completo es obligatorio.');
+      }
+
+      if (!this.form.celular) {
+        this.errors.push('El número de celular es obligatorio.');
+      }
+
+      if (!this.form.direccion) {
+        this.errors.push('La dirección es obligatorio.');
+      }
+
+      if (!this.errors) {
         this.$Progress.start();
         swal.fire('Ok. continua.!', 'Puedes continuar.', 'success');
         this.$Progress.finish();
       } else {
-        swal.fire('El icono rojo!', 'Muevalo donde su casa.', 'error');
+        swal.fire('Faltan datos!', 'Corrige estos datos  <span class="text-danger"> <b> X </b> </span>.', 'error');
         this.$Progress.fail();
       }
     },
     infoPerson: function infoPerson() {
-      var _this4 = this;
-
-      this.form.lat = this.$refs.posilat.value;
-      this.form.lng = this.$refs.posilng.value; //console.log(this.form.lat);
+      var _this5 = this;
 
       this.$Progress.start();
       this.form.post('/infoperson').then(function () {
         Fire.$emit('AfterCreate');
         swal.fire('Ok. continua.!', 'La información del usuario fue guardada.', 'success');
 
-        _this4.$Progress.finish();
+        _this5.$Progress.finish();
       })["catch"](function () {
-        _this4.$Progress.fail();
+        _this5.$Progress.fail();
       });
     }
   },
   created: function created() {
-    var _this5 = this;
+    var _this6 = this;
 
     this.loadProductos();
     Fire.$on('AfterCreate', function () {
-      _this5.loadProductos();
+      _this6.loadProductos();
     });
   },
-  watch: {
-    initializeMap: function initializeMap() {
-      this.form.lat = this.$refs.posilat.value;
-      this.form.lng = this.$refs.posilng.value;
-    }
-  }
+  watch: {}
 });
 
 /***/ }),
@@ -66859,258 +66937,43 @@ var render = function() {
                             _vm._m(4),
                             _vm._v(" "),
                             _c("div", { staticClass: "card-body" }, [
-                              _c("form", { attrs: { method: "POST" } }, [
-                                _c("div", { staticClass: "row " }, [
-                                  _c("div", { staticClass: "col-md-5" }, [
-                                    _c("div", { staticClass: "input-group" }, [
-                                      _vm._m(5),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "form-group label-floating is-empty",
-                                          class: {
-                                            "has-error is-focused": _vm.form.errors.has(
-                                              "fullname"
-                                            )
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "label",
-                                            { staticClass: "control-label" },
-                                            [_vm._v("Nombre completo:")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("input", {
-                                            directives: [
-                                              {
-                                                name: "model",
-                                                rawName: "v-model",
-                                                value: _vm.form.fullname,
-                                                expression: "form.fullname"
-                                              }
-                                            ],
-                                            staticClass: "form-control",
-                                            attrs: {
-                                              type: "text",
-                                              name: "fullname",
-                                              autofocus: "",
-                                              required: "",
-                                              value: " "
-                                            },
-                                            domProps: {
-                                              value: _vm.form.fullname
-                                            },
-                                            on: {
-                                              input: function($event) {
-                                                if ($event.target.composing) {
-                                                  return
-                                                }
-                                                _vm.$set(
-                                                  _vm.form,
-                                                  "fullname",
-                                                  $event.target.value
-                                                )
-                                              }
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("span", {
-                                            staticClass: "material-input"
-                                          }),
-                                          _vm._v(" "),
-                                          _c("has-error", {
-                                            attrs: {
-                                              form: _vm.form,
-                                              field: "fullname"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    ]),
+                              _c("div", { staticClass: "row " }, [
+                                _c("div", { staticClass: "col-md-5" }, [
+                                  _c("div", { staticClass: "input-group" }, [
+                                    _vm._m(5),
                                     _vm._v(" "),
-                                    _c("div", { staticClass: "input-group" }, [
-                                      _vm._m(6),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "form-group label-floating is-empty ",
-                                          class: {
-                                            "has-error is-focused": _vm.form.errors.has(
-                                              "celular"
-                                            )
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "label",
-                                            { staticClass: "control-label" },
-                                            [_vm._v("Número de celular:")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("input", {
-                                            directives: [
-                                              {
-                                                name: "model",
-                                                rawName: "v-model.number",
-                                                value: _vm.form.celular,
-                                                expression: "form.celular",
-                                                modifiers: { number: true }
-                                              }
-                                            ],
-                                            staticClass: "form-control",
-                                            attrs: {
-                                              type: "number",
-                                              name: "celular",
-                                              required: ""
-                                            },
-                                            domProps: {
-                                              value: _vm.form.celular
-                                            },
-                                            on: {
-                                              input: function($event) {
-                                                if ($event.target.composing) {
-                                                  return
-                                                }
-                                                _vm.$set(
-                                                  _vm.form,
-                                                  "celular",
-                                                  _vm._n($event.target.value)
-                                                )
-                                              },
-                                              blur: function($event) {
-                                                return _vm.$forceUpdate()
-                                              }
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("span", {
-                                            staticClass: "material-input"
-                                          }),
-                                          _vm._v(" "),
-                                          _c("has-error", {
-                                            attrs: {
-                                              form: _vm.form,
-                                              field: "celular"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "input-group" }, [
-                                      _vm._m(7),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "form-group label-floating is-empty ",
-                                          class: {
-                                            "has-error is-focused": _vm.form.errors.has(
-                                              "direccion"
-                                            )
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "label",
-                                            { staticClass: "control-label" },
-                                            [
-                                              _vm._v(
-                                                "Detalle su dirección especifica:"
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("textarea", {
-                                            directives: [
-                                              {
-                                                name: "model",
-                                                rawName: "v-model.trim",
-                                                value: _vm.form.direccion,
-                                                expression: "form.direccion",
-                                                modifiers: { trim: true }
-                                              }
-                                            ],
-                                            staticClass:
-                                              "form-control bg-light border-0",
-                                            class: {
-                                              "has-error is-focused": _vm.form.errors.has(
-                                                "direccion"
-                                              )
-                                            },
-                                            attrs: {
-                                              name: "direccion",
-                                              id: "direccion",
-                                              rows: "2",
-                                              required: ""
-                                            },
-                                            domProps: {
-                                              value: _vm.form.direccion
-                                            },
-                                            on: {
-                                              input: function($event) {
-                                                if ($event.target.composing) {
-                                                  return
-                                                }
-                                                _vm.$set(
-                                                  _vm.form,
-                                                  "direccion",
-                                                  $event.target.value.trim()
-                                                )
-                                              },
-                                              blur: function($event) {
-                                                return _vm.$forceUpdate()
-                                              }
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("span", {
-                                            staticClass: "material-input"
-                                          }),
-                                          _vm._v(" "),
-                                          _c("has-error", {
-                                            attrs: {
-                                              form: _vm.form,
-                                              field: "direccion"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "col-md-7 big-map" },
-                                    [
-                                      _c("div", { staticClass: "form-group" }, [
-                                        _vm._m(8),
-                                        _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "form-group label-floating is-empty",
+                                        class: {
+                                          "has-error is-focused": _vm.form.errors.has(
+                                            "fullname"
+                                          )
+                                        }
+                                      },
+                                      [
                                         _c("input", {
                                           directives: [
                                             {
                                               name: "model",
                                               rawName: "v-model",
-                                              value: _vm.form.lat,
-                                              expression: "form.lat"
+                                              value: _vm.form.fullname,
+                                              expression: "form.fullname"
                                             }
                                           ],
-                                          ref: "posilat",
+                                          staticClass: "form-control",
                                           attrs: {
-                                            type: "hidden",
-                                            name: "lat",
-                                            id: "lat"
+                                            type: "text",
+                                            name: "fullname",
+                                            autofocus: "",
+                                            required: "",
+                                            placeholder: "Nombre completo"
                                           },
-                                          domProps: { value: _vm.form.lat },
+                                          domProps: {
+                                            value: _vm.form.fullname
+                                          },
                                           on: {
                                             input: function($event) {
                                               if ($event.target.composing) {
@@ -67118,29 +66981,61 @@ var render = function() {
                                               }
                                               _vm.$set(
                                                 _vm.form,
-                                                "lat",
+                                                "fullname",
                                                 $event.target.value
                                               )
                                             }
                                           }
                                         }),
                                         _vm._v(" "),
+                                        _c("span", {
+                                          staticClass: "material-input"
+                                        }),
+                                        _vm._v(" "),
+                                        _c("has-error", {
+                                          attrs: {
+                                            form: _vm.form,
+                                            field: "fullname"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "input-group" }, [
+                                    _vm._m(6),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "form-group label-floating is-empty ",
+                                        class: {
+                                          "has-error is-focused": _vm.form.errors.has(
+                                            "celular"
+                                          )
+                                        }
+                                      },
+                                      [
                                         _c("input", {
                                           directives: [
                                             {
                                               name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.form.lng,
-                                              expression: "form.lng"
+                                              rawName: "v-model.number",
+                                              value: _vm.form.celular,
+                                              expression: "form.celular",
+                                              modifiers: { number: true }
                                             }
                                           ],
-                                          ref: "posilng",
+                                          staticClass: "form-control",
                                           attrs: {
-                                            type: "hidden",
-                                            name: "lng",
-                                            id: "lng"
+                                            type: "number",
+                                            name: "celular",
+                                            required: "",
+                                            placeholder: "Número de celular"
                                           },
-                                          domProps: { value: _vm.form.lng },
+                                          domProps: { value: _vm.form.celular },
                                           on: {
                                             input: function($event) {
                                               if ($event.target.composing) {
@@ -67148,50 +67043,671 @@ var render = function() {
                                               }
                                               _vm.$set(
                                                 _vm.form,
-                                                "lng",
-                                                $event.target.value
+                                                "celular",
+                                                _vm._n($event.target.value)
                                               )
+                                            },
+                                            blur: function($event) {
+                                              return _vm.$forceUpdate()
                                             }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span", {
+                                          staticClass: "material-input"
+                                        }),
+                                        _vm._v(" "),
+                                        _c("has-error", {
+                                          attrs: {
+                                            form: _vm.form,
+                                            field: "celular"
                                           }
                                         })
-                                      ]),
-                                      _vm._v(" "),
-                                      _vm._m(9)
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "ul",
-                                  { staticClass: "list-inline pull-right" },
-                                  [
-                                    _vm._m(10),
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "input-group" }, [
+                                    _vm._m(7),
                                     _vm._v(" "),
-                                    _c("li", [
-                                      _c(
-                                        "button",
-                                        {
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "form-group label-floating is-empty ",
+                                        class: {
+                                          "has-error is-focused": _vm.form.errors.has(
+                                            "direccion"
+                                          )
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "label",
+                                          { staticClass: "control-label" },
+                                          [
+                                            _vm._v(
+                                              "Detalle su dirección especifica:"
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("textarea", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model.trim",
+                                              value: _vm.form.direccion,
+                                              expression: "form.direccion",
+                                              modifiers: { trim: true }
+                                            }
+                                          ],
                                           staticClass:
-                                            "next-step btn btn-rose btn-round",
-                                          attrs: { type: "submit" },
+                                            "form-control bg-light border-0",
+                                          class: {
+                                            "has-error is-focused": _vm.form.errors.has(
+                                              "direccion"
+                                            )
+                                          },
+                                          attrs: {
+                                            name: "direccion",
+                                            id: "direccion",
+                                            rows: "2",
+                                            required: ""
+                                          },
+                                          domProps: {
+                                            value: _vm.form.direccion
+                                          },
                                           on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.infoPerson($event)
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.form,
+                                                "direccion",
+                                                $event.target.value.trim()
+                                              )
+                                            },
+                                            blur: function($event) {
+                                              return _vm.$forceUpdate()
                                             }
                                           }
-                                        },
-                                        [_vm._v("Continuar")]
-                                      )
-                                    ])
-                                  ]
-                                )
-                              ])
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span", {
+                                          staticClass: "material-input"
+                                        }),
+                                        _vm._v(" "),
+                                        _c("has-error", {
+                                          attrs: {
+                                            form: _vm.form,
+                                            field: "direccion"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "input-group" }, [
+                                    _vm._m(8),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "form-group label-floating is-empty ",
+                                        class: {
+                                          "has-error is-focused": _vm.form.errors.has(
+                                            "especificacion"
+                                          )
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "label",
+                                          { staticClass: "control-label" },
+                                          [
+                                            _vm._v(
+                                              "Detalle su pedido. Ejm. Torta sabor a chocolate."
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("textarea", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model.trim",
+                                              value: _vm.form.especificacion,
+                                              expression: "form.especificacion",
+                                              modifiers: { trim: true }
+                                            }
+                                          ],
+                                          staticClass:
+                                            "form-control bg-light border-0",
+                                          class: {
+                                            "has-error is-focused": _vm.form.errors.has(
+                                              "especificacion"
+                                            )
+                                          },
+                                          attrs: {
+                                            name: "especificacion",
+                                            id: "especificacion",
+                                            rows: "2"
+                                          },
+                                          domProps: {
+                                            value: _vm.form.especificacion
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.form,
+                                                "especificacion",
+                                                $event.target.value.trim()
+                                              )
+                                            },
+                                            blur: function($event) {
+                                              return _vm.$forceUpdate()
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span", {
+                                          staticClass: "material-input"
+                                        }),
+                                        _vm._v(" "),
+                                        _c("has-error", {
+                                          attrs: {
+                                            form: _vm.form,
+                                            field: "especificacion"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-7 big-map" }, [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _vm._m(9),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.lat,
+                                          expression: "form.lat"
+                                        }
+                                      ],
+                                      attrs: {
+                                        type: "hidden",
+                                        name: "lat",
+                                        id: "lat"
+                                      },
+                                      domProps: { value: _vm.form.lat },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.form,
+                                            "lat",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.lng,
+                                          expression: "form.lng"
+                                        }
+                                      ],
+                                      attrs: {
+                                        type: "hidden",
+                                        name: "lng",
+                                        id: "lng"
+                                      },
+                                      domProps: { value: _vm.form.lng },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.form,
+                                            "lng",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._m(10)
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "ul",
+                                { staticClass: "list-inline pull-right" },
+                                [
+                                  _vm._m(11),
+                                  _vm._v(" "),
+                                  _c("li", [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "next-step btn btn-rose btn-round",
+                                        attrs: { type: "button" },
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            return _vm.prePosition($event)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Continuar")]
+                                    )
+                                  ])
+                                ]
+                              )
                             ])
                           ]
                         ),
                         _vm._v(" "),
-                        _vm._m(11),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "tab-pane",
+                            attrs: { role: "tabpanel", id: "complete" }
+                          },
+                          [
+                            _c(
+                              "h3",
+                              { staticClass: "card-title text-center" },
+                              [_vm._v(" DATOS GENERALES ")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "col-md-4 col-md-offset-4",
+                                staticStyle: {
+                                  "padding-right": "0px",
+                                  "padding-left": "0px"
+                                }
+                              },
+                              [
+                                _vm.errors.length
+                                  ? _c("div", { staticClass: "errorbo" }, [
+                                      _c("b", [
+                                        _vm._v("Debe corregir lo siguiente:")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "ul",
+                                        {
+                                          staticStyle: { "list-style": "none" }
+                                        },
+                                        _vm._l(_vm.errors, function(error) {
+                                          return _c("li", [
+                                            _vm._v(_vm._s(error))
+                                          ])
+                                        }),
+                                        0
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "card card-blog shadow",
+                                    staticStyle: {
+                                      "background-color": "#f2f2f2"
+                                    }
+                                  },
+                                  [
+                                    _vm._m(12),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "card-pricing card-content"
+                                      },
+                                      [
+                                        _c(
+                                          "ul",
+                                          {
+                                            staticStyle: {
+                                              "max-width": "300px !important"
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "li",
+                                              {
+                                                staticStyle: {
+                                                  "text-align": "justify"
+                                                }
+                                              },
+                                              [
+                                                _vm._m(13),
+                                                _vm._v(" "),
+                                                _vm.form.fullname
+                                                  ? _c("span", [
+                                                      _vm._v(
+                                                        "\n\t\t\t                                            \t\t" +
+                                                          _vm._s(
+                                                            _vm.form.fullname
+                                                          ) +
+                                                          "\n\t\t\t                                            \t\t"
+                                                      ),
+                                                      _c(
+                                                        "i",
+                                                        {
+                                                          staticClass:
+                                                            "material-icons text-success"
+                                                        },
+                                                        [_vm._v("check")]
+                                                      )
+                                                    ])
+                                                  : _c("span", [
+                                                      _vm._v(
+                                                        "\n\t\t\t                                            \t\tNo definido\n\t\t\t                                            \t\t"
+                                                      ),
+                                                      _c(
+                                                        "i",
+                                                        {
+                                                          staticClass:
+                                                            "material-icons text-danger"
+                                                        },
+                                                        [_vm._v("close")]
+                                                      )
+                                                    ])
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "li",
+                                              {
+                                                staticStyle: {
+                                                  "text-align": "justify"
+                                                }
+                                              },
+                                              [
+                                                _vm._m(14),
+                                                _vm._v(" "),
+                                                _vm.form.celular
+                                                  ? _c("span", [
+                                                      _vm._v(
+                                                        "\n\t\t\t                                            \t\t" +
+                                                          _vm._s(
+                                                            _vm.form.celular
+                                                          ) +
+                                                          "\n\t\t\t                                            \t\t"
+                                                      ),
+                                                      _c(
+                                                        "i",
+                                                        {
+                                                          staticClass:
+                                                            "material-icons text-success"
+                                                        },
+                                                        [_vm._v("check")]
+                                                      )
+                                                    ])
+                                                  : _c("span", [
+                                                      _vm._v(
+                                                        "\n\t\t\t                                            \t\tNo definido\n\t\t\t                                            \t\t"
+                                                      ),
+                                                      _c(
+                                                        "i",
+                                                        {
+                                                          staticClass:
+                                                            "material-icons text-danger"
+                                                        },
+                                                        [_vm._v("close")]
+                                                      )
+                                                    ])
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "li",
+                                              {
+                                                staticClass:
+                                                  "card-description text-justify",
+                                                staticStyle: {
+                                                  "text-align": "justify"
+                                                }
+                                              },
+                                              [
+                                                _vm._m(15),
+                                                _vm._v(" "),
+                                                _vm.form.direccion
+                                                  ? _c("span", [
+                                                      _vm._v(
+                                                        "\n\t\t\t                                            \t\t" +
+                                                          _vm._s(
+                                                            _vm.form.direccion
+                                                          ) +
+                                                          "\n\t\t\t                                            \t\t"
+                                                      ),
+                                                      _c(
+                                                        "i",
+                                                        {
+                                                          staticClass:
+                                                            "material-icons text-success"
+                                                        },
+                                                        [_vm._v("check")]
+                                                      )
+                                                    ])
+                                                  : _c("span", [
+                                                      _vm._v(
+                                                        "\n\t\t\t                                            \t\tNo definido\n\t\t\t                                            \t\t"
+                                                      ),
+                                                      _c(
+                                                        "i",
+                                                        {
+                                                          staticClass:
+                                                            "material-icons text-danger"
+                                                        },
+                                                        [_vm._v("close")]
+                                                      )
+                                                    ])
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "li",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "show",
+                                                    rawName: "v-show",
+                                                    value:
+                                                      _vm.form.especificacion,
+                                                    expression:
+                                                      "form.especificacion"
+                                                  }
+                                                ],
+                                                staticClass:
+                                                  "card-description text-justify",
+                                                staticStyle: {
+                                                  "text-align": "justify"
+                                                }
+                                              },
+                                              [
+                                                _vm._m(16),
+                                                _vm._v(
+                                                  " " +
+                                                    _vm._s(
+                                                      _vm.form.especificacion
+                                                    ) +
+                                                    "\n\t\t\t                                            "
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "li",
+                                              {
+                                                staticStyle: {
+                                                  "text-align": "justify"
+                                                }
+                                              },
+                                              [
+                                                _vm._m(17),
+                                                _vm._v(" "),
+                                                _vm.form.lat && _vm.form.lng
+                                                  ? _c("span", [
+                                                      _vm._v(
+                                                        "\n\t\t\t                                            \t\tHogar ubicado en el mapa\n\t\t\t                                            \t\t"
+                                                      ),
+                                                      _c(
+                                                        "i",
+                                                        {
+                                                          staticClass:
+                                                            "material-icons text-success"
+                                                        },
+                                                        [_vm._v("check")]
+                                                      )
+                                                    ])
+                                                  : _c(
+                                                      "span",
+                                                      {
+                                                        staticClass:
+                                                          "text-danger"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n\t\t\t                                            \t\tHogar NO ubicado en el mapa\n\t\t\t                                            \t"
+                                                        )
+                                                      ]
+                                                    )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "li",
+                                              {
+                                                staticStyle: {
+                                                  "text-align": "justify"
+                                                }
+                                              },
+                                              [
+                                                _c("b", [
+                                                  _c(
+                                                    "i",
+                                                    {
+                                                      staticClass:
+                                                        "material-icons text-rose"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "local_grocery_store"
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(
+                                                    " " +
+                                                      _vm._s(_vm.cantipro) +
+                                                      " productos:"
+                                                  )
+                                                ]),
+                                                _vm._v(" "),
+                                                _vm.cantipro
+                                                  ? _c("span", [
+                                                      _vm._v(
+                                                        "\n\t\t\t                                            \t\t" +
+                                                          _vm._s(
+                                                            _vm.onViewTotal()
+                                                          ) +
+                                                          " Bs.\n\t\t\t                                            \t\t"
+                                                      ),
+                                                      _c(
+                                                        "i",
+                                                        {
+                                                          staticClass:
+                                                            "material-icons text-success"
+                                                        },
+                                                        [_vm._v("check")]
+                                                      )
+                                                    ])
+                                                  : _c("span", [
+                                                      _vm._v(
+                                                        "\n\t\t\t                                            \t\tNingún producto\n\t\t\t                                            \t\t"
+                                                      ),
+                                                      _c(
+                                                        "i",
+                                                        {
+                                                          staticClass:
+                                                            "material-icons text-danger"
+                                                        },
+                                                        [_vm._v("close")]
+                                                      )
+                                                    ])
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "li",
+                                              {
+                                                staticStyle: {
+                                                  "text-align": "justify"
+                                                }
+                                              },
+                                              [
+                                                _vm._m(18),
+                                                _vm._v(
+                                                  " " +
+                                                    _vm._s(_vm.deliTotal()) +
+                                                    " Bs.\n\t\t\t \t\t\t\t\t\t\t\t\t\t\t"
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "h6",
+                                          { staticClass: "card-title" },
+                                          [_vm._v("Total")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "h1",
+                                          { staticClass: "card-title" },
+                                          [
+                                            _c("small", [_vm._v("Bs.")]),
+                                            _vm._v(" " + _vm._s(_vm.totalbsok))
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _vm._m(19)
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        ),
                         _vm._v(" "),
                         _c("div", { staticClass: "clearfix" })
                       ])
@@ -67403,6 +67919,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "material-icons" }, [
+        _vm._v("assignment_turned_in")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
       "h6",
       {
@@ -67447,159 +67973,90 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-image" }, [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("img", {
+          staticClass: "imgcard",
+          staticStyle: { height: "100%" },
+          attrs: { src: "/img/welcome/642-193_4.png", alt: "Producto foto" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _c("i", { staticClass: "material-icons text-rose" }, [
+        _vm._v("contacts")
+      ]),
+      _vm._v(" Nombre:")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _c("i", { staticClass: "material-icons text-rose" }, [
+        _vm._v("tap_and_play")
+      ]),
+      _vm._v(" Celular:")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _c("i", { staticClass: "material-icons text-rose text-rose" }, [
+        _vm._v("my_location")
+      ]),
+      _vm._v(" Dirección")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _c("i", { staticClass: "material-icons text-rose" }, [
+        _vm._v("local_offer")
+      ]),
+      _vm._v(" Especificación de su pedido:")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _c("i", { staticClass: "material-icons text-rose" }, [
+        _vm._v("pin_drop")
+      ]),
+      _vm._v(" Mapa:")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _c("i", { staticClass: "material-icons text-rose" }, [
+        _vm._v("motorcycle")
+      ]),
+      _vm._v(" Delivery:")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
-      "div",
-      { staticClass: "tab-pane", attrs: { role: "tabpanel", id: "complete" } },
-      [
-        _c("h3", { staticClass: "card-title text-center" }, [
-          _vm._v(" DATOS GENERALES ")
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "col-md-4 col-md-offset-4",
-            staticStyle: { "padding-right": "0px", "padding-left": "0px" }
-          },
-          [
-            _c(
-              "div",
-              {
-                staticClass: "card card-blog shadow",
-                staticStyle: { "background-color": "#f2f2f2" }
-              },
-              [
-                _c("div", { staticClass: "card-image" }, [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _c("img", {
-                      staticClass: "imgcard",
-                      staticStyle: { height: "100%" },
-                      attrs: {
-                        src: "img/welcome/logo.png",
-                        alt: "Producto foto"
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-pricing card-content" }, [
-                  _c("ul", { staticClass: "list-unstyled" }, [
-                    _c("li", [
-                      _c("b", [
-                        _c("i", { staticClass: "material-icons text-rose" }, [
-                          _vm._v("contacts")
-                        ]),
-                        _vm._v(" Nombre:")
-                      ]),
-                      _vm._v(
-                        " Jorge Denys Peralta\n\t\t\t                                            "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c("b", [
-                        _c("i", { staticClass: "material-icons text-rose" }, [
-                          _vm._v("tap_and_play")
-                        ]),
-                        _vm._v(" Celular:")
-                      ]),
-                      _vm._v(
-                        " 75729198\n\t\t\t                                            "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "card-description text-justify" }, [
-                      _c("b", [
-                        _c(
-                          "i",
-                          { staticClass: "material-icons text-rose text-rose" },
-                          [_vm._v("my_location")]
-                        ),
-                        _vm._v(" Dirección")
-                      ]),
-                      _vm._v(
-                        " Lorem, ipsum, dolor sit amet consectetur adipisicing elit. Sunt delectus magnam id, optio provident.\n\t\t\t                                            "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "card-description text-justify" }, [
-                      _c("b", [
-                        _c("i", { staticClass: "material-icons text-rose" }, [
-                          _vm._v("local_offer")
-                        ]),
-                        _vm._v(" Especificación:")
-                      ]),
-                      _vm._v(
-                        " Lorem, ipsum, dolor sit amet consectetur adipisicing elit. Sunt delectus magnam id, optio provident.\n\t\t\t                                            "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c("i", { staticClass: "material-icons text-success" }, [
-                        _vm._v("check")
-                      ]),
-                      _vm._v(" "),
-                      _c("i", { staticClass: "material-icons text-rose" }, [
-                        _vm._v("pin_drop")
-                      ]),
-                      _vm._v(" Con datos en el mapa")
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c("i", { staticClass: "material-icons text-danger" }, [
-                        _vm._v("close")
-                      ]),
-                      _vm._v(" "),
-                      _c("i", { staticClass: "material-icons text-rose" }, [
-                        _vm._v("pin_drop")
-                      ]),
-                      _vm._v(
-                        "  Sin datos en el mapa\n\t\t\t \t\t\t\t\t\t\t\t\t\t\t"
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c("b", [
-                        _c("i", { staticClass: "material-icons text-rose" }, [
-                          _vm._v("local_grocery_store")
-                        ]),
-                        _vm._v(" En producto:")
-                      ]),
-                      _vm._v(" 107 Bs.\n\t\t\t \t\t\t\t\t\t\t\t\t\t\t")
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c("b", [
-                        _c("i", { staticClass: "material-icons text-rose" }, [
-                          _vm._v("motorcycle")
-                        ]),
-                        _vm._v(" Delivery:")
-                      ]),
-                      _vm._v(" 10 Bs.\n\t\t\t \t\t\t\t\t\t\t\t\t\t\t")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("h6", { staticClass: "card-title" }, [_vm._v("Total")]),
-                  _vm._v(" "),
-                  _c("h1", { staticClass: "card-title" }, [
-                    _c("small", [_vm._v("Bs.")]),
-                    _vm._v("117")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-rose btn-round",
-                      attrs: { href: "#pablo" }
-                    },
-                    [_c("b", [_vm._v(" ENVIAR PEDIDO ")])]
-                  )
-                ])
-              ]
-            )
-          ]
-        )
-      ]
+      "a",
+      { staticClass: "btn btn-rose btn-round", attrs: { href: "#pablo" } },
+      [_c("b", [_vm._v(" ENVIAR PEDIDO ")])]
     )
   }
 ]

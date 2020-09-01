@@ -202,7 +202,7 @@
                       </p>
                     </div>
                     <div class="box-round-wrap">
-                      <img class="imgfirst" src="{{ asset('/img/welcome/logo.png') }}" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'  />
+                      <img class="imgfirst" src="{{ asset('/img/welcome/logoWelcome.png') }}" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'  />
                     </div>
                   </div>
                 </div>

@@ -28,6 +28,7 @@
 					                            </span>
 					                        </a>
 					                    </li>
+
 					                    <li role="presentation" class="disabled">
 					                        <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Paso 2 - Datos">
 					                            <span class="round-tab">
@@ -35,6 +36,14 @@
 					                            </span>
 					                        </a>
 					                    </li>
+					                    <!--<li role="presentation" class="disabled">
+					                        <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Paso 3 - Confirmar">
+					                            <span class="round-tab">
+					                                <img src="/img/wizard/stationery.svg" style="width: 90%; vertical-align: initial; margin-top:1px;">
+					                            </span>
+					                        </a>
+					                    </li>-->
+
 					                    <li role="presentation" class="disabled">
 					                        <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Completo!">
 					                            <span class="round-tab">
@@ -139,6 +148,7 @@
 						                <h3 class="card-title text-center" >DATOS DEL USUARIO</h3>
 						                <p class="description text-center">Los campos de este <span class="text-rose"><b>color</b></span> son obligatorios </p>
 						                <div class="card-body">
+						                	<form method="POST">
 				                            <div class="row ">
 				                                <div class="col-md-5">
 				                                    <div class="input-group">
@@ -146,7 +156,8 @@
 				                                            <i class="material-icons text-rose">face</i>
 				                                        </span>
 				                                        <div class="form-group label-floating is-empty" :class="{ 'has-error is-focused': form.errors.has('fullname') }">
-				                                            <input type="text" class="form-control" name="fullname" v-model="form.fullname" autofocus required placeholder="Nombre completo">
+				                                            <label class="control-label">Nombre completo:</label>
+				                                            <input type="text" class="form-control" name="fullname" v-model="form.fullname" autofocus required value=" ">
 				                                            <span class="material-input"></span>
 				                            				<has-error :form="form" field="fullname"></has-error>
 				                                        </div>
@@ -156,7 +167,8 @@
 				                                            <i class="material-icons text-rose">stay_current_portrait</i>
 				                                        </span>
 				                                        <div class="form-group label-floating is-empty " :class="{ 'has-error is-focused': form.errors.has('celular') }">
-				                                            <input v-model.number="form.celular" type="number" class="form-control" name="celular" required placeholder="Número de celular">
+				                                            <label class="control-label">Número de celular:</label>
+				                                            <input v-model.number="form.celular" type="number" class="form-control" name="celular" required >
 				                                            <span class="material-input"></span>
 				                            				<has-error :form="form" field="celular"></has-error>
 				                                        </div>
@@ -172,25 +184,14 @@
 				                            				<has-error :form="form" field="direccion"></has-error>
 				                                        </div>
 				                                    </div>
-				                                    <div class="input-group">
-				                                        <span class="input-group-addon">
-				                                            <i class="material-icons">assignment_turned_in</i>
-				                                        </span>
-				                                        <div class="form-group label-floating is-empty " :class="{ 'has-error is-focused': form.errors.has('especificacion') }">
-				                                            <label class="control-label">Detalle su pedido. Ejm. Torta sabor a chocolate.</label>
-				                                            <textarea class="form-control bg-light border-0" :class="{ 'has-error is-focused': form.errors.has('especificacion') }" name="especificacion" id="especificacion" rows="2" v-model.trim="form.especificacion"> </textarea>
-				                                            <span class="material-input"></span>
-				                            				<has-error :form="form" field="especificacion"></has-error>
-				                                        </div>
-				                                    </div>
 				                                </div>
 				                                <div class="col-md-7 big-map">
 				                                    <div class="form-group">
 				                                        <h6 class="title" style="margin-top:1px; margin-bottom:1px;" >
 				                                    		Mueva el icono <i class="material-icons text-rose">room</i>  en donde esta su casa exactamente.
 				                                    	</h6>
-				                                        <input type="hidden" name="lat" id="lat" v-model="form.lat" />
-				                                        <input type="hidden" name="lng" id="lng" v-model="form.lng" />
+				                                        <input type="hidden" name="lat" id="lat" v-model="form.lat" ref="posilat" />
+				                                        <input type="hidden" name="lng" id="lng" v-model="form.lng" ref="posilng" />
 				                                    </div>
 				                                    <div style="width:100%;height:400px; ">
 				                                        <div style="width: 100%; height: 100%" id="map"></div>
@@ -203,92 +204,60 @@
 				                            		<button type="button" class="btn btn-default prev-step">Atrás</button>
 				                            	</li>
 				                            	<li>
-				                            		<!--<button @click.prevent="infoPerson" type="submit" class="next-step btn btn-rose btn-round">Continuar</button>-->
-				                            		<button @click.prevent="prePosition" type="button" class="next-step btn btn-rose btn-round">Continuar</button>
+				                            		<button @click.prevent="infoPerson" type="submit" class="next-step btn btn-rose btn-round">Continuar</button>
 				                        		</li>
 				                        	</ul>
+				                        	</form>
 						            	</div>
 				                    </div>
+				                    <!--<div class="tab-pane" role="tabpanel" id="step3">
+				                        <h3>Step 3</h3>
+				                        <p>This is step 3</p>
+				                        <ul class="list-inline pull-right">
+				                            <li><button type="button" class="btn btn-default prev-step">Atrás</button></li>
+				                            <li><button type="button" class="btn btn-default next-step">Omitir</button></li>
+				                            <li>
+				                            	<button    type="button" class="btn btn-rose btn-round btn-info-full next-step">Guardar y continuar</button>
+				                            </li>
+				                        </ul>
+				                    </div>-->
 				                    <div class="tab-pane" role="tabpanel" id="complete">
 				                        <h3 class="card-title text-center"> DATOS GENERALES </h3>
 						                <div class="col-md-4 col-md-offset-4" style="padding-right: 0px; padding-left: 0px;">
-						                	<div class="errorbo" v-if="errors.length" >
-											  	<b>Debe corregir lo siguiente:</b>
-											    <ul style="list-style:none;">
-											      <li v-for="error in errors">{{ error }}</li>
-											    </ul>
-											</div>
 				                            <div class="card card-blog shadow" style="background-color: #f2f2f2;">
 				                                <div class="card-image">
 				                                    <a href="#">
-				                                        <img src="/img/welcome/642-193_4.png" class="imgcard"  alt="Producto foto" style="height: 100%;" />
+				                                        <img src="img/welcome/logo.png" class="imgcard"  alt="Producto foto" style="height: 100%;" />
 				                                    </a>
 				                                </div>
 				                                <div class="card-pricing card-content">
-			                                        <ul style="max-width: 300px !important;">
-			                                            <li style="text-align: justify;">
-			                                            	<b><i class="material-icons text-rose">contacts</i> Nombre:</b>
-			                                            	<span v-if="form.fullname">
-			                                            		{{ form.fullname }}
-			                                            		<i class="material-icons text-success">check</i>
-			                                            	</span>
-			                                            	<span v-else>
-			                                            		No definido
-			                                            		<i class="material-icons text-danger">close</i>
-			                                            	</span>
+			                                        <ul class="list-unstyled">
+			                                            <li >
+			                                            	<b><i class="material-icons text-rose">contacts</i> Nombre:</b> Jorge Denys Peralta
 			                                            </li>
-			                                            <li style="text-align: justify;">
-			                                            	<b> <i class="material-icons text-rose">tap_and_play</i> Celular:</b>
-			                                            	<span v-if="form.celular">
-			                                            		{{ form.celular }}
-			                                            		<i class="material-icons text-success">check</i>
-			                                            	</span>
-			                                            	<span v-else>
-			                                            		No definido
-			                                            		<i class="material-icons text-danger">close</i>
-			                                            	</span>
+			                                            <li>
+			                                            	<b> <i class="material-icons text-rose">tap_and_play</i> Celular:</b> 75729198
 			                                            </li>
-			                                            <li class="card-description text-justify" style="text-align: justify;">
-			                                            	<b><i class="material-icons text-rose text-rose">my_location</i> Dirección</b>
-			                                            	<span v-if="form.direccion">
-			                                            		{{ form.direccion }}
-			                                            		<i class="material-icons text-success">check</i>
-			                                            	</span>
-			                                            	<span v-else>
-			                                            		No definido
-			                                            		<i class="material-icons text-danger">close</i>
-			                                            	</span>
+			                                            <li class="card-description text-justify">
+			                                            	<b><i class="material-icons text-rose text-rose">my_location</i> Dirección</b> Lorem, ipsum, dolor sit amet consectetur adipisicing elit. Sunt delectus magnam id, optio provident.
 			                                            </li>
-			                                            <li class="card-description text-justify" style="text-align: justify;" v-show="form.especificacion">
-			                                            	<b> <i class="material-icons text-rose">local_offer</i> Especificación de su pedido:</b> {{ form.especificacion }}
+			                                            <li class="card-description text-justify">
+			                                            	<b> <i class="material-icons text-rose">local_offer</i> Especificación:</b> Lorem, ipsum, dolor sit amet consectetur adipisicing elit. Sunt delectus magnam id, optio provident.
 			                                            </li>
-			                                            <li style="text-align: justify;">
-			                                            	<b><i class="material-icons text-rose">pin_drop</i> Mapa:</b>
-			                                            	<span v-if="form.lat && form.lng">
-			                                            		Hogar ubicado en el mapa
-			                                            		<i class="material-icons text-success">check</i>
-			                                            	</span>
-			                                            	<span v-else class="text-danger">
-			                                            		Hogar NO ubicado en el mapa
-			                                            	</span>
-			                                            </li>
-			 											<li style="text-align: justify;">
-			 												<b><i class="material-icons text-rose">local_grocery_store</i> {{ cantipro }} productos:</b>
-			 												<span v-if="cantipro">
-			                                            		{{onViewTotal()}} Bs.
-			                                            		<i class="material-icons text-success">check</i>
-			                                            	</span>
-			                                            	<span v-else>
-			                                            		Ningún producto
-			                                            		<i class="material-icons text-danger">close</i>
-			                                            	</span>
+			                                            <li><i class="material-icons text-success">check</i> <i class="material-icons text-rose">pin_drop</i> Con datos en el mapa</li>
+			 											<li>
+			 												<i class="material-icons text-danger">close</i>
+			 												<i class="material-icons text-rose">pin_drop</i>  Sin datos en el mapa
 			 											</li>
-			 											<li style="text-align: justify;">
-			 												<b> <i class="material-icons text-rose">motorcycle</i> Delivery:</b> {{deliTotal()}} Bs.
+			 											<li>
+			 												<b><i class="material-icons text-rose">local_grocery_store</i> En producto:</b> 107 Bs.
+			 											</li>
+			 											<li>
+			 												<b> <i class="material-icons text-rose">motorcycle</i> Delivery:</b> 10 Bs.
 			 											</li>
 			                                        </ul>
 				                                    <h6 class="card-title">Total</h6>
-			                                        <h1 class="card-title"><small>Bs.</small> {{ totalbsok }}</h1>
+			                                        <h1 class="card-title"><small>Bs.</small>117</h1>
 			                                        <a href="#pablo" class="btn btn-rose btn-round">
 			                                            <b> ENVIAR PEDIDO </b>
 			                                        </a>
@@ -312,9 +281,8 @@
 		data() {
             return {
             	carridetas : [],
-            	totalbsok: 0,
-            	cantipro: 0,
-            	errors: [],
+            	desmessage: '0.00',
+            	error: '',
             	myLatLng: {lat: -19.589263, lng: -65.754102},
                 form: new Form({
                 	fullname: '',
@@ -322,8 +290,7 @@
                 	direccion:'',
                 	lat:'',
                 	lng:'',
-                	especificacion:'',
-                	delivery:''
+                	especificacion:''
                 })
 			}
 		},
@@ -341,7 +308,6 @@
 				//console.log(resul.data.data);
 				this.carridetas = resul.data.data;
 				//console.log(this.users);
-				await axios.get('api/profile').then(({data}) => (this.form.fill(data)));
 
             },
             cambiarCantidad(index,type){
@@ -400,34 +366,6 @@
 	            })
 	            return this.convertMoney(total)
 	        },
-          	deliTotal(){
-	            let total = 0
-	            let totaltor = 0
-	            let deli = 0
-	            let actitor = false
-	            let canpro = 0
-	            this.carridetas.map((data)=>{
-	            	total = total + ((data.cantidad * data.producto.precio)-data.descuento_bs)
-	            	canpro = canpro + data.cantidad
-	              	if(data.producto.categoria.nombre === 'Tortas'){
-	              		totaltor = totaltor + ((data.cantidad * data.producto.precio)-data.descuento_bs)
-	              		actitor = true
-	              	}
-	            })
-	            if(actitor){
-              		deli = 10
-              		if(totaltor > 120){
-              			deli = 15
-              		}
-              	}else{
-              		deli = 8
-              	}
-
-              	this.totalbsok = total+deli
-              	this.form.delivery = deli
-              	this.cantipro = canpro
-	            return deli
-	        },
 	        deletePro(id){
 	        	swal.fire({
 				  title: '¿Estás seguro?',
@@ -475,26 +413,30 @@
             },
             initializeMap(){
             	/*Inicio el mapa con la ubicacion señalada en myLatLng*/
-				let map = new google.maps.Map(document.getElementById('map'), {
-	                zoom: 15,
-	                center: this.myLatLng,
-	                mapTypeId: google.maps.MapTypeId.SATELLITE,
-	                //scrollwheel: true,
-	            });
+				let map = new google.maps.Map(document.getElementById('map'),
+			    {
+			        center: this.myLatLng,
+			        mapTypeId: google.maps.MapTypeId.SATELLITE,
+			        scrollwheel: true,
+			        zoom: 16
+			    });
 				//hasta aqui se ve el mapa
 
 				/*Inicio el icono para que se mueva*/
 			    let marker = new google.maps.Marker({
-	                position: this.myLatLng,
-	                map: map,
-	                draggable: true,
-	                title: 'Mové esto a tu casa!'
-	            });
+			      map: map,
+			      draggable: true,
+			      position: this.myLatLng,
+			      title: 'Mové esto a tu casa!'
+			    });
 			    //agarro las coordenadas de la posición donde mueva
-				google.maps.event.addListener(marker, 'position_changed', () => {
-	                this.form.lat = marker.getPosition().lat()
-	                this.form.lng = marker.getPosition().lng()
-	            });
+
+			    google.maps.event.addListener(marker,'position_changed',function(){
+			        let lat = marker.getPosition().lat();
+			        let lng = marker.getPosition().lng();
+			        $('#lat').val(lat);
+			        $('#lng').val(lng);
+			    });
 			    //console.log(posilat);
 			    //hasta aqui muestro el icono con  lat, lng
 
@@ -572,23 +514,11 @@
 	                                'Error: Su navegador no admite geolocalización.');
 	        	}*/
             },
-            prePosition(){
-            	if (this.form.fullname && this.form.celular) {
-			        if(this.form.direccion){
-			        	return true;
-			        }
-			    }
-			    this.errors = [];
-			    if (!this.form.fullname){
-			    	this.errors.push('El nombre completo es obligatorio.');
-			    }
-			    if (!this.form.celular){
-			        this.errors.push('El número de celular es obligatorio.');
-			    }
-			    if (!this.form.direccion){
-			        this.errors.push('La dirección es obligatorio.');
-			    }
-        		if(!this.errors){
+            getPosition(){
+            	this.form.lat = this.$refs.posilat.value
+        		this.form.lng = this.$refs.posilng.value
+        		if(this.form.lat !=""){
+        			Fire.$emit('AfterCreate');
         			this.$Progress.start();
         			swal.fire(
 						'Ok. continua.!',
@@ -598,14 +528,18 @@
         			this.$Progress.finish();
         		}else{
         			swal.fire(
-						'Faltan datos!',
-		                'Los datos con este signo <span class="text-danger"> <b> X </b> </span> son obligatorios.',
+						'El icono rojo!',
+		                'Muevalo donde su casa.',
 		                'error'
     				)
         			this.$Progress.fail();
         		}
+
             },
             infoPerson(){
+            	this.form.lat = this.$refs.posilat.value
+        		this.form.lng = this.$refs.posilng.value
+        		//console.log(this.form.lat);
         		this.$Progress.start();
         		this.form.post('/infoperson')
         		.then(()=>{
@@ -629,7 +563,10 @@
             });
         },
         watch: {
-
+        	initializeMap(){
+        		this.form.lat = this.$refs.posilat.value
+        		this.form.lng = this.$refs.posilng.value
+        	}
         }
 	};
 </script>
