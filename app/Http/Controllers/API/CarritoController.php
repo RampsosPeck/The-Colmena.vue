@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class CarritoController extends Controller
 {
@@ -67,14 +68,20 @@ class CarritoController extends Controller
     {
         //return $request->all();
         $antuser = User::where('celular',$request->celular)->first();
+        //return $antuser;
         if($antuser){
             $antuser->update($request->all());
             $carri = Carrito::where('id',$request->carrito->id)->first();
+            //return $carri;
             Carrito::where('id',$request->carrito->id)->update([
-                'codigo'   => 'CO/'.date('M').'/'.date('h:m:s').'/'.$carri->id,
-                'user_id'  => $antuser->id,
+                'codigo'      => 'CO/'.date('M').'/'.date('h:m:s').'/'.$carri->id,
+                'user_id'     => $antuser->id,
+                'fecha_orden' => Carbon::now(),
+                'estado'      => 'recibido',
                 'especificacion' => $request->especificacion
             ]);
+            //$message = 'Usuario actualizado correctamente.';
+            $request->session()->flush();
         }else{
             $userid = \DB::table('users')->insertGetId([
                 'slug' => Str::of($request->fullname)->slug('-'),
@@ -89,12 +96,16 @@ class CarritoController extends Controller
             Carrito::where('id',$request->carrito->id)->update([
                 'codigo'   => 'CO/'.date('M').'/'.date('h:m:s').'/'.$carri->id,
                 'user_id'  => $userid,
+                'fecha_orden' => Carbon::now(),
+                'estado'      => 'recibido',
                 'especificacion' => $request->especificacion
             ]);
+            //$message = 'Usuario creado correctamente.';
+            $request->session()->flush();
         }
 
         //$request->session()->flush();
-
+         return response()->json(['message' => 'Excelente carrito guardado.'], 200);
     }
 
     /**

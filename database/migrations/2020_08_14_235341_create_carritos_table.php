@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateCarritosTable extends Migration
 {
-    /**
+    /** CARIITO -> recibido -> procesando(cancelado) -> enviado -> vendido
      * Run the migrations.
      *
      * @return void
@@ -19,7 +19,8 @@ class CreateCarritosTable extends Migration
             $table->timestamp('fecha_orden')->nullable();
             $table->timestamp('fecha_entrega')->nullable();
             $table->unsignedDecimal('total_bs',9,2)->nullable();
-            $table->integer('estado')->default(0);
+            //$table->integer('estado')->default(0);
+            $table->string('estado')->nullable();
             $table->text('especificacion')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');

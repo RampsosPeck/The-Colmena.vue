@@ -7,7 +7,7 @@
             <div class="col-md-12">
                <div class="profile" style="margin-bottom: -70px;">
                     <div class="avatar">
-                        <img src="/img/secondary/cart1.svg" alt="Circle Image" class="img-responsive">
+                        <img src="/img/secondary/cart1.svg" alt="Circle Image" class="imgcarrix img-responsive">
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
 					                    <li role="presentation" class="disabled">
 					                        <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Completo!">
 					                            <span class="round-tab">
-					                                <img src="/img/wizard/checked.svg" style="width: 90%; vertical-align: initial; margin-top:2px;">
+					                                <img src="/img/wizard/checklist.svg" style="width: 90%; vertical-align: initial; margin-top:2px;">
 					                            </span>
 					                        </a>
 					                    </li>
@@ -131,7 +131,8 @@
 			                                    </tbody>
 			                                </table>
 			                                <div class="pull-right" style="padding-right: 15px;">
-					                            <button type="button" class="btn btn-rose btn-round next-step" v-on:click="onSendOrder()">Guardar y continuar</button>
+					                            <button type="button" class="btn btn-rose btn-round next-step" v-on:click="onSendOrder()" v-show="carridetas.length>0" >Guardar y continuar</button>
+					                            <a href="/dashboard" class="btn btn-default btn-round"  v-show="carridetas.length===0">Agregue productos a su carrito</a>
 					                        </div>
 				                        </div>
 				                    </div>
@@ -166,8 +167,7 @@
 				                                            <i class="material-icons text-rose">room</i>
 				                                        </span>
 				                                        <div class="form-group label-floating is-empty " :class="{ 'has-error is-focused': form.errors.has('direccion') }">
-				                                            <label class="control-label">Detalle su dirección especifica:</label>
-				                                            <textarea class="form-control bg-light border-0" :class="{ 'has-error is-focused': form.errors.has('direccion') }" name="direccion" id="direccion" rows="2" v-model.trim="form.direccion" required > </textarea>
+				                                            <textarea class="form-control bg-light border-0" :class="{ 'has-error is-focused': form.errors.has('direccion') }" name="direccion" id="direccion" rows="2" v-model.trim="form.direccion" required placeholder="Detalle su dirección especifica."> </textarea>
 				                                            <span class="material-input"></span>
 				                            				<has-error :form="form" field="direccion"></has-error>
 				                                        </div>
@@ -200,18 +200,18 @@
 
 					                        <ul class="list-inline pull-right">
 				                            	<li>
-				                            		<button type="button" class="btn btn-default prev-step">Atrás</button>
+				                            		<button type="button" class="btn btn-default btn-round prev-step">Atrás</button>
 				                            	</li>
 				                            	<li>
 				                            		<!--<button @click.prevent="infoPerson" type="submit" class="next-step btn btn-rose btn-round">Continuar</button>-->
-				                            		<button @click.prevent="prePosition" type="button" class="next-step btn btn-rose btn-round">Continuar</button>
+				                            		<button @click="prePosition" type="button" class="next-step btn btn-rose btn-round">Continuar</button>
 				                        		</li>
 				                        	</ul>
 						            	</div>
 				                    </div>
 				                    <div class="tab-pane" role="tabpanel" id="complete">
-				                        <h3 class="card-title text-center"> DATOS GENERALES </h3>
-						                <div class="col-md-4 col-md-offset-4" style="padding-right: 0px; padding-left: 0px;">
+				                        <h3 class="card-title text-center"> ORDEN DE COMPRA </h3>
+						                <div class="col-md-4 col-md-offset-4" style="padding-right: 0px; padding-left: 0px;" v-show="!estadopedi">
 						                	<div class="errorbo" v-if="errors.length" >
 											  	<b>Debe corregir lo siguiente:</b>
 											    <ul style="list-style:none;">
@@ -289,10 +289,39 @@
 			                                        </ul>
 				                                    <h6 class="card-title">Total</h6>
 			                                        <h1 class="card-title"><small>Bs.</small> {{ totalbsok }}</h1>
-			                                        <a href="#pablo" class="btn btn-rose btn-round">
-			                                            <b> ENVIAR PEDIDO </b>
-			                                        </a>
+					                            		<button type="button" class="btn btn-default btn-round prev-step" v-show="errors.length>0">
+					                            			 Atrás - ver datos faltantes
+					                            		</button>
+					                            		<button @click="infoPerson" type="button" class="btn btn-rose btn-round" v-show="errors.length === 0">
+					                            			<b>
+						                                		<i class="material-icons">near_me</i>
+						                                		Enviar pedido
+						                                	</b>
+						                                </button>
 				                                </div>
+				                            </div>
+				                        </div>
+				                        <div class="col-md-4 col-md-offset-4" style="padding-right: 0px; padding-left: 0px;" v-show="estadopedi">
+				                            <div class="card card-blog shadow" style="background-color: #dff0d8;">
+				                                <div class="card-image">
+				                                    <a href="#">
+				                                        <img src="/img/secondary/panal2.png" class="imgcard"  alt="Producto foto" style="height: 18em !important" />
+				                                    </a>
+				                                </div>
+				                                <div class="successbo card-content">
+			                                        <div class="text-center">
+			                                        	<h5><b>¡Gracias por su preferencia!</b></h5>
+			                                        </div>
+			                                        <h6>En un momento recibira una <strong>llamada</strong> de confirmación.</h6>
+			                                        <div class="warningbo card-content">
+			                                        	Ingresa al sistema para VER tu PEDIDO.
+					                                	<b>"Utiliza tú número de celular como contraseña."</b>
+			                                        	<a href="/login" class="btn btn-danger btn-round">
+							                            	<b><i class="material-icons">folder_shared</i></b>
+							                            	INGREGAR AL SISTEMA
+							                            </a>
+			                                        </div>
+						                        </div>
 				                            </div>
 				                        </div>
 				                    </div>
@@ -315,6 +344,7 @@
             	totalbsok: 0,
             	cantipro: 0,
             	errors: [],
+            	estadopedi: false,
             	myLatLng: {lat: -19.589263, lng: -65.754102},
                 form: new Form({
                 	fullname: '',
@@ -323,7 +353,8 @@
                 	lat:'',
                 	lng:'',
                 	especificacion:'',
-                	delivery:''
+                	delivery:'',
+                	slug:''
                 })
 			}
 		},
@@ -573,11 +604,6 @@
 	        	}*/
             },
             prePosition(){
-            	if (this.form.fullname && this.form.celular) {
-			        if(this.form.direccion){
-			        	return true;
-			        }
-			    }
 			    this.errors = [];
 			    if (!this.form.fullname){
 			    	this.errors.push('El nombre completo es obligatorio.');
@@ -588,7 +614,14 @@
 			    if (!this.form.direccion){
 			        this.errors.push('La dirección es obligatorio.');
 			    }
-        		if(!this.errors){
+        		if(this.errors.length > 0){
+        			swal.fire(
+						'Faltan datos!',
+		                'Los datos con este signo <span class="text-danger"> <b> X </b> </span> son obligatorios.',
+		                'error'
+    				)
+        			this.$Progress.fail();
+        		}else{
         			this.$Progress.start();
         			swal.fire(
 						'Ok. continua.!',
@@ -596,28 +629,28 @@
 		                'success'
     				)
         			this.$Progress.finish();
-        		}else{
-        			swal.fire(
-						'Faltan datos!',
-		                'Los datos con este signo <span class="text-danger"> <b> X </b> </span> son obligatorios.',
-		                'error'
-    				)
-        			this.$Progress.fail();
         		}
             },
             infoPerson(){
         		this.$Progress.start();
         		this.form.post('/infoperson')
         		.then(()=>{
+        			this.estadopedi = true;
         			Fire.$emit('AfterCreate');
         			swal.fire(
-        				'Ok. continua.!',
-                        'La información del usuario fue guardada.',
+        				'Excelente.!',
+                        'Pedido enviado con exito!',
                         'success'
         			)
         			this.$Progress.finish();
+        			//this.$router.push('/dashboard')
         		})
         		.catch(()=>{
+        			swal.fire(
+        				'Oops.!',
+                        'Ocurrio un error - actualize su pagina',
+                        'error'
+        			)
         			this.$Progress.fail();
         		})
         	}
@@ -627,9 +660,6 @@
         	Fire.$on('AfterCreate',() => {
                 this.loadProductos();
             });
-        },
-        watch: {
-
         }
 	};
 </script>

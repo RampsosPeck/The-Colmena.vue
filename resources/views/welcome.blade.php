@@ -46,8 +46,7 @@
                     <!--RD Navbar Brand-->
                     <div class="rd-navbar-brand">
                       <a class="brand" href="#programs">
-                        <img class="brand-logo-light" src="{{ asset('/img/welcome/logo.png') }}" alt="" width="181" height="50"/>
-
+                        <img class="brand-logo-light" src="{{ asset('/img/welcome/logowel.png') }}" />
                       </a>
                     </div>
                   </div>
@@ -202,7 +201,7 @@
                       </p>
                     </div>
                     <div class="box-round-wrap">
-                      <img class="imgfirst" src="{{ asset('/img/welcome/logoWelcome.png') }}" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'  />
+                      <img class="imgfirst" src="{{ asset('/img/welcome/panal.png') }}" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'  />
                     </div>
                   </div>
                 </div>
@@ -221,7 +220,7 @@
                       </p>
                     </div>
                     <div class="box-round-wrap">
-                      <img class="imgfirst" src="/img/welcome/a461x407.png" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'/>
+                      <img class="imgfirst" src="/img/welcome/torta.png" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'/>
                     </div>
                   </div>
                 </div>
@@ -240,7 +239,7 @@
                       </p>
                     </div>
                     <div class="box-round-wrap">
-                      <img class="imgfirst" src="/img/welcome/671X671_1.png" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'/>
+                      <img class="imgfirst" src="/img/welcome/671X671_b.png" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'/>
                     </div>
                   </div>
                 </div>
@@ -258,7 +257,7 @@
                           <a class="button button-primary-wel" href="{{ url('dashboard') }}">Ver Catálogo</a>
                       </p>
                     </div>
-                    <div class="box-round-wrap"><img src="images/slider-04-671x671.png" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'/>
+                    <div class="box-round-wrap"><img src="/img/welcome/delivery-man.svg" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'/>
                     </div>
                   </div>
                 </div>
@@ -311,7 +310,7 @@
               <!-- Product-->
               <div class="product novi-bg bg-default">
                 <h3 class="product-title">COMIDAS</h3>
-                <img class="product-img" src="/img/welcome/comida3.png" alt="" width="176" height="88"/>
+                <img class="product-img" src="/img/welcome/671X671_b.png" alt="" width="176" height="88"/>
                 <div class="product-price">
                   <div class="product-price-header">
                     <div class="product-price-currency">Bs.</div>
@@ -333,7 +332,7 @@
               <!-- Product-->
               <div class="product novi-bg bg-default">
                 <h3 class="product-title">TORTAS</h3>
-                <img class="product-img" src="/img/welcome/a671X671.png" alt="" width="176" height="88"/>
+                <img class="product-img" src="/img/welcome/671x671.png" alt="" width="176" height="88"/>
                 <div class="product-price">
                   <div class="product-price-header">
                     <div class="product-price-currency">Bs.</div>
@@ -350,7 +349,7 @@
             <div class="col-xl-4 col-md-6">
               <!-- Product-->
               <div class="product novi-bg bg-default">
-                <h3 class="product-title">PRODUCTOS</h3><img class="product-img" src="images/product-03-176x176.png" alt="" width="176" height="88"/>
+                <h3 class="product-title">PRODUCTOS</h3><img class="product-img" src="/img/welcome/products.svg" alt="" width="176" height="88"/>
                 <div class="product-price">
                   <div class="product-price-header">
                     <div class="product-price-currency">Bs.</div>
@@ -452,7 +451,7 @@
           </div>
           <div class="box-custom-3-img-wrap"><img src="/img/welcome/461x407.png" alt="" width="461" height="203"/>
           </div>
-          <div class="box-custom-3-img-wrap"><img src="images/home-04-191x191.png" alt="" width="191" height="95"/>
+          <div class="box-custom-3-img-wrap"><img src="/img/welcome/671x671_d.png" alt="" width="191" height="95"/>
           </div>
         </div>
       </section>

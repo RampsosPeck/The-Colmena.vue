@@ -10,15 +10,7 @@
                     <div class="header header-rose text-center">
                         <h4 class="card-title">INICIO DE SECIÓN </h4>
                         <div class="social-line">
-                            <a href="#pablo" class="btn btn-just-icon btn-simple">
-                                <i class="fa fa-facebook-square"></i>
-                            </a>
-                            <a href="#pablo" class="btn btn-just-icon btn-simple">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                            <a href="#pablo" class="btn btn-just-icon btn-simple">
-                                <i class="fa fa-google-plus"></i>
-                            </a>
+                            <img class="imgfirst" src="{{ asset('/img/welcome/panal.png') }}" alt="" style="width:80%;"/>
                         </div>
                     </div>
 
@@ -56,7 +48,7 @@
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-rose btn-round">
-                            {{ __('INGRESAR') }}
+                            <b> INGRESAR</b>
                         </button>
                     </div>
                     <div class="text-center">

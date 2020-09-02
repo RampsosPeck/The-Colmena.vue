@@ -48,7 +48,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"><b>LA COLMENA</b></a>
+                    <a class="navbar-brand " href="/" style="padding-top: 1px !important; margin-top: -15px;">
+                        <img class="nav-icon" src="{{ asset('/img/secondary/logo1.png') }}" alt="La Colmena" width="220" height="80"/>
+                    </a>
                 </div>
 
                 <div class="collapse navbar-collapse">
@@ -90,7 +92,7 @@
                         </li>
                         @endguest
                         <li>
-                            <a href="" target="_blank" class="btn btn-rose btn-round btn-sm" data-toggle="tooltip" data-placement="bottom" title="Carrito/Compras">
+                            <a href="/carrito" class="btn btn-rose btn-round btn-sm" data-toggle="tooltip" data-placement="bottom" title="Carrito/Compras">
                                 <img src="{{ asset('/img/secondary/cart.svg') }}" alt="pedidos" width="30" class="nav-icon" ><b>
                                  Carrito</b>
                                  <span class="label label-warning"> {{ $productsCount }}</span>
@@ -101,7 +103,7 @@
             </div>
         </nav>
 
-        <div class="page-header header-filter" style="background-image: url('../img/welcome/potosi2.jpg'); background-size: cover; background-position: top center;">
+        <div class="page-header header-filter" style="background-image: url('../img/welcome/potosi.png'); background-size: cover; background-position: top center;">
 
 
             @yield('authcontent')

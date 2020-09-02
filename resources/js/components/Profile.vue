@@ -42,7 +42,7 @@
 		                            </div>
 		                        </div>
 		                        <div class="col-md-8 text-center">
-		                            <div class="media-body">
+		                            <div class=""><!--media-body-->
 		                                <div class="row">
 		                                    <div class="col-md-6">
 		                                        <div class="input-group">

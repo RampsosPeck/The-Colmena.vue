@@ -43,7 +43,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand " href="/"><strong>La Colmena </strong></a>
+                    <a class="navbar-brand " href="/" style="padding-top: 1px !important; margin-top: -15px;">
+                        <img class="nav-icon" src="{{ asset('/img/secondary/logo1.png') }}" alt="La Colmena" width="220" height="80"/>
+                    </a>
                 </div>
 
                 <div class="collapse navbar-collapse">
@@ -143,7 +145,7 @@
 
         <div class="page-header header-filter" data-parallax="true" style="background-image: url('../img/secondary/potosi.jpg');">
             <div style="position: relative; ">
-                <img class="imgcol" src="{{ asset('/img/welcome/642-193_4.png') }}" alt="Colmena Image" />
+                <img class="imgcol" src="{{ asset('/img/secondary/logocentral.png') }}" alt="Colmena Image" />
             </div>
         </div>
 
