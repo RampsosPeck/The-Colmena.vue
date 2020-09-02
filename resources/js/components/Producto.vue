@@ -42,12 +42,15 @@
 				                        </thead>
 				                        <tbody>
 				                            <tr v-for="(producto, index) in productos" :key="producto.id" >
-				                                <td v-text="producto.id"  ></td>
-				                                <td class="td-usertable" >
+				                                <td v-text="producto.id"></td>
+				                                <td class="td-usertable col-md-5 col-xs-4" >
 													<div class="media text-left" style="display: flex !important;  align-items: center !important;">
 				                                		<a class="pull-left td-usertable">
-				                                			<div class="listcategoria" v-for="foto in producto.fotos" :key="foto.id" >
+				                                			<div class="listcategoria" v-for="foto in producto.fotos" :key="foto.id" v-show="producto.fotos.length>0">
 				                                				<img :src="getFoto(foto.imagen)" class="img img-raised " alt="Producto foto" style="height: 100%;">
+				                                			</div>
+				                                			<div class="listcategoria" v-show="!producto.fotos.length>0">
+				                                				<img src="/img/producto/panal1.png" class="img img-raised " alt="Producto foto" style="height: 100%;">
 				                                			</div>
 				                                		</a>
 				                                		<div class="media-body" style="width: auto !important;">
@@ -77,22 +80,20 @@
 				                                    	</div>
 				                                    </div>
 				                                </td>
-												<td class="text-center text-default">
+												<td class="text-center text-default col-md-1 col-xs-1">
 				                                	<h6 class="media-heading productlist">
 														Bs.
 		                                				<small>: {{ producto.precio }}</small> Unid.
 		                                			</h6>
-												</td>
-				                                <td class="text-center text-warning">
+																					</td>
+				                                <td class="text-center text-warning col-md-1 col-xs-1">
 				                                	<b>{{ producto.estado ? 'ACTIVO' : 'INACTIVO' }}</b>
 				                                	<button class="btn btn-rose btn-xs"> Detalles <div class="ripple-container"></div></button>
 				                                </td>
-				                                <td class="card-content text-center col-md-3">
-
-														<add-producto-btn v-bind:product="producto" v-bind:carri="carrito"> </add-producto-btn>
-
+				                                <td class="card-content text-center col-md-3 col-xs-4" style="position: relative !important;">
+													<add-producto-btn v-bind:product="producto" v-bind:carri="carrito"> </add-producto-btn>
 				                                </td>
-				                                <td class="td-actions text-center col-md-2">
+				                                <td class="td-actions text-center col-md-2 col-xs-2">
 				                                    <a @click="editModal(producto)" href="#" rel="tooltip" class="btn btn-success" data-original-title="" title="Editar Usuario">
 				                                        <i class="material-icons">edit</i>
 				                                    </a>
@@ -236,8 +237,121 @@
 			                            <has-error :form="form" field="oferta"></has-error>
 		                            </div>
 		                      	</div>
-                            </div>
-                            <div class="col-md-4 text-center">
+		                      	<div class="row">
+		                        	<div class="col-md-4">
+		                        		<div class="input-group" >
+		                                    <div class="input-group-addon">
+					                        	<span class="input-group-text"> <h4> % </h4></span>
+					                      	</div>
+		                                    <input  v-model.number="form.descuento" type="number" step="any" min="0" max="100" value="0" class="form-control" name="descuento" id="descuento" placeholder="Porcentaje del descuento.">
+		                                    <has-error :form="form" field="descuento"></has-error>
+
+		                                <div class="progress" style="height: 19px;  margin-bottom: 2px !important;">
+										  <div class="progress-bar progress-bar-rose " role="progressbar" aria-valuenow="form.descuento"
+										  aria-valuemin="0" aria-valuemax="100" v-bind:style="{width: form.descuento+'%'}">
+										    {{ form.descuento }}%
+										  </div>
+										</div>
+										</div>
+		                        	</div>
+		                        	<div class="col-md-4"  style="margin-top:20px !important;">
+		                        		<span class="text-rose"><b>{{ generardescuento }}</b></span>
+		                        	</div>
+									<div class="col-md-4">
+		                        		<div class="input-group" >
+		                                    <input  v-model.number="form.actides" type="number" step="any" min="0" max="100" value="0" class="form-control" name="actides" placeholder="Ej.: 3 ">
+		                                    <div class="input-group-addon">
+					                        	<span class="input-group-text"> Unids. </span>
+					                      	</div>
+		                                    <has-error :form="form" field="actides"></has-error>
+		                                </div>
+		                        	</div>
+		                        </div>
+		                        <div class="row">
+	                        		<div class="panel panel-default text-center">
+	                        			<div role="tab" id="headingOne" class="panel-heading " >
+	                        				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed btn   btn-round btn-sm">
+	                        					<h4 class="panel-title">
+	                                				¿Menú del Almuerzo?
+	                               					<i class="material-icons">keyboard_arrow_down</i>
+	                               				</h4>
+	                               			</a>
+	                               		</div>
+	                               		<div id="collapseOne" role="tabpanel" aria-labelledby="headingOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+	                               			<div class="panel-body">
+	                               				<div class="row">
+					                                <div class="col-md-4">
+														<div class="input-group">
+					                                        <span class="input-group-addon">
+					                                            <i class="material-icons text-rose">local_offer</i>
+															</span>
+															 <div class="form-group is-empty" :class="{ 'has-error is-focused': form.errors.has('entrada') }">
+						                                    	<input v-model.trim="form.entrada" type="text" class="form-control" name="entrada" placeholder="Entrada">
+						                                    	<span class="material-input"></span>
+									                            <has-error :form="form" field="entrada"></has-error>
+								                            </div>
+					                                    </div>
+					                                </div>
+					                                <div class="col-md-4">
+														<div class="input-group">
+					                                        <span class="input-group-addon">
+					                                            <i class="material-icons text-rose">local_offer</i>
+															</span>
+															 <div class="form-group is-empty" :class="{ 'has-error is-focused': form.errors.has('sopa') }">
+						                                    	<input v-model.trim="form.sopa" type="text" class="form-control" name="sopa" placeholder="Sopa">
+						                                    	<span class="material-input"></span>
+									                            <has-error :form="form" field="sopa"></has-error>
+								                            </div>
+					                                    </div>
+					                                </div>
+					                                <div class="col-md-4">
+														<div class="input-group">
+					                                        <span class="input-group-addon">
+					                                            <i class="material-icons text-rose">local_offer</i>
+															</span>
+															 <div class="form-group is-empty" :class="{ 'has-error is-focused': form.errors.has('segundo') }">
+						                                    	<input v-model.trim="form.segundo" type="text" class="form-control" name="segundo" placeholder="Segundo">
+						                                    	<span class="material-input"></span>
+									                            <has-error :form="form" field="segundo"></has-error>
+								                            </div>
+					                                    </div>
+					                                </div>
+					                            </div>
+					                            <div class="row">
+					                                <div class="col-md-4">
+														<div class="input-group">
+					                                        <span class="input-group-addon">
+					                                            <i class="material-icons text-rose">local_offer</i>
+															</span>
+															 <div class="form-group is-empty" :class="{ 'has-error is-focused': form.errors.has('postre') }">
+						                                    	<input v-model.trim="form.postre" type="text" class="form-control" name="postre" placeholder="Postre">
+						                                    	<span class="material-input"></span>
+									                            <has-error :form="form" field="postre"></has-error>
+								                            </div>
+					                                    </div>
+					                                </div>
+					                                <div class="col-md-4">
+														<div class="input-group">
+					                                        <span class="input-group-addon">
+					                                            <i class="material-icons text-rose">local_offer</i>
+															</span>
+															 <div class="form-group is-empty" :class="{ 'has-error is-focused': form.errors.has('refresco') }">
+						                                    	<input v-model.trim="form.refresco" type="text" class="form-control" name="refresco" placeholder="Refresco">
+						                                    	<span class="material-input"></span>
+									                            <has-error :form="form" field="refresco"></has-error>
+								                            </div>
+					                                    </div>
+					                                </div>
+					                                <div class="col-md-4">
+
+					                                </div>
+					                            </div>
+	                               			</div>
+	                               		</div>
+	                               	</div>
+		                        </div>
+		                    </div>
+	                        <div class="col-md-4 text-center" v-show="!editmode">
 								<h4><b>Imagen de la categoría</b></h4>
 								<div class="fileinput fileinput-new text-center" data-provides="fileinput" :class="{ 'has-error is-focused': form.errors.has('foto') }" style="margin-bottom: 0px;">
 									<div class="fileinput-new thumbnail img-rounded img-raised " >
@@ -256,123 +370,9 @@
 									<has-error :form="form" field="foto"></has-error>
 								</div>
                             </div>
-	                      	<div class="row ">
-	                        	<div class="col-md-4">
-	                        		<div class="input-group" >
-	                                    <div class="input-group-addon">
-				                        	<span class="input-group-text"> <h4> % </h4></span>
-				                      	</div>
-	                                    <input  v-model.number="form.descuento" type="number" step="any" min="0" max="100" value="0" class="form-control" name="descuento" id="descuento" placeholder="Porcentaje del descuento.">
-	                                    <has-error :form="form" field="descuento"></has-error>
-
-	                                <div class="progress" style="height: 19px;  margin-bottom: 2px !important;">
-									  <div class="progress-bar progress-bar-rose " role="progressbar" aria-valuenow="form.descuento"
-									  aria-valuemin="0" aria-valuemax="100" v-bind:style="{width: form.descuento+'%'}">
-									    {{ form.descuento }}%
-									  </div>
-									</div>
-									</div>
-	                        	</div>
-	                        	<div class="col-md-4">
-	                        		<div class="form-group">
-	                        			<div class="input-group-addon">
-				                        	<span class="input-group-text">{{ generardescuento }}</span>
-				                      	</div>
-	                        		</div>
-	                        	</div>
-								<div class="col-md-4">
-	                        		<div class="input-group" >
-	                                    <input  v-model.number="form.actides" type="number" step="any" min="0" max="100" value="0" class="form-control" name="actides" placeholder="Ej.: 3 ">
-	                                    <div class="input-group-addon">
-				                        	<span class="input-group-text"> Unids. </span>
-				                      	</div>
-	                                    <has-error :form="form" field="actides"></has-error>
-	                                </div>
-	                        	</div>
-	                        </div>
-	                        <div class="row">
-                        		<div class="panel panel-default text-center">
-                        			<div role="tab" id="headingOne" class="panel-heading " >
-                        				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed btn   btn-round btn-sm">
-                        					<h4 class="panel-title">
-                                				¿Menú del Almuerzo?
-                               					<i class="material-icons">keyboard_arrow_down</i>
-                               				</h4>
-                               			</a>
-                               		</div>
-                               		<div id="collapseOne" role="tabpanel" aria-labelledby="headingOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                               			<div class="panel-body">
-                               				<div class="row">
-				                                <div class="col-md-4">
-													<div class="input-group">
-				                                        <span class="input-group-addon">
-				                                            <i class="material-icons text-rose">local_offer</i>
-														</span>
-														 <div class="form-group is-empty" :class="{ 'has-error is-focused': form.errors.has('entrada') }">
-					                                    	<input v-model.trim="form.entrada" type="text" class="form-control" name="entrada" placeholder="Entrada">
-					                                    	<span class="material-input"></span>
-								                            <has-error :form="form" field="entrada"></has-error>
-							                            </div>
-				                                    </div>
-				                                </div>
-				                                <div class="col-md-4">
-													<div class="input-group">
-				                                        <span class="input-group-addon">
-				                                            <i class="material-icons text-rose">local_offer</i>
-														</span>
-														 <div class="form-group is-empty" :class="{ 'has-error is-focused': form.errors.has('sopa') }">
-					                                    	<input v-model.trim="form.sopa" type="text" class="form-control" name="sopa" placeholder="Sopa">
-					                                    	<span class="material-input"></span>
-								                            <has-error :form="form" field="sopa"></has-error>
-							                            </div>
-				                                    </div>
-				                                </div>
-				                                <div class="col-md-4">
-													<div class="input-group">
-				                                        <span class="input-group-addon">
-				                                            <i class="material-icons text-rose">local_offer</i>
-														</span>
-														 <div class="form-group is-empty" :class="{ 'has-error is-focused': form.errors.has('segundo') }">
-					                                    	<input v-model.trim="form.segundo" type="text" class="form-control" name="segundo" placeholder="Segundo">
-					                                    	<span class="material-input"></span>
-								                            <has-error :form="form" field="segundo"></has-error>
-							                            </div>
-				                                    </div>
-				                                </div>
-				                            </div>
-				                            <div class="row">
-				                                <div class="col-md-4">
-													<div class="input-group">
-				                                        <span class="input-group-addon">
-				                                            <i class="material-icons text-rose">local_offer</i>
-														</span>
-														 <div class="form-group is-empty" :class="{ 'has-error is-focused': form.errors.has('postre') }">
-					                                    	<input v-model.trim="form.postre" type="text" class="form-control" name="postre" placeholder="Postre">
-					                                    	<span class="material-input"></span>
-								                            <has-error :form="form" field="postre"></has-error>
-							                            </div>
-				                                    </div>
-				                                </div>
-				                                <div class="col-md-4">
-													<div class="input-group">
-				                                        <span class="input-group-addon">
-				                                            <i class="material-icons text-rose">local_offer</i>
-														</span>
-														 <div class="form-group is-empty" :class="{ 'has-error is-focused': form.errors.has('refresco') }">
-					                                    	<input v-model.trim="form.refresco" type="text" class="form-control" name="refresco" placeholder="Refresco">
-					                                    	<span class="material-input"></span>
-								                            <has-error :form="form" field="refresco"></has-error>
-							                            </div>
-				                                    </div>
-				                                </div>
-				                                <div class="col-md-4">
-
-				                                </div>
-				                            </div>
-                               			</div>
-                               		</div>
-                               	</div>
-	                        </div>
+                            <div class="col-md-4 text-center" v-show="editmode">
+                            	<img src="/img/secondary/panal2.png" alt="Producto foto" style="height: 18em !important" />
+                            </div>
                         </div>
                         <div class="media-footer text-center">
 	                    	<button class="btn btn-default btn-round" type="botton" data-dismiss="modal">
@@ -496,6 +496,11 @@
                     Fire.$emit('AfterCreate');
                 })
                 .catch(() => {
+                	swal.fire(
+                        'Oops..!',
+                        'Revisa los errores.',
+                        'error'
+                    )
                     this.$Progress.fail();
                 });
             },
@@ -518,7 +523,7 @@
                 $('#proModal').modal('show');
         	},
         	deletePro(id){
-	        		swal.fire({
+	        	swal.fire({
 				  title: '¿Estás seguro?',
 				  text: "No podrás revertir esto!",
 				  icon: 'warning',
@@ -603,7 +608,11 @@
                 	this.$Progress.finish()
 
                 }).catch(error => {
-
+                	swal.fire(
+                        'Oops...!',
+                        'Revisa los errores.',
+                        'success'
+                    )
                 	this.$Progress.fail()
                     console.log(error)
 
@@ -613,22 +622,22 @@
         		//console.log('uploading...');
         		let file = e.target.files[0];
         		let reader = new FileReader();
-
-        		if(file['size'] < 2111775 )
-                {
-                    reader.onloadend = (file) => {
-                        //console.log('RESULT', reader.result)
-                        this.form.foto = reader.result;
-                    }
-                    reader.readAsDataURL(file);
-                }else{
-                    swal.fire(
-                    	'Oops...!',
-                        'La imagen es demaciado grande!',
-                        'error'
-                    )
-                }
-
+        		if(file){
+	        		if(file['size'] < 2111775 )
+	                {
+	                    reader.onloadend = (file) => {
+	                        //console.log('RESULT', reader.result)
+	                        this.form.foto = reader.result;
+	                    }
+	                    reader.readAsDataURL(file);
+	                }else{
+	                    swal.fire(
+	                    	'Oops...!',
+	                        'La imagen es demaciado grande!',
+	                        'error'
+	                    )
+	                }
+	            }
         	}
 
         },

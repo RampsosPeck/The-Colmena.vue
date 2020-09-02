@@ -221,7 +221,7 @@
 				                            <div class="card card-blog shadow" style="background-color: #f2f2f2;">
 				                                <div class="card-image">
 				                                    <a href="#">
-				                                        <img src="/img/welcome/642-193_4.png" class="imgcard"  alt="Producto foto" style="height: 100%;" />
+				                                        <img src="/img/wizard/target.png" class="imgcard"  alt="Producto foto" style="height: 100%;" />
 				                                    </a>
 				                                </div>
 				                                <div class="card-pricing card-content">

@@ -70,7 +70,7 @@ class ProductoController extends Controller
             //'precio' => 'required|regex:/^[1-9][0-9]+$///i|not_in:0',
             'precio' => 'required|numeric|not_in:0',
             'stock' => 'required|min:1',
-            'foto' => 'required',
+            //'foto' => 'required',
             'categoria' => 'required',
         ]);
 
@@ -97,13 +97,14 @@ class ProductoController extends Controller
          $producto->categoria_id = $request['categoria'];
          $producto->save();
 
-
-        $name = time().'.'.explode('/',explode(':',substr($request->foto, 0, strpos($request->foto, ';')))[1])[1];
-        \Image::make($request->foto)->save(public_path('img/producto/').$name);
-        $profoto = new ProductoFoto;
-        $profoto->imagen = $name;
-        $profoto->producto_id = $producto->id;
-        $profoto->save();
+         if($request->foto){
+            $name = time().'.'.explode('/',explode(':',substr($request->foto, 0, strpos($request->foto, ';')))[1])[1];
+            \Image::make($request->foto)->save(public_path('img/producto/').$name);
+            $profoto = new ProductoFoto;
+            $profoto->imagen = $name;
+            $profoto->producto_id = $producto->id;
+            $profoto->save();
+        }
 
         if($request['segundo']){
             $prodetalle = new Prodetalle;
@@ -158,26 +159,27 @@ class ProductoController extends Controller
         ]);
 
         $fotopro = ProductoFoto::where('producto_id',$producto->id)->first();
-        $fotoActual = $fotopro->imagen;
-        if($request->foto != $fotoActual)
-        {
-            $name = time().'.'.explode('/',explode(':',substr($request->foto, 0, strpos($request->foto, ';')))[1])[1];
-
-            \Image::make($request->foto)->save(public_path('img/producto/').$name);
-
-            $request->merge(['foto' => $name]);
-
-            //Aqui encuentro la imagen en esa carpeta para borrarla
-            $proPhoto = public_path('img/producto/').$fotoActual;
-            if( file_exists($proPhoto) )
+        if($fotopro){
+            $fotoActual = $fotopro->imagen;
+            if($request->foto != $fotoActual)
             {
-                @unlink($proPhoto);
+                $name = time().'.'.explode('/',explode(':',substr($request->foto, 0, strpos($request->foto, ';')))[1])[1];
+
+                \Image::make($request->foto)->save(public_path('img/producto/').$name);
+
+                $request->merge(['foto' => $name]);
+
+                //Aqui encuentro la imagen en esa carpeta para borrarla
+                $proPhoto = public_path('img/producto/').$fotoActual;
+                if( file_exists($proPhoto) )
+                {
+                    @unlink($proPhoto);
+                }
+                $fotopro->imagen = $name;
+                $fotopro->save();
+
             }
-            $fotopro->imagen = $name;
-            $fotopro->save();
-
         }
-
          /*if($request['descuento'] && $request['actides'])
          {
             $ofer = 'Hay un descuento de '.(($request['precio']*$request['descuento'])/100).' Bs. Apartir de :'.$request['actides'].' unidades.';
