@@ -35,7 +35,7 @@
 					                            <tbody>
 					                                <tr v-for="(categoria, index) in categorias" :key="categoria.id" >
 					                                    <td v-text="categoria.id" ></td>
-					                                    <td class="td-usertable">
+					                                    <td class="td-usertable col-md-6">
 															<div class="media text-left">
 					                                    		<a class="pull-left td-usertable">
 					                                    			<div class="listcategoria">
@@ -52,8 +52,8 @@
 		                                                    </div>
 					                                    </td>
 
-					                                    <td >{{ categoria.estado ? 'ACTIVO':'INACTIVO' }}</td>
-					                                    <td class="td-actions text-center">
+					                                    <td class="col-md-3">{{ categoria.estado ? 'ACTIVO':'INACTIVO' }}</td>
+					                                    <td class="td-actions text-center col-md-3">
 					                                        <a @click.prevent="editForm(categoria)" href="#" rel="tooltip" class="btn btn-success" data-original-title="" title="Editar Categoría">
 					                                            <i class="material-icons">edit</i>
 					                                        </a>

@@ -19,7 +19,7 @@ class CreateCarritosTable extends Migration
             $table->timestamp('fecha_orden')->nullable();
             $table->timestamp('fecha_entrega')->nullable();
             $table->unsignedDecimal('total_bs',9,2)->nullable();
-            //$table->integer('estado')->default(0);
+            $table->unsignedInteger('delivery')->nullable();
             $table->string('estado')->nullable();
             $table->text('especificacion')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();

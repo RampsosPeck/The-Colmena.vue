@@ -70,8 +70,11 @@
                                         </div>
                                         <a href="#pablo">
                                             <label class="cardprecio label label-primary" > Bs. <strong>{{ torta.precio }} </strong> </label>
-                                            <span v-for="foto in torta.fotos" :key="foto.id">
+                                            <span v-for="foto in torta.fotos" :key="foto.id" v-show="torta.fotos.length>0">
                                                 <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;">
+                                            </span>
+                                            <span v-show="!torta.fotos.length>0">
+                                                <img src="/img/producto/panal1.png" class="imgcard"  alt="Producto foto" style="height: 100%;">
                                             </span>
                                         </a>
                                     </div>
@@ -146,8 +149,11 @@
                                                 <label class="cardprecio label label-primary" >
                                                     Bs. <strong>{{ comida.precio }} </strong>
                                                 </label>
-                                                    <span v-for="foto in comida.fotos" :key="foto.id">
+                                                    <span v-for="foto in comida.fotos" :key="foto.id" v-show="comida.fotos.length>0">
                                                         <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;">
+                                                    </span>
+                                                    <span v-show="!comida.fotos.length>0">
+                                                        <img src="/img/producto/panal1.png" class="imgcard"  alt="Producto foto" style="height: 100%;">
                                                     </span>
                                                 </a>
                                             </div>
@@ -181,8 +187,11 @@
                                             </div>
                                             <a href="#pablo">
                                             <label class="cardprecio label label-primary" > Bs. <strong>{{ vario.precio }}</strong> </label>
-                                            <span v-for="foto in vario.fotos" :key="foto.id">
+                                            <span v-for="foto in vario.fotos" :key="foto.id" v-show="vario.fotos.length>0">
                                                 <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;">
+                                            </span>
+                                            <span v-show="!vario.fotos.length>0">
+                                                <img src="/img/producto/panal1.png" class="imgcard"  alt="Producto foto" style="height: 100%;">
                                             </span>
                                             </a>
                                         </div>

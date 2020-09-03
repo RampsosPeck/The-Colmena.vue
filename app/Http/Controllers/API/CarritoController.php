@@ -78,6 +78,7 @@ class CarritoController extends Controller
                 'user_id'     => $antuser->id,
                 'fecha_orden' => Carbon::now(),
                 'estado'      => 'recibido',
+                'delivery'    => $request->delivery,
                 'especificacion' => $request->especificacion
             ]);
             //$message = 'Usuario actualizado correctamente.';
@@ -98,6 +99,7 @@ class CarritoController extends Controller
                 'user_id'  => $userid,
                 'fecha_orden' => Carbon::now(),
                 'estado'      => 'recibido',
+                'delivery'    => $request->delivery,
                 'especificacion' => $request->especificacion
             ]);
             //$message = 'Usuario creado correctamente.';

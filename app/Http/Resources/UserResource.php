@@ -32,6 +32,8 @@ class UserResource extends JsonResource
             'tipo' => $this->tipo,
             'activo' => $this->activo,
             'direccion' => $this->direccion,
+            'lat' => $this->lat,
+            'lng' => $this->lng,
             'location' => $this->location
         ];
     }

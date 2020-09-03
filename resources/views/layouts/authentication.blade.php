@@ -57,6 +57,11 @@
                     <ul class="nav navbar-nav navbar-right">
                         @guest
                             <li>
+                                <a href="/dashboard">
+                                    <i class="material-icons">local_offer</i>Catálogo
+                                </a>
+                            </li>
+                            <li>
                                 <a href="{{ route('login') }}">
                                     <i class="material-icons">account_circle</i>
                                     INGRESAR

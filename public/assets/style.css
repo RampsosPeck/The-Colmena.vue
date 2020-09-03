@@ -98,7 +98,7 @@
 }
 .ribbon-top-right span {
     left: -25px;
-    top: 30px;
+    top: 50px;
     transform: rotate(45deg)
 }
 /*HASTA AQUI*/
@@ -120,7 +120,7 @@
     z-index: 3;
     margin-right: auto;
     margin-left: auto;
-    margin-top: -150px;
+    margin-top: -90px;
 }
 
 .ulcenter {
@@ -378,3 +378,18 @@ span.round-tab:hover {
     border-radius: 36px;
 }
 /*Error*/
+
+/*CARD PEDIDOS*/
+.cardvery {
+    position: absolute;
+    margin-top: 160px;
+    font-size: 15px;
+}
+.hrcardpe{
+    margin-top: 1px;
+    margin-bottom: 1px;
+    border-top: 1px solid #e91e63; !important;
+}
+
+
+/*HASTA AQUI*/

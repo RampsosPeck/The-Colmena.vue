@@ -85,6 +85,7 @@ let routes = [
       component: () => import(/* webpackChunkName: "about" */ './components/Editpro.vue')
     },
     { path: '/profile', component: require('./components/Profile.vue').default },
+    { path: '/pedidos', component: require('./components/PedidoRecibidos.vue').default },
     //{ path: '*', component: require('./components/NotFound.vue').default }
   ]
 

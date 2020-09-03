@@ -34,6 +34,8 @@ Route::group(['middleware' => ['auth:api']], function(){
 	Route::get('profile','API\UserController@profile');
 	Route::get('findUser','API\UserController@search');
 	Route::put('profile','API\UserController@updateProfile');
+
+	Route::apiResources(['pedidos' => 'API\PedidoController']);
 });
 
 // Routes for guests only

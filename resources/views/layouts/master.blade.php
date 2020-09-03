@@ -106,10 +106,38 @@
                                 <i class="material-icons">shop</i> Productos
                             </router-link>
                         </li>
-                        <li>
-                            <a href="../index.html">
-                                <i class="material-icons">format_list_numbered</i> Pedidos
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="material-icons">markunread_mailbox</i> Pedidos
+                                <b class="caret"></b>
                             </a>
+                            <ul class="dropdown-menu dropdown-with-icons">
+                                <li>
+                                    <router-link to="/pedidos"  class="nav-link">
+                                        <i class="material-icons text-rose">markunread_mailbox</i> Recibidos
+                                    </router-link>
+                                </li>
+                                <!--<li>
+                                    <router-link to="/pedidos"  class="nav-link">
+                                        <i class="material-icons text-success">offline_pin</i> Aceptados
+                                    </router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/pedidos"  class="nav-link">
+                                        <i class="material-icons text-danger">assignment_late</i> Rechazados
+                                    </router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/pedidos"  class="nav-link">
+                                        <i class="material-icons text-warning">motorcycle</i> Enviados
+                                    </router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/pedidos"  class="nav-link">
+                                        <i class="material-icons text-rose">done_all</i> Entregados
+                                    </router-link>
+                                </li>-->
+                            </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

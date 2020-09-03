@@ -187,6 +187,8 @@ class ProductoController extends Controller
          }else{
             $request->merge(['oferta' => 'Sin descuento']);
          }*/
+        Producto::where('id', $id)
+              ->update(['categoria_id' => $request->categoria]);
         $producto->update($request->all());
 
         if($prodetalle){
