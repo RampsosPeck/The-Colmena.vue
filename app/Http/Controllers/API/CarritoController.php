@@ -91,6 +91,7 @@ class CarritoController extends Controller
                 'direccion'=> $request->direccion,
                 'lat'      => $request->lat,
                 'lng'      => $request->lng,
+                'created_at'=> Carbon::now(),
                 'password' => Hash::make($request->celular)
             ]);
             $carri = Carrito::where('id',$request->carrito->id)->first();

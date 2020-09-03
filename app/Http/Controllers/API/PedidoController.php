@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PedidoResource;
+use App\Http\Resources\ProductoResource;
 use App\Models\Carrito;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
@@ -39,7 +41,8 @@ class PedidoController extends Controller
      */
     public function show($id)
     {
-        //
+        $producto = Producto::find($id);
+        return new ProductoResource($producto);
     }
 
     /**
@@ -49,9 +52,12 @@ class PedidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        Carrito::where('id', $id)
+              ->update(['estado' => 'procesando']);
+
+        return response()->json(['message' => 'Carrito aprobado'], 200);
     }
 
     /**
@@ -62,6 +68,9 @@ class PedidoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Carrito::where('id', $id)
+              ->update(['estado' => 'cancelado']);
+
+        return response()->json(['message' => 'Carrito cancelado'], 200);
     }
 }
