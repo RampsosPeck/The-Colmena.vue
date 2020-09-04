@@ -114,29 +114,29 @@
                             <ul class="dropdown-menu dropdown-with-icons">
                                 <li>
                                     <router-link to="/pedidos"  class="nav-link">
-                                        <i class="material-icons text-rose">markunread_mailbox</i> Recibidos
+                                        <i class="material-icons text-info">markunread_mailbox</i> Recibidos
                                     </router-link>
                                 </li>
-                                <!--<li>
-                                    <router-link to="/pedidos"  class="nav-link">
+                                <li>
+                                    <router-link to="/aceptados"  class="nav-link">
                                         <i class="material-icons text-success">offline_pin</i> Aceptados
                                     </router-link>
                                 </li>
                                 <li>
-                                    <router-link to="/pedidos"  class="nav-link">
+                                    <router-link to="/rechazados"  class="nav-link">
                                         <i class="material-icons text-danger">assignment_late</i> Rechazados
                                     </router-link>
                                 </li>
                                 <li>
-                                    <router-link to="/pedidos"  class="nav-link">
+                                    <router-link to="/enviados"  class="nav-link">
                                         <i class="material-icons text-warning">motorcycle</i> Enviados
                                     </router-link>
                                 </li>
                                 <li>
-                                    <router-link to="/pedidos"  class="nav-link">
+                                    <router-link to="/vendidos"  class="nav-link">
                                         <i class="material-icons text-rose">done_all</i> Entregados
                                     </router-link>
-                                </li>-->
+                                </li>
                             </ul>
                         </li>
                         <li class="dropdown">

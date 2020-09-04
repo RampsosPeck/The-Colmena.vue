@@ -22,6 +22,28 @@ class PedidoController extends Controller
         return PedidoResource::collection($carritos);
     }
 
+    public function aceptado()
+    {
+        $carritos = Carrito::where('estado','procesando')->orderBy('id','ASC')->get();
+        return PedidoResource::collection($carritos);
+    }
+
+    public function enviados()
+    {
+        $carritos = Carrito::where('estado','enviado')->orderBy('id','ASC')->get();
+        return PedidoResource::collection($carritos);
+    }
+    public function rechazados()
+    {
+        $carritos = Carrito::where('estado','rechazado')->orderBy('id','ASC')->get();
+        return PedidoResource::collection($carritos);
+    }
+    public function vendidos()
+    {
+        $carritos = Carrito::where('estado','entregado')->orderBy('id','ASC')->get();
+        return PedidoResource::collection($carritos);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -69,8 +91,32 @@ class PedidoController extends Controller
     public function destroy($id)
     {
         Carrito::where('id', $id)
-              ->update(['estado' => 'cancelado']);
+              ->update(['estado' => 'rechazado']);
 
-        return response()->json(['message' => 'Carrito cancelado'], 200);
+        return response()->json(['message' => 'Carrito rechazado'], 200);
+    }
+
+    public function processando($id)
+    {
+        Carrito::where('id', $id)
+              ->update(['estado' => 'enviado']);
+
+        return response()->json(['message' => 'Carrito enviado'], 200);
+    }
+
+    public function enviado($id)
+    {
+        Carrito::where('id', $id)
+              ->update(['estado' => 'entregado']);
+
+        return response()->json(['message' => 'Carrito entregado'], 200);
+    }
+
+    public function rechazo($id)
+    {
+        Carrito::where('id', $id)
+              ->update(['estado' => 'procesando']);
+
+        return response()->json(['message' => 'Carrito aceptado'], 200);
     }
 }

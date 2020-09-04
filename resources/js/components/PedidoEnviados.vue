@@ -10,7 +10,7 @@
                                 <img src="/img/secondary/food.svg" alt="Circle Image" class="img-responsive">
                             </div>
                             <div class="name">
-                                <h3 class="title">PEDIDOS - RECIBIDOS</h3>
+                                <h3 class="title">PEDIDOS - ENVIADOS</h3>
                             </div>
                         </div>
                     </div>
@@ -83,23 +83,13 @@
                                         <span class="title">Precio total:</span> <span class="btn btn-round btn-rose btn-xs"><b>  {{convertMoney(pedido.total_bs,pedido.delivery) }} </b>Bs. </span>
                                         <hr class="hrcardpe" />
                                     </div>
-                                    <div class="footer" style="position:relative !important;">
-								        <div class="author">
-								            <div class="btn-group">
-								                <button type="button" @click="cancelPro(pedido.id)" class="btn btn-round btn-danger btn-xs">
-											        <strong> Rechazar</strong>
-											        <i class="material-icons ">info</i>
-											    </button>
-								            </div>
-								        </div>
-								        <div class="stats">
-								            <div class="btn-group">
-								                <button type="button" @click="successPro(pedido.id)" class="btn btn-round btn-success btn-xs" >
-											        <strong> Aceptar </strong>
-											        <i class="material-icons ">check_circle</i>
-											    </button>
-								            </div>
-								        </div>
+                                    <div class="footer text-center" style="position:relative !important;">
+							            <div class="btn-group">
+							                <button type="button" @click="successPro(pedido.id)" class="btn btn-round btn-success btn-xs" >
+										        <strong> ENTREGADO </strong>
+										        <i class="material-icons">person_pin</i>
+										    </button>
+							            </div>
 								    </div>
                                 </div>
                             </div>
@@ -344,7 +334,7 @@
 
         	},
         	async loadPedidos(){
-                const  resul = await axios.get('api/pedidos');
+                const  resul = await axios.get('api/enviados');
 				this.pedidos = resul.data.data;
             },
             viewPro(producto){
@@ -374,38 +364,6 @@
   	            let money = parseFloat(value1)+parseFloat(value2);
            		return (money.toFixed(2));
 		    },
-		    cancelPro(id){
-	        	swal.fire({
-				  title: '¿Estás seguro?',
-				  text: "No podrás revertir esto!",
-				  icon: 'warning',
-				  showCancelButton: true,
-				  confirmButtonColor: '#3085d6',
-				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Si, Cancelar!'
-				}).then((result) => {
-				   if (result.value)
-				   {
-				   	    this.$Progress.start();
-				        axios.delete('api/pedidos/'+id).then(()=>{
-                            swal.fire(
-                                'OK!',
-                                'El pedido fue cancelado.',
-                                'success'
-                            )
-                            Fire.$emit('AfterCreate');
-                            this.$Progress.finish();
-                        }).catch(()=>{
-                            swal.fire(
-                                'Failed!',
-                                'Revisa algo salió mal.',
-                                'warning'
-                            )
-                            this.$Progress.fail();
-                      })
-				   }
-				})
-        	},
         	successPro(id){
 	        	swal.fire({
 				  title: '¿Estás seguro?',
@@ -414,23 +372,23 @@
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
 				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Si, Aceptar!'
+				  confirmButtonText: 'Si, Entregado!'
 				}).then((result) => {
 				   if (result.value)
 				   {
 				   	    this.$Progress.start();
-				        axios.put('api/pedidos/'+id).then(()=>{
+				        axios.get('api/entregados/'+id).then(()=>{
                             swal.fire(
                                 'Excelente!',
-                                'El pedido fue APROBADO.',
+                                'El pedido fue ENTREGADO.',
                                 'success'
                             )
                             Fire.$emit('AfterCreate');
                             this.$Progress.finish();
                         }).catch(()=>{
                             swal.fire(
-                                'Failed!',
-                                'Revisa algo salió mal.',
+                                'Oops...!',
+                                'Revisa, algo salió mal.',
                                 'warning'
                             )
                             this.$Progress.fail();
@@ -447,5 +405,8 @@
         }
     };
 </script>
+
+
+
 
 

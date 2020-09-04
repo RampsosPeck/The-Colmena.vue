@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateCarritosTable extends Migration
 {
-    /** CARIITO -> recibido -> procesando(cancelado) -> enviado -> vendido
+    /** CARIITO -> recibido -> procesando(rechazado) -> enviado -> vendido
      * Run the migrations.
      *
      * @return void

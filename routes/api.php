@@ -36,6 +36,13 @@ Route::group(['middleware' => ['auth:api']], function(){
 	Route::put('profile','API\UserController@updateProfile');
 
 	Route::apiResources(['pedidos' => 'API\PedidoController']);
+	Route::get('aceptados','API\PedidoController@aceptado');
+	Route::get('enviados/{id}','API\PedidoController@processando');
+	Route::get('enviados','API\PedidoController@enviados');
+	Route::get('entregados/{id}','API\PedidoController@enviado');
+	Route::get('rechazados','API\PedidoController@rechazados');
+	Route::get('rechazados/{id}','API\PedidoController@rechazo');
+	Route::get('vendidos','API\PedidoController@vendidos');
 });
 
 // Routes for guests only

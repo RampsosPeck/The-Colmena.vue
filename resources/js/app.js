@@ -86,6 +86,10 @@ let routes = [
     },
     { path: '/profile', component: require('./components/Profile.vue').default },
     { path: '/pedidos', component: require('./components/PedidoRecibidos.vue').default },
+    { path: '/aceptados', component: require('./components/PedidoAceptados.vue').default },
+    { path: '/rechazados', component: require('./components/PedidoRechazado.vue').default },
+    { path: '/enviados', component: require('./components/PedidoEnviados.vue').default },
+    { path: '/vendidos', component: require('./components/PedidoVendidos.vue').default },
     //{ path: '*', component: require('./components/NotFound.vue').default }
   ]
 
