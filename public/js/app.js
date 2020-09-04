@@ -3432,7 +3432,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       tortas: [],
       comidas: [],
       almuerzo: [],
-      varios: [],
+      tiendas: [],
       carrito: [],
       form: new Form({
         id: '',
@@ -3503,11 +3503,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 almu = _context.sent;
                 _this.almuerzo = almu.data.data;
                 _context.next = 22;
-                return axios.get('api/varios');
+                return axios.get('api/tiendas');
 
               case 22:
                 va = _context.sent;
-                _this.varios = va.data.data;
+                _this.tiendas = va.data.data;
 
               case 24:
               case "end":
@@ -6056,6 +6056,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -71463,8 +71465,7 @@ var render = function() {
                                   _c(
                                     "label",
                                     {
-                                      staticClass:
-                                        "cardprecio label label-primary"
+                                      staticClass: "cardprecio label label-rose"
                                     },
                                     [
                                       _vm._v(" Bs. "),
@@ -71811,8 +71812,7 @@ var render = function() {
                                   _c(
                                     "label",
                                     {
-                                      staticClass:
-                                        "cardprecio label label-primary"
+                                      staticClass: "cardprecio label label-rose"
                                     },
                                     [
                                       _vm._v(
@@ -71923,13 +71923,13 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "tab-pane", attrs: { id: "varios" } }, [
+          _c("div", { staticClass: "tab-pane", attrs: { id: "tienda" } }, [
             _c("div", { staticClass: "row" }, [
               _c(
                 "div",
                 { staticClass: "col-md-6 col-md-offset-3" },
-                _vm._l(_vm.varios, function(vario, index) {
-                  return _c("div", { key: vario.id }, [
+                _vm._l(_vm.tiendas, function(tienda, index) {
+                  return _c("div", { key: tienda.id }, [
                     _c("div", { staticClass: "col-md-6" }, [
                       _c(
                         "div",
@@ -71946,8 +71946,8 @@ var render = function() {
                                   {
                                     name: "show",
                                     rawName: "v-show",
-                                    value: vario.descuento,
-                                    expression: "vario.descuento"
+                                    value: tienda.descuento,
+                                    expression: "tienda.descuento"
                                   }
                                 ],
                                 staticClass: "ribbon ribbon-top-right "
@@ -71956,7 +71956,7 @@ var render = function() {
                                 _c("span", [
                                   _c("strong", [
                                     _vm._v(
-                                      " " + _vm._s(vario.descuento) + "% DTO. "
+                                      " " + _vm._s(tienda.descuento) + "% DTO. "
                                     )
                                   ])
                                 ])
@@ -71970,16 +71970,17 @@ var render = function() {
                                 _c(
                                   "label",
                                   {
-                                    staticClass:
-                                      "cardprecio label label-primary"
+                                    staticClass: "cardprecio label label-rose"
                                   },
                                   [
                                     _vm._v(" Bs. "),
-                                    _c("strong", [_vm._v(_vm._s(vario.precio))])
+                                    _c("strong", [
+                                      _vm._v(_vm._s(tienda.precio))
+                                    ])
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _vm._l(vario.fotos, function(foto) {
+                                _vm._l(tienda.fotos, function(foto) {
                                   return _c(
                                     "span",
                                     {
@@ -71987,8 +71988,8 @@ var render = function() {
                                         {
                                           name: "show",
                                           rawName: "v-show",
-                                          value: vario.fotos.length > 0,
-                                          expression: "vario.fotos.length>0"
+                                          value: tienda.fotos.length > 0,
+                                          expression: "tienda.fotos.length>0"
                                         }
                                       ],
                                       key: foto.id
@@ -72013,8 +72014,8 @@ var render = function() {
                                       {
                                         name: "show",
                                         rawName: "v-show",
-                                        value: !vario.fotos.length > 0,
-                                        expression: "!vario.fotos.length>0"
+                                        value: !tienda.fotos.length > 0,
+                                        expression: "!tienda.fotos.length>0"
                                       }
                                     ]
                                   },
@@ -72040,7 +72041,7 @@ var render = function() {
                               { staticClass: "card-title text-center" },
                               [
                                 _c("a", { attrs: { href: "#pablo" } }, [
-                                  _vm._v(_vm._s(vario.nombre))
+                                  _vm._v(_vm._s(tienda.nombre))
                                 ])
                               ]
                             ),
@@ -72055,7 +72056,7 @@ var render = function() {
                               [
                                 _vm._v(
                                   "\n                                            " +
-                                    _vm._s(vario.descripcion) +
+                                    _vm._s(tienda.descripcion) +
                                     "\n                                        "
                                 )
                               ]
@@ -72063,7 +72064,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("add-producto-btn", {
-                            attrs: { product: vario, carri: _vm.carrito }
+                            attrs: { product: tienda, carri: _vm.carrito }
                           })
                         ],
                         1
@@ -72167,7 +72168,7 @@ var staticRenderFns = [
                       "a",
                       {
                         attrs: {
-                          href: "#varios",
+                          href: "#tienda",
                           role: "tab",
                           "data-toggle": "tab"
                         }
@@ -72178,7 +72179,7 @@ var staticRenderFns = [
                           attrs: { src: "/img/secondary/store.svg" }
                         }),
                         _vm._v(
-                          "\n                                        VARIOS\n                                    "
+                          "\n                                        TIENDA\n                                    "
                         )
                       ]
                     )
@@ -72587,7 +72588,7 @@ var render = function() {
                                                 _c(
                                                   "span",
                                                   { staticClass: "title" },
-                                                  [_vm._v("Total:")]
+                                                  [_vm._v("Descuento:")]
                                                 ),
                                                 _vm._v(" "),
                                                 _c("small", [
@@ -73694,7 +73695,7 @@ var render = function() {
                                                 _c(
                                                   "span",
                                                   { staticClass: "title" },
-                                                  [_vm._v("Total:")]
+                                                  [_vm._v("Descuento:")]
                                                 ),
                                                 _vm._v(" "),
                                                 _c("small", [
@@ -74801,7 +74802,7 @@ var render = function() {
                                                 _c(
                                                   "span",
                                                   { staticClass: "title" },
-                                                  [_vm._v("Total:")]
+                                                  [_vm._v("Descuento:")]
                                                 ),
                                                 _vm._v(" "),
                                                 _c("small", [
@@ -75908,7 +75909,7 @@ var render = function() {
                                                 _c(
                                                   "span",
                                                   { staticClass: "title" },
-                                                  [_vm._v("Total:")]
+                                                  [_vm._v("Descuento:")]
                                                 ),
                                                 _vm._v(" "),
                                                 _c("small", [
@@ -77044,7 +77045,7 @@ var render = function() {
                                                 _c(
                                                   "span",
                                                   { staticClass: "title" },
-                                                  [_vm._v("Total:")]
+                                                  [_vm._v("Descuento:")]
                                                 ),
                                                 _vm._v(" "),
                                                 _c("small", [
@@ -78287,31 +78288,8 @@ var render = function() {
                                           [_vm._v("done")]
                                         )
                                       ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "router-link",
-                                      {
-                                        attrs: {
-                                          to: {
-                                            name: "editar",
-                                            params: { id: producto.id }
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "btn btn-info btn-sm mr-2"
-                                          },
-                                          [_vm._v("Editar")]
-                                        )
-                                      ]
                                     )
-                                  ],
-                                  1
+                                  ]
                                 )
                               ])
                             }),
@@ -78401,20 +78379,18 @@ var render = function() {
                       _c("div", { staticClass: "col-md-8" }, [
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-6" }, [
-                            _c("div", { staticClass: "input-group" }, [
-                              _vm._m(5),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "form-group",
-                                  class: {
-                                    "has-error is-focused": _vm.form.errors.has(
-                                      "categoria"
-                                    )
-                                  }
-                                },
-                                [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "input-group",
+                                class: {
+                                  "has-error ": _vm.form.errors.has("categoria")
+                                }
+                              },
+                              [
+                                _vm._m(5),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
                                   _c(
                                     "select",
                                     {
@@ -78480,18 +78456,15 @@ var render = function() {
                                       })
                                     ],
                                     2
-                                  ),
-                                  _vm._v(" "),
-                                  _c("has-error", {
-                                    attrs: {
-                                      form: _vm.form,
-                                      field: "categoria"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ])
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("has-error", {
+                                  attrs: { form: _vm.form, field: "categoria" }
+                                })
+                              ],
+                              1
+                            )
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-md-6" }, [
@@ -79410,109 +79383,91 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: !_vm.editmode,
-                              expression: "!editmode"
-                            }
-                          ],
-                          staticClass: "col-md-4 text-center"
-                        },
-                        [
-                          _vm._m(20),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "fileinput fileinput-new text-center",
-                              class: {
-                                "has-error is-focused": _vm.form.errors.has(
-                                  "foto"
-                                )
-                              },
-                              staticStyle: { "margin-bottom": "0px" },
-                              attrs: { "data-provides": "fileinput" }
+                      _c("div", { staticClass: "col-md-4 text-center" }, [
+                        _vm._m(20),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "fileinput fileinput-new text-center",
+                            class: {
+                              "has-error is-focused": _vm.form.errors.has(
+                                "foto"
+                              )
                             },
-                            [
-                              _vm._m(21),
-                              _vm._v(" "),
-                              _c("div", {
+                            staticStyle: { "margin-bottom": "0px" },
+                            attrs: { "data-provides": "fileinput" }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
                                 staticClass:
-                                  "fileinput-preview fileinput-exists thumbnail img-rounded img-raised"
-                              }),
+                                  "fileinput-new thumbnail img-rounded img-raised "
+                              },
+                              [
+                                _c("img", {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: _vm.editmode,
+                                      expression: "editmode"
+                                    }
+                                  ],
+                                  staticStyle: { width: "20rem" },
+                                  attrs: {
+                                    src: "/img/secondary/panal2.png",
+                                    alt: "Foto Usuario"
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", {
+                              staticClass:
+                                "fileinput-preview fileinput-exists thumbnail img-rounded img-raised"
+                            }),
+                            _vm._v(" "),
+                            _c("div", [
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "btn btn-raised btn-sm btn-round btn-rose btn-file"
+                                },
+                                [
+                                  _c("span", { staticClass: "fileinput-new" }, [
+                                    _vm._v("Añadir Imagen")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "fileinput-exists" },
+                                    [_vm._v("Cambiar")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    attrs: { type: "file", name: "foto" },
+                                    on: { change: _vm.proFoto }
+                                  })
+                                ]
+                              ),
                               _vm._v(" "),
-                              _c("div", [
-                                _c(
-                                  "span",
-                                  {
-                                    staticClass:
-                                      "btn btn-raised btn-sm btn-round btn-rose btn-file"
-                                  },
-                                  [
-                                    _c(
-                                      "span",
-                                      { staticClass: "fileinput-new" },
-                                      [_vm._v("Añadir Imagen")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      { staticClass: "fileinput-exists" },
-                                      [_vm._v("Cambiar")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      attrs: { type: "file", name: "foto" },
-                                      on: { change: _vm.proFoto }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _vm._m(22)
-                              ]),
-                              _vm._v(" "),
-                              _c("has-error", {
-                                attrs: { form: _vm.form, field: "foto" }
-                              })
-                            ],
-                            1
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: _vm.editmode,
-                              expression: "editmode"
-                            }
+                              _vm._m(21)
+                            ]),
+                            _vm._v(" "),
+                            _c("has-error", {
+                              attrs: { form: _vm.form, field: "foto" }
+                            })
                           ],
-                          staticClass: "col-md-4 text-center"
-                        },
-                        [
-                          _c("img", {
-                            staticStyle: { height: "18em !important" },
-                            attrs: {
-                              src: "/img/secondary/panal2.png",
-                              alt: "Producto foto"
-                            }
-                          })
-                        ]
-                      )
+                          1
+                        )
+                      ])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "media-footer text-center" }, [
-                      _vm._m(23),
+                      _vm._m(22),
                       _vm._v(" "),
                       _c(
                         "button",
@@ -79817,21 +79772,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h4", [_c("b", [_vm._v("Imagen de la categoría")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "fileinput-new thumbnail img-rounded img-raised " },
-      [
-        _c("img", {
-          staticStyle: { width: "20rem" },
-          attrs: { src: "/img/categoria/catedefault.jpg", alt: "Foto Usuario" }
-        })
-      ]
-    )
   },
   function() {
     var _vm = this

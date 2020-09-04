@@ -66,7 +66,7 @@
 	                                        		<span class="title">Precio:</span>
 	                                        		<small> {{ prodetaca.producto_precio }} Bs.</small>
 	                                        		<span v-show="prodetaca.descuento_bs">
-	                                        			<span class="title">Total:</span>
+	                                        			<span class="title">Descuento:</span>
 	                                        			<small> {{ prodetaca.descuento_bs }} Bs.</small>
 	                                        		</span>
 	                                        		<span class="title">Total:</span>

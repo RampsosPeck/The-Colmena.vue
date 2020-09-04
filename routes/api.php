@@ -23,7 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 	Route::get('tortas','API\ProductoController@tortas');
 	Route::get('comidas','API\ProductoController@comidas');
 	Route::get('almuerzo','API\ProductoController@almuerzo');
-	Route::get('varios','API\ProductoController@varios');
+	Route::get('tiendas','API\ProductoController@tienda');
 
 /*Route::group(['middleware' => ['web']], function () {
 	Route::apiResources(['carripro' => 'API\CarritoController']);

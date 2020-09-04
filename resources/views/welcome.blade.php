@@ -193,7 +193,7 @@
                 <div class="container">
                   <div class="row row-50 align-items-center swiper-custom-row">
                     <div class="col-lg-5 pt-2">
-                      <h3 class="subtitle" data-swiper-anime='{"animation":"swiperContentRide","duration":900,"delay":900}'>Bienbenido a:</h3>
+                      <h3 class="subtitle" data-swiper-anime='{"animation":"swiperContentRide","duration":900,"delay":900}'>Desde Potosí</h3>
                       <h1 data-swiper-anime='{"animation":"swiperContentRide","duration":1000,"delay":1000}' data-subtext="#1">La Colmena</h1>
                       <p class="big text-justify" data-swiper-anime='{"animation":"swiperContentRide","duration":1100,"delay":1100}'>Le ofrecemos una variedad de productos y ahora puedes realizar tus pedidos en linea. </p>
                       <p class="postitle text-center" data-swiper-anime='{"animation":"swiperContentRide","duration":1200,"delay":1200}'>
@@ -349,13 +349,13 @@
             <div class="col-xl-4 col-md-6">
               <!-- Product-->
               <div class="product novi-bg bg-default">
-                <h3 class="product-title">PRODUCTOS</h3><img class="product-img" src="/img/welcome/products.svg" alt="" width="176" height="88"/>
+                <h3 class="product-title">TIENDA</h3><img class="product-img" src="/img/welcome/products.svg" alt="" width="176" height="88"/>
                 <div class="product-price">
                   <div class="product-price-header">
                     <div class="product-price-currency">Bs.</div>
                     <div class="product-price-value">10</div>
                   </div>
-                  <div class="product-price-footer">ENVIO</div>
+                  <div class="product-price-footer">DESDE</div>
                 </div>
                 <p class="product-text text-justify">Le ofrecemos distintos productos desde refrescos y mucho más con un envio rápido y seguro.</p>
                 <div class="cel-pro">
@@ -493,7 +493,7 @@
                     <h3 class="quote-classic-name">Margarita Cortez</h3>
                   </div>
                 </div>
-              </div><a class="button button-primary button-sm" href="#">Enviar comentario</a>
+              </div>
             </div>
           </div>
         </div>

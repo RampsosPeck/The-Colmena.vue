@@ -49,10 +49,10 @@ class ProductoController extends Controller
         return ProductoResource::collection($procomi);
     }
 
-    public function varios()
+    public function tienda()
     {
-        $varios = Categoria::where('nombre','Varios')->first();
-        $prova = Producto::where('categoria_id',$varios->id)->get();
+        $tienda = Categoria::where('nombre','Tienda')->first();
+        $prova = Producto::where('categoria_id',$tienda->id)->get();
         return ProductoResource::collection($prova);
     }
     /**
@@ -147,6 +147,7 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //return $request->all();
         $producto = Producto::findOrFail($id);
         $prodetalle = Prodetalle::where('producto_id',$producto->id)->first();
 
@@ -158,26 +159,28 @@ class ProductoController extends Controller
             'categoria' => 'required',
         ]);
 
-        $fotopro = ProductoFoto::where('producto_id',$producto->id)->first();
-        if($fotopro){
-            $fotoActual = $fotopro->imagen;
-            if($request->foto != $fotoActual)
-            {
-                $name = time().'.'.explode('/',explode(':',substr($request->foto, 0, strpos($request->foto, ';')))[1])[1];
-
-                \Image::make($request->foto)->save(public_path('img/producto/').$name);
-
-                $request->merge(['foto' => $name]);
-
-                //Aqui encuentro la imagen en esa carpeta para borrarla
-                $proPhoto = public_path('img/producto/').$fotoActual;
-                if( file_exists($proPhoto) )
+        if($request->foto){
+            $fotopro = ProductoFoto::where('producto_id',$producto->id)->first();
+            if($fotopro){
+                $fotoActual = $fotopro->imagen;
+                if($request->foto != $fotoActual)
                 {
-                    @unlink($proPhoto);
-                }
-                $fotopro->imagen = $name;
-                $fotopro->save();
+                    $name = time().'.'.explode('/',explode(':',substr($request->foto, 0, strpos($request->foto, ';')))[1])[1];
 
+                    \Image::make($request->foto)->save(public_path('img/producto/').$name);
+
+                    $request->merge(['foto' => $name]);
+
+                    //Aqui encuentro la imagen en esa carpeta para borrarla
+                    $proPhoto = public_path('img/producto/').$fotoActual;
+                    if( file_exists($proPhoto) )
+                    {
+                        @unlink($proPhoto);
+                    }
+                    $fotopro->imagen = $name;
+                    $fotopro->save();
+
+                }
             }
         }
          /*if($request['descuento'] && $request['actides'])

@@ -108,10 +108,10 @@
 				                                     	<span v-if="!estaEnCarrito(producto)">Añadir</span>
 				                                     	<span v-else>Agregado</span>
 				                                     	<div class="ripple-container"></div>
-				                                    </button>-->
+				                                    </button>
 				                                    <router-link :to="{name: 'editar', params:{ id: producto.id}}">
 														<button class="btn btn-info btn-sm mr-2">Editar</button>
-													</router-link>
+													</router-link>-->
 				                                </td>
 				                            </tr>
 				                        </tbody>
@@ -157,17 +157,17 @@
                             <div class="col-md-8">
                             	<div class="row">
                             		<div class="col-md-6">
-                            			<div class="input-group">
+                            			<div class="input-group"  :class="{ 'has-error ': form.errors.has('categoria') }">
 		                                    <span class="input-group-addon">
 		                                        <i class="material-icons text-rose">bookmark</i>
 											</span>
-		                                	<div class="form-group" :class="{ 'has-error is-focused': form.errors.has('categoria') }">
+		                                	<div class="form-group">
 												<select data-style="btn btn-rose btn-round" v-model="form.categoria" title="Categoria" data-size="7" class="form-control" tabindex="-98"  >
 												 	<option class="bs-title-option" value="">Seleccione una categoría</option>
 										            <option v-for="categoria in categorias" v-bind:value="categoria.id">{{categoria.nombre}}</option>
 										        </select>
-										        <has-error :form="form" field="categoria"></has-error>
 										    </div>
+										    <has-error :form="form" field="categoria"></has-error>
 										</div>
 	                                </div>
 	                                <div class="col-md-6">
@@ -351,11 +351,13 @@
 	                               	</div>
 		                        </div>
 		                    </div>
-	                        <div class="col-md-4 text-center" v-show="!editmode">
+	                        <div class="col-md-4 text-center">
 								<h4><b>Imagen de la categoría</b></h4>
 								<div class="fileinput fileinput-new text-center" data-provides="fileinput" :class="{ 'has-error is-focused': form.errors.has('foto') }" style="margin-bottom: 0px;">
 									<div class="fileinput-new thumbnail img-rounded img-raised " >
-										<img src="/img/categoria/catedefault.jpg" alt="Foto Usuario" style="width: 20rem;" >
+										<!--<img src="/img/categoria/catedefault.jpg" alt="Foto Usuario" style="width: 20rem;" >-->
+
+										<img src="/img/secondary/panal2.png" alt="Foto Usuario" style="width: 20rem;" v-show="editmode">
 									</div>
 									<div class="fileinput-preview fileinput-exists thumbnail img-rounded img-raised"></div>
 									<div>
@@ -370,9 +372,9 @@
 									<has-error :form="form" field="foto"></has-error>
 								</div>
                             </div>
-                            <div class="col-md-4 text-center" v-show="editmode">
+                            <!--<div class="col-md-4 text-center" v-show="editmode">
                             	<img src="/img/secondary/panal2.png" alt="Producto foto" style="height: 18em !important" />
-                            </div>
+                            </div>-->
                         </div>
                         <div class="media-footer text-center">
 	                    	<button class="btn btn-default btn-round" type="botton" data-dismiss="modal">

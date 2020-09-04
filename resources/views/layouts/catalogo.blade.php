@@ -177,7 +177,7 @@
                                         <li>
                                             <a href="#varios" role="tab" data-toggle="tab">
                                                 <img src="/img/secondary/store.svg"  class="material-icons img-responsive">
-                                                VARIOS
+                                                TIENDA
                                             </a>
                                         </li>
                                     </ul>

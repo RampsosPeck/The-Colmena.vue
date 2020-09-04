@@ -47,9 +47,9 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#varios" role="tab" data-toggle="tab">
-                                            <img src="/img/secondary/store.svg"  class="material-icons img-responsive">
-                                            VARIOS
+                                        <a href="#tienda" role="tab" data-toggle="tab">
+                                            <img src="/img/secondary/store.svg"  class="material-icons img-responsive" >
+                                            TIENDA
                                         </a>
                                     </li>
                                 </ul>
@@ -69,7 +69,7 @@
                                             <span><strong> {{ torta.descuento }} % DTO. </strong></span>
                                         </div>
                                         <a href="#pablo">
-                                            <label class="cardprecio label label-primary" > Bs. <strong>{{ torta.precio }} </strong> </label>
+                                            <label class="cardprecio label label-rose" > Bs. <strong>{{ torta.precio }} </strong> </label>
                                             <span v-for="foto in torta.fotos" :key="foto.id" v-show="torta.fotos.length>0">
                                                 <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;">
                                             </span>
@@ -146,7 +146,7 @@
                                                     <span><strong> {{ comida.descuento }}% DTO. </strong></span>
                                                 </div>
                                                 <a href="#pablo">
-                                                <label class="cardprecio label label-primary" >
+                                                <label class="cardprecio label label-rose" >
                                                     Bs. <strong>{{ comida.precio }} </strong>
                                                 </label>
                                                     <span v-for="foto in comida.fotos" :key="foto.id" v-show="comida.fotos.length>0">
@@ -175,22 +175,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="varios" >
+                    <div class="tab-pane" id="tienda" >
                         <div class="row">
                             <div class="col-md-6 col-md-offset-3">
-                                <div v-for="(vario, index) in varios" :key="vario.id">
+                                <div v-for="(tienda, index) in tiendas" :key="tienda.id">
                                 <div class="col-md-6">
                                     <div class="card card-img-top card-blog shadow" style="background-color: #f2f2f2;">
                                         <div class="card-image">
-                                            <div class="ribbon ribbon-top-right " v-show="vario.descuento">
-                                                <span><strong> {{ vario.descuento }}% DTO. </strong></span>
+                                            <div class="ribbon ribbon-top-right " v-show="tienda.descuento">
+                                                <span><strong> {{ tienda.descuento }}% DTO. </strong></span>
                                             </div>
                                             <a href="#pablo">
-                                            <label class="cardprecio label label-primary" > Bs. <strong>{{ vario.precio }}</strong> </label>
-                                            <span v-for="foto in vario.fotos" :key="foto.id" v-show="vario.fotos.length>0">
+                                            <label class="cardprecio label label-rose" > Bs. <strong>{{ tienda.precio }}</strong> </label>
+                                            <span v-for="foto in tienda.fotos" :key="foto.id" v-show="tienda.fotos.length>0">
                                                 <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;">
                                             </span>
-                                            <span v-show="!vario.fotos.length>0">
+                                            <span v-show="!tienda.fotos.length>0">
                                                 <img src="/img/producto/panal1.png" class="imgcard"  alt="Producto foto" style="height: 100%;">
                                             </span>
                                             </a>
@@ -198,13 +198,13 @@
 
                                         <div class="card-content">
                                             <h4 class="card-title text-center">
-                                                <a href="#pablo">{{ vario.nombre }}</a>
+                                                <a href="#pablo">{{ tienda.nombre }}</a>
                                             </h4>
                                             <p class="card-description text-justify cut-text" style="margin-bottom: 0px;">
-                                                {{ vario.descripcion }}
+                                                {{ tienda.descripcion }}
                                             </p>
                                         </div>
-                                        <add-producto-btn v-bind:product="vario" v-bind:carri="carrito"> </add-producto-btn>
+                                        <add-producto-btn v-bind:product="tienda" v-bind:carri="carrito"> </add-producto-btn>
                                     </div>
                                 </div>
                                 </div>
@@ -226,7 +226,7 @@
                 tortas : [],
                 comidas : [],
                 almuerzo : [],
-                varios : [],
+                tiendas : [],
                 carrito : [],
                 form: new Form({
                     id:'',
@@ -275,8 +275,8 @@
                 const  almu = await axios.get('api/almuerzo');
                 this.almuerzo = almu.data.data;
 
-                const  va = await axios.get('api/varios');
-                this.varios = va.data.data;
+                const  va = await axios.get('api/tiendas');
+                this.tiendas = va.data.data;
 
             }
         },

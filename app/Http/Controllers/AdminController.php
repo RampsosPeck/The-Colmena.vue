@@ -23,7 +23,7 @@ class AdminController extends Controller
     	$almuerzo = Producto::where('categoria_id',$catalmuer->id)->first();
     	//dd($almuerzo);
 
-    	$varios = Categoria::where('nombre','Varios')->first();
+    	$varios = Categoria::where('nombre','Tienda')->first();
     	$provarios = Producto::where('categoria_id',$varios->id)->get();
     	//dd($protortas);
     	return view('layouts.catalogo', compact('protortas','procomidas','almuerzo','provarios'));
