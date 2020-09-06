@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth:api']], function(){
 	Route::get('rechazados','API\PedidoController@rechazados');
 	Route::get('rechazados/{id}','API\PedidoController@rechazo');
 	Route::get('vendidos','API\PedidoController@vendidos');
+
+	Route::get('actialmuerzo/{id}','API\ProductoController@actialmu');
 });
 
 // Routes for guests only

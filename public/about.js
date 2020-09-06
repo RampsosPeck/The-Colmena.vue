@@ -136,6 +136,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -235,6 +244,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return false;
+    },
+    goBack: function goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
     }
   },
   created: function created() {
@@ -634,31 +646,53 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "row text-center" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("div", { staticClass: "btn-group" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-round btn-rose ",
-                        attrs: { disabled: _vm.estaEnCarrito(_vm.producto) },
-                        on: {
-                          click: function($event) {
-                            return _vm.addToCart(_vm.producto)
-                          }
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-default  btn-round",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.goBack()
                         }
-                      },
-                      [
-                        !_vm.estaEnCarrito(_vm.producto)
-                          ? _c("strong", [
-                              _vm._v(" " + _vm._s(_vm.message) + " ")
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n\t\t\t            \t\tAtrás\n\t\t\t            \t"
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm.producto.estado
+                    ? _c("span", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-round btn-rose ",
+                            attrs: {
+                              disabled: _vm.estaEnCarrito(_vm.producto)
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.addToCart(_vm.producto)
+                              }
+                            }
+                          },
+                          [
+                            !_vm.estaEnCarrito(_vm.producto)
+                              ? _c("strong", [
+                                  _vm._v(" " + _vm._s(_vm.message) + " ")
+                                ])
+                              : _c("strong", [_vm._v("Agregado")]),
+                            _vm._v(" "),
+                            _c("i", { staticClass: "material-icons" }, [
+                              _vm._v("add_shopping_cart")
                             ])
-                          : _c("strong", [_vm._v("Agregado")]),
-                        _vm._v(" "),
-                        _c("i", { staticClass: "material-icons" }, [
-                          _vm._v("add_shopping_cart")
-                        ])
-                      ]
-                    )
-                  ])
+                          ]
+                        )
+                      ])
+                    : _c("span", [_vm._m(4)])
                 ])
               ])
             ])
@@ -815,6 +849,20 @@ var staticRenderFns = [
             ])
           ]
         )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "btn btn-round btn-rose ", attrs: { type: "button" } },
+      [
+        _c("b", [_vm._v("NO DISPONIBLE")]),
+        _vm._v(" "),
+        _c("i", { staticClass: "material-icons" }, [_vm._v("cancel")])
       ]
     )
   }

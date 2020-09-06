@@ -101,13 +101,22 @@
                     </div>
                     <div class="row text-center">
                     	<div class="form-group">
-				            <div class="btn-group">
+                    		<button @click="goBack()" type="button" class="btn btn-default  btn-round">
+			            		Atrás
+			            	</button>
+			            	<span v-if="producto.estado">
 				                <button @click="addToCart(producto)" class="btn btn-round btn-rose " :disabled="estaEnCarrito(producto)">
 							        <strong v-if="!estaEnCarrito(producto)"> {{ message }} </strong>
 							        <strong v-else>Agregado</strong>
 							        <i class="material-icons" >add_shopping_cart</i>
 							    </button>
-				            </div>
+							</span>
+							<span v-else>
+				                <button type="button" class="btn btn-round btn-rose " >
+				                	<b>NO DISPONIBLE</b>
+                                    <i class="material-icons">cancel</i>
+							    </button>
+							</span>
 				        </div>
 				    </div>
                 </div>
@@ -193,7 +202,10 @@
         			return true;
         		}
         		return false;
-        	}
+        	},
+        	goBack() {
+		      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+		    }
 		},
      	created() {
         	this.loadPro();

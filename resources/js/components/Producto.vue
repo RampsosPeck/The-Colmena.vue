@@ -71,6 +71,12 @@
 				                                				<button class="btn btn-default btn-xs productcate">
 				                                					{{ producto.categoria.nombre }}
 				                                				</button>
+
+				                                				<span v-show="producto.prodetalle">
+							                                    	 <button type="button" class="btn btn-warning btn-xs productcate" @click="actiAlmu(producto.id)">
+					                                					activar
+					                                				</button>
+							                                    </span>
 				                                			</h6>
 				                                			<h6  class="media-heading productlist" v-if="producto.descuento">
 				                                				Descuento: Del
@@ -87,13 +93,23 @@
 														Bs.
 		                                				<small>: {{ producto.precio }}</small> Unid.
 		                                			</h6>
-																					</td>
+												</td>
 				                                <td class="text-center text-warning col-md-1 col-xs-1">
-				                                	<b>{{ producto.estado ? 'ACTIVO' : 'INACTIVO' }}</b>
-				                                	<button class="btn btn-rose btn-xs"> Detalles <div class="ripple-container"></div></button>
+				                                	<b>{{ producto.estado ? 'ACTIVO' : 'AGOTADO' }}</b>
+				                                	<router-link :to="{name: 'verpro', params:{ slug: producto.slug}}">
+				                                	<button type="button" class="btn btn-rose btn-xs btn-round"> Detalles </button>
+				                                	</router-link>
 				                                </td>
 				                                <td class="card-content text-center col-md-3 col-xs-4" style="position: relative !important;">
-													<add-producto-btn v-bind:product="producto" v-bind:carri="carrito"> </add-producto-btn>
+				                                	<span v-if="producto.estado">
+														<add-producto-btn v-bind:product="producto" v-bind:carri="carrito"> </add-producto-btn>
+													</span>
+													<span class="text-center" v-else>
+		                                                <button class="btn btn-round btn-danger btn-xs" >
+		                                                    <b>NO DISPONIBLE</b>
+		                                                    <i class="material-icons">do_not_disturb_alt</i>
+		                                                </button>
+			                                        </span>
 				                                </td>
 				                                <td class="td-actions text-center col-md-2 col-xs-2">
 				                                    <a @click="editModal(producto)" href="#" rel="tooltip" class="btn btn-success" data-original-title="" title="Editar Usuario">
@@ -105,15 +121,6 @@
 				                                    <a href="#" v-show="!producto.estado" @click="activoPro(producto.id)" class="btn btn-warning" data-original-title="" title="Activar producto">
 				                                        <i class="material-icons">done</i>
 				                                    </a>
-				                                    <!--<button class="btn btn-rose btn-xs" style="margin-top:3px;" @click="agregarCarro(producto)"  :disabled="estaEnCarrito(producto)">
-														<i class="material-icons">add_shopping_cart</i>
-				                                     	<span v-if="!estaEnCarrito(producto)">Añadir</span>
-				                                     	<span v-else>Agregado</span>
-				                                     	<div class="ripple-container"></div>
-				                                    </button>
-				                                    <router-link :to="{name: 'editar', params:{ id: producto.id}}">
-														<button class="btn btn-info btn-sm mr-2">Editar</button>
-													</router-link>-->
 				                                </td>
 				                            </tr>
 				                        </tbody>
@@ -123,22 +130,6 @@
 						</div>
 					</div>
 				</div>
-				<!--<div class="col-md-5">
-					<div class="card card-nav-tabs shadow">
-						<div class="header header-rose">
-							<div class="nav-tabs-navigation">
-								<div class="nav-tabs-wrapper">
-									<ul class="nav nav-tabs ulcenter" data-tabs="tabs">
-										<li class="active">
-											<a href="#crear" data-toggle="tab">Carrito de compras</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<carrito-list :items="carrito"></carrito-list>
-					</div>
-				</div>-->
 			</div>
 	    </div>
 	</div>
@@ -357,7 +348,7 @@
 								<h4><b>Imagen de la categoría</b></h4>
 								<div class="fileinput fileinput-new text-center" data-provides="fileinput" :class="{ 'has-error is-focused': form.errors.has('foto') }" style="margin-bottom: 0px;">
 									<div class="fileinput-new thumbnail img-rounded img-raised " >
-										<!--<img src="/img/categoria/catedefault.jpg" alt="Foto Usuario" style="width: 20rem;" >-->
+										<img src="/img/categoria/catedefault.jpg" alt="Foto Usuario" style="width: 20rem;" v-show="!editmode">
 
 										<img src="/img/secondary/panal2.png" alt="Foto Usuario" style="width: 20rem;" v-show="editmode">
 									</div>
@@ -529,7 +520,7 @@
         	deletePro(id){
 	        	swal.fire({
 				  title: '¿Estás seguro?',
-				  text: "No podrás revertir esto!",
+				  text: "Lo pondrás en NO DISPONIBLE?",
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
@@ -558,7 +549,7 @@
         	activoPro(id){
         		swal.fire({
 				  title: '¿Estás seguro?',
-				  text: "No podrás revertir esto!",
+				  text: "OK. Excelete...Activar!",
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
@@ -571,6 +562,35 @@
                             swal.fire(
                                 'Excelente!',
                                 'El producto.nombre fue activado.',
+                                'success'
+                            )
+                            Fire.$emit('AfterCreate');
+                        }).catch(()=>{
+                            swal.fire(
+                                'Failed!',
+                                'Revisa algo salió mal.',
+                                'warning'
+                            )
+                      })
+				   }
+				})
+        	},
+        	actiAlmu(id){
+        		swal.fire({
+				  title: '¿Estás seguro?',
+				  text: "Quieres activar este almuerzo?",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: 'Si, activar!'
+				}).then((result) => {
+				   if (result.value)
+				   {
+				      this.form.get('api/actialmuerzo/'+id).then(()=>{
+                            swal.fire(
+                                'Excelente!',
+                                'El Almuerzo fue activado.',
                                 'success'
                             )
                             Fire.$emit('AfterCreate');
@@ -615,7 +635,7 @@
                 	swal.fire(
                         'Oops...!',
                         'Revisa los errores.',
-                        'success'
+                        'error'
                     )
                 	this.$Progress.fail()
                     console.log(error)

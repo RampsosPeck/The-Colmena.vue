@@ -21,7 +21,7 @@ class CreateProdetallesTable extends Migration
             $table->string('postre')->nullable();
             $table->string('refresco')->nullable();
             $table->text('especificacion')->nullable();
-            $table->boolean('estado')->default(1);
+            $table->boolean('estado')->default(true);
             $table->unsignedBigInteger('producto_id');
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
             $table->timestamps();

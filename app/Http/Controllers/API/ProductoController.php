@@ -15,7 +15,7 @@ class ProductoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['only' => ['store','show','update','destroy']]);
+        $this->middleware('auth:api', ['only' => ['store','show','update','destroy','actialmu']]);
     }
     /**
      * Display a listing of the resource.
@@ -44,7 +44,7 @@ class ProductoController extends Controller
 
     public function almuerzo()
     {
-        $prodetalle = Prodetalle::where('estado',1)->first();
+        $prodetalle = Prodetalle::where('estado',true)->first();
         $procomi = Producto::where('id',$prodetalle->producto_id)->get();
         return ProductoResource::collection($procomi);
     }
@@ -109,12 +109,25 @@ class ProductoController extends Controller
             \Image::make($request->foto)->save(public_path('img/producto/').$name);
             $profoto = new ProductoFoto;
             $profoto->imagen = $name;
+            $profoto->favorito = true;
             $profoto->producto_id = $producto->id;
             $profoto->save();
         }
 
         if($request['segundo']){
-            $prodetalle = new Prodetalle;
+            $idprode = \DB::table('prodetalle')->insertGetId([
+                'entrada' => $request['entrada'],
+                'sopa'    => $request['sopa'],
+                'segundo' => $request['segundo'],
+                'postre'  => $request['postre'],
+                'refresco'=> $request['refresco'],
+                'especificacion' => $request['especificacion'],
+                'producto_id' => $producto->id
+            ]);
+            $almuer = Categoria::where('nombre','Almuerzo')->first();
+            Prodetalle::where('id','!=',$idprode)->update(['estado' => 0]);
+            Producto::where('categoria_id',$almuer->id)->where('id','!=',$producto->id)->update(['estado' => 0]);
+            /*$prodetalle = new Prodetalle;
             $prodetalle->entrada = $request['entrada'];
             $prodetalle->sopa = $request['sopa'];
             $prodetalle->segundo = $request['segundo'];
@@ -122,7 +135,7 @@ class ProductoController extends Controller
             $prodetalle->refresco = $request['refresco'];
             $prodetalle->especificacion = $request['especificacion'];
             $prodetalle->producto_id = $producto->id;
-            $prodetalle->save();
+            $prodetalle->save();*/
         }
 
         return ['message'=> "Success OK producto..."];
@@ -210,15 +223,18 @@ class ProductoController extends Controller
             $prodetalle->save();
         }
         if($request['segundo']){
-            $prodetalle = new Prodetalle;
-            $prodetalle->entrada = $request['entrada'];
-            $prodetalle->sopa = $request['sopa'];
-            $prodetalle->segundo = $request['segundo'];
-            $prodetalle->postre = $request['postre'];
-            $prodetalle->refresco = $request['refresco'];
-            $prodetalle->especificacion = $request['especificacion'];
-            $prodetalle->producto_id = $producto->id;
-            $prodetalle->save();
+            $idprode = \DB::table('prodetalle')->insertGetId([
+                'entrada' => $request['entrada'],
+                'sopa'    => $request['sopa'],
+                'segundo' => $request['segundo'],
+                'postre'  => $request['postre'],
+                'refresco'=> $request['refresco'],
+                'especificacion' => $request['especificacion'],
+                'producto_id' => $producto->id
+            ]);
+            $almuer = Categoria::where('nombre','Almuerzo')->first();
+            Prodetalle::where('id','!=',$idprode)->update(['estado' => 0]);
+            Producto::where('categoria_id',$almuer->id)->where('id','!=',$producto->id)->update(['estado' => 0]);
         }
 
         return ['message'=> "Success producto actualizado"];
@@ -238,5 +254,21 @@ class ProductoController extends Controller
               ->update(['estado' => 0]);
 
         return response()->json(['message' => 'Producto dado de baja'], 200);
+    }
+
+    public function actialmu($id)
+    {
+        //return $id;
+        $this->authorize('isSadmin');
+
+        /*Producto::where('id', $id)
+              ->update(['estado' => 0]);*/
+        $almuer = Categoria::where('nombre','Almuerzo')->first();
+        Prodetalle::where('producto_id',$id)->update(['estado' => 1]);
+        Prodetalle::where('producto_id','!=',$id)->update(['estado' => 0]);
+        Producto::where('categoria_id',$almuer->id)->where('id',$id)->update(['estado' => 1]);
+        Producto::where('categoria_id',$almuer->id)->where('id','!=',$id)->update(['estado' => 0]);
+
+        return response()->json(['message' => 'El almuerzo fue activado'], 200);
     }
 }

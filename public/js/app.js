@@ -3440,6 +3440,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6466,15 +6506,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6594,7 +6625,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       swal.fire({
         title: '¿Estás seguro?',
-        text: "No podrás revertir esto!",
+        text: "Lo pondrás en NO DISPONIBLE?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -6616,7 +6647,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       swal.fire({
         title: '¿Estás seguro?',
-        text: "No podrás revertir esto!",
+        text: "OK. Excelete...Activar!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -6633,8 +6664,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       });
     },
-    loadProductos: function loadProductos() {
+    actiAlmu: function actiAlmu(id) {
       var _this4 = this;
+
+      swal.fire({
+        title: '¿Estás seguro?',
+        text: "Quieres activar este almuerzo?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, activar!'
+      }).then(function (result) {
+        if (result.value) {
+          _this4.form.get('api/actialmuerzo/' + id).then(function () {
+            swal.fire('Excelente!', 'El Almuerzo fue activado.', 'success');
+            Fire.$emit('AfterCreate');
+          })["catch"](function () {
+            swal.fire('Failed!', 'Revisa algo salió mal.', 'warning');
+          });
+        }
+      });
+    },
+    loadProductos: function loadProductos() {
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var resul, cat;
@@ -6648,14 +6701,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 resul = _context.sent;
                 //console.log(resul);
-                _this4.productos = resul.data.data; //console.log(this.users);
+                _this5.productos = resul.data.data; //console.log(this.users);
 
                 _context.next = 6;
                 return axios.get('api/categorias');
 
               case 6:
                 cat = _context.sent;
-                _this4.categorias = cat.data.data;
+                _this5.categorias = cat.data.data;
 
               case 8:
               case "end":
@@ -6666,7 +6719,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     createPro: function createPro() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.$Progress.start();
       this.form.post('api/productos').then(function () {
@@ -6679,19 +6732,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           timer: 2000
         });
 
-        _this5.form.reset();
+        _this6.form.reset();
 
-        _this5.$Progress.finish();
+        _this6.$Progress.finish();
       })["catch"](function (error) {
-        swal.fire('Oops...!', 'Revisa los errores.', 'success');
+        swal.fire('Oops...!', 'Revisa los errores.', 'error');
 
-        _this5.$Progress.fail();
+        _this6.$Progress.fail();
 
         console.log(error);
       });
     },
     proFoto: function proFoto(e) {
-      var _this6 = this;
+      var _this7 = this;
 
       //console.log('uploading...');
       var file = e.target.files[0];
@@ -6701,7 +6754,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         if (file['size'] < 2111775) {
           reader.onloadend = function (file) {
             //console.log('RESULT', reader.result)
-            _this6.form.foto = reader.result;
+            _this7.form.foto = reader.result;
           };
 
           reader.readAsDataURL(file);
@@ -6712,11 +6765,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   created: function created() {
-    var _this7 = this;
+    var _this8 = this;
 
     this.loadProductos();
     Fire.$on('AfterCreate', function () {
-      _this7.loadProductos();
+      _this8.loadProductos();
     });
   }
 });
@@ -71602,11 +71655,40 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _c("add-producto-btn", {
-                              attrs: { product: torta, carri: _vm.carrito }
-                            })
-                          ],
-                          1
+                            torta.estado
+                              ? _c(
+                                  "span",
+                                  [
+                                    _c("add-producto-btn", {
+                                      attrs: {
+                                        product: torta,
+                                        carri: _vm.carrito
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              : _c("span", { staticClass: "text-center" }, [
+                                  _c("div", { staticClass: "footer" }, [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "btn btn-round btn-danger btn-xs"
+                                      },
+                                      [
+                                        _c("b", [_vm._v("NO DISPONIBLE")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "i",
+                                          { staticClass: "material-icons" },
+                                          [_vm._v("backspace")]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ])
+                          ]
                         )
                       ])
                     ]
@@ -71763,8 +71845,8 @@ var render = function() {
                                 {
                                   name: "show",
                                   rawName: "v-show",
-                                  value: almu.prodetalle.postre,
-                                  expression: "almu.prodetalle.postre"
+                                  value: almu.prodetalle.refresco,
+                                  expression: "almu.prodetalle.refresco"
                                 }
                               ]
                             },
@@ -71784,8 +71866,8 @@ var render = function() {
                                 {
                                   name: "show",
                                   rawName: "v-show",
-                                  value: almu.prodetalle.refresco,
-                                  expression: "almu.prodetalle.refresco"
+                                  value: almu.prodetalle.postre,
+                                  expression: "almu.prodetalle.postre"
                                 }
                               ]
                             },
@@ -71793,7 +71875,7 @@ var render = function() {
                               _c("b", [_vm._v("Postre:")]),
                               _vm._v(" "),
                               _c("span", { staticClass: "text-width title" }, [
-                                _vm._v(_vm._s(almu.prodetalle.refresco))
+                                _vm._v(_vm._s(almu.prodetalle.postre))
                               ])
                             ]
                           )
@@ -71816,13 +71898,27 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("hr", { staticStyle: { height: "20px !important" } }),
+                      _c("hr", {
+                        staticStyle: {
+                          height: "20px !important",
+                          "padding-top": "9px"
+                        }
+                      }),
                       _vm._v(" "),
-                      _c("add-producto-btn", {
-                        attrs: { product: almu, carri: _vm.carrito }
-                      })
-                    ],
-                    1
+                      almu.estado
+                        ? _c(
+                            "span",
+                            [
+                              _c("add-producto-btn", {
+                                attrs: { product: almu, carri: _vm.carrito }
+                              })
+                            ],
+                            1
+                          )
+                        : _c("span", { staticClass: "text-center" }, [
+                            _vm._m(2, true)
+                          ])
+                    ]
                   )
                 }),
                 0
@@ -71996,11 +72092,23 @@ var render = function() {
                             _vm._v(" "),
                             _c("hr"),
                             _vm._v(" "),
-                            _c("add-producto-btn", {
-                              attrs: { product: comida, carri: _vm.carrito }
-                            })
-                          ],
-                          1
+                            comida.estado
+                              ? _c(
+                                  "span",
+                                  [
+                                    _c("add-producto-btn", {
+                                      attrs: {
+                                        product: comida,
+                                        carri: _vm.carrito
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              : _c("span", { staticClass: "text-center" }, [
+                                  _vm._m(3, true)
+                                ])
+                          ]
                         )
                       ])
                     ])
@@ -72173,11 +72281,23 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c("add-producto-btn", {
-                            attrs: { product: tienda, carri: _vm.carrito }
-                          })
-                        ],
-                        1
+                          tienda.estado
+                            ? _c(
+                                "span",
+                                [
+                                  _c("add-producto-btn", {
+                                    attrs: {
+                                      product: tienda,
+                                      carri: _vm.carrito
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            : _c("span", { staticClass: "text-center" }, [
+                                _vm._m(4, true)
+                              ])
+                        ]
                       )
                     ])
                   ])
@@ -72299,6 +72419,42 @@ var staticRenderFns = [
             ])
           ]
         )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "footer" }, [
+      _c("button", { staticClass: "btn btn-round btn-danger btn-xs" }, [
+        _c("b", [_vm._v("NO DISPONIBLE")]),
+        _vm._v(" "),
+        _c("i", { staticClass: "material-icons" }, [_vm._v("backspace")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "footer" }, [
+      _c("button", { staticClass: "btn btn-round btn-danger btn-xs" }, [
+        _c("b", [_vm._v("NO DISPONIBLE")]),
+        _vm._v(" "),
+        _c("i", { staticClass: "material-icons" }, [_vm._v("backspace")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "footer" }, [
+      _c("button", { staticClass: "btn btn-round btn-danger btn-xs" }, [
+        _c("b", [_vm._v("NO DISPONIBLE")]),
+        _vm._v(" "),
+        _c("i", { staticClass: "material-icons" }, [_vm._v("backspace")])
       ])
     ])
   }
@@ -78188,6 +78344,48 @@ var render = function() {
                                                         "\n\t\t\t\t                                \t\t\t\t"
                                                     )
                                                   ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    directives: [
+                                                      {
+                                                        name: "show",
+                                                        rawName: "v-show",
+                                                        value:
+                                                          producto.prodetalle,
+                                                        expression:
+                                                          "producto.prodetalle"
+                                                      }
+                                                    ]
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "button",
+                                                      {
+                                                        staticClass:
+                                                          "btn btn-warning btn-xs productcate",
+                                                        attrs: {
+                                                          type: "button"
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.actiAlmu(
+                                                              producto.id
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n\t\t\t\t\t                                \t\t\t\t\tactivar\n\t\t\t\t\t                                \t\t\t\t"
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
                                                 )
                                               ]
                                             ),
@@ -78281,15 +78479,35 @@ var render = function() {
                                     _c("b", [
                                       _vm._v(
                                         _vm._s(
-                                          producto.estado
-                                            ? "ACTIVO"
-                                            : "INACTIVO"
+                                          producto.estado ? "ACTIVO" : "AGOTADO"
                                         )
                                       )
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(2, true)
-                                  ]
+                                    _c(
+                                      "router-link",
+                                      {
+                                        attrs: {
+                                          to: {
+                                            name: "verpro",
+                                            params: { slug: producto.slug }
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-rose btn-xs btn-round",
+                                            attrs: { type: "button" }
+                                          },
+                                          [_vm._v(" Detalles ")]
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
                                 ),
                                 _vm._v(" "),
                                 _c(
@@ -78302,14 +78520,25 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c("add-producto-btn", {
-                                      attrs: {
-                                        product: producto,
-                                        carri: _vm.carrito
-                                      }
-                                    })
-                                  ],
-                                  1
+                                    producto.estado
+                                      ? _c(
+                                          "span",
+                                          [
+                                            _c("add-producto-btn", {
+                                              attrs: {
+                                                product: producto,
+                                                carri: _vm.carrito
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _c(
+                                          "span",
+                                          { staticClass: "text-center" },
+                                          [_vm._m(2, true)]
+                                        )
+                                  ]
                                 ),
                                 _vm._v(" "),
                                 _c(
@@ -79529,6 +79758,22 @@ var render = function() {
                                     {
                                       name: "show",
                                       rawName: "v-show",
+                                      value: !_vm.editmode,
+                                      expression: "!editmode"
+                                    }
+                                  ],
+                                  staticStyle: { width: "20rem" },
+                                  attrs: {
+                                    src: "/img/categoria/catedefault.jpg",
+                                    alt: "Foto Usuario"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("img", {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
                                       value: _vm.editmode,
                                       expression: "editmode"
                                     }
@@ -79683,9 +79928,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-rose btn-xs" }, [
-      _vm._v(" Detalles "),
-      _c("div", { staticClass: "ripple-container" })
+    return _c("button", { staticClass: "btn btn-round btn-danger btn-xs" }, [
+      _c("b", [_vm._v("NO DISPONIBLE")]),
+      _vm._v(" "),
+      _c("i", { staticClass: "material-icons" }, [_vm._v("do_not_disturb_alt")])
     ])
   },
   function() {

@@ -90,7 +90,17 @@
                                             {{ torta.descripcion }}
                                         </p>
                                     </div>
-                                    <add-producto-btn v-bind:product="torta" v-bind:carri="carrito"> </add-producto-btn>
+                                    <span v-if="torta.estado">
+                                        <add-producto-btn v-bind:product="torta" v-bind:carri="carrito"> </add-producto-btn>
+                                    </span>
+                                    <span class="text-center" v-else>
+                                        <div class="footer">
+                                            <button class="btn btn-round btn-danger btn-xs" >
+                                                <b>NO DISPONIBLE</b>
+                                                <i class="material-icons">backspace</i>
+                                            </button>
+                                        </div>
+                                    </span>
                                 </div>
                             </div>
                             </div>
@@ -125,19 +135,29 @@
                                             <li v-show="almu.prodetalle.segundo"><b>Segundo:</b>
                                                 <span class="text-width title">{{ almu.prodetalle.segundo }}</span>
                                             </li>
-                                            <li v-show="almu.prodetalle.postre"><b>Refresco:</b>
+                                            <li v-show="almu.prodetalle.refresco"><b>Refresco:</b>
                                                 <span class="text-width title">{{ almu.prodetalle.refresco }}</span>
                                             </li>
-                                            <li v-show="almu.prodetalle.refresco"><b>Postre:</b>
-                                                <span class="text-width title">{{ almu.prodetalle.refresco }}</span>
+                                            <li v-show="almu.prodetalle.postre"><b>Postre:</b>
+                                                <span class="text-width title">{{ almu.prodetalle.postre }}</span>
                                             </li>
                                         </ul>
                                         <p class="card-description text-width title text-justify" style="margin-bottom: 0px;">
                                             {{ almu.descripcion }}
                                         </p>
                                     </div>
-                                    <hr style="height: 20px !important;">
-                                    <add-producto-btn v-bind:product="almu" v-bind:carri="carrito"> </add-producto-btn>
+                                    <hr style="height: 20px !important; padding-top:9px;">
+                                    <span v-if="almu.estado">
+                                        <add-producto-btn v-bind:product="almu" v-bind:carri="carrito"> </add-producto-btn>
+                                    </span>
+                                    <span class="text-center" v-else>
+                                        <div class="footer">
+                                            <button class="btn btn-round btn-danger btn-xs" >
+                                                <b>NO DISPONIBLE</b>
+                                                <i class="material-icons">backspace</i>
+                                            </button>
+                                        </div>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-md-9">
@@ -177,7 +197,17 @@
                                                 </p>
                                             </div>
                                             <hr>
-                                            <add-producto-btn v-bind:product="comida" v-bind:carri="carrito"> </add-producto-btn>
+                                            <span v-if="comida.estado">
+                                                <add-producto-btn v-bind:product="comida" v-bind:carri="carrito"> </add-producto-btn>
+                                            </span>
+                                            <span class="text-center" v-else>
+                                                <div class="footer">
+                                                    <button class="btn btn-round btn-danger btn-xs" >
+                                                        <b>NO DISPONIBLE</b>
+                                                        <i class="material-icons">backspace</i>
+                                                    </button>
+                                                </div>
+                                            </span>
                                         </div>
                                     </div>
                                     </div>
@@ -218,7 +248,17 @@
                                                 {{ tienda.descripcion }}
                                             </p>
                                         </div>
-                                        <add-producto-btn v-bind:product="tienda" v-bind:carri="carrito"> </add-producto-btn>
+                                        <span v-if="tienda.estado">
+                                            <add-producto-btn v-bind:product="tienda" v-bind:carri="carrito"> </add-producto-btn>
+                                        </span>
+                                        <span class="text-center" v-else>
+                                            <div class="footer">
+                                                <button class="btn btn-round btn-danger btn-xs" >
+                                                    <b>NO DISPONIBLE</b>
+                                                    <i class="material-icons">backspace</i>
+                                                </button>
+                                            </div>
+                                        </span>
                                     </div>
                                 </div>
                                 </div>

@@ -79,7 +79,7 @@ class RegisterController extends Controller
             $fileName = 'avatar.jpg';
         }
 
-        $location = new Point((array)$data['lat'], (array)$data['lng']);
+        //$location = new Point((array)$data['lat'], (array)$data['lng']);
 
         return User::create([
             'fullname' => $data['fullname'],
@@ -87,9 +87,9 @@ class RegisterController extends Controller
             'celular' => $data['celular'],
             //'email' => $data['email'],
             'direccion' => $data['direccion'],
-            'location'  => $location,
-            'lat' => $data['lat'],
-            'lng' => $data['lng'],
+            //'location'  => $location,
+            //'lat' => $data['lat'],
+            //'lng' => $data['lng'],
             'foto' => $fileName,
             'password' => Hash::make($data['celular']),
         ]);

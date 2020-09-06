@@ -35,18 +35,6 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="media-footer">
-                                <h6>Registrarse con:</h6>
-                                <a href="" class="btn btn-just-icon btn-round btn-twitter">
-                                      <i class="fa fa-twitter"></i>
-                                </a>
-                                <a href="" class="btn btn-just-icon btn-round btn-facebook">
-                                      <i class="fa fa-facebook-square"></i>
-                                </a>
-                                <a href="" class="btn btn-just-icon btn-round btn-google">
-                                      <i class="fa fa-google-plus-square"></i>
-                                </a>
-                            </div>
                         </div>
                         <div class="col-md-9 text-center">
                             <div class="row ">
@@ -81,6 +69,16 @@
                                             </span>
                                         @enderror
                                     </div>
+                                </div>
+                                <div class="col-md-6 big-map">
+                                    <!--<div class="form-group">
+                                        <input type="text" id="mibusqueda" name="location" class="form-control map-input"  placeholder="Registre o busque su dirección." >
+                                        <input type="hidden" name="lat" id="lat"/>
+                                        <input type="hidden" name="lng" id="lng" />
+                                    </div>
+                                    <div id="address-map-container" style="width:100%;height:300px; ">
+                                        <div style="width: 100%; height: 100%" id="map-canvas"></div>
+                                    </div>-->
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="material-icons text-rose">room</i>
@@ -95,16 +93,6 @@
                                                 {{ $message }}
                                             </span>
                                         @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6 big-map">
-                                    <div class="form-group">
-                                        <input type="text" id="mibusqueda" name="location" class="form-control map-input"  placeholder="Registre o busque su dirección." >
-                                        <input type="hidden" name="lat" id="lat"/>
-                                        <input type="hidden" name="lng" id="lng" />
-                                    </div>
-                                    <div id="address-map-container" style="width:100%;height:300px; ">
-                                        <div style="width: 100%; height: 100%" id="map-canvas"></div>
                                     </div>
                                 </div>
                             </div>
