@@ -55,6 +55,13 @@ class ProductoController extends Controller
         $prova = Producto::where('categoria_id',$tienda->id)->get();
         return ProductoResource::collection($prova);
     }
+
+    public function viewpro($slug)
+    {
+        $producto = Producto::where('slug',$slug)->first();
+        //return $producto;
+        return new ProductoResource($producto);
+    }
     /**
      * Store a newly created resource in storage.
      *

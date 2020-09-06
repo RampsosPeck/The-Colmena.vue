@@ -46,12 +46,14 @@
 				                                <td class="td-usertable col-md-5 col-xs-4" >
 													<div class="media text-left" style="display: flex !important;  align-items: center !important;">
 				                                		<a class="pull-left td-usertable">
-				                                			<div class="listcategoria" v-for="foto in producto.fotos" :key="foto.id" v-show="producto.fotos.length>0">
-				                                				<img :src="getFoto(foto.imagen)" class="img img-raised " alt="Producto foto" style="height: 100%;">
-				                                			</div>
-				                                			<div class="listcategoria" v-show="!producto.fotos.length>0">
-				                                				<img src="/img/producto/panal1.png" class="img img-raised " alt="Producto foto" style="height: 100%;">
-				                                			</div>
+				                                			<div class="listcategoria">
+				                                				<span  v-for="foto in producto.fotos" :key="foto.id" v-show="producto.fotos.length>0">
+				                                					<img :src="getFoto(foto.imagen)" class="img img-raised " alt="Producto foto" style="height: 100%;" v-if="foto.favorito">
+				                                				</span>
+					                                			<span class="listcategoria" v-show="!producto.fotos.length>0">
+					                                				<img src="/img/producto/panal1.png" class="img img-raised " alt="Producto foto" style="height: 100%;" >
+					                                			</span>
+					                                		</div>
 				                                		</a>
 				                                		<div class="media-body" style="width: auto !important;">
 				                                			<h6 class="media-heading">

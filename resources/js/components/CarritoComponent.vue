@@ -67,8 +67,10 @@
 						                                <td class="td-usertable" >
 															<div class="media text-left" style="display: flex !important;  align-items: center !important;">
 						                                		<a class="pull-left td-usertable">
-						                                			<div class="listcategoria" v-for="foto in cade.producto.fotos" :key="foto.id" >
-			                                							<img :src="getFoto(foto.imagen)" class="img img-raised " alt="Producto foto" style="height: 100%;">
+						                                			<div class="listcategoria">
+						                                				<span v-for="foto in cade.producto.fotos" :key="foto.id">
+			                                								<img :src="getFoto(foto.imagen)" class="img img-raised " alt="Producto foto" style="height: 100%;" v-if="foto.favorito">
+			                                							</span>
 			                                						</div>
 						                                		</a>
 						                                		<div class="media-body" style="width: auto !important;">

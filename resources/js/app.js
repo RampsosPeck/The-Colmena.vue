@@ -80,9 +80,9 @@ let routes = [
     { path: '/productos', component: require('./components/Producto.vue').default },
     { path: '/carrito',  component: require('./components/CarritoComponent.vue').default },
     {
-      path: '/editarpro/:id',
-      name: 'editar',
-      component: () => import(/* webpackChunkName: "about" */ './components/Editpro.vue')
+      path: '/viewpro/:slug',
+      name: 'verpro',
+      component: () => import(/* webpackChunkName: "about" */ './components/Viewpro.vue')
     },
     { path: '/profile', component: require('./components/Profile.vue').default },
     { path: '/pedidos', component: require('./components/PedidoRecibidos.vue').default },

@@ -2466,6 +2466,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3205,6 +3207,20 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6056,6 +6072,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -68962,36 +68980,44 @@ var render = function() {
                                                     staticClass:
                                                       "pull-left td-usertable"
                                                   },
-                                                  _vm._l(
-                                                    cade.producto.fotos,
-                                                    function(foto) {
-                                                      return _c(
-                                                        "div",
-                                                        {
-                                                          key: foto.id,
-                                                          staticClass:
-                                                            "listcategoria"
-                                                        },
-                                                        [
-                                                          _c("img", {
-                                                            staticClass:
-                                                              "img img-raised ",
-                                                            staticStyle: {
-                                                              height: "100%"
-                                                            },
-                                                            attrs: {
-                                                              src: _vm.getFoto(
-                                                                foto.imagen
-                                                              ),
-                                                              alt:
-                                                                "Producto foto"
-                                                            }
-                                                          })
-                                                        ]
-                                                      )
-                                                    }
-                                                  ),
-                                                  0
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "listcategoria"
+                                                      },
+                                                      _vm._l(
+                                                        cade.producto.fotos,
+                                                        function(foto) {
+                                                          return _c(
+                                                            "span",
+                                                            { key: foto.id },
+                                                            [
+                                                              foto.favorito
+                                                                ? _c("img", {
+                                                                    staticClass:
+                                                                      "img img-raised ",
+                                                                    staticStyle: {
+                                                                      height:
+                                                                        "100%"
+                                                                    },
+                                                                    attrs: {
+                                                                      src: _vm.getFoto(
+                                                                        foto.imagen
+                                                                      ),
+                                                                      alt:
+                                                                        "Producto foto"
+                                                                    }
+                                                                  })
+                                                                : _vm._e()
+                                                            ]
+                                                          )
+                                                        }
+                                                      ),
+                                                      0
+                                                    )
+                                                  ]
                                                 ),
                                                 _vm._v(" "),
                                                 _c(
@@ -71490,14 +71516,16 @@ var render = function() {
                                         key: foto.id
                                       },
                                       [
-                                        _c("img", {
-                                          staticClass: "imgcard",
-                                          staticStyle: { height: "100%" },
-                                          attrs: {
-                                            src: _vm.getFoto(foto.imagen),
-                                            alt: "Producto foto"
-                                          }
-                                        })
+                                        foto.favorito
+                                          ? _c("img", {
+                                              staticClass: "imgcard",
+                                              staticStyle: { height: "100%" },
+                                              attrs: {
+                                                src: _vm.getFoto(foto.imagen),
+                                                alt: "Producto foto"
+                                              }
+                                            })
+                                          : _vm._e()
                                       ]
                                     )
                                   }),
@@ -71535,9 +71563,25 @@ var render = function() {
                                 "h4",
                                 { staticClass: "card-title text-center" },
                                 [
-                                  _c("a", { attrs: { href: "#pablo" } }, [
-                                    _vm._v(" " + _vm._s(torta.nombre) + " ")
-                                  ])
+                                  _c(
+                                    "a",
+                                    { attrs: { href: "#pablo" } },
+                                    [
+                                      _c(
+                                        "router-link",
+                                        {
+                                          attrs: {
+                                            to: {
+                                              name: "verpro",
+                                              params: { slug: torta.slug }
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(torta.nombre))]
+                                      )
+                                    ],
+                                    1
+                                  )
                                 ]
                               ),
                               _vm._v(" "),
@@ -71607,14 +71651,16 @@ var render = function() {
                           { attrs: { href: "#pablo" } },
                           _vm._l(almu.fotos, function(foto) {
                             return _c("span", { key: foto.id }, [
-                              _c("img", {
-                                staticClass: "imgcard",
-                                staticStyle: { height: "100%" },
-                                attrs: {
-                                  src: _vm.getFoto(foto.imagen),
-                                  alt: "Producto foto"
-                                }
-                              })
+                              foto.favorito
+                                ? _c("img", {
+                                    staticClass: "imgcard",
+                                    staticStyle: { height: "100%" },
+                                    attrs: {
+                                      src: _vm.getFoto(foto.imagen),
+                                      alt: "Producto foto"
+                                    }
+                                  })
+                                : _vm._e()
                             ])
                           }),
                           0
@@ -71622,9 +71668,29 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "card-content card-pricing" }, [
-                        _c("h4", { staticClass: "title " }, [
-                          _vm._v("ALMUERZO FAMILIAR")
-                        ]),
+                        _c(
+                          "h4",
+                          { staticClass: "title" },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                attrs: {
+                                  to: {
+                                    name: "verpro",
+                                    params: { slug: almu.slug }
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "ALMUERZO FAMILIAR\n                                        "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        ),
                         _vm._v(" "),
                         _c("ul", [
                           _c(
@@ -71884,9 +71950,31 @@ var render = function() {
                                 "h4",
                                 { staticClass: "card-title text-center" },
                                 [
-                                  _c("a", { attrs: { href: "#pablo" } }, [
-                                    _vm._v(_vm._s(comida.nombre))
-                                  ])
+                                  _c(
+                                    "a",
+                                    { attrs: { href: "#pablo" } },
+                                    [
+                                      _c(
+                                        "router-link",
+                                        {
+                                          attrs: {
+                                            to: {
+                                              name: "verpro",
+                                              params: { slug: comida.slug }
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                    " +
+                                              _vm._s(comida.nombre) +
+                                              "\n                                                    "
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  )
                                 ]
                               ),
                               _vm._v(" "),
@@ -72040,9 +72128,31 @@ var render = function() {
                               "h4",
                               { staticClass: "card-title text-center" },
                               [
-                                _c("a", { attrs: { href: "#pablo" } }, [
-                                  _vm._v(_vm._s(tienda.nombre))
-                                ])
+                                _c(
+                                  "a",
+                                  { attrs: { href: "#pablo" } },
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        attrs: {
+                                          to: {
+                                            name: "verpro",
+                                            params: { slug: tienda.slug }
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                " +
+                                            _vm._s(tienda.nombre) +
+                                            "\n                                                "
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
                               ]
                             ),
                             _vm._v(" "),
@@ -77888,77 +77998,85 @@ var render = function() {
                                               "pull-left td-usertable"
                                           },
                                           [
-                                            _vm._l(producto.fotos, function(
-                                              foto
-                                            ) {
-                                              return _c(
-                                                "div",
-                                                {
-                                                  directives: [
-                                                    {
-                                                      name: "show",
-                                                      rawName: "v-show",
-                                                      value:
-                                                        producto.fotos.length >
-                                                        0,
-                                                      expression:
-                                                        "producto.fotos.length>0"
-                                                    }
-                                                  ],
-                                                  key: foto.id,
-                                                  staticClass: "listcategoria"
-                                                },
-                                                [
-                                                  _c("img", {
-                                                    staticClass:
-                                                      "img img-raised ",
-                                                    staticStyle: {
-                                                      height: "100%"
-                                                    },
-                                                    attrs: {
-                                                      src: _vm.getFoto(
-                                                        foto.imagen
-                                                      ),
-                                                      alt: "Producto foto"
-                                                    }
-                                                  })
-                                                ]
-                                              )
-                                            }),
-                                            _vm._v(" "),
                                             _c(
                                               "div",
-                                              {
-                                                directives: [
-                                                  {
-                                                    name: "show",
-                                                    rawName: "v-show",
-                                                    value:
-                                                      !producto.fotos.length >
-                                                      0,
-                                                    expression:
-                                                      "!producto.fotos.length>0"
-                                                  }
-                                                ],
-                                                staticClass: "listcategoria"
-                                              },
+                                              { staticClass: "listcategoria" },
                                               [
-                                                _c("img", {
-                                                  staticClass:
-                                                    "img img-raised ",
-                                                  staticStyle: {
-                                                    height: "100%"
+                                                _vm._l(producto.fotos, function(
+                                                  foto
+                                                ) {
+                                                  return _c(
+                                                    "span",
+                                                    {
+                                                      directives: [
+                                                        {
+                                                          name: "show",
+                                                          rawName: "v-show",
+                                                          value:
+                                                            producto.fotos
+                                                              .length > 0,
+                                                          expression:
+                                                            "producto.fotos.length>0"
+                                                        }
+                                                      ],
+                                                      key: foto.id
+                                                    },
+                                                    [
+                                                      foto.favorito
+                                                        ? _c("img", {
+                                                            staticClass:
+                                                              "img img-raised ",
+                                                            staticStyle: {
+                                                              height: "100%"
+                                                            },
+                                                            attrs: {
+                                                              src: _vm.getFoto(
+                                                                foto.imagen
+                                                              ),
+                                                              alt:
+                                                                "Producto foto"
+                                                            }
+                                                          })
+                                                        : _vm._e()
+                                                    ]
+                                                  )
+                                                }),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    directives: [
+                                                      {
+                                                        name: "show",
+                                                        rawName: "v-show",
+                                                        value:
+                                                          !producto.fotos
+                                                            .length > 0,
+                                                        expression:
+                                                          "!producto.fotos.length>0"
+                                                      }
+                                                    ],
+                                                    staticClass: "listcategoria"
                                                   },
-                                                  attrs: {
-                                                    src:
-                                                      "/img/producto/panal1.png",
-                                                    alt: "Producto foto"
-                                                  }
-                                                })
-                                              ]
+                                                  [
+                                                    _c("img", {
+                                                      staticClass:
+                                                        "img img-raised ",
+                                                      staticStyle: {
+                                                        height: "100%"
+                                                      },
+                                                      attrs: {
+                                                        src:
+                                                          "/img/producto/panal1.png",
+                                                        alt: "Producto foto"
+                                                      }
+                                                    })
+                                                  ]
+                                                )
+                                              ],
+                                              2
                                             )
-                                          ],
-                                          2
+                                          ]
                                         ),
                                         _vm._v(" "),
                                         _c(
@@ -99076,10 +99194,10 @@ var routes = [{
   path: '/carrito',
   component: __webpack_require__(/*! ./components/CarritoComponent.vue */ "./resources/js/components/CarritoComponent.vue")["default"]
 }, {
-  path: '/editarpro/:id',
-  name: 'editar',
+  path: '/viewpro/:slug',
+  name: 'verpro',
   component: function component() {
-    return __webpack_require__.e(/*! import() | about */ "about").then(__webpack_require__.bind(null, /*! ./components/Editpro.vue */ "./resources/js/components/Editpro.vue"));
+    return __webpack_require__.e(/*! import() | about */ "about").then(__webpack_require__.bind(null, /*! ./components/Viewpro.vue */ "./resources/js/components/Viewpro.vue"));
   }
 }, {
   path: '/profile',

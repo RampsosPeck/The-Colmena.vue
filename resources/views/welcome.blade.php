@@ -272,8 +272,8 @@
       <section class="section novi-bg novi-bg-img section-sm bg-gray-100 pb-xl-0" id="about">
         <div class="container">
           <div class="row row-50 flex-wrap-md-reverse flex-lg-wrap align-items-lg-center">
-            <div class="col-xl-6 col-lg-6">
-              <div class="box-custom-2"><img src="images/shutter-home-01-455x685.png" alt="" width="455" height="342"/>
+            <div class="col-xl-6 col-lg-6"><!--images/shutter-home-01-455x685.png-->
+              <div class="box-custom-2"><img src="/img/welcome/abe12.png" alt="" width="455" height="342"/>
                 <div class="box-custom-2-smal">
                   <p class="box-custom-2-name">Doña Abelina</p>
                   <p class="box-custom-2-position">Jefa de cocina</p>

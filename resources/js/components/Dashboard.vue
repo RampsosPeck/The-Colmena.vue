@@ -71,7 +71,7 @@
                                         <a href="#pablo">
                                             <label class="cardprecio label label-rose" > Bs. <strong>{{ torta.precio }} </strong> </label>
                                             <span v-for="foto in torta.fotos" :key="foto.id" v-show="torta.fotos.length>0">
-                                                <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;">
+                                                <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;"  v-if="foto.favorito">
                                             </span>
                                             <span v-show="!torta.fotos.length>0">
                                                 <img src="/img/producto/panal1.png" class="imgcard"  alt="Producto foto" style="height: 100%;">
@@ -81,7 +81,10 @@
 
                                     <div class="card-content">
                                         <h4 class="card-title text-center">
-                                            <a href="#pablo"> {{ torta.nombre }} </a>
+                                            <a href="#pablo">
+                                                <router-link :to="{name: 'verpro', params:{ slug: torta.slug}}"
+                                                >{{ torta.nombre }}</router-link>
+                                            </a>
                                         </h4>
                                         <p class="card-description text-justify cut-text" style="margin-bottom: 0px;">
                                             {{ torta.descripcion }}
@@ -102,13 +105,16 @@
                                             <span><strong> {{ almu.precio }} Bs. </strong></span>
                                         </div>
                                         <a href="#pablo">
-                                        <span v-for="foto in almu.fotos" :key="foto.id">
-                                            <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;">
-                                        </span>
+                                            <span v-for="foto in almu.fotos" :key="foto.id">
+                                                <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;"  v-if="foto.favorito">
+                                            </span>
                                         </a>
                                     </div>
                                     <div class="card-content card-pricing"  >
-                                        <h4 class="title ">ALMUERZO FAMILIAR</h4>
+                                        <h4 class="title">
+                                            <router-link :to="{name: 'verpro', params:{ slug: almu.slug}}">ALMUERZO FAMILIAR
+                                            </router-link>
+                                        </h4>
                                         <ul>
                                             <li v-show="almu.prodetalle.entrada"><b>Entrada:</b>
                                                <span class="text-width title">{{ almu.prodetalle.entrada }}</span>
@@ -160,7 +166,11 @@
 
                                             <div class="card-content">
                                                 <h4 class="card-title text-center">
-                                                    <a href="#pablo">{{ comida.nombre }}</a>
+                                                    <a href="#pablo">
+                                                        <router-link :to="{name: 'verpro', params:{ slug: comida.slug}}">
+                                                        {{ comida.nombre }}
+                                                        </router-link>
+                                                    </a>
                                                 </h4>
                                                 <p class="card-description text-justify cut-text" >
                                                     {{ comida.descripcion }}
@@ -198,7 +208,11 @@
 
                                         <div class="card-content">
                                             <h4 class="card-title text-center">
-                                                <a href="#pablo">{{ tienda.nombre }}</a>
+                                                <a href="#pablo">
+                                                    <router-link :to="{name: 'verpro', params:{ slug: tienda.slug}}">
+                                                    {{ tienda.nombre }}
+                                                    </router-link>
+                                                </a>
                                             </h4>
                                             <p class="card-description text-justify cut-text" style="margin-bottom: 0px;">
                                                 {{ tienda.descripcion }}
