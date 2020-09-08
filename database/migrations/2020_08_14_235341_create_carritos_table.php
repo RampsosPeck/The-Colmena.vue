@@ -22,6 +22,7 @@ class CreateCarritosTable extends Migration
             $table->unsignedInteger('delivery')->nullable();
             $table->string('estado')->nullable();
             $table->text('especificacion')->nullable();
+            $table->string('nomdelivery')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

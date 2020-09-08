@@ -82,16 +82,47 @@
                                         <hr class="hrcardpe" />
                                         <span class="title">Precio total:</span> <span class="btn btn-round btn-rose btn-xs"><b>  {{convertMoney(pedido.total_bs,pedido.delivery) }} </b>Bs. </span>
                                         <hr class="hrcardpe" />
+                                        <small class="title">Delivery:</small>
+                                        <div class="btn-group bootstrap-select">
+		                                    <select class="selectpicker" data-style="btn btn-rose btn-round" data-size="7" v-model="delivery">
+		                                        <option disabled selected>Seleccione Delivery</option>
+		                                        <option v-for="delivery in deliverys" v-bind:value="delivery.fullname">
+		                                        	<i class="material-icons">account_circle</i>
+		                                        {{ delivery.fullname }}</option>
+		                                    </select>
+			                                <!--<div class="col-lg-5 col-md-6 col-sm-3">
+			                                    <select class="selectpicker" data-style="select-with-transition" multiple title="Choose City" data-size="7">
+			                                        <option disabled> Choose city</option>
+			                                        <option value="2">Paris </option>
+			                                        <option value="3">Bucharest</option>
+			                                        <option value="4">Rome</option>
+			                                        <option value="5">New York</option>
+			                                        <option value="6">Miami </option>
+			                                        <option value="7">Piatra Neamt</option>
+			                                        <option value="8">Paris </option>
+			                                        <option value="9">Bucharest</option>
+			                                        <option value="10">Rome</option>
+			                                        <option value="11">New York</option>
+			                                        <option value="12">Miami </option>
+			                                        <option value="13">Piatra Neamt</option>
+			                                        <option value="14">Paris </option>
+			                                        <option value="15">Bucharest</option>
+			                                        <option value="16">Rome</option>
+			                                        <option value="17">New York</option>
+			                                        <option value="18">Miami </option>
+			                                        <option value="19">Piatra Neamt</option>
+			                                    </select>
+			                                </div>-->
+					            		</div>
+                                        <hr class="hrcardpe" />
                                     </div>
                                     <div class="footer text-center" style="position:relative !important;">
-
 							            <div class="btn-group">
 							                <button type="button" @click="successPro(pedido.id)" class="btn btn-round btn-success btn-xs" >
 										        <strong> Enviar </strong>
 										        <i class="material-icons">motorcycle</i>
 										    </button>
 							            </div>
-
 								    </div>
                                 </div>
                             </div>
@@ -283,6 +314,8 @@
         data() {
             return {
                 pedidos : [],
+                deliverys : [],
+                delivery : '',
                 cliente:'',
                 myLatLng: {},
                 user:{lat: -19.589263,lng:-65.754102},
@@ -338,6 +371,9 @@
         	async loadPedidos(){
                 const  resul = await axios.get('api/aceptados');
 				this.pedidos = resul.data.data;
+
+				const  re = await axios.get('api/deliverys');
+				this.deliverys = re.data.data;
             },
             viewPro(producto){
             	//console.log(producto.fotos[0].imagen);
@@ -379,7 +415,16 @@
 				   if (result.value)
 				   {
 				   	    this.$Progress.start();
-				        axios.get('api/enviados/'+id).then(()=>{
+				        //axios.get('api/enviados/'+id)
+				        //axios.put('api/enviados/'+id, data=this.delivery)
+				        axios({
+						  method: 'PUT',
+						  url: 'api/enviados/'+id,
+						  data: {
+						    nomdelivery: this.delivery
+						  }
+						})
+				        .then(()=>{
                             swal.fire(
                                 'Excelente!',
                                 'El pedido fue ENVIADO.',

@@ -377,12 +377,13 @@
 		    cancelPro(id){
 	        	swal.fire({
 				  title: '¿Estás seguro?',
-				  text: "No podrás revertir esto!",
+				  text: "¿Quieres rechazar este pedido?",
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
 				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Si, Cancelar!'
+				  confirmButtonText: 'Si, Rechazar!',
+				  cancelButtonText: 'Cancelar',
 				}).then((result) => {
 				   if (result.value)
 				   {
@@ -409,12 +410,13 @@
         	successPro(id){
 	        	swal.fire({
 				  title: '¿Estás seguro?',
-				  text: "No podrás revertir esto!",
+				  text: "¿Quieres aceptar este pedido?",
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
 				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Si, Aceptar!'
+				  confirmButtonText: 'Si, Aceptar!',
+				  cancelButtonText: 'Cancelar',
 				}).then((result) => {
 				   if (result.value)
 				   {

@@ -39,7 +39,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 	Route::apiResources(['pedidos' => 'API\PedidoController']);
 	Route::get('aceptados','API\PedidoController@aceptado');
-	Route::get('enviados/{id}','API\PedidoController@processando');
+	Route::put('enviados/{id}','API\PedidoController@processando');
 	Route::get('enviados','API\PedidoController@enviados');
 	Route::get('entregados/{id}','API\PedidoController@enviado');
 	Route::get('rechazados','API\PedidoController@rechazados');
@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth:api']], function(){
 	Route::get('vendidos','API\PedidoController@vendidos');
 
 	Route::get('actialmuerzo/{id}','API\ProductoController@actialmu');
+
+	Route::get('deliverys','API\PedidoController@delivery');
 });
 
 // Routes for guests only

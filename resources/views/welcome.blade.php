@@ -7,9 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900">
 
-    <meta name="description" content="Sistema de pedidos en linea realizado para la tienda LA COLMENA">
+    <meta name="description" content="Sistema de pedidos en linea realizado para la tienda LA COLMENA de la ciudad de Potosi">
     <meta name="author" content="Ing. Jorge Peralta">
-    <meta name="keyword" content="Sistema de pedidos en linea, Sistema bajo plataforma web La colmena. ">
+    <meta name="keyword" content="Sistema de pedidos en linea, Sistema bajo plataforma web La colmena. En la ciudad de Potosí">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="shortcut icon" href="{{ asset('/img/welcome/colmena.svg') }}" />
@@ -45,7 +45,7 @@
                     <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                     <!--RD Navbar Brand-->
                     <div class="rd-navbar-brand">
-                      <a class="brand" href="#programs">
+                      <a class="brand" href="/dashboard">
                         <img class="brand-logo-light" src="{{ asset('/img/welcome/logowel.png') }}" />
                       </a>
                     </div>
@@ -195,13 +195,15 @@
                     <div class="col-lg-5 pt-2">
                       <h3 class="subtitle" data-swiper-anime='{"animation":"swiperContentRide","duration":900,"delay":900}'>Desde Potosí</h3>
                       <h1 data-swiper-anime='{"animation":"swiperContentRide","duration":1000,"delay":1000}' data-subtext="#1">La Colmena</h1>
-                      <p class="big text-justify" data-swiper-anime='{"animation":"swiperContentRide","duration":1100,"delay":1100}'>Le ofrecemos una variedad de productos y ahora puedes realizar tus pedidos en linea. </p>
+                      <p class="big text-justify" data-swiper-anime='{"animation":"swiperContentRide","duration":1100,"delay":1100}'>
+                        Le ofrecemos una variedad de productos y ahora puedes realizar tus pedidos en linea.
+                      </p>
                       <p class="postitle text-center" data-swiper-anime='{"animation":"swiperContentRide","duration":1200,"delay":1200}'>
                         <a class="button button-primary-wel" href="{{ url('dashboard') }}">Ver Catálogo</a>
                       </p>
                     </div>
                     <div class="box-round-wrap">
-                      <img class="imgfirst" src="{{ asset('/img/welcome/panal.png') }}" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'  />
+                      <img class="imgfirst" style="border-radius: 20% !important;" src="{{ asset('/img/welcome/originalline.png') }}" alt="" width="671" height="335" data-swiper-anime='{"animation":"swiperContentFade","duration":1000,"delay":1000}'  />
                     </div>
                   </div>
                 </div>
@@ -268,12 +270,21 @@
           <div class="swiper-pagination"></div>
         </section>
       </div>
-      <!-- About-->
-      <section class="section novi-bg novi-bg-img section-sm bg-gray-100 pb-xl-0" id="about">
+      <!-- About
+      <section class="section novi-bg novi-bg-img section-sm bg-gray-100 pb-xl-0" id="about" style="background-image: url('../img/welcome/login.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;">-->
+      <section class="section novi-bg novi-bg-img section-sm bg-gray-100 pb-xl-0" id="about" style="background-image: url('../img/welcome/image.png');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;">
+
         <div class="container">
           <div class="row row-50 flex-wrap-md-reverse flex-lg-wrap align-items-lg-center">
             <div class="col-xl-6 col-lg-6"><!--images/shutter-home-01-455x685.png-->
-              <div class="box-custom-2"><img src="/img/welcome/abe12.png" alt="" width="455" height="342"/>
+              <div class="box-custom-2">
+                <img src="/img/welcome/abe12.png" alt="" width="455" height="342"/>
                 <div class="box-custom-2-smal">
                   <p class="box-custom-2-name">Doña Abelina</p>
                   <p class="box-custom-2-position">Jefa de cocina</p>
@@ -281,16 +292,16 @@
               </div>
             </div>
             <div class="col-xl-5 col-lg-6">
-              <div class="box-custom-1">
-                <h3>Sobre nosotros</h3>
-                <h2>La comida más sabrosa.</h2>
+              <div class="box-custom-1 text-white">
+                <h3 class="text-white">Sobre nosotros</h3>
+                <h2 class="text-white">La comida más sabrosa.</h2>
                 <p>La colmena le ofrece una variedad de productos de alta calidad para su paladar, realice su pedido en linea.</p>
                 <ul class="list-marked">
-                  <li>Los decorados personalizados para cada torta.</li>
-                  <li>Los ingredientes más frescos para cada plato.</li>
+                  <li class="text-white">Los decorados personalizados para cada torta.</li>
+                  <li class="text-white">Los ingredientes más frescos para cada plato.</li>
                 </ul>
                 <div class="text-center justify-content-center pt-3">
-                  <a class="button button-primary" href="{{ url('dashboard') }}">Ver Catálogo</a>
+                  <a class="button button-primary-wel" href="{{ url('dashboard') }}">Ver Catálogo</a>
                 </div>
               </div>
             </div>
@@ -377,20 +388,20 @@
           <div class="row row-50 post-classic-counter justify-content-lg-between justify-content-center">
             <div class="col-lg-4 col-sm-6">
               <div class="post-classic novi-bg bg-secondary-1">
-                <h3 class="post-classic-title">Ingrese <br> o registrese gratis</h3>
-                <p class="post-classic-text text-justify">Si ya tiene una cuenta puede ingresar o registrar sus datos.</p>
+                <h3 class="post-classic-title">Seleccione sus productos</h3>
+                <p class="post-classic-text text-justify">Añanada los productos que desea adquirir a su carrito de compras sin necesidad de registrarse.</p>
               </div>
             </div>
             <div class="col-lg-4 col-sm-6">
               <div class="post-classic novi-bg bg-secondary-2">
-                <h3 class="post-classic-title">Seleccione sus productos</h3>
-                <p class="post-classic-text text-justify">Elija que productos desea adquirir en nuestro catalogo y envie su pedido.</p>
+                <h3 class="post-classic-title">Inserte sus datos y ubicación</h3>
+                <p class="post-classic-text text-justify">Una vez verificado los productos en su carrito de compras inserte sus datos personales y su ubicación .</p>
               </div>
             </div>
             <div class="col-lg-4 col-sm-6">
               <div class="post-classic novi-bg bg-secondary-3">
-                <h3 class="post-classic-title">Inserte su ubicación.</h3>
-                <p class="post-classic-text text-justify">Detalle su ubicación donde le aremos llegar su pedido.</p>
+                <h3 class="post-classic-title">Verifique el estado de su pedido.</h3>
+                <p class="post-classic-text text-justify">Ya enviado el pedido, verifique el estado ingresando al sistema con su Nro. celular como usuario y contraseña.</p>
               </div>
             </div>
           </div>

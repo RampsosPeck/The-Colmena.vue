@@ -70,7 +70,13 @@ class CarritoController extends Controller
         $antuser = User::where('celular',$request->celular)->first();
         //return $antuser;
         if($antuser){
-            $antuser->update($request->all());
+            $antuser->update([
+                'fullname' =>$request->fullname,
+                'celular'  =>$request->celular,
+                'direccion'=>$request->direccion,
+                'lat'=>$request->lat,
+                'lng'=>$request->lng
+            ]);
             $carri = Carrito::where('id',$request->carrito->id)->first();
             //return $carri;
             Carrito::where('id',$request->carrito->id)->update([

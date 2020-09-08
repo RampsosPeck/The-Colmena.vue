@@ -5,8 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PedidoResource;
 use App\Http\Resources\ProductoResource;
+use App\Http\Resources\UserResource;
 use App\Models\Carrito;
 use App\Models\Producto;
+use App\User;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
@@ -44,6 +46,12 @@ class PedidoController extends Controller
         return PedidoResource::collection($carritos);
     }
 
+    public function delivery()
+    {
+        //return 'estas aqui';
+        $userdel = User::where('tipo','Delivery')->get();
+        return UserResource::collection($userdel);//new ;
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -96,10 +104,14 @@ class PedidoController extends Controller
         return response()->json(['message' => 'Carrito rechazado'], 200);
     }
 
-    public function processando($id)
+    public function processando(Request $request, $id)
     {
+        //return $request->nomdelivery;
         Carrito::where('id', $id)
-              ->update(['estado' => 'enviado']);
+              ->update([
+                'estado' => 'enviado',
+                'nomdelivery' => $request->nomdelivery
+            ]);
 
         return response()->json(['message' => 'Carrito enviado'], 200);
     }

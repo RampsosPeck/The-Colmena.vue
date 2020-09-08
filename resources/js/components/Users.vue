@@ -115,92 +115,90 @@
 										</div>
 									</div>
 									<div class="col-md-8 text-center">
-        	                        	<div class="media-body">
-        		                            <div class="row">
-        		                                <div class="col-md-6">
-				                                    <div class="input-group" :class="{ 'has-error is-focused': form.errors.has('fullname') }">
-				                                        <span class="input-group-addon">
-				                                            <i class="material-icons text-rose">face</i>
-														</span>
-					                                    <input v-model.trim="form.fullname" type="text" class="form-control" name="fullname" placeholder="Nombre completo">
-					                                    <has-error :form="form" field="fullname"></has-error>
+    		                            <div class="row">
+    		                                <div class="col-md-6">
+			                                    <div class="input-group" :class="{ 'has-error is-focused': form.errors.has('fullname') }">
+			                                        <span class="input-group-addon">
+			                                            <i class="material-icons text-rose">face</i>
+													</span>
+				                                    <input v-model.trim="form.fullname" type="text" class="form-control" name="fullname" placeholder="Nombre completo">
+				                                    <has-error :form="form" field="fullname"></has-error>
+			                                    </div>
+    		                                </div>
+    		                                <div class="col-md-6">
+												<div class="input-group">
+			                                        <span class="input-group-addon" :class="{ 'has-error is-focused': form.errors.has('celular') }">
+			                                            <i class="material-icons text-rose">stay_current_portrait</i>
+			                                        </span>
+				                                    <input v-model.number="form.celular" type="text" class="form-control" name="celular" placeholder="Número de celular">
+				                                    <has-error :form="form" field="celular"></has-error>
+			                                    </div>
+    		                                </div>
+    		                            </div>
+    		                            <div class="row">
+    		                                <div class="col-md-6">
+												<div class="input-group">
+			                                        <span class="input-group-addon">
+			                                            <i class="material-icons">email</i>
+			                                        </span>
+				                                    <input v-model.trim="form.email" type="text" class="form-control" name="email" placeholder="Correo electrónico">
+			                                    </div>
+    		                                </div>
+    		                                <div class="col-md-6">
+												<div class="input-group" :class="{ 'has-error is-focused': form.errors.has('direccion') }">
+			                                        <span class="input-group-addon">
+			                                            <i class="material-icons text-rose">room</i>
+			                                        </span>
+				                                    <input  v-model.trim="form.direccion" type="text" class="form-control" name="direccion" placeholder="Dirección exacta">
+				                                    <has-error :form="form" field="direccion"></has-error>
+			                                    </div>
+    		                                </div>
+    		                            </div>
+    		                            <div class="row">
+    		                            	<div class="col-md-6">
+												<div class="input-group">
+			                                        <span class="input-group-addon">
+			                                            <i class="material-icons text-rose">lock_outline</i>
+			                                        </span>
+			                                        <div class="form-group label-floating is-empty" :class="{ 'has-error is-focused': form.errors.has('password') }">
+				                                    	<label class="control-label">Contraseña:</label>
+				                                    	<input v-model.trim="form.password" type="password" class="form-control" name="password">
+				                                    	<span class="material-input"></span>
+				                                    	<has-error :form="form" field="password"></has-error>
 				                                    </div>
-        		                                </div>
-        		                                <div class="col-md-6">
-													<div class="input-group">
-				                                        <span class="input-group-addon" :class="{ 'has-error is-focused': form.errors.has('celular') }">
-				                                            <i class="material-icons text-rose">stay_current_portrait</i>
-				                                        </span>
-					                                    <input v-model.number="form.celular" type="text" class="form-control" name="celular" placeholder="Número de celular">
-					                                    <has-error :form="form" field="celular"></has-error>
-				                                    </div>
-        		                                </div>
-        		                            </div>
-        		                            <div class="row">
-        		                                <div class="col-md-6">
-													<div class="input-group">
-				                                        <span class="input-group-addon">
-				                                            <i class="material-icons">email</i>
-				                                        </span>
-					                                    <input v-model.trim="form.email" type="text" class="form-control" name="email" placeholder="Correo electrónico">
-				                                    </div>
-        		                                </div>
-        		                                <div class="col-md-6">
-													<div class="input-group" :class="{ 'has-error is-focused': form.errors.has('direccion') }">
-				                                        <span class="input-group-addon">
-				                                            <i class="material-icons text-rose">room</i>
-				                                        </span>
-					                                    <input  v-model.trim="form.direccion" type="text" class="form-control" name="direccion" placeholder="Dirección exacta">
-					                                    <has-error :form="form" field="direccion"></has-error>
-				                                    </div>
-        		                                </div>
-        		                            </div>
-        		                            <div class="row">
-        		                            	<div class="col-md-6">
-													<div class="input-group">
-				                                        <span class="input-group-addon">
-				                                            <i class="material-icons text-rose">lock_outline</i>
-				                                        </span>
-				                                        <div class="form-group label-floating is-empty" :class="{ 'has-error is-focused': form.errors.has('password') }">
-					                                    	<label class="control-label">Contraseña:</label>
-					                                    	<input v-model.trim="form.password" type="password" class="form-control" name="password">
-					                                    	<span class="material-input"></span>
-					                                    	<has-error :form="form" field="password"></has-error>
-					                                    </div>
-				                                    </div>
-        		                            	</div>
-        		                            	<div class="col-md-6">
-        		                            		<div class="input-group">
-				                                        <span class="input-group-addon">
-				                                            <i class="material-icons text-rose">assignment_ind</i>
-				                                        </span>
-														<div class="btn-group bootstrap-select show-tick dropup open">
-															<select data-style="select-with-transition" title="Tipo de Usuario" data-size="7" class="selectpicker" tabindex="-98" name="tipo" v-model="form.tipo">
-																<option disabled="disabled"> Seleccione</option>
-																<option value="Administrador">Administrador </option>
-																<option value="Vendedor">Vendedor</option>
-																<option value="Delivery">Delivery</option>
-																<option value="Cliente">Cliente</option>
-															</select>
-														</div>
+			                                    </div>
+    		                            	</div>
+    		                            	<div class="col-md-6">
+    		                            		<div class="input-group">
+			                                        <span class="input-group-addon">
+			                                            <i class="material-icons text-rose">assignment_ind</i>
+			                                        </span>
+													<div class="btn-group bootstrap-select show-tick dropup open">
+														<select data-style="select-with-transition" title="Tipo de Usuario" data-size="7" class="selectpicker" tabindex="-98" name="tipo" v-model="form.tipo">
+															<option disabled="disabled"> Seleccione</option>
+															<option value="Administrador">Administrador </option>
+															<option value="Vendedor">Vendedor</option>
+															<option value="Delivery">Delivery</option>
+															<option value="Cliente">Cliente</option>
+														</select>
 													</div>
-        		                            	</div>
-        		                            </div>
-        		                            <div class="media-footer">
-        		                            	<button class="btn btn-default btn-round" type="botton" data-dismiss="modal">
-													<i class="material-icons">close</i>
-													CANCELAR
-												</button>
-												<button class="btn btn-primary btn-round" type="submit" v-show="editmode">
-													<i class="material-icons">edit</i>
-													ACTUALIZAR
-												</button>
-												<button v-show="!editmode" class="btn btn-rose btn-round" type="submit">
-													<i class="material-icons">person_pin</i>
-													GUARDAR
-												</button>
-				                            </div>
-        	                        	</div>
+												</div>
+    		                            	</div>
+    		                            </div>
+    		                            <div class="media-footer">
+    		                            	<button class="btn btn-default btn-round" type="botton" data-dismiss="modal">
+												<i class="material-icons">close</i>
+												CANCELAR
+											</button>
+											<button class="btn btn-primary btn-round" type="submit" v-show="editmode">
+												<i class="material-icons">edit</i>
+												ACTUALIZAR
+											</button>
+											<button v-show="!editmode" class="btn btn-rose btn-round" type="submit">
+												<i class="material-icons">person_pin</i>
+												GUARDAR
+											</button>
+			                            </div>
         	                    	</div>
         	                    	</form>
         	                    </div>

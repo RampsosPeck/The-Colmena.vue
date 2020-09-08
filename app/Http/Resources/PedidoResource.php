@@ -28,6 +28,7 @@ class PedidoResource extends JsonResource
             'delivery' => $this->delivery,
             'estado' => $this->estado,
             'especificacion' => $this->especificacion,
+            'nomdelivery' => $this->nomdelivery,
             'user' => new UserResource($this->user),
             'carritodetalle' => CarritoResource::collection($this->carrito_detalles),
         ];
