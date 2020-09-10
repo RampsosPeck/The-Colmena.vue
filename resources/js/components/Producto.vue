@@ -345,7 +345,8 @@
 		                        </div>
 		                    </div>
 	                        <div class="col-md-4 text-center">
-								<h4><b>Imagen de la categoría</b></h4>
+								<h4 v-show="!editmode"><b>Imagen del producto</b></h4>
+								<h4 v-show="editmode"><b>Nueva imagen del producto</b></h4>
 								<div class="fileinput fileinput-new text-center" data-provides="fileinput" :class="{ 'has-error is-focused': form.errors.has('foto') }" style="margin-bottom: 0px;">
 									<div class="fileinput-new thumbnail img-rounded img-raised " >
 										<img src="/img/categoria/catedefault.jpg" alt="Foto Usuario" style="width: 20rem;" v-show="!editmode">
@@ -504,6 +505,7 @@
                 this.form.reset();
                 $('#proModal').modal('show');
                 this.form.fill(producto);
+                this.form.categoria = producto.categoria.id
                 if ($(producto.prodetalle).length){
                 	this.form.entrada = producto.prodetalle.entrada;
 	                this.form.sopa    = producto.prodetalle.sopa;

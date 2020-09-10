@@ -176,7 +176,7 @@
                                                     Bs. <strong>{{ comida.precio }} </strong>
                                                 </label>
                                                     <span v-for="foto in comida.fotos" :key="foto.id" v-show="comida.fotos.length>0">
-                                                        <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;">
+                                                        <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;" v-if="foto.favorito">
                                                     </span>
                                                     <span v-show="!comida.fotos.length>0">
                                                         <img src="/img/producto/panal1.png" class="imgcard"  alt="Producto foto" style="height: 100%;">
@@ -228,7 +228,7 @@
                                             <a href="#pablo">
                                             <label class="cardprecio label label-rose" > Bs. <strong>{{ tienda.precio }}</strong> </label>
                                             <span v-for="foto in tienda.fotos" :key="foto.id" v-show="tienda.fotos.length>0">
-                                                <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;">
+                                                <img :src="getFoto(foto.imagen)" class="imgcard"  alt="Producto foto" style="height: 100%;" v-if="foto.favorito">
                                             </span>
                                             <span v-show="!tienda.fotos.length>0">
                                                 <img src="/img/producto/panal1.png" class="imgcard"  alt="Producto foto" style="height: 100%;">

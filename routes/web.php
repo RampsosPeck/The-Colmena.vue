@@ -33,4 +33,7 @@ Route::post('/infoperson','API\CarritoController@infoperson')->name('shopping_ca
 
 Route::resource('/producto_detalles',"API\CarritoDetalleController", ["only"=>["store","destroy"]]);
 
+Route::get('profotodel/{id}',"API\ProductoController@fotodel");
+Route::get('profotofavo/{id}',"API\ProductoController@fotofavo");
+
 Route::get('{path}',"HomeController@index")->where('path','[\/\w\.-]*');

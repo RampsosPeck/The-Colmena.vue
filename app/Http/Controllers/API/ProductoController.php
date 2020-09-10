@@ -15,7 +15,7 @@ class ProductoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['only' => ['store','show','update','destroy','actialmu']]);
+        $this->middleware('auth:api', ['only' => ['store','show','update','destroy','actialmu' ]]);
     }
     /**
      * Display a listing of the resource.
@@ -176,11 +176,11 @@ class ProductoController extends Controller
             'descripcion' => ['required', 'string', 'max:255'],
             'precio' => 'required',
             'stock' => 'required|min:1',
-            'categoria' => 'required',
+            'categoria' => 'required'
         ]);
 
-        if($request->foto){
-            $fotopro = ProductoFoto::where('producto_id',$producto->id)->first();
+        /*if($request->foto){
+            $foto = ProductoFoto::where('producto_id',$producto->id)->first();
             if($fotopro){
                 $fotoActual = $fotopro->imagen;
                 if($request->foto != $fotoActual)
@@ -202,6 +202,15 @@ class ProductoController extends Controller
 
                 }
             }
+        }*/
+        if($request->foto){
+            $fotopro = new ProductoFoto;
+                $name = time().'.'.explode('/',explode(':',substr($request->foto, 0, strpos($request->foto, ';')))[1])[1];
+                \Image::make($request->foto)->save(public_path('img/producto/').$name);
+                //$request->merge(['foto' => $name]);
+            $fotopro->producto_id = $producto->id;
+            $fotopro->imagen = $name;
+            $fotopro->save();
         }
          /*if($request['descuento'] && $request['actides'])
          {
@@ -271,4 +280,32 @@ class ProductoController extends Controller
 
         return response()->json(['message' => 'El almuerzo fue activado'], 200);
     }
+
+    public function fotodel($id)
+    {
+        $foto = ProductoFoto::where('id',$id)->first();
+        $fotoActual = $foto->imagen;
+        //Aqui encuentro la imagen en esa carpeta para borrarla
+        $proPhoto = public_path('img/producto/').$fotoActual;
+        if( file_exists($proPhoto) )
+        {
+            @unlink($proPhoto);
+        }
+        ProductoFoto::where('id',$id)->delete();
+
+        return response()->json(['message' => 'La imagen fue eliminada del producto'], 200);
+    }
+    public function fotofavo($id)
+    {
+        $foto = ProductoFoto::where('id',$id)->first();
+
+        ProductoFoto::where('id',$id)->update([
+            'favorito'=>1
+        ]);
+        ProductoFoto::where('id','!=',$id)->where('producto_id',$foto->producto_id)->update([
+            'favorito'=>0
+        ]);
+        return response()->json(['message' => 'La imagen ahora es favorito'], 200);
+    }
+
 }

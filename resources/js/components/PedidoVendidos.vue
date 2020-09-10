@@ -79,6 +79,10 @@
                                         </ul>
                                         <hr class="hrcardpe" />
                                         <span class="title">Fecha Pedido:</span> <small> {{ pedido.dates.fecha_orden }} </small>
+                                        <span v-show="pedido.nomdelivery">
+                                        	<hr class="hrcardpe" />
+                                        	<span class="title">Delivery:</span> <small> {{ pedido.nomdelivery }} </small>
+                                        </span>
                                         <hr class="hrcardpe" />
                                         <span class="title">Precio total:</span> <span class="btn btn-round btn-rose btn-xs"><b>  {{convertMoney(pedido.total_bs,pedido.delivery) }} </b>Bs. </span>
                                     </div>

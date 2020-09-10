@@ -145,6 +145,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -247,6 +252,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     goBack: function goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
+    },
+    delFoto: function delFoto(id) {
+      swal.fire({
+        title: '¿Estás seguro?',
+        text: "¿Quieres eliminar esta imagen?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Eliminar!'
+      }).then(function (result) {
+        if (result.value) {
+          axios.get('/profotodel/' + id).then(function () {
+            //router.push({ path: `/viewpro/${this.$route.params.slug}` })
+            swal.fire('Eliminado!', 'La imagen del producto fue eliminada.', 'success');
+            Fire.$emit('AfterCreate');
+          })["catch"](function () {
+            swal.fire('Ooops...!', 'Revisa algo salió mal.', 'error');
+          });
+        }
+      });
+    },
+    favoriFoto: function favoriFoto(id) {
+      swal.fire({
+        title: '¿Estás seguro?',
+        text: "¿Esta imagen es favorita?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Favorito!'
+      }).then(function (result) {
+        if (result.value) {
+          axios.get('/profotofavo/' + id).then(function () {
+            //router.push({ path: `/viewpro/${this.$route.params.slug}` })
+            swal.fire('Excelente!', 'La imagen del producto es favorita.', 'success');
+            Fire.$emit('AfterCreate');
+          })["catch"](function () {
+            swal.fire('Ooops...!', 'Revisa algo salió mal.', 'error');
+          });
+        }
+      });
     }
   },
   created: function created() {
@@ -331,7 +378,46 @@ var render = function() {
                               return _vm.mosFoto(foto.id)
                             }
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _vm.fotos.length >= 2 && foto.favorito != true
+                          ? _c(
+                              "i",
+                              {
+                                staticClass: "material-icons text-danger",
+                                staticStyle: {
+                                  position: "absolute",
+                                  "margin-left": "-25px"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.delFoto(foto.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("backspace")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !foto.favorito
+                          ? _c(
+                              "i",
+                              {
+                                staticClass: "material-icons text-success",
+                                staticStyle: {
+                                  position: "absolute",
+                                  "margin-rigth": "20px",
+                                  "margin-top": "-20px"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.favoriFoto(foto.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("favorite")]
+                            )
+                          : _vm._e()
                       ]
                     )
                   ])

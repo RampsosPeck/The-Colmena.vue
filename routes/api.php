@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 	Route::get('actialmuerzo/{id}','API\ProductoController@actialmu');
 
 	Route::get('deliverys','API\PedidoController@delivery');
+
 });
 
 // Routes for guests only

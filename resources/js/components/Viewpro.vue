@@ -11,6 +11,11 @@
 						<li v-for="(foto, index) in fotos" :key="foto.id" >
 							<a role="tab" data-toggle="tab" aria-expanded="false" style="border-color:none;">
 								<img :src="getFotopro(foto.imagen)"  alt="Producto foto" style="max-width: 70px;" @click.prevent="mosFoto(foto.id)" >
+
+								<i class="material-icons text-danger" style="position: absolute; margin-left: -25px;" @click="delFoto(foto.id)" v-if="fotos.length >=2 && foto.favorito!=true" >backspace</i>
+
+								<i class="material-icons text-success" style="position: absolute; margin-rigth: 20px; margin-top: -20px;" @click="favoriFoto(foto.id)" v-if="!foto.favorito">favorite</i>
+
 							</a>
 						</li>
                     </ul>
@@ -180,7 +185,7 @@
 					url: '/producto_detalles',
 					data: {
 						producto_id: this.producto.id,
-						cantidad: this.cantidad,
+						cantidad: this.cantidad
 					},
 					headers: {
 						'Accept': 'application/json',
@@ -205,6 +210,70 @@
         	},
         	goBack() {
 		      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+		    },
+		    delFoto(id)
+		    {
+		    	swal.fire({
+				  title: '¿Estás seguro?',
+				  text: "¿Quieres eliminar esta imagen?",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: 'Si, Eliminar!'
+				}).then((result) => {
+				   if (result.value)
+				   {
+				      	axios.get('/profotodel/'+id)
+				      	.then(()=>{
+				      		//router.push({ path: `/viewpro/${this.$route.params.slug}` })
+                            swal.fire(
+                                'Eliminado!',
+                                'La imagen del producto fue eliminada.',
+                                'success'
+                            )
+                            Fire.$emit('AfterCreate');
+                        }).catch(()=>{
+                            swal.fire(
+                                'Ooops...!',
+                                'Revisa algo salió mal.',
+                                'error'
+                            )
+                      	})
+				   	}
+				})
+		    },
+		    favoriFoto(id)
+		    {
+		    	swal.fire({
+				  title: '¿Estás seguro?',
+				  text: "¿Esta imagen es favorita?",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: 'Si, Favorito!'
+				}).then((result) => {
+				   if (result.value)
+				   {
+				      	axios.get('/profotofavo/'+id)
+				      	.then(()=>{
+				      		//router.push({ path: `/viewpro/${this.$route.params.slug}` })
+                            swal.fire(
+                                'Excelente!',
+                                'La imagen del producto es favorita.',
+                                'success'
+                            )
+                            Fire.$emit('AfterCreate');
+                        }).catch(()=>{
+                            swal.fire(
+                                'Ooops...!',
+                                'Revisa algo salió mal.',
+                                'error'
+                            )
+                      	})
+				   	}
+				})
 		    }
 		},
      	created() {

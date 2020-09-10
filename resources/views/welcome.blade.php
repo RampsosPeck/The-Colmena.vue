@@ -293,9 +293,9 @@
             </div>
             <div class="col-xl-5 col-lg-6">
               <div class="box-custom-1 text-white">
-                <h3 class="text-white">Sobre nosotros</h3>
-                <h2 class="text-white">La comida más sabrosa.</h2>
-                <p>La colmena le ofrece una variedad de productos de alta calidad para su paladar, realice su pedido en linea.</p>
+                <h3 class="text-white"><b>Sobre nosotros</b></h3>
+                <h2 style="color:#e91e63;"><b>La comida más sabrosa.</b></h2>
+                <p class="text-white"><b> La colmena le ofrece una variedad de productos de alta calidad para su paladar, realice su pedido en linea.</b> </p>
                 <ul class="list-marked">
                   <li class="text-white">Los decorados personalizados para cada torta.</li>
                   <li class="text-white">Los ingredientes más frescos para cada plato.</li>
