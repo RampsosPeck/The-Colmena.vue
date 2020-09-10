@@ -3,11 +3,12 @@
 namespace App;
 
 use App\Models\Carrito;
+use App\Models\Message;
+use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 
 class User extends Authenticatable
 {
@@ -78,4 +79,10 @@ class User extends Authenticatable
             return $carrito;
         }
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
 }

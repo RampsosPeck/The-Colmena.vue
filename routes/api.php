@@ -50,6 +50,9 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 	Route::get('deliverys','API\PedidoController@delivery');
 
+	Route::get('messages', 'API\ChatsController@fetchMessages');
+	Route::post('messages', 'API\ChatsController@sendMessage');
+	Route::get('messageuser', 'API\ChatsController@userMessage');
 });
 
 // Routes for guests only

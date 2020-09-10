@@ -63,7 +63,8 @@ Vue.component(AlertSuccess.name, AlertSuccess)
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
-
+import VueChatScroll from 'vue-chat-scroll'
+Vue.use(VueChatScroll)
 // configuracion de vue progress bar
 import VueProgressBar from 'vue-progressbar'
 Vue.use(VueProgressBar, {
@@ -90,6 +91,7 @@ let routes = [
     { path: '/rechazados', component: require('./components/PedidoRechazado.vue').default },
     { path: '/enviados', component: require('./components/PedidoEnviados.vue').default },
     { path: '/vendidos', component: require('./components/PedidoVendidos.vue').default },
+    { path: '/chats', component: require('./components/Chats.vue').default },
     //{ path: '*', component: require('./components/NotFound.vue').default }
   ]
 
