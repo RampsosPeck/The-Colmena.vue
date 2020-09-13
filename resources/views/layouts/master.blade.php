@@ -21,9 +21,9 @@
 
     <!-- CSS Files
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="assets/css/material-kit.css?v=1.2.1" rel="stylesheet"/>
+    <link href="assets/css/material-kit.css?v=1.2.1" rel="stylesheet"/>-->
 
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyALsfWww_p2mj2KjasPSKbPzCR3pXsbvdc"></script>-->
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyALsfWww_p2mj2KjasPSKbPzCR3pXsbvdc"></script>
 
     <link href="{{ asset('css/frontend.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">

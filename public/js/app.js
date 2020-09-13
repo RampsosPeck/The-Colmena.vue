@@ -3243,12 +3243,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3264,6 +3258,10 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.fetchMessages();
+    Fire.$on('AfterCreate', function () {
+      _this.fetchMessages();
+    }); //this.fetchMessages();
+
     Echo.join('chat').here(function (user) {
       //console.log('Aqui');
       //console.log(user);
@@ -3295,6 +3293,10 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    getFoto: function getFoto(ufoto) {
+      var foto = "img/profile/" + ufoto;
+      return foto;
+    },
     fetchMessages: function fetchMessages() {
       var _this2 = this;
 
@@ -3315,6 +3317,7 @@ __webpack_require__.r(__webpack_exports__);
         message: this.newMessage
       });
       this.newMessage = '';
+      Fire.$emit('AfterCreate');
     },
     sendTypingEvent: function sendTypingEvent() {
       Echo.join('chat').whisper('typing', this.user.fullname);
@@ -77796,16 +77799,35 @@ var render = function() {
                           { name: "chat-scroll", rawName: "v-chat-scroll" }
                         ],
                         staticClass: "list-unstyled",
-                        staticStyle: { height: "900px", "overflow-y": "scroll" }
+                        staticStyle: { height: "400px", "overflow-y": "scroll" }
                       },
                       _vm._l(_vm.messages, function(message, index) {
                         return _c("li", { key: index }, [
-                          _vm._m(0, true),
+                          _c(
+                            "a",
+                            { staticClass: "pull-left", attrs: { href: "" } },
+                            [
+                              _c("div", { staticClass: "avatar" }, [
+                                _c("img", {
+                                  staticClass: "media-object",
+                                  attrs: {
+                                    alt: "64x64",
+                                    src: _vm.getFoto(message.user.foto)
+                                  }
+                                })
+                              ])
+                            ]
+                          ),
                           _vm._v(" "),
-                          _c("div", { staticClass: "media-body" }, [
+                          _c("div", {}, [
                             _c("h4", { staticClass: "media-heading" }, [
                               _vm._v(_vm._s(message.user.fullname) + " "),
-                              _c("small", [_vm._v("· Yesterday")])
+                              _c("small", [
+                                _vm._v(
+                                  "· " +
+                                    _vm._s(_vm._f("myDate")(message.created_at))
+                                )
+                              ])
                             ]),
                             _vm._v(" "),
                             _c("p", [_vm._v(_vm._s(message.message))])
@@ -77817,7 +77839,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "media media-post" }, [
-                    _vm._m(1),
+                    _vm._m(0),
                     _vm._v(" "),
                     _c("hr", { staticClass: "hrcardpe" }),
                     _vm._v(" "),
@@ -77872,10 +77894,11 @@ var render = function() {
                         _vm._v(" "),
                         _vm.activeUser
                           ? _c("span", { staticClass: "text-muted" }, [
+                              _vm._m(1),
                               _vm._v(
-                                " " +
+                                "\n\t\t                            " +
                                   _vm._s(_vm.activeUser) +
-                                  " está escribiendo..."
+                                  " está escribiendo...\n                                "
                               )
                             ])
                           : _vm._e()
@@ -77897,21 +77920,23 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "ul",
+                    { staticClass: "list-unstyled" },
                     _vm._l(_vm.users, function(user, index) {
                       return _c("li", { key: index }, [
                         _c("div", { staticClass: "author" }, [
-                          _c("a", { attrs: { href: "#pablo" } }, [
+                          _vm._m(2, true),
+                          _vm._v(" "),
+                          _c("a", { attrs: { href: "#" } }, [
                             _c("img", {
                               staticClass: "avatar img-raised",
-                              attrs: {
-                                src: "assets/img/faces/marc.jpg",
-                                alt: "..."
-                              }
+                              attrs: { src: _vm.getFoto(user.foto), alt: "..." }
                             }),
                             _vm._v(" "),
                             _c("span", [_vm._v(_vm._s(user.fullname))])
                           ])
-                        ])
+                        ]),
+                        _vm._v(" "),
+                        _c("hr")
                       ])
                     }),
                     0
@@ -77930,34 +77955,56 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "pull-left author", attrs: { href: "#pablo" } },
-      [
-        _c("div", { staticClass: "avatar" }, [
+    return _c("a", { staticClass: "pull-left author", attrs: { href: "#" } }, [
+      _c(
+        "div",
+        {
+          staticClass: "avatar",
+          staticStyle: {
+            "border-radius": "inherit !important",
+            "box-shadow": "inherit !important"
+          }
+        },
+        [
           _c("img", {
             staticClass: "media-object",
-            attrs: { alt: "64x64", src: "assets/img/faces/marc.jpg" }
+            attrs: { alt: "64x64", src: "/img/chat/email.svg" }
           })
-        ])
-      ]
-    )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { staticClass: "pull-left author", attrs: { href: "#" } }, [
+      _c(
+        "div",
+        {
+          staticClass: "avatar",
+          staticStyle: {
+            "border-radius": "inherit !important",
+            "box-shadow": "inherit !important"
+          }
+        },
+        [
+          _c("img", {
+            staticClass: "media-object",
+            attrs: { alt: "64x64", src: "/img/chat/messenger1.svg" }
+          })
+        ]
+      )
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "a",
-      { staticClass: "pull-left author", attrs: { href: "#pablo" } },
-      [
-        _c("div", { staticClass: "avatar" }, [
-          _c("img", {
-            staticClass: "media-object",
-            attrs: { alt: "64x64", src: "assets/img/faces/kendall.jpg" }
-          })
-        ])
-      ]
+      "span",
+      { staticStyle: { color: "green", "font-size": "50px" } },
+      [_c("b", [_vm._v(".")])]
     )
   }
 ]
@@ -106329,8 +106376,8 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   wsHost: window.location.hostname,
   wsPort: 6001,
   disableStats: true,
-  forceTLS: false,
-  enabledTransports: ['ws', 'wss']
+  forceTLS: false //enabledTransports: ['ws', 'wss']
+
 });
 window.Echo.channel('DemoChannel').listen('WebsocketDemoEvent', function (e) {
   console.log(e);

@@ -7,40 +7,25 @@
                 	<div class="card">
 	                <div class="card-body">
 	                	<div class="media">
-	                		<ul class="list-unstyled" style="height:900px; overflow-y:scroll;" v-chat-scroll>
-			                    <li v-for="(message, index) in messages" :key="index" >
-			                    <a class="pull-left author" href="#pablo">
-		                            <div class="avatar">
-		                                <img class="media-object" alt="64x64" src="assets/img/faces/marc.jpg">
+	                		<ul class="list-unstyled" style="height:400px; overflow-y:scroll;" v-chat-scroll>
+			                    <li v-for="(message, index) in messages" :key="index">
+			                    <a class="pull-left" href="">
+		                            <div class="avatar" >
+		                                <img class="media-object" alt="64x64" :src="getFoto(message.user.foto)">
 		                            </div>
 			                    </a>
-		                        <div class="media-body">
-		                         	<h4 class="media-heading">{{ message.user.fullname }} <small>&middot; Yesterday</small></h4>
+		                        <div class="">
+		                         	<h4 class="media-heading">{{ message.user.fullname }} <small>&middot; {{ message.created_at | myDate }}</small></h4>
 
 		                         	<p>{{message.message}}</p>
-
-		                         	<!--<div class="media">
-		                              	<a class="pull-left" href="#pablo">
-		                                    <div class="avatar">
-		                                        <img class="media-object" alt="64x64" src="assets/img/faces/avatar.jpg">
-		                                    </div>
-		                              	</a>
-		                              	<div class="media-body">
-		                                    <h4 class="media-heading">Tina Andrew <small>&middot; 2 Days Ago</small></h4>
-
-		                                    <p>Hello guys, nice to have you on the platform! There will be a lot of great stuff coming soon. We will keep you posted for the latest news.</p>
-		                                    <p> Don't forget, You're Awesome!</p>
-
-		                              	</div>
-		                          	</div>-->
 		                      	</div>
 		                      	</li>
 		                    </ul>
 	                    </div>
 	                    <div class="media media-post">
-                            <a class="pull-left author" href="#pablo">
-                                <div class="avatar">
-                                    <img class="media-object" alt="64x64" src="assets/img/faces/kendall.jpg">
+                            <a class="pull-left author" href="#">
+                                <div class="avatar" style="border-radius:inherit !important; box-shadow:inherit !important;">
+                                    <img class="media-object" alt="64x64" src="/img/chat/email.svg">
                                 </div>
                             </a>
                             <hr class="hrcardpe" />
@@ -50,7 +35,14 @@
                                 @keyup.enter="sendMessage"
                                 v-model="newMessage"
                                 type="text" name="message" class="form-control" placeholder="Escriba su mensaje...." >
-                                <span class="text-muted" v-if="activeUser" > {{ activeUser }} está escribiendo...</span>
+                                <span class="text-muted" v-if="activeUser" >
+                                	<a class="pull-left author" href="#">
+		                                <div class="avatar" style="border-radius:inherit !important; box-shadow:inherit !important;">
+		                                    <img class="media-object" alt="64x64" src="/img/chat/messenger1.svg">
+		                                </div>
+		                            </a>
+		                            {{ activeUser }} está escribiendo...
+                                </span>
                             </div>
                         </div>
 	                </div>
@@ -61,14 +53,16 @@
                 		<div class="card-body">
 	                		<div class="title text-center">Usuarios activos</div>
 	                		<hr>
-	                		<ul>
+	                		<ul class="list-unstyled">
 	                			<li v-for="(user, index) in users" :key="index">
 			                        <div class="author">
-			                            <a href="#pablo">
-			                               <img src="assets/img/faces/marc.jpg" alt="..." class="avatar img-raised">
+			                        	<span style="color:green; font-size: 50px;"><b>.</b></span>
+			                            <a href="#">
+			                               <img :src="getFoto(user.foto)" alt="..." class="avatar img-raised">
 			                               <span>{{ user.fullname }}</span>
 			                            </a>
 			                        </div>
+			                        <hr/>
 			                    </li>
 			                </ul>
 	                    </div>
@@ -94,6 +88,11 @@
 		},
 		created(){
 			this.fetchMessages();
+        	Fire.$on('AfterCreate',() => {
+                this.fetchMessages();
+            });
+
+			//this.fetchMessages();
 
 			Echo.join('chat')
 				.here(user =>{
@@ -127,6 +126,10 @@
 				})
 		},
 		methods: {
+			getFoto(ufoto){
+        		let foto = "img/profile/"+ufoto;
+                return foto;
+        	},
 			fetchMessages(){
 
 				axios.get('api/messageuser').then(response => {
@@ -146,6 +149,7 @@
 				});
 				axios.post('api/messages', {message: this.newMessage});
 				this.newMessage = '';
+				Fire.$emit('AfterCreate');
 			},
 			sendTypingEvent()
 			{
