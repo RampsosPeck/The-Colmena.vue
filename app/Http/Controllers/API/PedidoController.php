@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\NotismsCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PedidoResource;
 use App\Http\Resources\ProductoResource;
 use App\Http\Resources\UserResource;
 use App\Models\Carrito;
+use App\Models\Mensaje;
 use App\Models\Producto;
 use App\User;
 use Illuminate\Http\Request;
@@ -84,10 +86,19 @@ class PedidoController extends Controller
      */
     public function update($id)
     {
-        Carrito::where('id', $id)
-              ->update(['estado' => 'procesando']);
+        $carrito = Carrito::where('id', $id)->first();
+        //return $carrito;
+        Carrito::where('id', $id)->update(['estado' => 'procesando']);
 
-        return response()->json(['message' => 'Carrito aprobado'], 200);
+        $mensaje = Mensaje::create([
+            'sender_id' => auth()->id(),
+            'recipient_id' => $carrito->user_id,
+            'body' => 'Tú pedido con la orden #'.$carrito->id.'-'.$carrito->user_id.' fué APROBADO; Ahora se está proccesando, te volveremos a informar cuando se envíe el pedido a tú destino. Gracias...'
+        ]);
+
+        event(new NotismsCreated($mensaje));
+
+        return response()->json(['message' => 'Tú pedido fue aprobado!'], 200);
     }
 
     /**
@@ -98,37 +109,75 @@ class PedidoController extends Controller
      */
     public function destroy($id)
     {
+        $carrito = Carrito::where('id', $id)->first();
         Carrito::where('id', $id)
               ->update(['estado' => 'rechazado']);
 
-        return response()->json(['message' => 'Carrito rechazado'], 200);
+        $mensaje = Mensaje::create([
+            'sender_id' => auth()->id(),
+            'recipient_id' => $carrito->user_id,
+            'body' => 'Tú pedido con la orden #'.$carrito->id.'-'.$carrito->user_id.' fué RECHAZADO; Vuelva a intentarlo por favor. Gracias...'
+        ]);
+        event(new NotismsCreated($mensaje));
+
+        return response()->json(['message' => 'Tú pedido fue rechazado!'], 200);
     }
 
     public function processando(Request $request, $id)
     {
         //return $request->nomdelivery;
+        $carrito = Carrito::where('id', $id)->first();
         Carrito::where('id', $id)
               ->update([
                 'estado' => 'enviado',
                 'nomdelivery' => $request->nomdelivery
             ]);
 
-        return response()->json(['message' => 'Carrito enviado'], 200);
+        if($request->nomdelivery){
+            $delivery = $request->nomdelivery;
+        }else{
+            $delivery = 'movil';
+        }
+
+        $mensaje = Mensaje::create([
+            'sender_id' => auth()->id(),
+            'recipient_id' => $carrito->user_id,
+            'body' => 'Tú pedido con la orden #'.$carrito->id.'-'.$carrito->user_id.' fué ENVIADO, al delivery '.$delivery.'. En unos momentos estará en su domicilio. Gracias...'
+        ]);
+        event(new NotismsCreated($mensaje));
+
+        return response()->json(['message' => 'Pedido enviado...!'], 200);
     }
 
-    public function enviado($id)
+    public function entregado($id)
     {
+        $carrito = Carrito::where('id', $id)->first();
         Carrito::where('id', $id)
               ->update(['estado' => 'entregado']);
 
-        return response()->json(['message' => 'Carrito entregado'], 200);
+        $mensaje = Mensaje::create([
+            'sender_id' => auth()->id(),
+            'recipient_id' => $carrito->user_id,
+            'body' => 'Tú pedido con la orden #'.$carrito->id.'-'.$carrito->user_id.' fué ENTREGADO con exito!, Gracias por su compra... Vuelva pronto :)'
+        ]);
+        event(new NotismsCreated($mensaje));
+
+        return response()->json(['message' => 'Pedido entregado!'], 200);
     }
 
     public function rechazo($id)
     {
+        $carrito = Carrito::where('id', $id)->first();
         Carrito::where('id', $id)
               ->update(['estado' => 'procesando']);
 
-        return response()->json(['message' => 'Carrito aceptado'], 200);
+        $mensaje = Mensaje::create([
+            'sender_id' => auth()->id(),
+            'recipient_id' => $carrito->user_id,
+            'body' => 'Tú pedido con la orden #'.$carrito->id.'-'.$carrito->user_id.' fué APROBADO con exito!, Ahora se está proccesando, te volveremos a informar cuando se envíe el pedido a tú destino. Gracias...'
+        ]);
+        event(new NotismsCreated($mensaje));
+
+        return response()->json(['message' => 'Pedido APROBADO.'], 200);
     }
 }

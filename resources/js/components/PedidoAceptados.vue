@@ -14,6 +14,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xs-2 follow">
+                        <span class="btn btn-fab btn-rose" rel="tooltip" title="Escribenos" data-toggle="modal" data-target="#smsclientModal">
+				            <i class="material-icons">speaker_notes</i>
+				        </span>
+                    </div>
                 </div>
 
                 <div class="tab-content">
@@ -45,6 +50,10 @@
                                         </p>
                                         <hr class="hrcardpe" />
                                         <span class="title">Celular:</span> <small> {{ pedido.user.celular }} </small>
+                                        <span class="title">Orden #:</span>
+                                        <span class="btn-xs" style="background-color:#e91e63; color:#fff;">
+				                            <b>{{ pedido.id}}-{{pedido.user.id }}</b>
+                                        </span>
                                         <hr class="hrcardpe" />
                                         <span class="title">Dirección:</span> <small> {{ pedido.user.direccion }} </small>
                                         <hr class="hrcardpe" />
@@ -82,38 +91,20 @@
                                         <hr class="hrcardpe" />
                                         <span class="title">Precio total:</span> <span class="btn btn-round btn-rose btn-xs"><b>  {{convertMoney(pedido.total_bs,pedido.delivery) }} </b>Bs. </span>
                                         <hr class="hrcardpe" />
-                                        <small class="title">Delivery:</small>
-                                        <div class="btn-group bootstrap-select">
+
+                                         <span class="form-group is-empty" :class="{ 'has-error is-focused': form.errors.has('delivery') }">
+                                        	<v-select class="style-chooser" :options="deliverys"  label="fullname" :reduce="fullname => fullname.fullname" index="fullname" v-model="delivery" placeholder="Seleccione un delivery"></v-select>
+                							<has-error :form="form" field="delivery"></has-error>
+                						</span>
+                                        <!--<div class="btn-group bootstrap-select">
 		                                    <select class="selectpicker" data-style="btn btn-rose btn-round" data-size="7" v-model="delivery">
 		                                        <option disabled selected>Seleccione Delivery</option>
 		                                        <option v-for="delivery in deliverys" v-bind:value="delivery.fullname">
 		                                        	<i class="material-icons">account_circle</i>
 		                                        {{ delivery.fullname }}</option>
 		                                    </select>
-			                                <!--<div class="col-lg-5 col-md-6 col-sm-3">
-			                                    <select class="selectpicker" data-style="select-with-transition" multiple title="Choose City" data-size="7">
-			                                        <option disabled> Choose city</option>
-			                                        <option value="2">Paris </option>
-			                                        <option value="3">Bucharest</option>
-			                                        <option value="4">Rome</option>
-			                                        <option value="5">New York</option>
-			                                        <option value="6">Miami </option>
-			                                        <option value="7">Piatra Neamt</option>
-			                                        <option value="8">Paris </option>
-			                                        <option value="9">Bucharest</option>
-			                                        <option value="10">Rome</option>
-			                                        <option value="11">New York</option>
-			                                        <option value="12">Miami </option>
-			                                        <option value="13">Piatra Neamt</option>
-			                                        <option value="14">Paris </option>
-			                                        <option value="15">Bucharest</option>
-			                                        <option value="16">Rome</option>
-			                                        <option value="17">New York</option>
-			                                        <option value="18">Miami </option>
-			                                        <option value="19">Piatra Neamt</option>
-			                                    </select>
-			                                </div>-->
-					            		</div>
+					            		</div>-->
+
                                         <hr class="hrcardpe" />
                                     </div>
                                     <div class="footer text-center" style="position:relative !important;">
@@ -306,6 +297,35 @@
 	  	</div>
 	</div>
 	<!-- end mapa modal -->
+	<!-- mensaje modal -->
+	<div class="modal fade" id="smsclientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  	<div class="modal-dialog modal-notice">
+		    <div class="modal-content">
+			    <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
+			        <h5 class="modal-title title text-center" id="myModalLabel">REALIZA TU CONSULTA</h5>
+			    </div>
+		        <div class="modal-body">
+		        	<hr class="hrcardpe" />
+		        	<div class="input-group">
+        				<span class="input-group-addon">
+        					<i class="material-icons text-rose">email</i>
+        				</span>
+    					<div class="form-group label-floating  is-empty" :class="{ 'has-error is-focused': form.errors.has('mensaje') }">
+    						<label class="control-label">Escriba aqui su mensaje.</label>
+    						<textarea rows="2" class="form-control" v-model="form.mensaje"></textarea>
+    						<span class="material-input"></span>
+    						<has-error :form="form" field="mensaje"></has-error>
+    					</div>
+    				</div>
+		        </div>
+		        <div class="modal-footer text-center">
+		            <button @click="sendMessage" type="button" class="btn btn-rose btn-round"> <b>Enviar</b> </button>
+		        </div>
+		    </div>
+	  	</div>
+	</div>
+	<!-- end mensaje modal -->
 	</div>
 </template>
 
@@ -337,7 +357,8 @@
                     refresco:'',
                     especificacion:'',
                     foto:'',
-                    categoria:''
+                    categoria:'',
+                    mensaje:''
                 })
             }
         },
@@ -404,13 +425,14 @@
 		    },
         	successPro(id){
 	        	swal.fire({
-				  title: '¿Estás seguro?',
+				  title: 'Estás enviando este pedido?',
 				  text: "No podrás revertir esto!",
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
 				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Si, Enviar!'
+				  confirmButtonText: 'Si, Enviar!',
+				  cancelButtonText: 'Cancelar!'
 				}).then((result) => {
 				   if (result.value)
 				   {
@@ -424,17 +446,17 @@
 						    nomdelivery: this.delivery
 						  }
 						})
-				        .then(()=>{
+				        .then((re)=>{
                             swal.fire(
-                                'Excelente!',
-                                'El pedido fue ENVIADO.',
+                                `<b>${re.data.message}</b>`,
+                                'El pedido fue ENVIADO al cliente.',
                                 'success'
                             )
                             Fire.$emit('AfterCreate');
                             this.$Progress.finish();
                         }).catch(()=>{
                             swal.fire(
-                                'Failed!',
+                                'Ooops...!',
                                 'Revisa algo salió mal.',
                                 'warning'
                             )
@@ -442,7 +464,29 @@
                       })
 				   }
 				})
-        	}
+        	},
+            sendMessage(){
+            	this.$Progress.start();
+        		this.form.post('api/sendsmsclient')
+        		.then((res)=>{
+        			Fire.$emit('AfterCreate');
+        			swal.fire(
+        				`<b>${res.data.message}</b>`,
+                        'El mensaje fue enviado correctamente.',
+                        'success'
+        			)
+        			this.form.reset();
+        			this.$Progress.finish();
+        		})
+        		.catch(()=>{
+        			swal.fire(
+        				'Oops..!',
+                        'Existen algunos errores.',
+                        'error'
+        			)
+        			this.$Progress.fail();
+        		})
+            }
         },
         created(){
         	this.loadPedidos();

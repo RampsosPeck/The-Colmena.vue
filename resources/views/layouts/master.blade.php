@@ -126,11 +126,6 @@
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu dropdown-with-icons">
-                                <li class="text-center">
-                                    <router-link to="/chats"  class="nav-link">
-                                        <i class="material-icons text-rose">contact_mail</i>Escríbenos
-                                    </router-link>
-                                </li>
                                 <li>
                                     <router-link to="/pedidos"  class="nav-link">
                                         <i class="material-icons text-info">markunread_mailbox</i> Recibidos
@@ -164,6 +159,11 @@
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu dropdown-with-icons">
+                                <li>
+                                    <router-link to="/chats"  class="nav-link">
+                                        <i class="material-icons">question_answer</i> Chat - General
+                                    </router-link>
+                                </li>
                                 <li>
                                     <router-link to="/profile"  class="nav-link">
                                         <i class="material-icons">contacts</i> Perfil

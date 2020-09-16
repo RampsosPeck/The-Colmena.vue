@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 	Route::get('aceptados','API\PedidoController@aceptado');
 	Route::put('enviados/{id}','API\PedidoController@processando');
 	Route::get('enviados','API\PedidoController@enviados');
-	Route::get('entregados/{id}','API\PedidoController@enviado');
+	Route::get('entregados/{id}','API\PedidoController@entregado');
 	Route::get('rechazados','API\PedidoController@rechazados');
 	Route::get('rechazados/{id}','API\PedidoController@rechazo');
 	Route::get('vendidos','API\PedidoController@vendidos');
@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 	//Route::get('sendusers', 'API\MensajeController@index');
 	Route::apiResources(['sendusers' => 'API\MensajeController']);
+	Route::post('sendsmsclient', 'API\MensajeController@sendSmsclient');
 
 	Route::apiResources(['notifications' => 'API\NotificationsController']);
 	Route::get('notifynole','API\NotificationsController@notinoleidas');

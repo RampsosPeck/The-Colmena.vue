@@ -2801,8 +2801,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         Fire.$emit('AfterCreate');
         swal.fire('Excelente.!', 'Pedido enviado con exito!', 'success');
 
-        _this5.$Progress.finish(); //this.$router.push('/dashboard')
+        _this5.$Progress.finish(); //this.$router.push('/login')
+        //setInterval('document.location.reload()',5000);
 
+
+        setTimeout(function () {
+          window.location.pathname = '/login';
+        }, 5000);
+        /*window.setTimeout(function(){
+         window.location.pathname = '/login';
+        }, 5000);*/
       })["catch"](function () {
         swal.fire('Oops.!', 'Ocurrio un error - actualize su pagina', 'error');
 
@@ -3167,6 +3175,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4464,6 +4486,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4494,7 +4536,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         refresco: '',
         especificacion: '',
         foto: '',
-        categoria: ''
+        categoria: '',
+        mensaje: ''
       })
     };
   },
@@ -4622,13 +4665,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this4 = this;
 
       swal.fire({
-        title: '¿Estás seguro?',
+        title: 'Estás enviando este pedido?',
         text: "No podrás revertir esto!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, Enviar!'
+        confirmButtonText: 'Si, Enviar!',
+        cancelButtonText: 'Cancelar!'
       }).then(function (result) {
         if (result.value) {
           _this4.$Progress.start(); //axios.get('api/enviados/'+id)
@@ -4641,26 +4685,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             data: {
               nomdelivery: _this4.delivery
             }
-          }).then(function () {
-            swal.fire('Excelente!', 'El pedido fue ENVIADO.', 'success');
+          }).then(function (re) {
+            swal.fire("<b>".concat(re.data.message, "</b>"), 'El pedido fue ENVIADO al cliente.', 'success');
             Fire.$emit('AfterCreate');
 
             _this4.$Progress.finish();
           })["catch"](function () {
-            swal.fire('Failed!', 'Revisa algo salió mal.', 'warning');
+            swal.fire('Ooops...!', 'Revisa algo salió mal.', 'warning');
 
             _this4.$Progress.fail();
           });
         }
       });
+    },
+    sendMessage: function sendMessage() {
+      var _this5 = this;
+
+      this.$Progress.start();
+      this.form.post('api/sendsmsclient').then(function (res) {
+        Fire.$emit('AfterCreate');
+        swal.fire("<b>".concat(res.data.message, "</b>"), 'El mensaje fue enviado correctamente.', 'success');
+
+        _this5.form.reset();
+
+        _this5.$Progress.finish();
+      })["catch"](function () {
+        swal.fire('Oops..!', 'Existen algunos errores.', 'error');
+
+        _this5.$Progress.fail();
+      });
     }
   },
   created: function created() {
-    var _this5 = this;
+    var _this6 = this;
 
     this.loadPedidos();
     Fire.$on('AfterCreate', function () {
-      _this5.loadPedidos();
+      _this6.loadPedidos();
     });
   }
 });
@@ -4684,6 +4745,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -5117,18 +5182,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       swal.fire({
         title: '¿Estás seguro?',
-        text: "No podrás revertir esto!",
+        text: "Ya entregaste el pedido?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, Entregado!'
+        confirmButtonText: 'Si, Entregado!',
+        cancelButtonText: 'Cancelar!'
       }).then(function (result) {
         if (result.value) {
           _this4.$Progress.start();
 
-          axios.get('api/entregados/' + id).then(function () {
-            swal.fire('Excelente!', 'El pedido fue ENTREGADO.', 'success');
+          axios.get('api/entregados/' + id).then(function (re) {
+            swal.fire("<b>".concat(re.data.message, "</b>"), 'El cliente recibio el pedido.', 'success');
             Fire.$emit('AfterCreate');
 
             _this4.$Progress.finish();
@@ -5170,6 +5236,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -5599,18 +5669,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       swal.fire({
         title: '¿Estás seguro?',
-        text: "No podrás revertir esto!",
+        text: "¿Quieres aprobar este pedido?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, Aceptar!'
+        confirmButtonText: 'Si, Aceptar!',
+        cancelButtonText: 'Cancelar!'
       }).then(function (result) {
         if (result.value) {
           _this4.$Progress.start();
 
-          axios.get('api/rechazados/' + id).then(function () {
-            swal.fire('Excelente!', 'El pedido fue ACEPTADO.', 'success');
+          axios.get('api/rechazados/' + id).then(function (re) {
+            swal.fire("<b>".concat(re.data.message, "</b>"), 'Se aprobó este pedido.', 'success');
             Fire.$emit('AfterCreate');
 
             _this4.$Progress.finish();
@@ -5652,6 +5723,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -6102,13 +6177,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         if (result.value) {
           _this4.$Progress.start();
 
-          axios["delete"]('api/pedidos/' + id).then(function () {
-            swal.fire('OK!', 'El pedido fue cancelado.', 'success');
+          axios["delete"]('api/pedidos/' + id).then(function (re) {
+            swal.fire("<b>".concat(re.data.message, "</b>"), 'Vuelve a intentarlo por favor.', 'info');
             Fire.$emit('AfterCreate');
 
             _this4.$Progress.finish();
           })["catch"](function () {
-            swal.fire('Failed!', 'Revisa algo salió mal.', 'warning');
+            swal.fire('Ooops...!', 'Revisa algo salió mal.', 'warning');
 
             _this4.$Progress.fail();
           });
@@ -6131,13 +6206,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         if (result.value) {
           _this5.$Progress.start();
 
-          axios.put('api/pedidos/' + id).then(function () {
-            swal.fire('Excelente!', 'El pedido fue APROBADO.', 'success');
+          axios.put('api/pedidos/' + id).then(function (re) {
+            swal.fire("<b>".concat(re.data.message, "</b>"), 'Ahora se esta processando.', 'success');
             Fire.$emit('AfterCreate');
 
             _this5.$Progress.finish();
           })["catch"](function () {
-            swal.fire('Failed!', 'Revisa algo salió mal.', 'warning');
+            swal.fire('Ooops...!', 'Revisa algo salió mal.', 'warning');
 
             _this5.$Progress.fail();
           });
@@ -6174,6 +6249,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -77602,7 +77681,7 @@ var staticRenderFns = [
             _c(
               "a",
               {
-                staticClass: "btn btn-danger btn-round",
+                staticClass: "btn btn-rose btn-round",
                 attrs: { href: "/login" }
               },
               [
@@ -78269,179 +78348,219 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "product-page" }, [
-    _c("div", { staticClass: "container" }, [
-      _c(
-        "div",
-        {
-          staticClass: "main main-raised main-product",
-          staticStyle: { margin: "-10vh 0px 0px" }
-        },
-        [
+  return _c("div", { staticClass: "main main-raised" }, [
+    _c("div", { staticClass: "profile-content" }, [
+      _c("div", { staticClass: "container" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "tab-content" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-8 col-sm-8" }, [
-              _c("div", { staticClass: "card" }, [
-                _c("div", { staticClass: "card-body" }, [
-                  _c("div", { staticClass: "media" }, [
-                    _c(
-                      "ul",
-                      {
-                        directives: [
-                          { name: "chat-scroll", rawName: "v-chat-scroll" }
-                        ],
-                        staticClass: "list-unstyled",
-                        staticStyle: { height: "400px", "overflow-y": "scroll" }
-                      },
-                      _vm._l(_vm.messages, function(message, index) {
-                        return _c("li", { key: index }, [
-                          _c(
-                            "a",
-                            { staticClass: "pull-left", attrs: { href: "" } },
-                            [
-                              _c("div", { staticClass: "avatar" }, [
-                                _c("img", {
-                                  staticClass: "media-object",
-                                  attrs: {
-                                    alt: "64x64",
-                                    src: _vm.getFoto(message.user.foto)
-                                  }
-                                })
-                              ])
-                            ]
-                          ),
+              _c(
+                "div",
+                {
+                  staticClass: "card shadow",
+                  staticStyle: { "background-color": "rgb(242, 242, 242)" }
+                },
+                [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "media" }, [
+                      _c(
+                        "ul",
+                        {
+                          directives: [
+                            { name: "chat-scroll", rawName: "v-chat-scroll" }
+                          ],
+                          staticClass: "list-unstyled",
+                          staticStyle: {
+                            height: "400px",
+                            "overflow-y": "scroll"
+                          }
+                        },
+                        _vm._l(_vm.messages, function(message, index) {
+                          return _c("li", { key: index }, [
+                            _c(
+                              "a",
+                              { staticClass: "pull-left", attrs: { href: "" } },
+                              [
+                                _c("div", { staticClass: "avatar" }, [
+                                  _c("img", {
+                                    staticClass: "media-object",
+                                    attrs: {
+                                      alt: "64x64",
+                                      src: _vm.getFoto(message.user.foto)
+                                    }
+                                  })
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", {}, [
+                              _c("h4", { staticClass: "media-heading" }, [
+                                _vm._v(_vm._s(message.user.fullname) + " "),
+                                _c("small", [
+                                  _vm._v(
+                                    "· " +
+                                      _vm._s(
+                                        _vm._f("myDate")(message.created_at)
+                                      )
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("p", [_vm._v(_vm._s(message.message))])
+                            ])
+                          ])
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "media media-post" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("hr", { staticClass: "hrcardpe" }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "media-body",
+                          staticStyle: { width: "1000px !important" }
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.newMessage,
+                                expression: "newMessage"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "message",
+                              placeholder: "Escriba su mensaje...."
+                            },
+                            domProps: { value: _vm.newMessage },
+                            on: {
+                              keydown: _vm.sendTypingEvent,
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.sendMessage($event)
+                              },
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.newMessage = $event.target.value
+                              }
+                            }
+                          }),
                           _vm._v(" "),
-                          _c("div", {}, [
-                            _c("h4", { staticClass: "media-heading" }, [
-                              _vm._v(_vm._s(message.user.fullname) + " "),
-                              _c("small", [
+                          _vm.activeUser
+                            ? _c("span", { staticClass: "text-muted" }, [
+                                _vm._m(2),
                                 _vm._v(
-                                  "· " +
-                                    _vm._s(_vm._f("myDate")(message.created_at))
+                                  "\n\t\t\t                            " +
+                                    _vm._s(_vm.activeUser) +
+                                    " está escribiendo...\n\t                                "
                                 )
                               ])
-                            ]),
+                            : _vm._e()
+                        ]
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-4 col-sm-4" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "card shadow",
+                  staticStyle: { "background-color": "rgb(242, 242, 242)" }
+                },
+                [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "title text-center" }, [
+                      _vm._v("Usuarios activos")
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c(
+                      "ul",
+                      { staticClass: "list-unstyled" },
+                      _vm._l(_vm.users, function(user, index) {
+                        return _c("li", { key: index }, [
+                          _c("div", { staticClass: "author" }, [
+                            _vm._m(3, true),
                             _vm._v(" "),
-                            _c("p", [_vm._v(_vm._s(message.message))])
-                          ])
+                            _c("a", { attrs: { href: "#" } }, [
+                              _c("img", {
+                                staticClass: "avatar img-raised",
+                                attrs: {
+                                  src: _vm.getFoto(user.foto),
+                                  alt: "..."
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", [_vm._v(_vm._s(user.fullname))])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("hr")
                         ])
                       }),
                       0
                     )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media media-post" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c("hr", { staticClass: "hrcardpe" }),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "media-body",
-                        staticStyle: { width: "1000px !important" }
-                      },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.newMessage,
-                              expression: "newMessage"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            name: "message",
-                            placeholder: "Escriba su mensaje...."
-                          },
-                          domProps: { value: _vm.newMessage },
-                          on: {
-                            keydown: _vm.sendTypingEvent,
-                            keyup: function($event) {
-                              if (
-                                !$event.type.indexOf("key") &&
-                                _vm._k(
-                                  $event.keyCode,
-                                  "enter",
-                                  13,
-                                  $event.key,
-                                  "Enter"
-                                )
-                              ) {
-                                return null
-                              }
-                              return _vm.sendMessage($event)
-                            },
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.newMessage = $event.target.value
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.activeUser
-                          ? _c("span", { staticClass: "text-muted" }, [
-                              _vm._m(1),
-                              _vm._v(
-                                "\n\t\t                            " +
-                                  _vm._s(_vm.activeUser) +
-                                  " está escribiendo...\n                                "
-                              )
-                            ])
-                          : _vm._e()
-                      ]
-                    )
                   ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4 col-sm-4" }, [
-              _c("div", { staticClass: "card" }, [
-                _c("div", { staticClass: "card-body" }, [
-                  _c("div", { staticClass: "title text-center" }, [
-                    _vm._v("Usuarios activos")
-                  ]),
-                  _vm._v(" "),
-                  _c("hr"),
-                  _vm._v(" "),
-                  _c(
-                    "ul",
-                    { staticClass: "list-unstyled" },
-                    _vm._l(_vm.users, function(user, index) {
-                      return _c("li", { key: index }, [
-                        _c("div", { staticClass: "author" }, [
-                          _vm._m(2, true),
-                          _vm._v(" "),
-                          _c("a", { attrs: { href: "#" } }, [
-                            _c("img", {
-                              staticClass: "avatar img-raised",
-                              attrs: { src: _vm.getFoto(user.foto), alt: "..." }
-                            }),
-                            _vm._v(" "),
-                            _c("span", [_vm._v(_vm._s(user.fullname))])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("hr")
-                      ])
-                    }),
-                    0
-                  )
-                ])
-              ])
+                ]
+              )
             ])
           ])
-        ]
-      )
+        ])
+      ])
     ])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xs-6 col-xs-offset-3" }, [
+        _c("div", { staticClass: "profile" }, [
+          _c("div", { staticClass: "avatar" }, [
+            _c("img", {
+              staticClass: "img-responsive",
+              attrs: { src: "/img/chat/email.svg", alt: "Circle Image" }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "name" }, [
+            _c("h3", { staticClass: "title" }, [_vm._v("CHAT - GENERAL")])
+          ])
+        ])
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -80245,6 +80364,30 @@ var render = function() {
                                     )
                                   ]),
                                   _vm._v(" "),
+                                  _c("span", { staticClass: "title" }, [
+                                    _vm._v("Orden #:")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass: "btn-xs",
+                                      staticStyle: {
+                                        "background-color": "#e91e63",
+                                        color: "#fff"
+                                      }
+                                    },
+                                    [
+                                      _c("b", [
+                                        _vm._v(
+                                          _vm._s(pedido.id) +
+                                            "-" +
+                                            _vm._s(pedido.user.id)
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
                                   _c("hr", { staticClass: "hrcardpe" }),
                                   _vm._v(" "),
                                   _c("span", { staticClass: "title" }, [
@@ -80513,98 +80656,45 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("hr", { staticClass: "hrcardpe" }),
                                   _vm._v(" "),
-                                  _c("small", { staticClass: "title" }, [
-                                    _vm._v("Delivery:")
-                                  ]),
-                                  _vm._v(" "),
                                   _c(
-                                    "div",
+                                    "span",
                                     {
-                                      staticClass: "btn-group bootstrap-select"
+                                      staticClass: "form-group is-empty",
+                                      class: {
+                                        "has-error is-focused": _vm.form.errors.has(
+                                          "delivery"
+                                        )
+                                      }
                                     },
                                     [
-                                      _c(
-                                        "select",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.delivery,
-                                              expression: "delivery"
-                                            }
-                                          ],
-                                          staticClass: "selectpicker",
-                                          attrs: {
-                                            "data-style":
-                                              "btn btn-rose btn-round",
-                                            "data-size": "7"
+                                      _c("v-select", {
+                                        staticClass: "style-chooser",
+                                        attrs: {
+                                          options: _vm.deliverys,
+                                          label: "fullname",
+                                          reduce: function(fullname) {
+                                            return fullname.fullname
                                           },
-                                          on: {
-                                            change: function($event) {
-                                              var $$selectedVal = Array.prototype.filter
-                                                .call(
-                                                  $event.target.options,
-                                                  function(o) {
-                                                    return o.selected
-                                                  }
-                                                )
-                                                .map(function(o) {
-                                                  var val =
-                                                    "_value" in o
-                                                      ? o._value
-                                                      : o.value
-                                                  return val
-                                                })
-                                              _vm.delivery = $event.target
-                                                .multiple
-                                                ? $$selectedVal
-                                                : $$selectedVal[0]
-                                            }
-                                          }
+                                          index: "fullname",
+                                          placeholder: "Seleccione un delivery"
                                         },
-                                        [
-                                          _c(
-                                            "option",
-                                            {
-                                              attrs: {
-                                                disabled: "",
-                                                selected: ""
-                                              }
-                                            },
-                                            [_vm._v("Seleccione Delivery")]
-                                          ),
-                                          _vm._v(" "),
-                                          _vm._l(_vm.deliverys, function(
-                                            delivery
-                                          ) {
-                                            return _c(
-                                              "option",
-                                              {
-                                                domProps: {
-                                                  value: delivery.fullname
-                                                }
-                                              },
-                                              [
-                                                _c(
-                                                  "i",
-                                                  {
-                                                    staticClass:
-                                                      "material-icons"
-                                                  },
-                                                  [_vm._v("account_circle")]
-                                                ),
-                                                _vm._v(
-                                                  "\n\t\t                                        " +
-                                                    _vm._s(delivery.fullname)
-                                                )
-                                              ]
-                                            )
-                                          })
-                                        ],
-                                        2
-                                      )
-                                    ]
+                                        model: {
+                                          value: _vm.delivery,
+                                          callback: function($$v) {
+                                            _vm.delivery = $$v
+                                          },
+                                          expression: "delivery"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("has-error", {
+                                        attrs: {
+                                          form: _vm.form,
+                                          field: "delivery"
+                                        }
+                                      })
+                                    ],
+                                    1
                                   ),
                                   _vm._v(" "),
                                   _c("hr", { staticClass: "hrcardpe" })
@@ -81067,6 +81157,91 @@ var render = function() {
           ])
         ])
       ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "smsclientModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-notice" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(13),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("hr", { staticClass: "hrcardpe" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group" }, [
+                _vm._m(14),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "form-group label-floating  is-empty",
+                    class: {
+                      "has-error is-focused": _vm.form.errors.has("mensaje")
+                    }
+                  },
+                  [
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v("Escriba aqui su mensaje.")
+                    ]),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.mensaje,
+                          expression: "form.mensaje"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { rows: "2" },
+                      domProps: { value: _vm.form.mensaje },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "mensaje", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "material-input" }),
+                    _vm._v(" "),
+                    _c("has-error", {
+                      attrs: { form: _vm.form, field: "mensaje" }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer text-center" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-rose btn-round",
+                  attrs: { type: "button" },
+                  on: { click: _vm.sendMessage }
+                },
+                [_c("b", [_vm._v("Enviar")])]
+              )
+            ])
+          ])
+        ])
+      ]
     )
   ])
 }
@@ -81089,6 +81264,26 @@ var staticRenderFns = [
             _c("h3", { staticClass: "title" }, [_vm._v("PEDIDOS - ACEPTADOS")])
           ])
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xs-2 follow" }, [
+        _c(
+          "span",
+          {
+            staticClass: "btn btn-fab btn-rose",
+            attrs: {
+              rel: "tooltip",
+              title: "Escribenos",
+              "data-toggle": "modal",
+              "data-target": "#smsclientModal"
+            }
+          },
+          [
+            _c("i", { staticClass: "material-icons" }, [
+              _vm._v("speaker_notes")
+            ])
+          ]
+        )
       ])
     ])
   },
@@ -81280,6 +81475,42 @@ var staticRenderFns = [
         [_vm._v("ok! entendido.")]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-hidden": "true"
+          }
+        },
+        [_c("i", { staticClass: "material-icons" }, [_vm._v("clear")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "h5",
+        {
+          staticClass: "modal-title title text-center",
+          attrs: { id: "myModalLabel" }
+        },
+        [_vm._v("REALIZA TU CONSULTA")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "material-icons text-rose" }, [_vm._v("email")])
+    ])
   }
 ]
 render._withStripped = true
@@ -81447,6 +81678,30 @@ var render = function() {
                                       " " + _vm._s(pedido.user.celular) + " "
                                     )
                                   ]),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "title" }, [
+                                    _vm._v("Orden #:")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass: "btn-xs",
+                                      staticStyle: {
+                                        "background-color": "#e91e63",
+                                        color: "#fff"
+                                      }
+                                    },
+                                    [
+                                      _c("b", [
+                                        _vm._v(
+                                          _vm._s(pedido.id) +
+                                            "-" +
+                                            _vm._s(pedido.user.id)
+                                        )
+                                      ])
+                                    ]
+                                  ),
                                   _vm._v(" "),
                                   _c("hr", { staticClass: "hrcardpe" }),
                                   _vm._v(" "),
@@ -82582,6 +82837,30 @@ var render = function() {
                                     )
                                   ]),
                                   _vm._v(" "),
+                                  _c("span", { staticClass: "title" }, [
+                                    _vm._v("Orden #:")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass: "btn-xs",
+                                      staticStyle: {
+                                        "background-color": "#e91e63",
+                                        color: "#fff"
+                                      }
+                                    },
+                                    [
+                                      _c("b", [
+                                        _vm._v(
+                                          _vm._s(pedido.id) +
+                                            "-" +
+                                            _vm._s(pedido.user.id)
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
                                   _c("hr", { staticClass: "hrcardpe" }),
                                   _vm._v(" "),
                                   _c("span", { staticClass: "title" }, [
@@ -83688,6 +83967,30 @@ var render = function() {
                                       " " + _vm._s(pedido.user.celular) + " "
                                     )
                                   ]),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "title" }, [
+                                    _vm._v("Orden #:")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass: "btn-xs",
+                                      staticStyle: {
+                                        "background-color": "#e91e63",
+                                        color: "#fff"
+                                      }
+                                    },
+                                    [
+                                      _c("b", [
+                                        _vm._v(
+                                          _vm._s(pedido.id) +
+                                            "-" +
+                                            _vm._s(pedido.user.id)
+                                        )
+                                      ])
+                                    ]
+                                  ),
                                   _vm._v(" "),
                                   _c("hr", { staticClass: "hrcardpe" }),
                                   _vm._v(" "),
@@ -84824,6 +85127,30 @@ var render = function() {
                                       " " + _vm._s(pedido.user.celular) + " "
                                     )
                                   ]),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "title" }, [
+                                    _vm._v("Orden #:")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass: "btn-xs",
+                                      staticStyle: {
+                                        "background-color": "#e91e63",
+                                        color: "#fff"
+                                      }
+                                    },
+                                    [
+                                      _c("b", [
+                                        _vm._v(
+                                          _vm._s(pedido.id) +
+                                            "-" +
+                                            _vm._s(pedido.user.id)
+                                        )
+                                      ])
+                                    ]
+                                  ),
                                   _vm._v(" "),
                                   _c("hr", { staticClass: "hrcardpe" }),
                                   _vm._v(" "),

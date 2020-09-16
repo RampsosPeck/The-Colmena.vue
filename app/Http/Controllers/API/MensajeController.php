@@ -39,4 +39,21 @@ class MensajeController extends Controller
 		return response()->json(['message' => 'Excelente...!'], 200);
 	}
 
+	public function sendSmsclient(Request $request)
+	{
+		//return $request->all();
+		$this->validate($request, [
+			'mensaje' => 'required'
+		]);
+
+		$mensaje = Mensaje::create([
+			'sender_id' => auth()->id(),
+			'recipient_id' => 2,
+			'body' => $request->mensaje
+		]);
+
+		event(new NotismsCreated($mensaje));
+
+		return response()->json(['message' => 'Enviado excelente...!'], 200);
+	}
 }

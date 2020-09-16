@@ -45,6 +45,10 @@
                                         </p>
                                         <hr class="hrcardpe" />
                                         <span class="title">Celular:</span> <small> {{ pedido.user.celular }} </small>
+                                        <span class="title">Orden #:</span>
+                                        <span class="btn-xs" style="background-color:#e91e63; color:#fff;">
+				                            <b>{{ pedido.id }}-{{ pedido.user.id }}</b>
+                                        </span>
                                         <hr class="hrcardpe" />
                                         <span class="title">Dirección:</span> <small> {{ pedido.user.direccion }} </small>
                                         <hr class="hrcardpe" />
@@ -371,20 +375,22 @@
         	successPro(id){
 	        	swal.fire({
 				  title: '¿Estás seguro?',
-				  text: "No podrás revertir esto!",
+				  text: "Ya entregaste el pedido?",
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
 				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Si, Entregado!'
+				  confirmButtonText: 'Si, Entregado!',
+				  cancelButtonText: 'Cancelar!'
 				}).then((result) => {
 				   if (result.value)
 				   {
 				   	    this.$Progress.start();
-				        axios.get('api/entregados/'+id).then(()=>{
+				        axios.get('api/entregados/'+id)
+				        .then((re)=>{
                             swal.fire(
-                                'Excelente!',
-                                'El pedido fue ENTREGADO.',
+                                `<b>${re.data.message}</b>`,
+                                'El cliente recibio el pedido.',
                                 'success'
                             )
                             Fire.$emit('AfterCreate');

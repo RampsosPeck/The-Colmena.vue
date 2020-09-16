@@ -318,7 +318,7 @@
 			                                        <div class="warningbo card-content">
 			                                        	Ingresa al sistema para VER tu PEDIDO.
 					                                	<b>"Utiliza tú número de celular como contraseña."</b>
-			                                        	<a href="/login" class="btn btn-danger btn-round">
+			                                        	<a href="/login" class="btn btn-rose btn-round">
 							                            	<b><i class="material-icons">folder_shared</i></b>
 							                            	INGREGAR AL SISTEMA
 							                            </a>
@@ -645,7 +645,15 @@
                         'success'
         			)
         			this.$Progress.finish();
-        			//this.$router.push('/dashboard')
+        			//this.$router.push('/login')
+        			//setInterval('document.location.reload()',5000);
+        			setTimeout(function(){
+			            window.location.pathname = '/login';
+			        }, 5000);
+			        /*window.setTimeout(function(){
+				        window.location.pathname = '/login';
+				    }, 5000);*/
+
         		})
         		.catch(()=>{
         			swal.fire(

@@ -45,6 +45,10 @@
                                         </p>
                                         <hr class="hrcardpe" />
                                         <span class="title">Celular:</span> <small> {{ pedido.user.celular }} </small>
+                                        <span class="title">Orden #:</span>
+                                        <span class="btn-xs" style="background-color:#e91e63; color:#fff;">
+				                            <b>{{ pedido.id }}-{{ pedido.user.id }}</b>
+                                        </span>
                                         <hr class="hrcardpe" />
                                         <span class="title">Dirección:</span> <small> {{ pedido.user.direccion }} </small>
                                         <hr class="hrcardpe" />

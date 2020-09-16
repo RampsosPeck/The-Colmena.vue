@@ -45,6 +45,10 @@
                                         </p>
                                         <hr class="hrcardpe" />
                                         <span class="title">Celular:</span> <small> {{ pedido.user.celular }} </small>
+                                        <span class="title">Orden #:</span>
+                                        <span class="btn-xs" style="background-color:#e91e63; color:#fff;">
+				                            <b>{{ pedido.id}}-{{pedido.user.id }}</b>
+                                        </span>
                                         <hr class="hrcardpe" />
                                         <span class="title">Dirección:</span> <small> {{ pedido.user.direccion }} </small>
                                         <hr class="hrcardpe" />
@@ -367,20 +371,22 @@
         	successPro(id){
 	        	swal.fire({
 				  title: '¿Estás seguro?',
-				  text: "No podrás revertir esto!",
+				  text: "¿Quieres aprobar este pedido?",
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
 				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Si, Aceptar!'
+				  confirmButtonText: 'Si, Aceptar!',
+				  cancelButtonText: 'Cancelar!'
 				}).then((result) => {
 				   if (result.value)
 				   {
 				   	    this.$Progress.start();
-				        axios.get('api/rechazados/'+id).then(()=>{
+				        axios.get('api/rechazados/'+id)
+				        .then((re)=>{
                             swal.fire(
-                                'Excelente!',
-                                'El pedido fue ACEPTADO.',
+                                `<b>${re.data.message}</b>`,
+                                'Se aprobó este pedido.',
                                 'success'
                             )
                             Fire.$emit('AfterCreate');

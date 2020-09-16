@@ -48,7 +48,7 @@ class MensajeSent extends Notification
                     ->subject('Mensaje recibido desde el sitio web de LA COLMENA')
                     ->line('Has recibido un mensaje.')
                     ->action('Click aquí para ver la notificación', url('/notifications'))
-                    ->line('Gracias por utilizar nuestra aplicación...!');
+                    ->line('Gracias por utilizar nuestro sitio web!');
 
     }
 

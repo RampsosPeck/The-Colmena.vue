@@ -45,6 +45,10 @@
                                         </p>
                                         <hr class="hrcardpe" />
                                         <span class="title">Celular:</span> <small> {{ pedido.user.celular }} </small>
+                                        <span class="title">Orden #:</span>
+                                        <span class="btn-xs" style="background-color:#e91e63; color:#fff;">
+				                            <b>{{ pedido.id}}-{{pedido.user.id }}</b>
+                                        </span>
                                         <hr class="hrcardpe" />
                                         <span class="title">Dirección:</span> <small> {{ pedido.user.direccion }} </small>
                                         <hr class="hrcardpe" />
@@ -388,17 +392,18 @@
 				   if (result.value)
 				   {
 				   	    this.$Progress.start();
-				        axios.delete('api/pedidos/'+id).then(()=>{
+				        axios.delete('api/pedidos/'+id)
+				        .then((re)=>{
                             swal.fire(
-                                'OK!',
-                                'El pedido fue cancelado.',
-                                'success'
+                                `<b>${re.data.message}</b>`,
+                                'Vuelve a intentarlo por favor.',
+                                'info'
                             )
                             Fire.$emit('AfterCreate');
                             this.$Progress.finish();
                         }).catch(()=>{
                             swal.fire(
-                                'Failed!',
+                                'Ooops...!',
                                 'Revisa algo salió mal.',
                                 'warning'
                             )
@@ -421,17 +426,18 @@
 				   if (result.value)
 				   {
 				   	    this.$Progress.start();
-				        axios.put('api/pedidos/'+id).then(()=>{
+				        axios.put('api/pedidos/'+id)
+				        .then((re)=>{
                             swal.fire(
-                                'Excelente!',
-                                'El pedido fue APROBADO.',
+                                `<b>${re.data.message}</b>`,
+                                'Ahora se esta processando.',
                                 'success'
                             )
                             Fire.$emit('AfterCreate');
                             this.$Progress.finish();
                         }).catch(()=>{
                             swal.fire(
-                                'Failed!',
+                                'Ooops...!',
                                 'Revisa algo salió mal.',
                                 'warning'
                             )
