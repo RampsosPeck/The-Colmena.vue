@@ -67,7 +67,7 @@
 									<div class="footer" style="position: relative;">
 										<div class="author">
 											<a href="#pablo">
-												<img src="/img/notifications/incoming-message.svg" style="border-radius:inherit !important;" class="avatar">
+												<img src="/img/notifications/received-message.svg" style="border-radius:inherit !important;" class="avatar">
 												<span class="title">
 													Mensaje de {{ notisi.data.senduser }}
 												</span>

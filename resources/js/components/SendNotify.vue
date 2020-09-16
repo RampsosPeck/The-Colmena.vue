@@ -12,8 +12,8 @@
                         </div>
                     </div>
                     <div class="col-xs-2 follow">
-                        <router-link to="/carrito" @click.native="$router.go()" class="btn btn-fab btn-rose" rel="tooltip" title="Carrito de compras">
-                            <i class="material-icons">local_grocery_store</i>
+                        <router-link to="/notifications" @click.native="$router.go()" class="btn btn-fab btn-rose" rel="tooltip" title="Notificaciones">
+                            <i class="material-icons">notifications_active</i>
                         </router-link>
                     </div>
                 </div>

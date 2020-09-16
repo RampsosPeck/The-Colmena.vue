@@ -79797,7 +79797,7 @@ var render = function() {
                                   "border-radius": "inherit !important"
                                 },
                                 attrs: {
-                                  src: "/img/notifications/incoming-message.svg"
+                                  src: "/img/notifications/received-message.svg"
                                 }
                               }),
                               _vm._v(" "),
@@ -88359,9 +88359,9 @@ var render = function() {
                 {
                   staticClass: "btn btn-fab btn-rose",
                   attrs: {
-                    to: "/carrito",
+                    to: "/notifications",
                     rel: "tooltip",
-                    title: "Carrito de compras"
+                    title: "Notificaciones"
                   },
                   nativeOn: {
                     click: function($event) {
@@ -88371,7 +88371,7 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "material-icons" }, [
-                    _vm._v("local_grocery_store")
+                    _vm._v("notifications_active")
                   ])
                 ]
               )

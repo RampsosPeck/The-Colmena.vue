@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\NotismsCreated;
 use App\Http\Controllers\Controller;
 use App\Models\Mensaje;
 use App\Notifications\MensajeSent;
@@ -29,9 +30,11 @@ class MensajeController extends Controller
 			'body' => $request->mensaje
 		]);
 
-		$recipient = User::find($request->recipient_id);
+		//$recipient = User::find($request->recipient_id);
+		//$recipient->notify(new MensajeSent($mensaje));
 
-		$recipient->notify(new MensajeSent($mensaje));
+		//event(new NotismsCreated($mensaje));
+		NotismsCreated::dispatch($mensaje);
 
 		return response()->json(['message' => 'Excelente...!'], 200);
 	}

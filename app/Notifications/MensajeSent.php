@@ -31,7 +31,7 @@ class MensajeSent extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['mail','database'];
     }
 
     /**
@@ -42,10 +42,14 @@ class MensajeSent extends Notification
      */
     public function toMail($notifiable)
     {
+
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->greeting('Hola! '.$notifiable->fullname)
+                    ->subject('Mensaje recibido desde el sitio web de LA COLMENA')
+                    ->line('Has recibido un mensaje.')
+                    ->action('Click aquí para ver la notificación', url('/notifications'))
+                    ->line('Gracias por utilizar nuestra aplicación...!');
+
     }
 
     /**
