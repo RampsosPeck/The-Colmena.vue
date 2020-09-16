@@ -46,6 +46,15 @@
                     <a class="navbar-brand " href="/" style="padding-top: 1px !important; margin-top: -15px;">
                         <img class="nav-icon" src="{{ asset('/img/secondary/logo1.png') }}" alt="La Colmena" width="220" height="80"/>
                     </a>
+                    @guest
+                    @else
+                    @if($count = Auth::user()->unreadNotifications->count())
+                        <router-link to="/notifications" class="btn btn-rose btn-round btn-sm" data-toggle="tooltip" data-placement="bottom" title="Notificaciones">
+                            <img src="/img/notifications/notification2.svg" alt="pedidos" width="30" class="nav-icon">
+                            <span class="badge" style="position: absolute; right:12px; top:3px;background:red;">{{ $count }}</span>
+                        </router-link>
+                    @endif
+                    @endguest
                 </div>
 
                 <div class="collapse navbar-collapse">
@@ -82,6 +91,11 @@
                                         <i class="material-icons">group_add</i> Usuarios
                                     </router-link>
                                 </li>
+                                    <li>
+                                    <router-link to="/sendnotifi"  class="nav-link">
+                                        <i class="material-icons">notifications_active</i> Notificaciones
+                                    </router-link>
+                                </li>
                                 <li>
                                     <router-link to="/categorias"  class="nav-link">
                                         <i class="material-icons">input</i> Categorias
@@ -102,11 +116,6 @@
                             </router-link>
                         </li>
                         <li>
-                            <router-link to="/chats"  class="nav-link">
-                                <i class="material-icons text-success">user</i>Chats
-                            </router-link>
-                        </li>
-                        <li>
                             <router-link to="/productos"  class="nav-link">
                                 <i class="material-icons">shop</i> Productos
                             </router-link>
@@ -117,6 +126,11 @@
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu dropdown-with-icons">
+                                <li class="text-center">
+                                    <router-link to="/chats"  class="nav-link">
+                                        <i class="material-icons text-rose">contact_mail</i>Escríbenos
+                                    </router-link>
+                                </li>
                                 <li>
                                     <router-link to="/pedidos"  class="nav-link">
                                         <i class="material-icons text-info">markunread_mailbox</i> Recibidos

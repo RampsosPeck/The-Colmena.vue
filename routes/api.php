@@ -53,6 +53,13 @@ Route::group(['middleware' => ['auth:api']], function(){
 	Route::get('messages', 'API\ChatsController@fetchMessages');
 	Route::post('messages', 'API\ChatsController@sendMessage');
 	Route::get('messageuser', 'API\ChatsController@userMessage');
+
+	//Route::get('sendusers', 'API\MensajeController@index');
+	Route::apiResources(['sendusers' => 'API\MensajeController']);
+
+	Route::apiResources(['notifications' => 'API\NotificationsController']);
+	Route::get('notifynole','API\NotificationsController@notinoleidas');
+	Route::get('notifyle','API\NotificationsController@notileidas');
 });
 
 // Routes for guests only

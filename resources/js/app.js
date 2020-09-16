@@ -73,6 +73,9 @@ Vue.use(VueProgressBar, {
   height: '3px'
 })
 
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
+
 let routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue').default },
     { path: '/users', component: require('./components/Users.vue').default },
@@ -92,6 +95,9 @@ let routes = [
     { path: '/enviados', component: require('./components/PedidoEnviados.vue').default },
     { path: '/vendidos', component: require('./components/PedidoVendidos.vue').default },
     { path: '/chats', component: require('./components/Chats.vue').default },
+    { path: '/sendnotifi', component: require('./components/SendNotify.vue').default },
+    { path: '/notifications', component: require('./components/Notifications.vue').default },
+
     //{ path: '*', component: require('./components/NotFound.vue').default }
   ]
 
@@ -112,7 +118,9 @@ Vue.filter('dateSimple', function(created){
   return moment(created).locale('es').format('MMMM Do YYYY');
 });
 
-
+Vue.filter('dateHuman', function(created){
+  return moment(created).locale('es').fromNow();
+});
 
 
 window.Fire = new Vue();
