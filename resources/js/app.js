@@ -82,6 +82,12 @@ let routes = [
     { path: '/developer', component: require('./components/Developer.vue').default },
     { path: '/categorias', component: require('./components/Categoria.vue').default },
     { path: '/productos', component: require('./components/Producto.vue').default },
+    /*{
+      path: '/productos',
+      component: require('./components/Producto.vue'),
+      meta:{ requiredAuth: true}
+    },*/
+
     { path: '/carrito',  component: require('./components/CarritoComponent.vue').default },
     {
       path: '/viewpro/:slug',
@@ -98,13 +104,27 @@ let routes = [
     { path: '/sendnotifi', component: require('./components/SendNotify.vue').default },
     { path: '/notifications', component: require('./components/Notifications.vue').default },
 
-    //{ path: '*', component: require('./components/NotFound.vue').default }
+    { path: '*', component: require('./components/NotFound.vue').default }
+
   ]
 
 const router = new VueRouter({
 	mode: 'history',
 	routes
 })
+
+/*DESDE AQUI LAS RUTAS
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiredAuth)) {
+    alert("REQUIRES AUTH!"); //Do SOMETHING
+
+  } else {
+    next();
+  }
+})*/
+
+/*HASTA AQUI LAS RUTAS*/
+
 
 Vue.filter('upText', function(text){
 	//return text.toUpperCase();
@@ -177,6 +197,8 @@ Vue.component(
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+import auth from './mixins/auth';
+Vue.mixin(auth);
 
 const app = new Vue({
     el: '#app',

@@ -34,13 +34,13 @@
                         <div class="profile-tabs" style="margin-top: 2px;">
                             <div class="nav-align-center">
                                 <ul class="nav nav-pills nav-pills-rose nav-pills-icons" role="tablist">
-                                    <li class="active">
+                                    <li>
                                         <a href="#tortas" role="tab" data-toggle="tab">
                                             <img src="/img/secondary/torta.svg"  class="material-icons img-responsive">
                                             TORTAS
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="active">
                                         <a href="#comidas" role="tab" data-toggle="tab">
                                             <img src="/img/secondary/comida2.svg"  class="material-icons img-responsive">
                                             COMIDAS
@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="tab-content">
-                    <div class="tab-pane active" id="tortas">
+                    <div class="tab-pane" id="tortas">
                         <material-transition tag="div"  class="row">
                             <div v-for="(torta, index) in tortas" :key="torta.id" :data-index="index">
                             <div class="col-md-3  ">
@@ -106,7 +106,7 @@
                             </div>
                         </material-transition>
                     </div>
-                    <div class="tab-pane" id="comidas" >
+                    <div class="tab-pane active" id="comidas" >
                         <div class="row">
                             <div class="col-md-3" style="margin-top:35px;">
                                 <div class="card" style="background-color:rgba(233, 32, 99, 0.46);" v-for="(almu, index) in almuerzo" :key="almu.id">

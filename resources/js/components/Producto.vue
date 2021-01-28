@@ -14,8 +14,10 @@
 											<i class="material-icons">input</i>
 											LISTA DE PRODUCTOS
 										</a>
+										<!--/*<p v-text="`${user.email}`">
+										</p>*/-->
 									</li>
-									<li >
+									<li v-if="isAuth">
 										<a @click="modalPro" data-toggle="tab">
 											<i class="material-icons">add</i>
 											NUEVO PRODUCTOS
@@ -29,7 +31,7 @@
 						<div class="tab-content text-center">
 							<div class="tab-pane active" id="lista">
 								<div class="table-responsive">
-				                    <table class="table">
+				                    <table class="table center-block">
 				                        <thead>
 				                            <tr class="almuerzo">
 				                                <th class="text-center"><b>#</b></th>
@@ -37,7 +39,7 @@
 				                                <th class="text-center"><b>Precio</b></th>
 				                                <th class="text-center"><b>Estado</b></th>
 				                                <th class="text-center"><b>Cantidad</b></th>
-				                                <th class="text-center"><b>Acciones</b></th>
+				                                <th class="text-center" v-if="isAuth"><b v-if="isAdmin">Acciones</b></th>
 				                            </tr>
 				                        </thead>
 				                        <tbody>
@@ -73,9 +75,10 @@
 				                                				</button>
 
 				                                				<span v-show="producto.prodetalle">
-							                                    	 <button type="button" class="btn btn-warning btn-xs productcate" @click="actiAlmu(producto.id)">
+							                                    	 <button type="button" class="btn btn-warning btn-xs productcate" @click="actiAlmu(producto.id)"  v-if="isAuth && isAdmin">
 					                                					activar
 					                                				</button>
+					                                				<i class="material-icons" v-else>vpn_key</i>
 							                                    </span>
 				                                			</h6>
 				                                			<h6  class="media-heading productlist" v-if="producto.descuento">
@@ -111,7 +114,8 @@
 		                                                </button>
 			                                        </span>
 				                                </td>
-				                                <td class="td-actions text-center col-md-2 col-xs-2">
+				                                <td class="td-actions text-center col-md-2 col-xs-2" v-if="isAuth">
+				                                	<small v-if="isAdmin">
 				                                    <a @click="editModal(producto)" href="#" rel="tooltip" class="btn btn-success" data-original-title="" title="Editar Usuario">
 				                                        <i class="material-icons">edit</i>
 				                                    </a>
@@ -121,6 +125,7 @@
 				                                    <a href="#" v-show="!producto.estado" @click="activoPro(producto.id)" class="btn btn-warning" data-original-title="" title="Activar producto">
 				                                        <i class="material-icons">done</i>
 				                                    </a>
+				                                    </small>
 				                                </td>
 				                            </tr>
 				                        </tbody>
@@ -394,6 +399,7 @@
 </template>
 
 <script>
+	//import auth from '../mixins/auth';
     export default {
         data() {
             return {
@@ -425,6 +431,7 @@
                 })
             }
         },
+        //mixins:[auth],
         computed: {
         	generardescuento : function(){
 	            if (this.form.descuento > 100) {
@@ -439,7 +446,7 @@
 	                this.smsdescuento = 'Hay un descuento de '+((this.form.precio * this.form.descuento) /100) +' Bs. Apartir de :';
 	                return this.smsdescuento;
 
-	            } else
+	            } else{
 		            if (this.form.descuento < 0) {
 			            swal.fire({
 			                icon: 'error',
@@ -471,6 +478,7 @@
 		                  return this.smsdescuento;
 		              }
 	            }
+	        }
 
         },
         methods: {

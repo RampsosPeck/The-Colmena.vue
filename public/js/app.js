@@ -7097,6 +7097,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//import auth from '../mixins/auth';
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -7128,6 +7134,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       })
     };
   },
+  //mixins:[auth],
   computed: {
     generardescuento: function generardescuento() {
       if (this.form.descuento > 100) {
@@ -7141,32 +7148,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         this.smsdescuento = 'Hay un descuento de ' + this.form.precio * this.form.descuento / 100 + ' Bs. Apartir de :';
         return this.smsdescuento;
-      } else if (this.form.descuento < 0) {
-        swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'No puedes poner un valor menor a 0.'
-        });
-        this.form.descuento = 0; //this.form.descuento = (this.form.precio * this.form.descuento) /100;
-        //this.form.precio = this.form.precio - this.form.descuento;
-
-        this.smsdescuento = '';
-        return this.smsdescuento;
-      } else if (this.form.descuento > 0) {
-        //this.form.descuento = (this.form.precio * this.form.descuento) /100;
-        //this.form.precio = this.form.precio - this.form.descuento;
-        if (this.form.descuento == 100) {
-          this.smsdescuento = 'Este producto tiene el 100% de descuento, por ende es gratis.';
-        } else {
-          this.smsdescuento = 'Hay un descuento de ' + this.form.precio * this.form.descuento / 100 + ' Bs. Apartir de :';
-        }
-
-        return this.smsdescuento;
       } else {
-        //this.form.descuento = '';
-        //this.form.precio = this.form.precio;
-        this.smsdescuento = 'Sin descuento.';
-        return this.smsdescuento;
+        if (this.form.descuento < 0) {
+          swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No puedes poner un valor menor a 0.'
+          });
+          this.form.descuento = 0; //this.form.descuento = (this.form.precio * this.form.descuento) /100;
+          //this.form.precio = this.form.precio - this.form.descuento;
+
+          this.smsdescuento = '';
+          return this.smsdescuento;
+        } else if (this.form.descuento > 0) {
+          //this.form.descuento = (this.form.precio * this.form.descuento) /100;
+          //this.form.precio = this.form.precio - this.form.descuento;
+          if (this.form.descuento == 100) {
+            this.smsdescuento = 'Este producto tiene el 100% de descuento, por ende es gratis.';
+          } else {
+            this.smsdescuento = 'Hay un descuento de ' + this.form.precio * this.form.descuento / 100 + ' Bs. Apartir de :';
+          }
+
+          return this.smsdescuento;
+        } else {
+          //this.form.descuento = '';
+          //this.form.precio = this.form.precio;
+          this.smsdescuento = 'Sin descuento.';
+          return this.smsdescuento;
+        }
       }
     }
   },
@@ -78741,7 +78750,7 @@ var render = function() {
         _c("div", { staticClass: "tab-content" }, [
           _c(
             "div",
-            { staticClass: "tab-pane active", attrs: { id: "tortas" } },
+            { staticClass: "tab-pane", attrs: { id: "tortas" } },
             [
               _c(
                 "material-transition",
@@ -78949,426 +78958,450 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "tab-pane", attrs: { id: "comidas" } }, [
-            _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "col-md-3",
-                  staticStyle: { "margin-top": "35px" }
-                },
-                _vm._l(_vm.almuerzo, function(almu, index) {
-                  return _c(
-                    "div",
-                    {
-                      key: almu.id,
-                      staticClass: "card",
-                      staticStyle: {
-                        "background-color": "rgba(233, 32, 99, 0.46)"
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "card-image" }, [
-                        _c("div", { staticClass: "ribbon ribbon-top-right" }, [
-                          _c("span", [
-                            _c("strong", [
-                              _vm._v(" " + _vm._s(almu.precio) + " Bs. ")
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          { attrs: { href: "#pablo" } },
-                          _vm._l(almu.fotos, function(foto) {
-                            return _c("span", { key: foto.id }, [
-                              foto.favorito
-                                ? _c("img", {
-                                    staticClass: "imgcard",
-                                    staticStyle: { height: "100%" },
-                                    attrs: {
-                                      src: _vm.getFoto(foto.imagen),
-                                      alt: "Producto foto"
-                                    }
-                                  })
-                                : _vm._e()
-                            ])
-                          }),
-                          0
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "card-content card-pricing" }, [
-                        _c(
-                          "h4",
-                          { staticClass: "title" },
-                          [
-                            _c(
-                              "router-link",
-                              {
-                                attrs: {
-                                  to: {
-                                    name: "verpro",
-                                    params: { slug: almu.slug }
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "ALMUERZO FAMILIAR\n                                        "
-                                )
-                              ]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("ul", [
-                          _c(
-                            "li",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: almu.prodetalle.entrada,
-                                  expression: "almu.prodetalle.entrada"
-                                }
-                              ]
-                            },
-                            [
-                              _c("b", [_vm._v("Entrada:")]),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "text-width title" }, [
-                                _vm._v(_vm._s(almu.prodetalle.entrada))
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: almu.prodetalle.sopa,
-                                  expression: "almu.prodetalle.sopa"
-                                }
-                              ]
-                            },
-                            [
-                              _c("b", [_vm._v("Sopa:")]),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "text-width title" }, [
-                                _vm._v(_vm._s(almu.prodetalle.sopa))
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: almu.prodetalle.segundo,
-                                  expression: "almu.prodetalle.segundo"
-                                }
-                              ]
-                            },
-                            [
-                              _c("b", [_vm._v("Segundo:")]),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "text-width title" }, [
-                                _vm._v(_vm._s(almu.prodetalle.segundo))
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: almu.prodetalle.refresco,
-                                  expression: "almu.prodetalle.refresco"
-                                }
-                              ]
-                            },
-                            [
-                              _c("b", [_vm._v("Refresco:")]),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "text-width title" }, [
-                                _vm._v(_vm._s(almu.prodetalle.refresco))
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: almu.prodetalle.postre,
-                                  expression: "almu.prodetalle.postre"
-                                }
-                              ]
-                            },
-                            [
-                              _c("b", [_vm._v("Postre:")]),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "text-width title" }, [
-                                _vm._v(_vm._s(almu.prodetalle.postre))
-                              ])
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "p",
-                          {
-                            staticClass:
-                              "card-description text-width title text-justify",
-                            staticStyle: { "margin-bottom": "0px" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                        " +
-                                _vm._s(almu.descripcion) +
-                                "\n                                    "
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("hr", {
-                        staticStyle: {
-                          height: "20px !important",
-                          "padding-top": "9px"
-                        }
-                      }),
-                      _vm._v(" "),
-                      almu.estado
-                        ? _c(
-                            "span",
-                            [
-                              _c("add-producto-btn", {
-                                attrs: { product: almu, carri: _vm.carrito }
-                              })
-                            ],
-                            1
-                          )
-                        : _c("span", { staticClass: "text-center" }, [
-                            _vm._m(2, true)
-                          ])
-                    ]
-                  )
-                }),
-                0
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-9" }, [
-                _c("h4", { staticClass: "title" }, [_vm._v("Platos extras")]),
-                _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "tab-pane active", attrs: { id: "comidas" } },
+            [
+              _c("div", { staticClass: "row" }, [
                 _c(
                   "div",
-                  { staticClass: "row collections" },
-                  _vm._l(_vm.comidas, function(comida, index) {
-                    return _c("div", { key: comida.id }, [
-                      _c("div", { staticClass: "col-md-4" }, [
+                  {
+                    staticClass: "col-md-3",
+                    staticStyle: { "margin-top": "35px" }
+                  },
+                  _vm._l(_vm.almuerzo, function(almu, index) {
+                    return _c(
+                      "div",
+                      {
+                        key: almu.id,
+                        staticClass: "card",
+                        staticStyle: {
+                          "background-color": "rgba(233, 32, 99, 0.46)"
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "card-image" }, [
+                          _c(
+                            "div",
+                            { staticClass: "ribbon ribbon-top-right" },
+                            [
+                              _c("span", [
+                                _c("strong", [
+                                  _vm._v(" " + _vm._s(almu.precio) + " Bs. ")
+                                ])
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            { attrs: { href: "#pablo" } },
+                            _vm._l(almu.fotos, function(foto) {
+                              return _c("span", { key: foto.id }, [
+                                foto.favorito
+                                  ? _c("img", {
+                                      staticClass: "imgcard",
+                                      staticStyle: { height: "100%" },
+                                      attrs: {
+                                        src: _vm.getFoto(foto.imagen),
+                                        alt: "Producto foto"
+                                      }
+                                    })
+                                  : _vm._e()
+                              ])
+                            }),
+                            0
+                          )
+                        ]),
+                        _vm._v(" "),
                         _c(
                           "div",
-                          {
-                            staticClass: "card card-img-top card-blog shadow",
-                            staticStyle: { "background-color": "#f2f2f2" }
-                          },
+                          { staticClass: "card-content card-pricing" },
                           [
-                            _c("div", { staticClass: "card-image" }, [
+                            _c(
+                              "h4",
+                              { staticClass: "title" },
+                              [
+                                _c(
+                                  "router-link",
+                                  {
+                                    attrs: {
+                                      to: {
+                                        name: "verpro",
+                                        params: { slug: almu.slug }
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "ALMUERZO FAMILIAR\n                                        "
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("ul", [
                               _c(
-                                "div",
+                                "li",
                                 {
                                   directives: [
                                     {
                                       name: "show",
                                       rawName: "v-show",
-                                      value: comida.descuento,
-                                      expression: "comida.descuento"
+                                      value: almu.prodetalle.entrada,
+                                      expression: "almu.prodetalle.entrada"
                                     }
-                                  ],
-                                  staticClass: "ribbon ribbon-top-right "
+                                  ]
                                 },
                                 [
-                                  _c("span", [
-                                    _c("strong", [
-                                      _vm._v(
-                                        " " +
-                                          _vm._s(comida.descuento) +
-                                          "% DTO. "
-                                      )
-                                    ])
-                                  ])
+                                  _c("b", [_vm._v("Entrada:")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "text-width title" },
+                                    [_vm._v(_vm._s(almu.prodetalle.entrada))]
+                                  )
                                 ]
                               ),
                               _vm._v(" "),
                               _c(
-                                "a",
-                                { attrs: { href: "#pablo" } },
-                                [
-                                  _c(
-                                    "label",
+                                "li",
+                                {
+                                  directives: [
                                     {
-                                      staticClass: "cardprecio label label-rose"
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                                Bs. "
-                                      ),
-                                      _c("strong", [
-                                        _vm._v(_vm._s(comida.precio) + " ")
-                                      ])
-                                    ]
-                                  ),
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: almu.prodetalle.sopa,
+                                      expression: "almu.prodetalle.sopa"
+                                    }
+                                  ]
+                                },
+                                [
+                                  _c("b", [_vm._v("Sopa:")]),
                                   _vm._v(" "),
-                                  _vm._l(comida.fotos, function(foto) {
-                                    return _c(
+                                  _c(
+                                    "span",
+                                    { staticClass: "text-width title" },
+                                    [_vm._v(_vm._s(almu.prodetalle.sopa))]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "li",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: almu.prodetalle.segundo,
+                                      expression: "almu.prodetalle.segundo"
+                                    }
+                                  ]
+                                },
+                                [
+                                  _c("b", [_vm._v("Segundo:")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "text-width title" },
+                                    [_vm._v(_vm._s(almu.prodetalle.segundo))]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "li",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: almu.prodetalle.refresco,
+                                      expression: "almu.prodetalle.refresco"
+                                    }
+                                  ]
+                                },
+                                [
+                                  _c("b", [_vm._v("Refresco:")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "text-width title" },
+                                    [_vm._v(_vm._s(almu.prodetalle.refresco))]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "li",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: almu.prodetalle.postre,
+                                      expression: "almu.prodetalle.postre"
+                                    }
+                                  ]
+                                },
+                                [
+                                  _c("b", [_vm._v("Postre:")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "text-width title" },
+                                    [_vm._v(_vm._s(almu.prodetalle.postre))]
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              {
+                                staticClass:
+                                  "card-description text-width title text-justify",
+                                staticStyle: { "margin-bottom": "0px" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(almu.descripcion) +
+                                    "\n                                    "
+                                )
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("hr", {
+                          staticStyle: {
+                            height: "20px !important",
+                            "padding-top": "9px"
+                          }
+                        }),
+                        _vm._v(" "),
+                        almu.estado
+                          ? _c(
+                              "span",
+                              [
+                                _c("add-producto-btn", {
+                                  attrs: { product: almu, carri: _vm.carrito }
+                                })
+                              ],
+                              1
+                            )
+                          : _c("span", { staticClass: "text-center" }, [
+                              _vm._m(2, true)
+                            ])
+                      ]
+                    )
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-9" }, [
+                  _c("h4", { staticClass: "title" }, [_vm._v("Platos extras")]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row collections" },
+                    _vm._l(_vm.comidas, function(comida, index) {
+                      return _c("div", { key: comida.id }, [
+                        _c("div", { staticClass: "col-md-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "card card-img-top card-blog shadow",
+                              staticStyle: { "background-color": "#f2f2f2" }
+                            },
+                            [
+                              _c("div", { staticClass: "card-image" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: comida.descuento,
+                                        expression: "comida.descuento"
+                                      }
+                                    ],
+                                    staticClass: "ribbon ribbon-top-right "
+                                  },
+                                  [
+                                    _c("span", [
+                                      _c("strong", [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(comida.descuento) +
+                                            "% DTO. "
+                                        )
+                                      ])
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  { attrs: { href: "#pablo" } },
+                                  [
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass:
+                                          "cardprecio label label-rose"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                Bs. "
+                                        ),
+                                        _c("strong", [
+                                          _vm._v(_vm._s(comida.precio) + " ")
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm._l(comida.fotos, function(foto) {
+                                      return _c(
+                                        "span",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "show",
+                                              rawName: "v-show",
+                                              value: comida.fotos.length > 0,
+                                              expression:
+                                                "comida.fotos.length>0"
+                                            }
+                                          ],
+                                          key: foto.id
+                                        },
+                                        [
+                                          foto.favorito
+                                            ? _c("img", {
+                                                staticClass: "imgcard",
+                                                staticStyle: { height: "100%" },
+                                                attrs: {
+                                                  src: _vm.getFoto(foto.imagen),
+                                                  alt: "Producto foto"
+                                                }
+                                              })
+                                            : _vm._e()
+                                        ]
+                                      )
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
                                       "span",
                                       {
                                         directives: [
                                           {
                                             name: "show",
                                             rawName: "v-show",
-                                            value: comida.fotos.length > 0,
-                                            expression: "comida.fotos.length>0"
+                                            value: !comida.fotos.length > 0,
+                                            expression: "!comida.fotos.length>0"
                                           }
-                                        ],
-                                        key: foto.id
+                                        ]
                                       },
                                       [
-                                        foto.favorito
-                                          ? _c("img", {
-                                              staticClass: "imgcard",
-                                              staticStyle: { height: "100%" },
-                                              attrs: {
-                                                src: _vm.getFoto(foto.imagen),
-                                                alt: "Producto foto"
-                                              }
-                                            })
-                                          : _vm._e()
+                                        _c("img", {
+                                          staticClass: "imgcard",
+                                          staticStyle: { height: "100%" },
+                                          attrs: {
+                                            src: "/img/producto/panal1.png",
+                                            alt: "Producto foto"
+                                          }
+                                        })
                                       ]
                                     )
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
+                                  ],
+                                  2
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "card-content" }, [
+                                _c(
+                                  "h4",
+                                  { staticClass: "card-title text-center" },
+                                  [
+                                    _c(
+                                      "a",
+                                      { attrs: { href: "#pablo" } },
+                                      [
+                                        _c(
+                                          "router-link",
+                                          {
+                                            attrs: {
+                                              to: {
+                                                name: "verpro",
+                                                params: { slug: comida.slug }
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(comida.nombre) +
+                                                "\n                                                    "
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "p",
+                                  {
+                                    staticClass:
+                                      "card-description text-justify cut-text"
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                                " +
+                                        _vm._s(comida.descripcion) +
+                                        "\n                                            "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("hr"),
+                              _vm._v(" "),
+                              comida.estado
+                                ? _c(
                                     "span",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "show",
-                                          rawName: "v-show",
-                                          value: !comida.fotos.length > 0,
-                                          expression: "!comida.fotos.length>0"
-                                        }
-                                      ]
-                                    },
                                     [
-                                      _c("img", {
-                                        staticClass: "imgcard",
-                                        staticStyle: { height: "100%" },
+                                      _c("add-producto-btn", {
                                         attrs: {
-                                          src: "/img/producto/panal1.png",
-                                          alt: "Producto foto"
+                                          product: comida,
+                                          carri: _vm.carrito
                                         }
                                       })
-                                    ]
-                                  )
-                                ],
-                                2
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "card-content" }, [
-                              _c(
-                                "h4",
-                                { staticClass: "card-title text-center" },
-                                [
-                                  _c(
-                                    "a",
-                                    { attrs: { href: "#pablo" } },
-                                    [
-                                      _c(
-                                        "router-link",
-                                        {
-                                          attrs: {
-                                            to: {
-                                              name: "verpro",
-                                              params: { slug: comida.slug }
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(comida.nombre) +
-                                              "\n                                                    "
-                                          )
-                                        ]
-                                      )
                                     ],
                                     1
                                   )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "p",
-                                {
-                                  staticClass:
-                                    "card-description text-justify cut-text"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                                " +
-                                      _vm._s(comida.descripcion) +
-                                      "\n                                            "
-                                  )
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("hr"),
-                            _vm._v(" "),
-                            comida.estado
-                              ? _c(
-                                  "span",
-                                  [
-                                    _c("add-producto-btn", {
-                                      attrs: {
-                                        product: comida,
-                                        carri: _vm.carrito
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              : _c("span", { staticClass: "text-center" }, [
-                                  _vm._m(3, true)
-                                ])
-                          ]
-                        )
+                                : _c("span", { staticClass: "text-center" }, [
+                                    _vm._m(3, true)
+                                  ])
+                            ]
+                          )
+                        ])
                       ])
-                    ])
-                  }),
-                  0
-                )
+                    }),
+                    0
+                  )
+                ])
               ])
-            ])
-          ]),
+            ]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "tab-pane", attrs: { id: "tienda" } }, [
             _c("div", { staticClass: "row" }, [
@@ -79602,7 +79635,7 @@ var staticRenderFns = [
                   attrs: { role: "tablist" }
                 },
                 [
-                  _c("li", { staticClass: "active" }, [
+                  _c("li", [
                     _c(
                       "a",
                       {
@@ -79624,7 +79657,7 @@ var staticRenderFns = [
                     )
                   ]),
                   _vm._v(" "),
-                  _c("li", [
+                  _c("li", { staticClass: "active" }, [
                     _c(
                       "a",
                       {
@@ -79772,6 +79805,53 @@ var staticRenderFns = [
           _c("div", { staticClass: "name" }, [
             _c("h3", { staticClass: "title" }, [_vm._v("DEVELOPER")])
           ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NotFound.vue?vue&type=template&id=2ce50e5a&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NotFound.vue?vue&type=template&id=2ce50e5a& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "profile" }, [
+        _c("div", { staticClass: "avatar" }, [
+          _c("img", {
+            staticStyle: { "max-width": "350px" },
+            attrs: { src: "/img/error/404.svg" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "name" }, [
+          _c("h3", { staticClass: "title" }, [_vm._v("Oops!")]),
+          _c("br"),
+          _vm._v(" "),
+          _c("h3", { staticClass: "title" }, [_vm._v("Página no existente.")])
         ])
       ])
     ])
@@ -86121,23 +86201,25 @@ var render = function() {
                       [
                         _vm._m(0),
                         _vm._v(" "),
-                        _c("li", [
-                          _c(
-                            "a",
-                            {
-                              attrs: { "data-toggle": "tab" },
-                              on: { click: _vm.modalPro }
-                            },
-                            [
-                              _c("i", { staticClass: "material-icons" }, [
-                                _vm._v("add")
-                              ]),
-                              _vm._v(
-                                "\n\t\t\t\t\t\t\t\t\t\t\tNUEVO PRODUCTOS\n\t\t\t\t\t\t\t\t\t\t"
+                        _vm.isAuth
+                          ? _c("li", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: { "data-toggle": "tab" },
+                                  on: { click: _vm.modalPro }
+                                },
+                                [
+                                  _c("i", { staticClass: "material-icons" }, [
+                                    _vm._v("add")
+                                  ]),
+                                  _vm._v(
+                                    "\n\t\t\t\t\t\t\t\t\t\t\tNUEVO PRODUCTOS\n\t\t\t\t\t\t\t\t\t\t"
+                                  )
+                                ]
                               )
-                            ]
-                          )
-                        ])
+                            ])
+                          : _vm._e()
                       ]
                     )
                   ])
@@ -86151,8 +86233,28 @@ var render = function() {
                     { staticClass: "tab-pane active", attrs: { id: "lista" } },
                     [
                       _c("div", { staticClass: "table-responsive" }, [
-                        _c("table", { staticClass: "table" }, [
-                          _vm._m(1),
+                        _c("table", { staticClass: "table center-block" }, [
+                          _c("thead", [
+                            _c("tr", { staticClass: "almuerzo" }, [
+                              _vm._m(1),
+                              _vm._v(" "),
+                              _vm._m(2),
+                              _vm._v(" "),
+                              _vm._m(3),
+                              _vm._v(" "),
+                              _vm._m(4),
+                              _vm._v(" "),
+                              _vm._m(5),
+                              _vm._v(" "),
+                              _vm.isAuth
+                                ? _c("th", { staticClass: "text-center" }, [
+                                    _vm.isAdmin
+                                      ? _c("b", [_vm._v("Acciones")])
+                                      : _vm._e()
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]),
                           _vm._v(" "),
                           _c(
                             "tbody",
@@ -86393,30 +86495,39 @@ var render = function() {
                                                     ]
                                                   },
                                                   [
-                                                    _c(
-                                                      "button",
-                                                      {
-                                                        staticClass:
-                                                          "btn btn-warning btn-xs productcate",
-                                                        attrs: {
-                                                          type: "button"
-                                                        },
-                                                        on: {
-                                                          click: function(
-                                                            $event
-                                                          ) {
-                                                            return _vm.actiAlmu(
-                                                              producto.id
+                                                    _vm.isAuth && _vm.isAdmin
+                                                      ? _c(
+                                                          "button",
+                                                          {
+                                                            staticClass:
+                                                              "btn btn-warning btn-xs productcate",
+                                                            attrs: {
+                                                              type: "button"
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.actiAlmu(
+                                                                  producto.id
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n\t\t\t\t\t                                \t\t\t\t\tactivar\n\t\t\t\t\t                                \t\t\t\t"
                                                             )
-                                                          }
-                                                        }
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          "\n\t\t\t\t\t                                \t\t\t\t\tactivar\n\t\t\t\t\t                                \t\t\t\t"
+                                                          ]
                                                         )
-                                                      ]
-                                                    )
+                                                      : _c(
+                                                          "i",
+                                                          {
+                                                            staticClass:
+                                                              "material-icons"
+                                                          },
+                                                          [_vm._v("vpn_key")]
+                                                        )
                                                   ]
                                                 )
                                               ]
@@ -86568,108 +86679,133 @@ var render = function() {
                                       : _c(
                                           "span",
                                           { staticClass: "text-center" },
-                                          [_vm._m(2, true)]
+                                          [_vm._m(6, true)]
                                         )
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticClass:
-                                      "td-actions text-center col-md-2 col-xs-2"
-                                  },
-                                  [
-                                    _c(
-                                      "a",
+                                _vm.isAuth
+                                  ? _c(
+                                      "td",
                                       {
-                                        staticClass: "btn btn-success",
-                                        attrs: {
-                                          href: "#",
-                                          rel: "tooltip",
-                                          "data-original-title": "",
-                                          title: "Editar Usuario"
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.editModal(producto)
-                                          }
-                                        }
+                                        staticClass:
+                                          "td-actions text-center col-md-2 col-xs-2"
                                       },
                                       [
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("edit")]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "a",
-                                      {
-                                        directives: [
-                                          {
-                                            name: "show",
-                                            rawName: "v-show",
-                                            value: producto.estado,
-                                            expression: "producto.estado"
-                                          }
-                                        ],
-                                        staticClass: "btn btn-danger",
-                                        attrs: {
-                                          href: "#",
-                                          "data-original-title": "",
-                                          title: "Dar de Baja"
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.deletePro(producto.id)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("close")]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "a",
-                                      {
-                                        directives: [
-                                          {
-                                            name: "show",
-                                            rawName: "v-show",
-                                            value: !producto.estado,
-                                            expression: "!producto.estado"
-                                          }
-                                        ],
-                                        staticClass: "btn btn-warning",
-                                        attrs: {
-                                          href: "#",
-                                          "data-original-title": "",
-                                          title: "Activar producto"
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.activoPro(producto.id)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("done")]
-                                        )
+                                        _vm.isAdmin
+                                          ? _c("small", [
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-success",
+                                                  attrs: {
+                                                    href: "#",
+                                                    rel: "tooltip",
+                                                    "data-original-title": "",
+                                                    title: "Editar Usuario"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.editModal(
+                                                        producto
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "i",
+                                                    {
+                                                      staticClass:
+                                                        "material-icons"
+                                                    },
+                                                    [_vm._v("edit")]
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "a",
+                                                {
+                                                  directives: [
+                                                    {
+                                                      name: "show",
+                                                      rawName: "v-show",
+                                                      value: producto.estado,
+                                                      expression:
+                                                        "producto.estado"
+                                                    }
+                                                  ],
+                                                  staticClass: "btn btn-danger",
+                                                  attrs: {
+                                                    href: "#",
+                                                    "data-original-title": "",
+                                                    title: "Dar de Baja"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.deletePro(
+                                                        producto.id
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "i",
+                                                    {
+                                                      staticClass:
+                                                        "material-icons"
+                                                    },
+                                                    [_vm._v("close")]
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "a",
+                                                {
+                                                  directives: [
+                                                    {
+                                                      name: "show",
+                                                      rawName: "v-show",
+                                                      value: !producto.estado,
+                                                      expression:
+                                                        "!producto.estado"
+                                                    }
+                                                  ],
+                                                  staticClass:
+                                                    "btn btn-warning",
+                                                  attrs: {
+                                                    href: "#",
+                                                    "data-original-title": "",
+                                                    title: "Activar producto"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.activoPro(
+                                                        producto.id
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "i",
+                                                    {
+                                                      staticClass:
+                                                        "material-icons"
+                                                    },
+                                                    [_vm._v("done")]
+                                                  )
+                                                ]
+                                              )
+                                            ])
+                                          : _vm._e()
                                       ]
                                     )
-                                  ]
-                                )
+                                  : _vm._e()
                               ])
                             }),
                             0
@@ -86702,7 +86838,7 @@ var render = function() {
         _c("div", { staticClass: "modal-dialog modal-lg" }, [
           _c("div", { staticClass: "modal-content" }, [
             _c("div", { staticClass: "modal-header" }, [
-              _vm._m(3),
+              _vm._m(7),
               _vm._v(" "),
               _c(
                 "h2",
@@ -86738,7 +86874,7 @@ var render = function() {
                 [_vm._v("EDITAR PRODUCTO")]
               ),
               _vm._v(" "),
-              _vm._m(4)
+              _vm._m(8)
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
@@ -86767,7 +86903,7 @@ var render = function() {
                                 }
                               },
                               [
-                                _vm._m(5),
+                                _vm._m(9),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "form-group" }, [
                                   _c(
@@ -86848,7 +86984,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "col-md-6" }, [
                             _c("div", { staticClass: "input-group" }, [
-                              _vm._m(6),
+                              _vm._m(10),
                               _vm._v(" "),
                               _c(
                                 "div",
@@ -86910,7 +87046,7 @@ var render = function() {
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-4" }, [
                             _c("div", { staticClass: "input-group" }, [
-                              _vm._m(7),
+                              _vm._m(11),
                               _vm._v(" "),
                               _c(
                                 "div",
@@ -86971,7 +87107,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "col-md-4" }, [
                             _c("div", { staticClass: "input-group" }, [
-                              _vm._m(8),
+                              _vm._m(12),
                               _vm._v(" "),
                               _c(
                                 "div",
@@ -87034,7 +87170,7 @@ var render = function() {
                               "div",
                               { staticClass: "input-group" },
                               [
-                                _vm._m(9),
+                                _vm._m(13),
                                 _vm._v(" "),
                                 _c("input", {
                                   directives: [
@@ -87083,7 +87219,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "input-group" }, [
-                          _vm._m(10),
+                          _vm._m(14),
                           _vm._v(" "),
                           _c(
                             "div",
@@ -87139,7 +87275,7 @@ var render = function() {
                             1
                           ),
                           _vm._v(" "),
-                          _vm._m(11),
+                          _vm._m(15),
                           _vm._v(" "),
                           _c(
                             "div",
@@ -87203,7 +87339,7 @@ var render = function() {
                               "div",
                               { staticClass: "input-group" },
                               [
-                                _vm._m(12),
+                                _vm._m(16),
                                 _vm._v(" "),
                                 _c("input", {
                                   directives: [
@@ -87344,7 +87480,7 @@ var render = function() {
                                   }
                                 }),
                                 _vm._v(" "),
-                                _vm._m(13),
+                                _vm._m(17),
                                 _vm._v(" "),
                                 _c("has-error", {
                                   attrs: { form: _vm.form, field: "actides" }
@@ -87360,7 +87496,7 @@ var render = function() {
                             "div",
                             { staticClass: "panel panel-default text-center" },
                             [
-                              _vm._m(14),
+                              _vm._m(18),
                               _vm._v(" "),
                               _c(
                                 "div",
@@ -87382,7 +87518,7 @@ var render = function() {
                                           "div",
                                           { staticClass: "input-group" },
                                           [
-                                            _vm._m(15),
+                                            _vm._m(19),
                                             _vm._v(" "),
                                             _c(
                                               "div",
@@ -87457,7 +87593,7 @@ var render = function() {
                                           "div",
                                           { staticClass: "input-group" },
                                           [
-                                            _vm._m(16),
+                                            _vm._m(20),
                                             _vm._v(" "),
                                             _c(
                                               "div",
@@ -87531,7 +87667,7 @@ var render = function() {
                                           "div",
                                           { staticClass: "input-group" },
                                           [
-                                            _vm._m(17),
+                                            _vm._m(21),
                                             _vm._v(" "),
                                             _c(
                                               "div",
@@ -87608,7 +87744,7 @@ var render = function() {
                                           "div",
                                           { staticClass: "input-group" },
                                           [
-                                            _vm._m(18),
+                                            _vm._m(22),
                                             _vm._v(" "),
                                             _c(
                                               "div",
@@ -87682,7 +87818,7 @@ var render = function() {
                                           "div",
                                           { staticClass: "input-group" },
                                           [
-                                            _vm._m(19),
+                                            _vm._m(23),
                                             _vm._v(" "),
                                             _c(
                                               "div",
@@ -87877,7 +88013,7 @@ var render = function() {
                                 ]
                               ),
                               _vm._v(" "),
-                              _vm._m(20)
+                              _vm._m(24)
                             ]),
                             _vm._v(" "),
                             _c("has-error", {
@@ -87890,7 +88026,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "media-footer text-center" }, [
-                      _vm._m(21),
+                      _vm._m(25),
                       _vm._v(" "),
                       _c(
                         "button",
@@ -87964,24 +88100,38 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", { staticClass: "almuerzo" }, [
-        _c("th", { staticClass: "text-center" }, [_c("b", [_vm._v("#")])]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [_c("b", [_vm._v("Datos")])]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [_c("b", [_vm._v("Precio")])]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [_c("b", [_vm._v("Estado")])]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [
-          _c("b", [_vm._v("Cantidad")])
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [
-          _c("b", [_vm._v("Acciones")])
-        ])
-      ])
+    return _c("th", { staticClass: "text-center" }, [_c("b", [_vm._v("#")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", { staticClass: "text-center" }, [
+      _c("b", [_vm._v("Datos")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", { staticClass: "text-center" }, [
+      _c("b", [_vm._v("Precio")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", { staticClass: "text-center" }, [
+      _c("b", [_vm._v("Estado")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", { staticClass: "text-center" }, [
+      _c("b", [_vm._v("Cantidad")])
     ])
   },
   function() {
@@ -107661,6 +107811,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_progressbar__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
 /* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _mixins_auth__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./mixins/auth */ "./resources/js/mixins/auth.js");
+/* harmony import */ var _mixins_auth__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_mixins_auth__WEBPACK_IMPORTED_MODULE_7__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -107745,7 +107897,13 @@ var routes = [{
 }, {
   path: '/productos',
   component: __webpack_require__(/*! ./components/Producto.vue */ "./resources/js/components/Producto.vue")["default"]
-}, {
+},
+/*{
+  path: '/productos',
+  component: require('./components/Producto.vue'),
+  meta:{ requiredAuth: true}
+},*/
+{
   path: '/carrito',
   component: __webpack_require__(/*! ./components/CarritoComponent.vue */ "./resources/js/components/CarritoComponent.vue")["default"]
 }, {
@@ -107781,12 +107939,26 @@ var routes = [{
 }, {
   path: '/notifications',
   component: __webpack_require__(/*! ./components/Notifications.vue */ "./resources/js/components/Notifications.vue")["default"]
-} //{ path: '*', component: require('./components/NotFound.vue').default }
-];
+}, {
+  path: '*',
+  component: __webpack_require__(/*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue")["default"]
+}];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]({
   mode: 'history',
   routes: routes
 });
+/*DESDE AQUI LAS RUTAS
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiredAuth)) {
+    alert("REQUIRES AUTH!"); //Do SOMETHING
+
+  } else {
+    next();
+  }
+})*/
+
+/*HASTA AQUI LAS RUTAS*/
+
 Vue.filter('upText', function (text) {
   //return text.toUpperCase();
   return text.charAt(0).toUpperCase() + text.slice(1);
@@ -107824,6 +107996,8 @@ Vue.component('count-producto', __webpack_require__(/*! ./components/CounterProd
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
+Vue.mixin(_mixins_auth__WEBPACK_IMPORTED_MODULE_7___default.a);
 var app = new Vue({
   el: '#app',
   router: router
@@ -108442,6 +108616,59 @@ component.options.__file = "resources/js/components/MaterialComponent.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MaterialComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./MaterialComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MaterialComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MaterialComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/NotFound.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/NotFound.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NotFound.vue?vue&type=template&id=2ce50e5a& */ "./resources/js/components/NotFound.vue?vue&type=template&id=2ce50e5a&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/NotFound.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/NotFound.vue?vue&type=template&id=2ce50e5a&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/NotFound.vue?vue&type=template&id=2ce50e5a& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./NotFound.vue?vue&type=template&id=2ce50e5a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NotFound.vue?vue&type=template&id=2ce50e5a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -109411,6 +109638,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PersonalAccessTokens_vue_vue_type_template_id_49962cc0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/mixins/auth.js":
+/*!*************************************!*\
+  !*** ./resources/js/mixins/auth.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var user = document.head.querySelector('meta[name="user"]'); //console.log(JSON.parse(user.content).fullname);
+
+module.exports = {
+  computed: {
+    isAuth: function isAuth() {
+      //Si el usuario esta authenticado
+      return !!user.content; //Devuelve boolean si el usuario esta logueado o no
+    },
+    currentUser: function currentUser() {
+      //llamo al usuario
+      if (this.isAuth) {
+        return JSON.parse(user.content);
+      } else {
+        return 'INGRESA';
+      }
+    },
+    isAdmin: function isAdmin() {
+      if (this.isAuth) {
+        if (JSON.parse(user.content).tipo === 'Super-Admin' || JSON.parse(user.content).tipo === 'Administrador' || JSON.parse(user.content).tipo === 'Vendedora') {
+          return !!user.content;
+        }
+      }
+    },
+    isCliente: function isCliente() {
+      if (this.isAuth) {
+        if (JSON.parse(user.content).tipo === 'Cliente') {
+          return !!user.content;
+        }
+      }
+    },
+    isDelivery: function isDelivery() {
+      if (this.isAuth) {
+        if (JSON.parse(user.content).tipo === 'Delivery') {
+          return !!user.content;
+        }
+      }
+    },
+    guest: function guest() {
+      return !this.isAuth;
+    }
+  }
+};
 
 /***/ }),
 

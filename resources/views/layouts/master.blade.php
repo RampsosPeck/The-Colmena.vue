@@ -16,6 +16,7 @@
     <meta name="author" content="Ing. Jorge Peralta">
     <meta name="keyword" content="Sistema de pedidos en linea, Sistema bajo plataforma web La colmena. ">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="user" content="{{ Auth::user() }}">
 
     <link rel="shortcut icon" href="{{ asset('/img/welcome/colmena.svg') }}" />
 
