@@ -228,7 +228,7 @@
                     </ul>
                 </nav>
                 <div class="copyright pull-right">
-                     {{ date('Y') }} &copy; Create By <i class="fa fa-android" aria-hidden="true"></i> Mentrax
+                     {{ date('Y') }} &copy; Created By <i class="fa fa-android" aria-hidden="true"></i> Mentrax
                 </div>
             </div>
         </footer>
